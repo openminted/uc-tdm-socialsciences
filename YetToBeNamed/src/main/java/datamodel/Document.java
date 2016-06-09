@@ -22,4 +22,8 @@ public class Document {
 	public String getText() {
 		return text;
 	}
+
+	public boolean isEmpty() {
+		return text == null || text.isEmpty();
+	}
 }
