@@ -10,7 +10,7 @@ public class Document {
 	}
 
 	public void setText(String text) {
-		if (text == null || text.isEmpty()) {
+		if (this.text == null || this.text.isEmpty()) {
 			this.text = text;
 		}
 	}
