@@ -1,9 +1,13 @@
 package util.convert;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.tika.Tika;
+import org.apache.tika.exception.TikaException;
 
 import datamodel.Document;
 
@@ -37,7 +41,18 @@ public class PDFConverter {
 	}
 
 	private static void convertWithTika(Path docPath, Document doc) {
+		// Create a Tika instance with the default configuration
+		Tika tika = new Tika();
+		tika.setMaxStringLength(-1); // disable max length
 
+		// Parse file
+		String text = null;
+		try {
+			text = tika.parseToString(docPath);
+		} catch (IOException | TikaException e) {
+
+		}
+		doc.setText(text);
 	}
 
 	private static void convertWithPdfBox(Path docPath, Document doc) {
