@@ -29,27 +29,36 @@ public class DocReadingTest {
 	@Test
 	public void testReadSingleFile() {
 		File docFile = getFile(docLocation + shortPaperName);
-		Document doc = PDFConverter.convert(docFile, Converter.JPOD);
+		Document doc = PDFConverter.convert(docFile, Converter.TIKA);
 		Assert.assertFalse(doc.isEmpty());
 	}
 
 	@Test
 	public void testReadSinglePath() {
-		Path docPath = getFile(shortPaperName).toPath();
-		Document doc = PDFConverter.convert(docPath, Converter.JPOD);
+		Path docPath = getFile(docLocation + shortPaperName).toPath();
+		Document doc = PDFConverter.convert(docPath, Converter.TIKA);
 		Assert.assertFalse(doc.isEmpty());
 	}
 
 	@Test
 	public void testReadMultipleFiles() {
 		List<Path> docPaths = new ArrayList<Path>();
+		addPathsToList(docPaths, shortPaperName, longPaperName);
 
-		List<Document> docs = PDFConverter.convert(docPaths, Converter.JPOD);
+		List<Document> docs = PDFConverter.convert(docPaths, Converter.TIKA);
 
 		Assert.assertFalse(docs.isEmpty());
 
 		for (Document document : docs) {
 			Assert.assertFalse(document.isEmpty());
+			System.out.println(document.getText().substring(0, 200));
+		}
+
+	}
+
+	private void addPathsToList(List<Path> docPaths, String... paperNames) {
+		for (String paper : paperNames) {
+			docPaths.add(new File(getClass().getResource(docLocation + paper).getFile()).toPath());
 		}
 
 	}
