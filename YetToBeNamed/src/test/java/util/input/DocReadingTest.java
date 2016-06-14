@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,6 +25,18 @@ public class DocReadingTest {
 		docLocation = "/pdf/";
 		shortPaperName = "2819.pdf";
 		longPaperName = "29294.pdf";
+	}
+
+	@Test
+	public void testDocReader() {
+		DocReader reader = new DocReader();
+		reader.setRootDir(getFile(docLocation).toPath());
+
+		Map<String, Document> readDocuments = reader.readDocuments();
+		for (String docID : readDocuments.keySet()) {
+			Document doc = readDocuments.get(docID);
+			System.out.println(String.format("Document %s:\t%s", docID, doc.getText().trim().substring(0, 40)));
+		}
 	}
 
 	@Test
