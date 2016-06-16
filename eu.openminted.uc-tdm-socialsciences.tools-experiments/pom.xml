@@ -1,9 +1,30 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-    <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>eu.openminted.uc-tdm-socialsciences.tools-experiments</artifactId>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>eu.openminted.uc-tdm-socialsciences.tools-experiments</artifactId>
+
+	<properties>
+		<cermine.version>1.8</cermine.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>icm</id>
+			<name>ICM repository</name>
+			<url>http://maven.icm.edu.pl/artifactory/repo</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>pl.edu.icm.cermine</groupId>
+			<artifactId>cermine-impl</artifactId>
+			<version>${cermine.version}</version>
+		</dependency>
+	</dependencies>
 </project>
