@@ -1,0 +1,11 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+  <artifactId>openminted-uc-tdm-socialsciences</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>social sciences text and data mining use-case</name>
+  <modules>
+  	<module>tool-experiments</module>
+  </modules>
+</project>
