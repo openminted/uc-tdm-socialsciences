@@ -16,10 +16,40 @@ import datamodel.Dataset;
 public class DBWriter {
 
 	private String dbURL;
+	private Connection conn;
 
 	public DBWriter(String path) {
 		// example path: "H:/OpenMinTeD/WP9/DatasetsVariables.sqlite"
 		dbURL = "jdbc:sqlite:" + path;
+
+		try {
+			prepare();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void prepare() throws SQLException {
+		DriverManager.registerDriver(new JDBC());
+		conn = DriverManager.getConnection(dbURL);
+
+		Statement stmt = null;
+
+		if (conn != null) {
+			System.out.println("Connected to the database");
+			DatabaseMetaData dm = conn.getMetaData();
+			System.out.println("Driver name: " + dm.getDriverName());
+			System.out.println("Driver version: " + dm.getDriverVersion());
+			System.out.println("Product name: " + dm.getDatabaseProductName());
+			System.out.println("Product version: " + dm.getDatabaseProductVersion());
+
+			stmt = conn.createStatement();
+			stmt.addBatch("DROP TABLE IF EXISTS Datasets"); // TODO:
+															// Tabellennamen als
+															// Konstanten
+			stmt.addBatch("DROP TABLE IF EXISTS Variables");
+			stmt.executeBatch();
+		}
 	}
 
 	// TODO adapt
