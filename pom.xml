@@ -5,6 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>social sciences text and data mining use-case</name>
+  
   <modules>
   	<module>
   		eu.openminted.uc-tdm-socialsciences.tools-experiments

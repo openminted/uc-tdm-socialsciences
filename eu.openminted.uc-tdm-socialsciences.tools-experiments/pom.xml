@@ -17,8 +17,25 @@
 			<id>icm</id>
 			<name>ICM repository</name>
 			<url>http://maven.icm.edu.pl/artifactory/repo</url>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>pl.edu.icm.cermine</groupId>
+				<artifactId>cermine-parent</artifactId>
+				<version>${cermine.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
