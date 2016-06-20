@@ -7,127 +7,122 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Set;
 
 import org.sqlite.JDBC;
 
 import datamodel.Dataset;
+import datamodel.Variable;
 
 public class DBWriter {
 
 	private String dbURL;
 	private Connection conn;
+	private Statement stmt;
 
-	public DBWriter(String path) {
-		// example path: "H:/OpenMinTeD/WP9/DatasetsVariables.sqlite"
+	private static final String DATASETS = "Datasets";
+	private static final String VARIABLES = "Variables";
+
+	/**
+	 * @param path
+	 *            example path: "H:/OpenMinTeD/WP9/DatasetsVariables.sqlite"
+	 * @param dropTables
+	 *            specifies if all tables should be cleared
+	 *
+	 */
+	public DBWriter(String path, boolean dropTables) {
 		dbURL = "jdbc:sqlite:" + path;
 
 		try {
 			prepare();
+			if (dropTables) {
+				dropAllTables();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void dropAllTables() throws SQLException {
+		stmt.addBatch("DROP TABLE IF EXISTS" + DATASETS);
+		stmt.addBatch("DROP TABLE IF EXISTS" + VARIABLES);
+
+		String sql;
+		sql = "CREATE TABLE " + DATASETS
+				+ " (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, label TEXT NOT NULL,";
+		stmt.addBatch(sql);
+		sql = "CREATE TABLE " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+				+ "name TEXT NOT NULL, label TEXT NOT NULL, qstntext TEXT, id_dataset INTEGER NOT NULL)";
+		stmt.addBatch(sql);
+		stmt.executeBatch();
+
+		conn.commit();
 	}
 
 	private void prepare() throws SQLException {
 		DriverManager.registerDriver(new JDBC());
 		conn = DriverManager.getConnection(dbURL);
 
-		Statement stmt = null;
+		System.out.println("Connected to the database");
+		DatabaseMetaData dm = conn.getMetaData();
+		System.out.println("Driver name: " + dm.getDriverName());
+		System.out.println("Driver version: " + dm.getDriverVersion());
+		System.out.println("Product name: " + dm.getDatabaseProductName());
+		System.out.println("Product version: " + dm.getDatabaseProductVersion());
 
-		if (conn != null) {
-			System.out.println("Connected to the database");
-			DatabaseMetaData dm = conn.getMetaData();
-			System.out.println("Driver name: " + dm.getDriverName());
-			System.out.println("Driver version: " + dm.getDriverVersion());
-			System.out.println("Product name: " + dm.getDatabaseProductName());
-			System.out.println("Product version: " + dm.getDatabaseProductVersion());
-
-			stmt = conn.createStatement();
-			stmt.addBatch("DROP TABLE IF EXISTS Datasets"); // TODO:
-															// Tabellennamen als
-															// Konstanten
-			stmt.addBatch("DROP TABLE IF EXISTS Variables");
-			stmt.executeBatch();
-		}
+		conn.setAutoCommit(false);
+		stmt = conn.createStatement();
 	}
 
-	// TODO adapt
-	public void write(Set<Dataset> datasets) {
-		try {
-			DriverManager.registerDriver(new JDBC());
-			Connection conn = DriverManager.getConnection(dbURL);
+	public void write(Dataset dataset) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO " + DATASETS + "  VALUES (?, ?);");
 
-			Statement stmt = null;
+		ps.setString(2, dataset.getTitle());
+		ps.addBatch();
 
-			if (conn != null) {
-				System.out.println("Connected to the database");
-				DatabaseMetaData dm = conn.getMetaData();
-				System.out.println("Driver name: " + dm.getDriverName());
-				System.out.println("Driver version: " + dm.getDriverVersion());
-				System.out.println("Product name: " + dm.getDatabaseProductName());
-				System.out.println("Product version: " + dm.getDatabaseProductVersion());
+		ps.executeBatch();
 
-				stmt = conn.createStatement();
+		stmt.close();
+		conn.commit();
+		conn.close();
+	}
 
-				// String sql = "INSERT INTO Datasets
-				// (id,label,language,categories) "
-				// + "VALUES (2, 'test', 'en', 'test1;test2');";
+	public void write(Variable variable, int datasetID) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO " + VARIABLES + "  VALUES (?, ?, ?, ?, ?);");
 
-				String sql = "DROP TABLE IF EXISTS COMPANY";
-				stmt.executeUpdate(sql);
+		ps.setString(2, variable.getName());
+		ps.setString(3, variable.getLabel());
+		ps.setString(4, variable.getQuestion());
+		ps.setInt(5, datasetID);
 
-				sql = "CREATE TABLE COMPANY " + "(ID INT PRIMARY KEY     NOT NULL,"
-						+ " NAME           TEXT    NOT NULL, " + " AGE            INT     NOT NULL, "
-						+ " ADDRESS        CHAR(50), " + " SALARY         REAL)";
-				stmt.executeUpdate(sql);
+		ps.addBatch();
 
-				sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
-						+ "VALUES (1, 'Paul', 32, 'California', 20000.00 );";
-				stmt.executeUpdate(sql);
+		ps.executeBatch();
 
-				sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
-						+ "VALUES (2, 'Allen', 25, 'Texas', 15000.00 );";
-				stmt.executeUpdate(sql);
+		stmt.close();
+		conn.commit();
+		conn.close();
+	}
 
-				sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
-						+ "VALUES (3, 'Teddy', 23, 'Norway', 20000.00 );";
-				stmt.executeUpdate(sql);
+	public void printDatabases() throws SQLException {
+		ResultSet rs = stmt.executeQuery("SELECT * FROM " + VARIABLES + ";");
+		while (rs.next()) {
+			System.out.println("ID = " + rs.getInt("id"));
+			System.out.println("Name = " + rs.getString("name"));
+			System.out.println("Label = " + rs.getString("label"));
+			System.out.println("Question = " + rs.getString("qstntext"));
+			System.out.println();
+		}
+		rs.close();
 
-				sql = "INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) "
-						+ "VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 );";
-				stmt.executeUpdate(sql);
-
-				PreparedStatement ps = conn.prepareStatement("INSERT INTO COMPANY VALUES (?, ?, ?, ?, ?);");
-
-				ps.setInt(1, 5);
-				ps.setString(2, "Peter");
-				ps.setInt(3, 35);
-				ps.setString(4, "Poland");
-				ps.setDouble(5, 80000.00);
-				ps.addBatch();
-
-				conn.setAutoCommit(false);
-				ps.executeBatch();
-				conn.setAutoCommit(true);
-
-				ResultSet rs = stmt.executeQuery("SELECT * FROM COMPANY;");
-				while (rs.next()) {
-					System.out.println("Name = " + rs.getString("NAME"));
-					System.out.println("Age = " + rs.getInt("AGE"));
-					System.out.println("Address = " + rs.getString("ADDRESS"));
-					System.out.println("Salary = " + rs.getDouble("SALARY"));
-					System.out.println();
-				}
-				rs.close();
-
-				stmt.close();
-				// conn.commit();
-				conn.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		rs = stmt.executeQuery("SELECT * FROM " + DATASETS + ";");
+		while (rs.next()) {
+			System.out.println("ID = " + rs.getInt("id"));
+			System.out.println("Label = " + rs.getString("label"));
+			System.out.println();
 		}
 
+		stmt.close();
+		conn.commit();
+		conn.close();
 	}
 }
