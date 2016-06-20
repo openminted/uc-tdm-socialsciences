@@ -8,6 +8,7 @@ public class Dataset {
 	private String title;
 	private List<String> topics;
 	private List<Variable> variables;
+	private String language;
 
 	public Dataset(String id) {
 		this.id = id;
@@ -45,9 +46,16 @@ public class Dataset {
 		this.variables = variables;
 	}
 
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Dataset %s ('%s')", id, title);
 	}
 
+	public String getLanguage() {
+		return this.language;
+	}
 }
