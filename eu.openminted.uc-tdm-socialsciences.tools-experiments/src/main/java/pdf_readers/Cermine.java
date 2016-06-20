@@ -22,6 +22,8 @@ public class Cermine
     public static void main(String args[])
         throws AnalysisException, IOException
     {
+        //Test documents can be obtained from the following URL
+        //  https://drive.google.com/file/d/0Bx1HpGFsGYhnbFh2SjAzU3p3X3c/view?usp=sharing
         final String[] fileNames = new String[] { "2819", "16597", "17527", "18479", "27939",
                 "27940", "28005", "28189", "28681", "28750", "28835", "28862", "29294", "31259",
                 "31451", "31457", "44921" };
