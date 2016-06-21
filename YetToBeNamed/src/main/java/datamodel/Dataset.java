@@ -1,5 +1,6 @@
 package datamodel;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ public class Dataset {
 
 	public Dataset(String id) {
 		this.id = id;
+		this.variables = new HashSet<>();
 	}
 
 	public String getId() {
