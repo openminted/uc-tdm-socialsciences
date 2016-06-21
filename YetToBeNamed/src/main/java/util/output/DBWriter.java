@@ -38,10 +38,11 @@ public class DBWriter {
 		dbURL = "jdbc:sqlite:" + path;
 
 		try {
-			prepare();
+			connect();
 			if (dropTables) {
 				dropAllTables();
 			}
+			createTables();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
@@ -51,13 +52,16 @@ public class DBWriter {
 		stmt.addBatch("DROP TABLE IF EXISTS " + DATASETS);
 		stmt.addBatch("DROP TABLE IF EXISTS " + VARIABLES);
 		stmt.executeBatch();
+		conn.commit();
+	}
 
+	private void createTables() throws SQLException {
 		String sql;
-		sql = "CREATE TABLE " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL
-				+ " TEXT NOT NULL UNIQUE)";
+		sql = "CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID
+				+ " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL + " TEXT NOT NULL UNIQUE)";
 		stmt.addBatch(sql);
-		sql = "CREATE TABLE " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," + NAME
-				+ " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
+		sql = "CREATE TABLE IF NOT EXISTS " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+				+ NAME + " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
 				+ " INTEGER NOT NULL)";
 		stmt.addBatch(sql);
 		stmt.executeBatch();
@@ -65,7 +69,7 @@ public class DBWriter {
 		conn.commit();
 	}
 
-	private void prepare() throws SQLException {
+	private void connect() throws SQLException {
 		DriverManager.registerDriver(new JDBC());
 		conn = DriverManager.getConnection(dbURL);
 
