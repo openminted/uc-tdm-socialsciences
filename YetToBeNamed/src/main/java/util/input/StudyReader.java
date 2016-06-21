@@ -61,10 +61,7 @@ public class StudyReader {
 		return result;
 	}
 
-	private Dataset followDataset(Resource dataset) {
-		// TODO: don't store as Dataset but rather in the SQLite DB (use
-		// DBWriter)
-
+	public Dataset followDataset(Resource dataset) {
 		InputStream content = URLConnector.getStreamFromURL(dataset.getURI());
 		if (content == null) {
 			return null;
