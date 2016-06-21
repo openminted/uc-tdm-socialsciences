@@ -2,6 +2,7 @@ package util.input;
 
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.jena.rdf.model.Bag;
 import org.apache.jena.rdf.model.Model;
@@ -13,6 +14,7 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
 
 import datamodel.Dataset;
+import datamodel.Variable;
 
 public class StudyReader {
 
@@ -23,41 +25,44 @@ public class StudyReader {
 	private String datasetURI = "http://zacat.gesis.org:80/obj/fCatalog/ZACAT@datasets";
 	private String studyURIBase = "http://zacat.gesis.org:80/obj/fStudy/";
 
-	private HashSet<Dataset> datasets;
-
 	public StudyReader() {
 		model = ModelFactory.createDefaultModel();
-		datasets = new HashSet<Dataset>();
 	}
 
 	public void read() {
-		InputStream content = URLConnector.getStreamFromURL(startURL);
+		Set<Resource> resources = getResourcesInBag(startURL, datasetURI);
+		for (Resource res : resources) {
+			followDataset(res);
+		}
+	}
+
+	private Set<Resource> getResourcesInBag(String URL, String URI) {
+		Set<Resource> result = new HashSet<>();
+
+		InputStream content = URLConnector.getStreamFromURL(URL);
 		if (content == null) {
-			return;
+			return result;
 		}
 		model.read(content, null);
 
-		Bag bag = model.getBag(datasetURI);
+		Bag bag = model.getBag(URI);
 		System.out.println("Bag URI: " + bag.getURI());
 
 		NodeIterator bagIter = bag.iterator();
 		while (bagIter.hasNext()) {
 			RDFNode inBag = bagIter.nextNode();
-			// System.out.println(inBag);
 			if (inBag.isURIResource()) {
-				followDataset((Resource) inBag);
+				result.add((Resource) inBag);
 			}
 		}
+		return result;
 	}
 
-	private static void followDataset(Resource dataset) {
-		Dataset ds = new Dataset(dataset.getLocalName());
+	private void followDataset(Resource dataset) {
+		// TODO don't use local name but rather content from <externalId>
+
 		// TODO: don't store as Dataset but rather in the SQLite DB (use
 		// DBWriter)
-
-		System.out.println("create new dataset: " + ds.toString());
-
-		Model model = ModelFactory.createDefaultModel();
 
 		InputStream content = URLConnector.getStreamFromURL(dataset.getURI());
 		if (content == null) {
@@ -66,9 +71,17 @@ public class StudyReader {
 		model.read(content, null);
 
 		String n39 = model.getNsPrefixMap().get("n39");
+		String n36 = model.getNsPrefixMap().get("n36");
+		String n40 = model.getNsPrefixMap().get("n40");
+
+		Statement id = model.getProperty(dataset, ResourceFactory.createProperty(n36 + "externalId"));
+		Statement title = model.getProperty(dataset, ResourceFactory.createProperty(n40 + "title"));
+
+		Dataset ds = new Dataset(id.getString());
+		ds.setTitle(title.getString());
+		System.out.println("create new dataset: " + ds.toString());
 
 		Statement varRefStmt = model.getProperty(dataset, ResourceFactory.createProperty(n39 + "variables"));
-		// System.out.println(varRefStmt);
 		if (varRefStmt != null) {
 			RDFNode varRef = varRefStmt.getObject();
 			if (varRef != null && varRef.isURIResource()) {
@@ -80,31 +93,15 @@ public class StudyReader {
 
 	}
 
-	private static void followVars(Resource varsRef, Dataset ds) {
-		Model model = ModelFactory.createDefaultModel();
-
-		InputStream content = URLConnector.getStreamFromURL(varsRef.getURI());
-		if (content == null) {
-			return;
+	private void followVars(Resource varsRef, Dataset ds) {
+		Set<Resource> resources = getResourcesInBag(varsRef.getURI(), varsRef.getURI());
+		for (Resource res : resources) {
+			followVar(res);
 		}
-		model.read(content, null);
-
-		Bag bag = model.getBag(varsRef.getURI());
-		System.out.println("Bag URI: " + bag.getURI());
-
-		NodeIterator bagIter = bag.iterator();
-		while (bagIter.hasNext()) {
-			RDFNode inBag = bagIter.nextNode();
-			// System.out.println(inBag);
-			if (inBag.isURIResource()) {
-				followVar((Resource) inBag);
-			}
-		}
-
 	}
 
-	private static void followVar(Resource varRef) {
-		Model model = ModelFactory.createDefaultModel();
+	private void followVar(Resource varRef) {
+		Variable var = new Variable();
 
 		InputStream content = URLConnector.getStreamFromURL(varRef.getURI());
 		if (content == null) {
@@ -113,12 +110,28 @@ public class StudyReader {
 		model.read(content, null);
 
 		String s = model.getNsPrefixMap().get("s");
+		String n43 = model.getNsPrefixMap().get("n43");
+
 		Statement labelStmt = model.getProperty(varRef, ResourceFactory.createProperty(s + "label"));
 		if (labelStmt != null) {
-			// System.out.println(labelStmt.getObject());
-		} else {
-			System.err.println("No label found for var " + varRef);
+			var.setLabel(labelStmt.getString());
 		}
+
+		Statement varID = model.getProperty(varRef, ResourceFactory.createProperty(n43 + "varID"));
+		if (varID != null) {
+			var.setId(varID.getString()); // TODO: das ist nicht die ID für die
+											// DB!
+		}
+
+		Statement name = model.getProperty(varRef, ResourceFactory.createProperty(n43 + "name"));
+		if (name != null) {
+			var.setName(name.getString());
+		}
+		Statement qstnText = model.getProperty(varRef, ResourceFactory.createProperty(n43 + "questionText"));
+		if (qstnText != null) {
+			var.setQuestion(qstnText.getString());
+		}
+
 	}
 
 }
