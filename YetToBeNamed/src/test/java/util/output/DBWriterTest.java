@@ -48,6 +48,7 @@ public class DBWriterTest {
 	@Test
 	public void testWriteDataset() throws SQLException {
 		writer.write(dataset);
+		writer.write(dataset);
 	}
 
 	@Test
