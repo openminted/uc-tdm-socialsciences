@@ -56,14 +56,12 @@ public class DBWriter {
 	}
 
 	private void createTables() throws SQLException {
-		String sql;
-		sql = "CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID
-				+ " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL + " TEXT NOT NULL UNIQUE)";
-		stmt.addBatch(sql);
-		sql = "CREATE TABLE IF NOT EXISTS " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
+		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID
+				+ " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL + " TEXT NOT NULL UNIQUE)");
+		stmt.addBatch(
+				"CREATE TABLE IF NOT EXISTS " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
 				+ NAME + " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
-				+ " INTEGER NOT NULL)";
-		stmt.addBatch(sql);
+						+ " INTEGER NOT NULL)");
 		stmt.executeBatch();
 
 		conn.commit();
