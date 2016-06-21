@@ -69,6 +69,7 @@ public class DBWriter {
 		System.out.println("Driver version: " + dm.getDriverVersion());
 		System.out.println("Product name: " + dm.getDatabaseProductName());
 		System.out.println("Product version: " + dm.getDatabaseProductVersion());
+		System.out.println("--------------------\n");
 
 		conn.setAutoCommit(false);
 		stmt = conn.createStatement();
@@ -82,9 +83,9 @@ public class DBWriter {
 
 		ps.executeBatch();
 
-		stmt.close();
+		// stmt.close();
 		conn.commit();
-		conn.close();
+		// conn.close();
 	}
 
 	public void write(Variable variable, int datasetID) throws SQLException {
@@ -99,9 +100,9 @@ public class DBWriter {
 
 		ps.executeBatch();
 
-		stmt.close();
+		// stmt.close();
 		conn.commit();
-		conn.close();
+		// conn.close();
 	}
 
 	public void printDatabases() throws SQLException {
@@ -122,8 +123,8 @@ public class DBWriter {
 		}
 		rs.close();
 
-		stmt.close();
+		// stmt.close();
 		conn.commit();
-		conn.close();
+		// conn.close();
 	}
 }
