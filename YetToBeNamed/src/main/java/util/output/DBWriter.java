@@ -43,7 +43,7 @@ public class DBWriter {
 				dropAllTables();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -54,7 +54,7 @@ public class DBWriter {
 
 		String sql;
 		sql = "CREATE TABLE " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL
-				+ " TEXT NOT NULL)";
+				+ " TEXT NOT NULL UNIQUE)";
 		stmt.addBatch(sql);
 		sql = "CREATE TABLE " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," + NAME
 				+ " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
@@ -81,58 +81,69 @@ public class DBWriter {
 		stmt = conn.createStatement();
 	}
 
-	public void write(Dataset dataset) throws SQLException {
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO " + DATASETS + " (" + LABEL + ")  VALUES (?);");
+	public void write(Dataset dataset) {
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement("INSERT INTO " + DATASETS + " (" + LABEL + ")  VALUES (?);");
+			ps.setString(1, dataset.getTitle());
+			ps.addBatch();
 
-		ps.setString(1, dataset.getTitle());
-		ps.addBatch();
+			ps.executeBatch();
 
-		ps.executeBatch();
-
-		// stmt.close();
-		conn.commit();
-		// conn.close();
+			conn.commit();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
-	public void write(Variable variable, int datasetID) throws SQLException {
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO " + VARIABLES + "  (" + NAME + ", " + LABEL + ", "
-				+ QSTNTEXT + ", " + DATASET_ID + ") VALUES (?, ?, ?, ?);");
+	public void write(Variable variable, int datasetID) {
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement("INSERT INTO " + VARIABLES + "  (" + NAME + ", " + LABEL + ", " + QSTNTEXT + ", "
+					+ DATASET_ID + ") VALUES (?, ?, ?, ?);");
+			ps.setString(1, variable.getName());
+			ps.setString(2, variable.getLabel());
+			ps.setString(3, variable.getQuestion());
+			ps.setInt(4, datasetID);
 
-		ps.setString(1, variable.getName());
-		ps.setString(2, variable.getLabel());
-		ps.setString(3, variable.getQuestion());
-		ps.setInt(4, datasetID);
+			ps.addBatch();
 
-		ps.addBatch();
+			ps.executeBatch();
 
-		ps.executeBatch();
-
-		// stmt.close();
-		conn.commit();
-		// conn.close();
+			// stmt.close();
+			conn.commit();
+			// conn.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
-	public void printDatabases() throws SQLException {
-		ResultSet rs = stmt.executeQuery("SELECT * FROM " + DATASETS + ";");
-		while (rs.next()) {
-			System.out.println("ID = " + rs.getInt(ID));
-			System.out.println("Label = " + rs.getString(LABEL));
-			System.out.println();
-		}
+	public void printDatabases() {
+		ResultSet rs;
+		try {
+			rs = stmt.executeQuery("SELECT * FROM " + DATASETS + ";");
+			while (rs.next()) {
+				System.out.println("ID = " + rs.getInt(ID));
+				System.out.println("Label = " + rs.getString(LABEL));
+				System.out.println();
+			}
 
-		rs = stmt.executeQuery("SELECT * FROM " + VARIABLES + ";");
-		while (rs.next()) {
-			System.out.println("ID = " + rs.getInt(ID));
-			System.out.println("Name = " + rs.getString(NAME));
-			System.out.println("Label = " + rs.getString(LABEL));
-			System.out.println("Question = " + rs.getString(QSTNTEXT));
-			System.out.println("Dataset ID = " + rs.getInt(DATASET_ID));
-			System.out.println();
-		}
-		rs.close();
+			rs = stmt.executeQuery("SELECT * FROM " + VARIABLES + ";");
+			while (rs.next()) {
+				System.out.println("ID = " + rs.getInt(ID));
+				System.out.println("Name = " + rs.getString(NAME));
+				System.out.println("Label = " + rs.getString(LABEL));
+				System.out.println("Question = " + rs.getString(QSTNTEXT));
+				System.out.println("Dataset ID = " + rs.getInt(DATASET_ID));
+				System.out.println();
+			}
+			rs.close();
 
-		// stmt.close();
-		conn.commit();
-		// conn.close();
+			// stmt.close();
+			conn.commit();
+			// conn.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 }
