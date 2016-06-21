@@ -43,12 +43,13 @@ public class DBWriter {
 	}
 
 	private void dropAllTables() throws SQLException {
-		stmt.addBatch("DROP TABLE IF EXISTS" + DATASETS);
-		stmt.addBatch("DROP TABLE IF EXISTS" + VARIABLES);
+		stmt.addBatch("DROP TABLE IF EXISTS " + DATASETS);
+		stmt.addBatch("DROP TABLE IF EXISTS " + VARIABLES);
+		stmt.executeBatch();
 
 		String sql;
 		sql = "CREATE TABLE " + DATASETS
-				+ " (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, label TEXT NOT NULL,";
+				+ " (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, label TEXT NOT NULL)";
 		stmt.addBatch(sql);
 		sql = "CREATE TABLE " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
 				+ "name TEXT NOT NULL, label TEXT NOT NULL, qstntext TEXT, id_dataset INTEGER NOT NULL)";
@@ -104,7 +105,14 @@ public class DBWriter {
 	}
 
 	public void printDatabases() throws SQLException {
-		ResultSet rs = stmt.executeQuery("SELECT * FROM " + VARIABLES + ";");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM " + DATASETS + ";");
+		while (rs.next()) {
+			System.out.println("ID = " + rs.getInt("id"));
+			System.out.println("Label = " + rs.getString("label"));
+			System.out.println();
+		}
+
+		rs = stmt.executeQuery("SELECT * FROM " + VARIABLES + ";");
 		while (rs.next()) {
 			System.out.println("ID = " + rs.getInt("id"));
 			System.out.println("Name = " + rs.getString("name"));
@@ -113,13 +121,6 @@ public class DBWriter {
 			System.out.println();
 		}
 		rs.close();
-
-		rs = stmt.executeQuery("SELECT * FROM " + DATASETS + ";");
-		while (rs.next()) {
-			System.out.println("ID = " + rs.getInt("id"));
-			System.out.println("Label = " + rs.getString("label"));
-			System.out.println();
-		}
 
 		stmt.close();
 		conn.commit();
