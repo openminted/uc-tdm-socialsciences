@@ -59,8 +59,6 @@ public class StudyReader {
 	}
 
 	private void followDataset(Resource dataset) {
-		// TODO don't use local name but rather content from <externalId>
-
 		// TODO: don't store as Dataset but rather in the SQLite DB (use
 		// DBWriter)
 
@@ -96,21 +94,23 @@ public class StudyReader {
 	private void followVars(Resource varsRef, Dataset ds) {
 		Set<Resource> resources = getResourcesInBag(varsRef.getURI(), varsRef.getURI());
 		for (Resource res : resources) {
-			followVar(res);
+			ds.addVariable(followVar(res));
 		}
 	}
 
-	private void followVar(Resource varRef) {
-		Variable var = new Variable();
+	private Variable followVar(Resource varRef) {
+		Variable var = null;
 
 		InputStream content = URLConnector.getStreamFromURL(varRef.getURI());
 		if (content == null) {
-			return;
+			return var;
 		}
 		model.read(content, null);
 
 		String s = model.getNsPrefixMap().get("s");
 		String n43 = model.getNsPrefixMap().get("n43");
+
+		var = new Variable();
 
 		Statement labelStmt = model.getProperty(varRef, ResourceFactory.createProperty(s + "label"));
 		if (labelStmt != null) {
@@ -132,6 +132,7 @@ public class StudyReader {
 			var.setQuestion(qstnText.getString());
 		}
 
+		return var;
 	}
 
 }
