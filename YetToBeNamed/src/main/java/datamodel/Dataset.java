@@ -11,6 +11,7 @@ public class Dataset {
 	private List<String> topics;
 	private Set<Variable> variables;
 	private String language;
+	private String externalID;
 
 	public Dataset(String id) {
 		this.id = id;
@@ -58,13 +59,20 @@ public class Dataset {
 		this.language = language;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("Dataset %s ('%s')", id, title);
-	}
-
 	public String getLanguage() {
 		return this.language;
 	}
 
+	public String getExternalID() {
+		return externalID;
+	}
+
+	public void setExternalID(String externalID) {
+		this.externalID = externalID;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Dataset %s ('%s')", id, title);
+	}
 }
