@@ -29,11 +29,14 @@ public class StudyReader {
 		model = ModelFactory.createDefaultModel();
 	}
 
-	public void read() {
+	public Set<Dataset> read() {
+		Set<Dataset> result = new HashSet<>();
 		Set<Resource> resources = getResourcesInBag(startURL, datasetURI);
 		for (Resource res : resources) {
-			followDataset(res);
+			Dataset ds = followDataset(res);
+			result.add(ds);
 		}
+		return result;
 	}
 
 	private Set<Resource> getResourcesInBag(String URL, String URI) {
@@ -58,13 +61,13 @@ public class StudyReader {
 		return result;
 	}
 
-	private void followDataset(Resource dataset) {
+	private Dataset followDataset(Resource dataset) {
 		// TODO: don't store as Dataset but rather in the SQLite DB (use
 		// DBWriter)
 
 		InputStream content = URLConnector.getStreamFromURL(dataset.getURI());
 		if (content == null) {
-			return;
+			return null;
 		}
 		model.read(content, null);
 
@@ -76,7 +79,12 @@ public class StudyReader {
 		Statement title = model.getProperty(dataset, ResourceFactory.createProperty(n40 + "title"));
 
 		Dataset ds = new Dataset(id.getString());
-		ds.setTitle(title.getString());
+		if (title != null) {
+			ds.setTitle(title.getString());
+		}
+		if (id != null) {
+			ds.setExternalID(id.getString());
+		}
 		System.out.println("create new dataset: " + ds.toString());
 
 		Statement varRefStmt = model.getProperty(dataset, ResourceFactory.createProperty(n39 + "variables"));
@@ -89,6 +97,7 @@ public class StudyReader {
 			System.err.println("No variables found for var " + dataset);
 		}
 
+		return ds;
 	}
 
 	private void followVars(Resource varsRef, Dataset ds) {
