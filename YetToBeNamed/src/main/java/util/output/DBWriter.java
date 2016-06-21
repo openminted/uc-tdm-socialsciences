@@ -20,6 +20,7 @@ public class DBWriter {
 	private static final String NAME = "name";
 	private static final String ID = "id";
 	private static final String LABEL = "label";
+	private static final String EXT_ID = "externalID";
 	private String dbURL;
 	private Connection conn;
 	private Statement stmt;
@@ -57,7 +58,8 @@ public class DBWriter {
 
 	private void createTables() throws SQLException {
 		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID
-				+ " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL + " TEXT NOT NULL UNIQUE)");
+				+ " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL + " TEXT NOT NULL UNIQUE, " + EXT_ID
+				+ " TEXT NOT NULL)");
 		stmt.addBatch(
 				"CREATE TABLE IF NOT EXISTS " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
 				+ NAME + " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
