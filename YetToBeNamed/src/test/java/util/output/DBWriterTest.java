@@ -4,7 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import datamodel.Dataset;
@@ -12,12 +13,15 @@ import datamodel.Variable;
 
 public class DBWriterTest {
 
-	private Dataset dataset;
-	private Variable v1;
-	private Variable v2;
+	private static Dataset dataset;
+	private static Variable v1;
+	private static Variable v2;
+	private static DBWriter writer;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		writer = new DBWriter("test.sqlite", true);
+
 		dataset = new Dataset("test");
 		dataset.setLanguage("English");
 		dataset.setTitle("test dataset");
@@ -43,19 +47,17 @@ public class DBWriterTest {
 
 	@Test
 	public void testWriteDataset() throws SQLException {
-		DBWriter writer = new DBWriter("test.sqlite", true);
 		writer.write(dataset);
-
-		writer.printDatabases();
 	}
 
 	@Test
 	public void testWriteVariable() throws SQLException {
-		DBWriter writer = new DBWriter("test.sqlite", false);
 		writer.write(v1, 1);
 		writer.write(v2, 1);
-
-		writer.printDatabases();
 	}
 
+	@AfterClass
+	public static void printDatabases() throws SQLException {
+		writer.printDatabases();
+	}
 }
