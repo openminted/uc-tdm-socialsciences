@@ -15,6 +15,11 @@ import datamodel.Variable;
 
 public class DBWriter {
 
+	private static final String DATASET_ID = "dataset_id";
+	private static final String QSTNTEXT = "qstntext";
+	private static final String NAME = "name";
+	private static final String ID = "id";
+	private static final String LABEL = "label";
 	private String dbURL;
 	private Connection conn;
 	private Statement stmt;
@@ -48,11 +53,12 @@ public class DBWriter {
 		stmt.executeBatch();
 
 		String sql;
-		sql = "CREATE TABLE " + DATASETS
-				+ " (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, label TEXT NOT NULL)";
+		sql = "CREATE TABLE " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL
+				+ " TEXT NOT NULL)";
 		stmt.addBatch(sql);
-		sql = "CREATE TABLE " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-				+ "name TEXT NOT NULL, label TEXT NOT NULL, qstntext TEXT, id_dataset INTEGER NOT NULL)";
+		sql = "CREATE TABLE " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," + NAME
+				+ " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
+				+ " INTEGER NOT NULL)";
 		stmt.addBatch(sql);
 		stmt.executeBatch();
 
@@ -76,9 +82,9 @@ public class DBWriter {
 	}
 
 	public void write(Dataset dataset) throws SQLException {
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO " + DATASETS + "  VALUES (?, ?);");
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO " + DATASETS + " (" + LABEL + ")  VALUES (?);");
 
-		ps.setString(2, dataset.getTitle());
+		ps.setString(1, dataset.getTitle());
 		ps.addBatch();
 
 		ps.executeBatch();
@@ -89,12 +95,13 @@ public class DBWriter {
 	}
 
 	public void write(Variable variable, int datasetID) throws SQLException {
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO " + VARIABLES + "  VALUES (?, ?, ?, ?, ?);");
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO " + VARIABLES + "  (" + NAME + ", " + LABEL + ", "
+				+ QSTNTEXT + ", " + DATASET_ID + ") VALUES (?, ?, ?, ?);");
 
-		ps.setString(2, variable.getName());
-		ps.setString(3, variable.getLabel());
-		ps.setString(4, variable.getQuestion());
-		ps.setInt(5, datasetID);
+		ps.setString(1, variable.getName());
+		ps.setString(2, variable.getLabel());
+		ps.setString(3, variable.getQuestion());
+		ps.setInt(4, datasetID);
 
 		ps.addBatch();
 
@@ -108,17 +115,18 @@ public class DBWriter {
 	public void printDatabases() throws SQLException {
 		ResultSet rs = stmt.executeQuery("SELECT * FROM " + DATASETS + ";");
 		while (rs.next()) {
-			System.out.println("ID = " + rs.getInt("id"));
-			System.out.println("Label = " + rs.getString("label"));
+			System.out.println("ID = " + rs.getInt(ID));
+			System.out.println("Label = " + rs.getString(LABEL));
 			System.out.println();
 		}
 
 		rs = stmt.executeQuery("SELECT * FROM " + VARIABLES + ";");
 		while (rs.next()) {
-			System.out.println("ID = " + rs.getInt("id"));
-			System.out.println("Name = " + rs.getString("name"));
-			System.out.println("Label = " + rs.getString("label"));
-			System.out.println("Question = " + rs.getString("qstntext"));
+			System.out.println("ID = " + rs.getInt(ID));
+			System.out.println("Name = " + rs.getString(NAME));
+			System.out.println("Label = " + rs.getString(LABEL));
+			System.out.println("Question = " + rs.getString(QSTNTEXT));
+			System.out.println("Dataset ID = " + rs.getInt(DATASET_ID));
 			System.out.println();
 		}
 		rs.close();
