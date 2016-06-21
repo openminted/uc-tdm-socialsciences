@@ -1,8 +1,6 @@
 package util.output;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -38,11 +36,8 @@ public class DBWriterTest {
 		v2.setName("v2");
 		v2.setQuestion("test Question 2");
 
-		List<Variable> variables = new ArrayList<>();
-		variables.add(v1);
-		variables.add(v2);
-
-		dataset.setVariables(variables);
+		dataset.addVariable(v1);
+		dataset.addVariable(v2);
 	}
 
 	@Test
