@@ -1,13 +1,14 @@
 package datamodel;
 
 import java.util.List;
+import java.util.Set;
 
 public class Dataset {
 
 	private String id;
 	private String title;
 	private List<String> topics;
-	private List<Variable> variables;
+	private Set<Variable> variables;
 	private String language;
 
 	public Dataset(String id) {
@@ -26,7 +27,7 @@ public class Dataset {
 		return topics;
 	}
 
-	public List<Variable> getVariables() {
+	public Set<Variable> getVariables() {
 		return variables;
 	}
 
@@ -42,8 +43,13 @@ public class Dataset {
 		this.topics = topics;
 	}
 
-	public void setVariables(List<Variable> variables) {
+	@SuppressWarnings("unused")
+	private void setVariables(Set<Variable> variables) {
 		this.variables = variables;
+	}
+
+	public void addVariable(Variable var) {
+		this.variables.add(var);
 	}
 
 	public void setLanguage(String language) {
@@ -58,4 +64,5 @@ public class Dataset {
 	public String getLanguage() {
 		return this.language;
 	}
+
 }
