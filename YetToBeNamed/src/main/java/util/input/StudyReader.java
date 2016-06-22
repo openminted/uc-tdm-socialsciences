@@ -1,5 +1,6 @@
 package util.input;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,12 +31,17 @@ public class StudyReader {
 		model = ModelFactory.createDefaultModel();
 	}
 
-	public Set<Dataset> read() {
+	public Set<Dataset> read(int maxNumber) {
 		Set<Dataset> result = new HashSet<>();
 		Set<Resource> resources = getResourcesInBag(startURL, datasetURI);
+		int counter = 0;
 		for (Resource res : resources) {
+			if (counter == maxNumber) {
+				break;
+			}
 			Dataset ds = followDataset(res);
 			result.add(ds);
+			counter++;
 		}
 		return result;
 	}
@@ -63,11 +69,14 @@ public class StudyReader {
 	}
 
 	public Dataset followDataset(Resource dataset) {
-		InputStream content = URLConnector.getStreamFromURL(dataset.getURI());
-		if (content == null) {
-			return null;
+		try (InputStream content = URLConnector.getStreamFromURL(dataset.getURI())) {
+			if (content == null) {
+				return null;
+			}
+			model.read(content, null);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		model.read(content, null);
 
 		String n39 = model.getNsPrefixMap().get("n39");
 		String n36 = model.getNsPrefixMap().get("n36");
@@ -113,6 +122,11 @@ public class StudyReader {
 			return var;
 		}
 		model.read(content, null);
+		try {
+			content.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		String s = model.getNsPrefixMap().get("s");
 		String n43 = model.getNsPrefixMap().get("n43");
@@ -136,8 +150,9 @@ public class StudyReader {
 		}
 		Statement qstnText = model.getProperty(varRef, ResourceFactory.createProperty(n43 + "questionText"));
 		if (qstnText != null) {
-			String text = cleanHTML(qstnText.getString());
-			var.setQuestion(text);
+			// String text = cleanHTML(qstnText.getString());
+			// var.setQuestion(text);
+			var.setQuestion(qstnText.getString());
 		}
 
 		return var;
