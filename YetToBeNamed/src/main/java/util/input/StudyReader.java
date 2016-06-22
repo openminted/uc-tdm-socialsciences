@@ -12,6 +12,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
+import org.jsoup.Jsoup;
 
 import datamodel.Dataset;
 import datamodel.Variable;
@@ -135,10 +136,26 @@ public class StudyReader {
 		}
 		Statement qstnText = model.getProperty(varRef, ResourceFactory.createProperty(n43 + "questionText"));
 		if (qstnText != null) {
-			var.setQuestion(qstnText.getString());
+			String text = cleanHTML(qstnText.getString());
+			var.setQuestion(text);
 		}
 
 		return var;
 	}
 
+	/**
+	 * Cleans text containing HTML tags and entities. This method replaces the
+	 * entities with characters and removes tags.
+	 *
+	 * @param html
+	 * @return
+	 */
+	private String cleanHTML(String html) {
+		// String temp = HtmlEscape.unescapeHtml(html);
+		// temp = temp.replaceAll("<.+?>", " ").replaceAll("<script
+		// ?.*?>.+</script>", "").replaceAll("\\s+", " ");
+		// return temp;
+		html = html.replaceAll("<a href=.+?>.*?</a>", "");
+		return Jsoup.parse(html).text();
+	}
 }
