@@ -57,13 +57,11 @@ public class DBWriter {
 	}
 
 	private void createTables() throws SQLException {
-		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID
-				+ " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " + LABEL + " TEXT NOT NULL UNIQUE, " + EXT_ID
-				+ " TEXT NOT NULL)");
-		stmt.addBatch(
-				"CREATE TABLE IF NOT EXISTS " + VARIABLES + "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,"
-				+ NAME + " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
-						+ " INTEGER NOT NULL)");
+		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
+				+ LABEL + " TEXT NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");/*  */
+		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES
+				+ "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," + NAME + " TEXT NOT NULL, " + LABEL
+				+ " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID + " INTEGER NOT NULL)");
 		stmt.executeBatch();
 
 		conn.commit();
@@ -88,8 +86,11 @@ public class DBWriter {
 	public void write(Dataset dataset) {
 		PreparedStatement ps;
 		try {
-			ps = conn.prepareStatement("INSERT INTO " + DATASETS + " (" + LABEL + ")  VALUES (?);");
-			ps.setString(1, dataset.getTitle());
+			ps = conn.prepareStatement(
+					"INSERT INTO " + DATASETS + " (" + ID + ", " + LABEL + ", " + EXT_ID + ")  VALUES (?, ?, ?);");
+			ps.setInt(1, dataset.getId());
+			ps.setString(2, dataset.getTitle());
+			ps.setString(3, dataset.getExternalID());
 			ps.addBatch();
 
 			ps.executeBatch();
