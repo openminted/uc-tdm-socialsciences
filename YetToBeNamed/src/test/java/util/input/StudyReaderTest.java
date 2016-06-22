@@ -13,7 +13,7 @@ public class StudyReaderTest {
 	@Test
 	public void test() {
 		StudyReader reader = new StudyReader();
-		reader.read();
+		reader.read(-1);
 	}
 
 }

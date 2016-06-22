@@ -73,7 +73,7 @@ public class DBWriterTest {
 	public void testWriteAllRealData() {
 		StudyReader reader = new StudyReader();
 
-		Set<Dataset> datasets = reader.read();
+		Set<Dataset> datasets = reader.read(100);
 		for (Dataset dataset : datasets) {
 			writer.write(dataset);
 		}
