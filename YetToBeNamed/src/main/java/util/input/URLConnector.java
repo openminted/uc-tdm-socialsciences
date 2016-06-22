@@ -27,6 +27,9 @@ public class URLConnector {
 
 	public static InputStream getStreamFromURL(String inputURL) {
 		HttpEntity entity = getEntity(inputURL);
+		if (null == entity) {
+			return null;
+		}
 		InputStream result = null;
 		try {
 			result = entity.getContent();
@@ -51,8 +54,10 @@ public class URLConnector {
 		 */
 		try {
 			CloseableHttpResponse response = httpclient.execute(httpGet);
-			if (response.getStatusLine().getStatusCode() != 200) {
-				System.err.println(String.format("Status code not OK, returning null. (URL: %s)", inputURL));
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode != 200) {
+				System.err.println(
+						String.format("Status code not OK, returning null. (URL: %s; Code: %i)", inputURL, statusCode));
 				return null;
 			}
 			HttpEntity entity = response.getEntity();
