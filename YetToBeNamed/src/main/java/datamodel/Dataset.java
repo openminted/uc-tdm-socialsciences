@@ -13,7 +13,7 @@ public class Dataset {
 	private String externalID;
 	private int id;
 
-	private static int counter = 1;
+	private static int counter = 0;
 
 	public Dataset(String id) {
 		this.variables = new HashSet<>();
