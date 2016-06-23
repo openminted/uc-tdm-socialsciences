@@ -57,7 +57,7 @@ public class URLConnector {
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (statusCode != 200) {
 				System.err.println(
-						String.format("Status code not OK, returning null. (URL: %s; Code: %i)", inputURL, statusCode));
+						String.format("Status code not OK, returning null. (URL: %s; Code: %d)", inputURL, statusCode));
 				return null;
 			}
 			HttpEntity entity = response.getEntity();
