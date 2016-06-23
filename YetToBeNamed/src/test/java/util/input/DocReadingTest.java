@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import datamodel.Document;
@@ -20,8 +20,8 @@ public class DocReadingTest {
 	private static String shortPaperName;
 	private static String longPaperName;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUp() throws Exception {
 		docLocation = "/pdf/";
 		shortPaperName = "2819.pdf";
 		longPaperName = "29294.pdf";
