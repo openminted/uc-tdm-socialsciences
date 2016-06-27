@@ -22,7 +22,7 @@ public class StudyReaderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		output = new File(getClass().getResource("datasets.out").getFile());
+		output = new File("output/datasets.out");
 	}
 
 	@Test
@@ -39,6 +39,7 @@ public class StudyReaderTest {
 		Assert.assertTrue(!data.isEmpty());
 	}
 
+	@SuppressWarnings("unchecked")
 	private Set<Dataset> readFromFile() {
 		Set<Dataset> readData = null;
 
@@ -59,9 +60,9 @@ public class StudyReaderTest {
 	}
 
 	@Test
-	public void testRead100() {
+	public void testReadN() {
 		StudyReader reader = new StudyReader();
-		Set<Dataset> data = reader.read(100);
+		Set<Dataset> data = reader.read(10);
 
 		writeToFile(data);
 	}
