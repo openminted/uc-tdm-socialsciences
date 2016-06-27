@@ -1,8 +1,14 @@
 package datamodel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Variable {
+public class Variable implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -5319869801726193913L;
 
 	private String id;
 	private String name;

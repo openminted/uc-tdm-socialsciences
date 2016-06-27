@@ -1,6 +1,13 @@
 package datamodel;
 
-public class Category<T> {
+import java.io.Serializable;
+
+public class Category<T> implements Serializable{
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -6704829696171816784L;
 
 	private String label;
 	private T value;

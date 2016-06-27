@@ -1,10 +1,16 @@
 package datamodel;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Dataset {
+public class Dataset implements Serializable{
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -554107093493784151L;
 
 	private String title;
 	private List<String> topics;
