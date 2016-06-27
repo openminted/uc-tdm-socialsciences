@@ -83,14 +83,14 @@ public class StudyReader {
 		String n40 = model.getNsPrefixMap().get("n40");
 
 		Statement id = model.getProperty(dataset, ResourceFactory.createProperty(n36 + "externalId"));
+		if (id == null) {
+			return null;
+		}
 		Statement title = model.getProperty(dataset, ResourceFactory.createProperty(n40 + "title"));
 
 		Dataset ds = new Dataset(id.getString());
 		if (title != null) {
 			ds.setTitle(title.getString());
-		}
-		if (id != null) {
-			ds.setExternalID(id.getString());
 		}
 		System.out.println("create new dataset: " + ds.toString());
 
