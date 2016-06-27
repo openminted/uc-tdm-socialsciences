@@ -72,6 +72,6 @@ public class Dataset {
 
 	@Override
 	public String toString() {
-		return String.format("Dataset %s ('%s')", id, title);
+		return String.format("Dataset %s ('%s')", externalID, title);
 	}
 }
