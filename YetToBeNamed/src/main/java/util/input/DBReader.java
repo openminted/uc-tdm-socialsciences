@@ -12,23 +12,13 @@ import java.util.Set;
 import org.sqlite.JDBC;
 
 import datamodel.Dataset;
+import datamodel.Variable;
 
 public class DBReader {
 
 	private String dbURL;
 	private Connection conn;
 	private Statement stmt;
-
-	private static final String DATASETS = "Datasets";
-	private static final String VARIABLES = "Variables";
-
-	// TODO: duplicated in reader and writer; maybe outsourcing
-	private static final String DATASET_ID = "dataset_id";
-	private static final String QSTNTEXT = "qstntext";
-	private static final String NAME = "name";
-	private static final String ID = "id";
-	private static final String LABEL = "label";
-	private static final String EXT_ID = "externalID";
 
 	/**
 	 * @param path
@@ -73,22 +63,35 @@ public class DBReader {
 		 *
 		 */
 
-		String query = "SELECT Datasets.externalID, Datasets.label as dlabel, Variables.name, Variables.label as vlabel, "
+		String query = "SELECT Datasets.externalID, Datasets.title, Variables.name, Variables.label, "
 				+ "Variables.qstntext from Variables join Datasets on Variables.dataset_id = Datasets.id";
 		System.out.println(query);
 
 		try {
 			ResultSet rs = stmt.executeQuery(query);
 
-			String extid, name, label, qstn;
+			String extid, name, label, qstn, title;
+
+			Dataset ds;
+			Variable var;
 
 			while (rs.next()) {
 				extid = rs.getString("externalID");
 				name = rs.getString("name");
-				label = rs.getString("vlabel");
+				label = rs.getString("label");
 				qstn = rs.getString("qstntext");
+				title = rs.getString("title");
 
-				System.out.println(extid + " | " + name + " | " + label + " | " + qstn);
+				// System.out.println(extid + " | " + name + " | " + label + " |
+				// " + qstn);
+
+				ds = new Dataset(extid);
+				ds.setTitle(title);
+
+				var = new Variable();
+				var.setName(name);
+				var.setLabel(label);
+				var.setQuestion(qstn);
 			}
 
 		} catch (SQLException e) {
