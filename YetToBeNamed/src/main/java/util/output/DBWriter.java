@@ -15,12 +15,15 @@ import datamodel.Variable;
 
 public class DBWriter {
 
-	private static final String DATASET_ID = "dataset_id";
-	private static final String QSTNTEXT = "qstntext";
-	private static final String NAME = "name";
-	private static final String ID = "id";
-	private static final String LABEL = "label";
+	private static final String TITLE = "title";
 	private static final String EXT_ID = "externalID";
+
+	private static final String ID = "id";
+	private static final String NAME = "name";
+	private static final String LABEL = "label";
+	private static final String QSTNTEXT = "qstntext";
+	private static final String DATASET_ID = "dataset_id";
+
 	private String dbURL;
 	private Connection conn;
 	private Statement stmt;
@@ -58,7 +61,7 @@ public class DBWriter {
 
 	private void createTables() throws SQLException {
 		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
-				+ LABEL + " TEXT NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");/*  */
+				+ TITLE + " TEXT NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");/*  */
 		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES
 				+ "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," + NAME + " TEXT NOT NULL, " + LABEL
 				+ " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID + " INTEGER NOT NULL)");
@@ -87,7 +90,7 @@ public class DBWriter {
 		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement(
-					"INSERT INTO " + DATASETS + " (" + ID + ", " + LABEL + ", " + EXT_ID + ")  VALUES (?, ?, ?);");
+					"INSERT INTO " + DATASETS + " (" + ID + ", " + TITLE + ", " + EXT_ID + ")  VALUES (?, ?, ?);");
 			ps.setInt(1, dataset.getId());
 			ps.setString(2, dataset.getTitle());
 			ps.setString(3, dataset.getExternalID());
@@ -129,7 +132,7 @@ public class DBWriter {
 			rs = stmt.executeQuery("SELECT * FROM " + DATASETS + ";");
 			while (rs.next()) {
 				System.out.println("ID = " + rs.getInt(ID));
-				System.out.println("Label = " + rs.getString(LABEL));
+				System.out.println("Title = " + rs.getString(TITLE));
 				System.out.println();
 			}
 
