@@ -17,7 +17,7 @@ public class Dataset {
 
 	public Dataset(String id) {
 		this.variables = new HashSet<>();
-		this.externalID = id;
+		setExternalID(id);
 		this.id = counter++;
 	}
 
@@ -66,7 +66,7 @@ public class Dataset {
 		return externalID;
 	}
 
-	public void setExternalID(String externalID) {
+	private void setExternalID(String externalID) {
 		this.externalID = externalID;
 	}
 
