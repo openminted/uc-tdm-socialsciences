@@ -6,7 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.sqlite.JDBC;
@@ -55,13 +57,8 @@ public class DBReader {
 
 	public Set<Dataset> readData() {
 		Set<Dataset> result = new HashSet<>();
-		// ...
-		/*
-		 * join tables
-		 *
-		 * read data
-		 *
-		 */
+
+		Map<Dataset, Set<Variable>> temp = new HashMap<>();
 
 		String query = "SELECT Datasets.externalID, Datasets.title, Variables.name, Variables.label, "
 				+ "Variables.qstntext from Variables join Datasets on Variables.dataset_id = Datasets.id";
@@ -82,16 +79,22 @@ public class DBReader {
 				qstn = rs.getString("qstntext");
 				title = rs.getString("title");
 
-				// System.out.println(extid + " | " + name + " | " + label + " |
-				// " + qstn);
-
 				ds = new Dataset(extid);
 				ds.setTitle(title);
+
+				temp.putIfAbsent(ds, new HashSet<Variable>());
 
 				var = new Variable();
 				var.setName(name);
 				var.setLabel(label);
 				var.setQuestion(qstn);
+
+				temp.get(ds).add(var);
+			}
+
+			for (Dataset dataset : temp.keySet()) {
+				dataset.addVariables(temp.get(dataset));
+				result.add(dataset);
 			}
 
 		} catch (SQLException e) {
