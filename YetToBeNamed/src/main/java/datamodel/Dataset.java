@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Dataset implements Serializable{
+public class Dataset implements Serializable {
 
 	/**
 	 *
@@ -79,5 +79,21 @@ public class Dataset implements Serializable{
 	@Override
 	public String toString() {
 		return String.format("Dataset %s ('%s')", externalID, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (!(obj instanceof Dataset)) {
+			return false;
+		}
+		Dataset other = (Dataset) obj;
+		return other.externalID.equals(this.externalID);
+	}
+
+	public void addVariables(Set<Variable> set) {
+		this.variables.addAll(set);
 	}
 }
