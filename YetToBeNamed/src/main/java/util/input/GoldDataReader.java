@@ -24,9 +24,9 @@ import eval.GoldData;
  */
 public class GoldDataReader {
 
-	static final int VARIABLE = 0;
-	static final int PAPER = 4;
-	static final int REFERENCE = 3;
+	private static int VARIABLE;
+	private static int PAPER = 4;
+	private static int REFERENCE = 3;
 
 	public String simpleTextExtraction(File file) {
 		String text = null;
@@ -63,34 +63,33 @@ public class GoldDataReader {
 
 		String datasetID = sheetName;
 
-		String[] labels = null;
-
-		// System.out.println("Number of rows: " +
-		// sheet.getPhysicalNumberOfRows());
+		System.out.println("Number of rows: " + sheet.getPhysicalNumberOfRows());
 
 		GoldData gold = null;
-		for (Row row : sheet) {
-			if (row.getRowNum() == 0) {
-				labels = getLabels(row);
-				continue;
+		Cell varCell, paperCell, refCell;
+		Row row;
+
+		String varRef = null, refText, paperRef;
+
+		setLabels(sheet.getRow(0));
+
+		gold = new GoldData();
+		gold.setDatasetID(datasetID);
+
+		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+			row = sheet.getRow(i);
+			System.out.println("Processing row " + row.getRowNum());
+
+			varCell = row.getCell(VARIABLE, Row.CREATE_NULL_AS_BLANK);
+			paperCell = row.getCell(PAPER, Row.RETURN_BLANK_AS_NULL);
+			refCell = row.getCell(REFERENCE, Row.RETURN_BLANK_AS_NULL);
+
+			if (!(varCell.getCellType() == Cell.CELL_TYPE_BLANK)) {
+				varRef = varCell.getStringCellValue();
 			}
 
-			gold = new GoldData();
-			gold.setDatasetID(datasetID);
-
-			Cell varCell = row.getCell(VARIABLE);
-			Cell paperCell = row.getCell(PAPER);
-			Cell refCell = row.getCell(REFERENCE);
-
-			if (!(varCell.getCellType() == Cell.CELL_TYPE_STRING && paperCell.getCellType() == Cell.CELL_TYPE_STRING
-					&& refCell.getCellType() == Cell.CELL_TYPE_STRING)) {
-				System.err.println("Wrong cell type in row, skipping row...");
-				continue;
-			}
-
-			String varRef = varCell.getRichStringCellValue().getString();
-			String refText = refCell.getRichStringCellValue().getString();
-			String paperRef = paperCell.getRichStringCellValue().getString();
+			refText = refCell.getStringCellValue();
+			paperRef = paperCell.getStringCellValue();
 
 			gold.addRef(varRef, refText, paperRef);
 		}
@@ -98,15 +97,19 @@ public class GoldDataReader {
 		return gold;
 	}
 
-	private String[] getLabels(Row row) {
-		String[] labels = new String[row.getLastCellNum()];
-
-		int i = 0;
-		for (Cell cell : row) {
-			labels[i] = cell.getStringCellValue();
-			i++;
+	private void setLabels(Row row) {
+		for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {
+			switch (row.getCell(i).getStringCellValue()) {
+			case "Variable":
+				VARIABLE = i;
+				break;
+			case "Paper":
+				PAPER = i;
+				break;
+			case "Reference":
+				REFERENCE = i;
+				break;
+			}
 		}
-
-		return labels;
 	}
 }
