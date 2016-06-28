@@ -73,9 +73,8 @@ public class DocReader {
 					// MIME type (based on the Detector interface)
 					type = detector.detect(stream, metadata);
 				}
-			} else {
-				return type.getSubtype().equals("pdf");
 			}
+			return type.getSubtype().equals("pdf");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
