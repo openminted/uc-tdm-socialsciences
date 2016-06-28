@@ -27,8 +27,21 @@ public class GoldData {
 	}
 
 	public void addRef(String varRef, String refText, String paperRef) {
+		if (null == varRef) {
+			System.err.println("VarRef is null!");
+		}
 		List<Reference> refs = references.getOrDefault(varRef, new ArrayList<Reference>());
 		refs.add(new Reference(refText, paperRef));
+		references.put(varRef, refs);
+	}
+
+	@Override
+	public String toString() {
+		// for (String var : references.keySet()) {
+		// List<Reference> refs = references.get(var);
+		//
+		// }
+		return String.format("Dataset ID: %s (%s)", datasetID, references.keySet().toString());
 	}
 
 }
@@ -57,5 +70,10 @@ class Reference {
 
 	private void setReferenceText(String referenceText) {
 		this.referenceText = referenceText;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Reference in Paper %s: '%s'", paperID, referenceText);
 	}
 }
