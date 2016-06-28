@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import datamodel.Dataset;
+import datamodel.Variable;
 
 public class DBReaderTest {
 
@@ -21,7 +22,14 @@ public class DBReaderTest {
 	public void testRead() {
 		Set<Dataset> readData = reader.readData();
 
-		Assert.assertTrue(readData.isEmpty());
-	}
+		Assert.assertFalse(readData.isEmpty());
 
+		for (Dataset dataset : readData) {
+			System.out.println(dataset);
+			Set<Variable> variables = dataset.getVariables();
+			for (Variable variable : variables) {
+				System.out.println(variable);
+			}
+		}
+	}
 }
