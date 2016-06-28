@@ -93,6 +93,11 @@ public class Dataset implements Serializable {
 		return other.externalID.equals(this.externalID);
 	}
 
+	@Override
+	public int hashCode() {
+		return externalID.hashCode();
+	}
+
 	public void addVariables(Set<Variable> set) {
 		this.variables.addAll(set);
 	}
