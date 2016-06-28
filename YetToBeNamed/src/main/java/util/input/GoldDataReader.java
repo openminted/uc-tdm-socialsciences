@@ -63,8 +63,6 @@ public class GoldDataReader {
 
 		String datasetID = sheetName;
 
-		System.out.println("Number of rows: " + sheet.getPhysicalNumberOfRows());
-
 		GoldData gold = null;
 		Cell varCell, paperCell, refCell;
 		Row row;
@@ -78,7 +76,6 @@ public class GoldDataReader {
 
 		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 			row = sheet.getRow(i);
-			System.out.println("Processing row " + row.getRowNum());
 
 			varCell = row.getCell(VARIABLE, Row.CREATE_NULL_AS_BLANK);
 			paperCell = row.getCell(PAPER, Row.RETURN_BLANK_AS_NULL);
