@@ -96,10 +96,6 @@ public class DBReader {
 				k.addVariables(v);
 				result.add(k);
 			});
-			// for (Dataset dataset : temp.keySet()) {
-			// dataset.addVariables(temp.get(dataset));
-			// result.add(dataset);
-			// }
 
 		} catch (SQLException e) {
 			e.printStackTrace();
