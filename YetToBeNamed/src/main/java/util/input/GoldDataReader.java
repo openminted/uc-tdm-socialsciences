@@ -94,7 +94,7 @@ public class GoldDataReader {
 		return gold;
 	}
 
-	private void setLabels(Row row) {
+	private static void setLabels(Row row) {
 		for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {
 			switch (row.getCell(i).getStringCellValue()) {
 			case "Variable":
