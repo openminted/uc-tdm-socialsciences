@@ -28,13 +28,11 @@ public class DBWriterTest {
 		dataset.setTitle("test dataset");
 
 		v1 = new Variable();
-		v1.setId("1");
 		v1.setLabel("testVar1");
 		v1.setName("v1");
 		v1.setQuestion("test Question 1");
 
 		v2 = new Variable();
-		v2.setId("2");
 		v2.setLabel("testVar2");
 		v2.setName("v2");
 		v2.setQuestion("test Question 2");

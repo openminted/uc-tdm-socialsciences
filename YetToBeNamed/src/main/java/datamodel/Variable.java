@@ -10,15 +10,10 @@ public class Variable implements Serializable {
 	 */
 	private static final long serialVersionUID = -5319869801726193913L;
 
-	private String id;
 	private String name;
 	private String label;
 	private String question;
 	private List<Category<Type>> categories;
-
-	public String getId() {
-		return id;
-	}
 
 	public String getName() {
 		return name;
@@ -34,10 +29,6 @@ public class Variable implements Serializable {
 
 	public List<Category<Type>> getCategories() {
 		return categories;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public void setName(String name) {
@@ -58,6 +49,6 @@ public class Variable implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("Var %s ('%s')", id, label);
+		return String.format("Var %s ('%s')", name, label);
 	}
 }

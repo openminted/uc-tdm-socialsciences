@@ -138,12 +138,6 @@ public class StudyReader {
 			var.setLabel(labelStmt.getString());
 		}
 
-		Statement varID = model.getProperty(varRef, ResourceFactory.createProperty(n43 + "varID"));
-		if (varID != null) {
-			var.setId(varID.getString()); // TODO: das ist nicht die ID für die
-											// DB!
-		}
-
 		Statement name = model.getProperty(varRef, ResourceFactory.createProperty(n43 + "name"));
 		if (name != null) {
 			var.setName(name.getString());
