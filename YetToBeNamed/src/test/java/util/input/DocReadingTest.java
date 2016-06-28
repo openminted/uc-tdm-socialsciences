@@ -44,7 +44,6 @@ public class DocReadingTest {
 		File docFile = getFile(docLocation + shortPaperName);
 		Document doc = PDFConverter.convert(docFile, Converter.TIKA);
 		Assert.assertFalse(doc.isEmpty());
-		System.out.println(doc.getText());
 	}
 
 	@Test
@@ -52,7 +51,6 @@ public class DocReadingTest {
 		Path docPath = getFile(docLocation + shortPaperName).toPath();
 		Document doc = PDFConverter.convert(docPath, Converter.TIKA);
 		Assert.assertFalse(doc.isEmpty());
-		System.out.println(doc.getText());
 	}
 
 	@Test
