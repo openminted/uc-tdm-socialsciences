@@ -2,6 +2,7 @@ package util.convert;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,11 @@ public class PDFConverter {
 	}
 
 	public static Document convert(Path docPath, Converter converter) {
-		Document doc = new Document(docPath.getFileName().toString());
+		Path fileName = docPath.getFileName();
+		if (fileName == null || !Files.isRegularFile(docPath)) {
+			return null;
+		}
+		Document doc = new Document(fileName.toString());
 
 		switch (converter) {
 		case GROBID:
