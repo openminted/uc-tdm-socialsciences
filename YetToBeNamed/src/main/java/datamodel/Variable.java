@@ -1,7 +1,6 @@
 package datamodel;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Variable implements Serializable {
 
@@ -13,7 +12,6 @@ public class Variable implements Serializable {
 	private String name;
 	private String label;
 	private String question;
-	private List<Category<Type>> categories;
 
 	public String getName() {
 		return name;
@@ -27,10 +25,6 @@ public class Variable implements Serializable {
 		return question;
 	}
 
-	public List<Category<Type>> getCategories() {
-		return categories;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -41,10 +35,6 @@ public class Variable implements Serializable {
 
 	public void setQuestion(String question) {
 		this.question = question;
-	}
-
-	public void setCategories(List<Category<Type>> categories) {
-		this.categories = categories;
 	}
 
 	@Override
