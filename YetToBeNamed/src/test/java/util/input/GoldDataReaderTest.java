@@ -12,7 +12,7 @@ public class GoldDataReaderTest {
 
 	@Test
 	public void testReadText() {
-		GoldDataReader reader = new GoldDataReader();
+		GoldDataReader reader = new GoldDataReader(getFile("/xlsx/ALLBUS.xlsx").toPath());
 		String text = reader.simpleTextExtraction(getFile("/xlsx/ALLBUS.xlsx"));
 		Assert.assertNotNull(text);
 		System.out.println(text);
@@ -21,8 +21,8 @@ public class GoldDataReaderTest {
 
 	@Test
 	public void testReadData() {
-		GoldDataReader reader = new GoldDataReader();
-		Set<GoldData> goldData = reader.read(getFile("/xlsx/ALLBUS.xlsx"));
+		GoldDataReader reader = new GoldDataReader(getFile("/xlsx/ALLBUS.xlsx").toPath());
+		Set<GoldData> goldData = reader.readData();
 		Assert.assertTrue(!goldData.isEmpty());
 
 		for (GoldData entry : goldData) {

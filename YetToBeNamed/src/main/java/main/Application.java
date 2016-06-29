@@ -1,6 +1,5 @@
 package main;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -21,7 +20,7 @@ public class Application {
 
 		String dbName = "studyData.sqlite";
 		String docFolder = "R:\\DATA-SETS\\OpenMinTeD\\Variable Extraction\\Corpus";
-		String goldDataFile = "H:\\OpenMinTeD\\WP9\\variable mentions\\ISSP_Religiosität.xlsx"; // TODO
+		String goldDataPath = "H:\\OpenMinTeD\\WP9\\variable mentions\\Labeled Data";
 
 		if (!dbExists(dbName)) {
 			System.out.println("Database doesn't exist yet, have to read in study data...");
@@ -37,13 +36,9 @@ public class Application {
 		Map<String, Document> documents = docReader.readDocuments();
 		System.out.println("Number of documents: " + documents.size());
 
-		GoldDataReader goldReader = new GoldDataReader();
-		// TODO add path to constructor
-		Set<GoldData> goldData = goldReader.read(new File(goldDataFile)); // TODO:
-																			// read
-																			// from
-																			// multiple
-																			// files?
+		GoldDataReader goldReader = new GoldDataReader(Paths.get(goldDataPath));
+		Set<GoldData> goldData = goldReader.readData();
+
 		System.out.println("Number of gold data: " + goldData.size());
 	}
 

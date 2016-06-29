@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -24,9 +27,24 @@ import eval.GoldData;
  */
 public class GoldDataReader {
 
+	private List<Path> toProcess;
+
 	private static int VARIABLE;
 	private static int PAPER = 4;
 	private static int REFERENCE = 3;
+
+	public GoldDataReader(Path root) {
+		setRootDir(root);
+	}
+
+	private void setRootDir(Path root) {
+		try {
+			Files.walk(root).filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".xlsx"))
+					.forEach(toProcess::add);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public String simpleTextExtraction(File file) {
 		String text = null;
@@ -44,16 +62,23 @@ public class GoldDataReader {
 		return text;
 	}
 
-	public Set<GoldData> read(File file) {
+	public Set<GoldData> readData() {
 		Set<GoldData> result = new HashSet<GoldData>();
-		try (XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file))) {
+		for (Path path : toProcess) {
+			result.addAll(readData(path));
+		}
+		return result;
+	}
+
+	private Set<GoldData> readData(Path file) {
+		Set<GoldData> result = new HashSet<GoldData>();
+		try (XSSFWorkbook wb = new XSSFWorkbook(Files.newInputStream(file))) {
 			for (int i = 0; i < wb.getNumberOfSheets(); i++) {
 				result.add(processSheet(wb.getSheetAt(i)));
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
 		return result;
 	}
 
