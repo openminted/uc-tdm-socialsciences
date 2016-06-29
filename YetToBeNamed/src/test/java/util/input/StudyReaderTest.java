@@ -28,7 +28,7 @@ public class StudyReaderTest {
 
 	@Test
 	public void testReadAll() {
-		StudyReader reader = new StudyReader(new DBWriter("testall2.sqlite", true));
+		StudyReader reader = new StudyReader(new DBWriter("testall.sqlite", true));
 		reader.read(-1);
 	}
 
