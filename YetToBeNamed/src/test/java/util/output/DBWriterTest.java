@@ -1,7 +1,6 @@
 package util.output;
 
 import java.sql.SQLException;
-import java.util.Set;
 
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.junit.AfterClass;
@@ -21,8 +20,6 @@ public class DBWriterTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		writer = new DBWriter("test.sqlite", true);
-
 		dataset = new Dataset("test");
 		dataset.setLanguage("English");
 		dataset.setTitle("test dataset");
@@ -43,41 +40,30 @@ public class DBWriterTest {
 
 	@Test
 	public void testWriteDataset() throws SQLException {
+		writer = new DBWriter("testsimple.sqlite", true);
 		writer.write(dataset);
 		writer.write(dataset);
 	}
 
 	@Test
 	public void testWriteVariable() throws SQLException {
+		writer = new DBWriter("testsimple.sqlite", true);
 		writer.write(v1, 1);
 		writer.write(v2, 1);
 	}
 
 	@Test
 	public void testWriteSingleRealData() {
-		StudyReader reader = new StudyReader();
+		StudyReader reader = new StudyReader(new DBWriter("testsingle.sqlite", true));
 
-		Dataset ds = reader
-				.followDataset(ResourceFactory.createResource("http://zacat.gesis.org:80/obj/fStudy/ZA3779"));
-		writer.write(ds);
-
-		Set<Variable> variables = ds.getVariables();
-		for (Variable variable : variables) {
-			writer.write(variable, ds.getId());
-		}
+		reader.followDataset(ResourceFactory.createResource("http://zacat.gesis.org:80/obj/fStudy/ZA3779"));
 	}
 
 	@Test
-	public void testWriteAllRealData() {
-		StudyReader reader = new StudyReader();
+	public void testWriteNRealData() {
+		StudyReader reader = new StudyReader(new DBWriter("testN.sqlite", true));
 
-		Set<Dataset> datasets = reader.read(10);
-		for (Dataset dataset : datasets) {
-			writer.write(dataset);
-			for (Variable var : dataset.getVariables()) {
-				writer.write(var, dataset.getId());
-			}
-		}
+		reader.read(10);
 	}
 
 	@AfterClass

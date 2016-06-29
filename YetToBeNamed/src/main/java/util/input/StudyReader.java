@@ -17,6 +17,7 @@ import org.unbescape.html.HtmlEscape;
 
 import datamodel.Dataset;
 import datamodel.Variable;
+import util.output.DBWriter;
 
 public class StudyReader {
 
@@ -27,8 +28,11 @@ public class StudyReader {
 	private String datasetURI = "http://zacat.gesis.org:80/obj/fCatalog/ZACAT@datasets";
 	private String studyURIBase = "http://zacat.gesis.org:80/obj/fStudy/";
 
-	public StudyReader() {
+	private DBWriter writer;
+
+	public StudyReader(DBWriter writer) {
 		model = ModelFactory.createDefaultModel();
+		this.writer = writer;
 	}
 
 	public Set<Dataset> read(int maxNumber) {
@@ -82,13 +86,13 @@ public class StudyReader {
 		String n36 = model.getNsPrefixMap().get("n36");
 		String n40 = model.getNsPrefixMap().get("n40");
 
-		Statement id = model.getProperty(dataset, ResourceFactory.createProperty(n36 + "externalId"));
-		if (id == null) {
+		Statement extId = model.getProperty(dataset, ResourceFactory.createProperty(n36 + "externalId"));
+		if (extId == null) {
 			return null;
 		}
 		Statement title = model.getProperty(dataset, ResourceFactory.createProperty(n40 + "title"));
 
-		Dataset ds = new Dataset(id.getString());
+		Dataset ds = new Dataset(extId.getString());
 		if (title != null) {
 			ds.setTitle(title.getString());
 		}
@@ -104,13 +108,17 @@ public class StudyReader {
 			System.err.println("No variables found for var " + dataset);
 		}
 
+		writer.write(ds);
 		return ds;
 	}
 
 	private void followVars(Resource varsRef, Dataset ds) {
 		Set<Resource> resources = getResourcesInBag(varsRef.getURI(), varsRef.getURI());
+		Variable var;
 		for (Resource res : resources) {
-			ds.addVariable(followVar(res));
+			var = followVar(res);
+			ds.addVariable(var);
+			writer.write(var, ds.getId());
 		}
 	}
 

@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import datamodel.Dataset;
+import util.output.DBWriter;
 
 public class StudyReaderTest {
 
@@ -27,7 +28,7 @@ public class StudyReaderTest {
 
 	@Test
 	public void testReadAll() {
-		StudyReader reader = new StudyReader();
+		StudyReader reader = new StudyReader(new DBWriter("testall2.sqlite", true));
 		reader.read(-1);
 	}
 
@@ -39,15 +40,15 @@ public class StudyReaderTest {
 		Assert.assertTrue(!data.isEmpty());
 	}
 
-	@SuppressWarnings("unchecked")
 	private Set<Dataset> readFromFile() {
 		Set<Dataset> readData = null;
 
 		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(output))) {
 
+			readData = new HashSet<>();
 			Object readObject = in.readObject();
-			if (readObject instanceof Set) {
-				readData = (HashSet<Dataset>) readObject;
+			if (readObject instanceof Dataset) {
+				readData.add((Dataset) readObject);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -61,7 +62,7 @@ public class StudyReaderTest {
 
 	@Test
 	public void testReadN() {
-		StudyReader reader = new StudyReader();
+		StudyReader reader = new StudyReader(new DBWriter("testn.sqlite", true));
 		Set<Dataset> data = reader.read(10);
 
 		writeToFile(data);
