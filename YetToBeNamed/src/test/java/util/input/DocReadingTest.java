@@ -30,8 +30,7 @@ public class DocReadingTest {
 
 	@Test
 	public void testDocReader() {
-		DocReader reader = new DocReader();
-		reader.setRootDir(getFile(docLocation).toPath());
+		DocReader reader = new DocReader(getFile(docLocation).toPath());
 
 		Map<String, Document> readDocuments = reader.readDocuments();
 		for (Entry<String, Document> entry : readDocuments.entrySet()) {

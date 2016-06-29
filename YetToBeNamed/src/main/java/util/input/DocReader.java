@@ -25,12 +25,13 @@ public class DocReader {
 	private List<Path> toProcess;
 	private Converter converter;
 
-	public DocReader() {
+	public DocReader(Path root) {
 		toProcess = new ArrayList<>();
 		converter = Converter.TIKA;
+		setRootDir(root);
 	}
 
-	public void setRootDir(Path root) {
+	private void setRootDir(Path root) {
 		try {
 			Files.walk(root).filter(Files::isRegularFile).filter(this::isPDFFile).forEach(toProcess::add);
 		} catch (IOException e) {
@@ -47,7 +48,7 @@ public class DocReader {
 		return result;
 	}
 
-	// TODO: auslagern
+	// TODO: auslagern (Java 8 Style)
 	private boolean isPDFFile(Path file) {
 		String fileName = file.getFileName().toString();
 
