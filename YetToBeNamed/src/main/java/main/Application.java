@@ -40,6 +40,16 @@ public class Application {
 		Set<GoldData> goldData = goldReader.readData();
 
 		System.out.println("Number of gold data: " + goldData.size());
+
+		/*
+		 * TODO: in GoldData weiß ich, welches Dokument welche Studie behandelt
+		 * (indirekt). Dieses Wissen nutzen, um gezielt die Variablen aus der
+		 * Studie im Dokument zu finden. Schlüssel: Dokumentname.
+		 *
+		 * Evtl. da auch noch was im StudyReader hinzufügen, was mir die
+		 * Variablen on the fly holt, weil die DB wegen Heap Overflow nicht
+		 * vollständig ist.
+		 */
 	}
 
 	private static boolean dbExists(String db) {

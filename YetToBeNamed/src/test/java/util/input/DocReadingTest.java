@@ -77,7 +77,7 @@ public class DocReadingTest {
 
 	}
 
-	File getFile(String relativePath) {
+	private File getFile(String relativePath) {
 		return new File(getClass().getResource(relativePath).getFile());
 	}
 

@@ -16,7 +16,7 @@ public class DBWriterTest {
 	private static Dataset dataset;
 	private static Variable v1;
 	private static Variable v2;
-	private static DBWriter writer;
+	private DBWriter writer;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -67,7 +67,7 @@ public class DBWriterTest {
 	}
 
 	@AfterClass
-	public static void printDatabases() throws SQLException {
+	public void printDatabases() throws SQLException {
 		writer.printDatabases();
 	}
 }
