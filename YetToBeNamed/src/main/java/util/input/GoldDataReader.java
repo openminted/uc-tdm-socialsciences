@@ -1,8 +1,5 @@
 package util.input;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,7 +9,6 @@ import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.extractor.XSSFExcelExtractor;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -44,22 +40,6 @@ public class GoldDataReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public String simpleTextExtraction(File file) {
-		String text = null;
-		try (XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file));
-				XSSFExcelExtractor extractor = new XSSFExcelExtractor(wb)) {
-
-			extractor.setFormulasNotResults(true);
-			extractor.setIncludeSheetNames(false);
-			text = extractor.getText();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		return text;
 	}
 
 	public Set<GoldData> readData() {
