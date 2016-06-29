@@ -51,11 +51,6 @@ public class Dataset implements Serializable {
 		this.topics = topics;
 	}
 
-	@SuppressWarnings("unused")
-	private void setVariables(Set<Variable> variables) {
-		this.variables = variables;
-	}
-
 	public void addVariable(Variable var) {
 		this.variables.add(var);
 	}
