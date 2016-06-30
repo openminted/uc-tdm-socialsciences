@@ -24,7 +24,7 @@ public class Application {
 
 		if (!dbExists(dbName)) {
 			System.out.println("Database doesn't exist yet, have to read in study data...");
-			StudyReader r = new StudyReader(new DBWriter(dbName, true));
+			StudyReader r = new StudyReader(DBWriter.getInstance(dbName, true));
 			r.read(-1);
 		}
 

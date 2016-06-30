@@ -28,7 +28,7 @@ public class StudyReaderTest {
 
 	@Test
 	public void testReadAll() {
-		StudyReader reader = new StudyReader(new DBWriter("testall.sqlite", true));
+		StudyReader reader = new StudyReader(DBWriter.getInstance("testall.sqlite", true));
 		reader.read(-1);
 	}
 
@@ -62,12 +62,11 @@ public class StudyReaderTest {
 
 	@Test
 	public void testReadN() {
-		StudyReader reader = new StudyReader(new DBWriter("testn.sqlite", true));
-		Set<Dataset> data = reader.read(10);
-
-		writeToFile(data);
+		StudyReader reader = new StudyReader(DBWriter.getInstance("testn.sqlite", true));
+		reader.read(10);
 	}
 
+	@SuppressWarnings("unused")
 	private void writeToFile(Set<Dataset> data) {
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(output))) {
 

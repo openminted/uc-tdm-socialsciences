@@ -26,7 +26,7 @@ public class StudyReader {
 	private String startURL = "http://zacat.gesis.org/obj/fCatalog/ZACAT@datasets";
 
 	private String datasetURI = "http://zacat.gesis.org:80/obj/fCatalog/ZACAT@datasets";
-	private String studyURIBase = "http://zacat.gesis.org:80/obj/fStudy/";
+	// private String studyURIBase = "http://zacat.gesis.org:80/obj/fStudy/";
 
 	private DBWriter writer;
 
@@ -35,19 +35,16 @@ public class StudyReader {
 		this.writer = writer;
 	}
 
-	public Set<Dataset> read(int maxNumber) {
-		Set<Dataset> result = new HashSet<>();
+	public void read(int maxNumber) {
 		Set<Resource> resources = getResourcesInBag(startURL, datasetURI);
 		int counter = 0;
 		for (Resource res : resources) {
 			if (counter == maxNumber) {
 				break;
 			}
-			Dataset ds = followDataset(res);
-			result.add(ds);
+			followDataset(res);
 			counter++;
 		}
-		return result;
 	}
 
 	private Set<Resource> getResourcesInBag(String URL, String URI) {
@@ -57,6 +54,7 @@ public class StudyReader {
 		if (content == null) {
 			return result;
 		}
+		model = ModelFactory.createDefaultModel();
 		model.read(content, null);
 
 		Bag bag = model.getBag(URI);
@@ -72,11 +70,12 @@ public class StudyReader {
 		return result;
 	}
 
-	public Dataset followDataset(Resource dataset) {
+	public void followDataset(Resource dataset) {
 		try (InputStream content = URLConnector.getStreamFromURL(dataset.getURI())) {
 			if (content == null) {
-				return null;
+				return;
 			}
+			model = ModelFactory.createDefaultModel();
 			model.read(content, null);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -88,7 +87,7 @@ public class StudyReader {
 
 		Statement extId = model.getProperty(dataset, ResourceFactory.createProperty(n36 + "externalId"));
 		if (extId == null) {
-			return null;
+			return;
 		}
 		Statement title = model.getProperty(dataset, ResourceFactory.createProperty(n40 + "title"));
 
@@ -109,26 +108,23 @@ public class StudyReader {
 		}
 
 		writer.write(ds);
-		return ds;
 	}
 
 	private void followVars(Resource varsRef, Dataset ds) {
 		Set<Resource> resources = getResourcesInBag(varsRef.getURI(), varsRef.getURI());
-		Variable var;
 		for (Resource res : resources) {
-			var = followVar(res);
-			ds.addVariable(var);
-			writer.write(var, ds.getId());
+			followVar(res, ds);
 		}
 	}
 
-	private Variable followVar(Resource varRef) {
+	private void followVar(Resource varRef, Dataset ds) {
 		Variable var = null;
 
 		InputStream content = URLConnector.getStreamFromURL(varRef.getURI());
 		if (content == null) {
-			return var;
+			return;
 		}
+		model = ModelFactory.createDefaultModel();
 		model.read(content, null);
 		try {
 			content.close();
@@ -157,7 +153,8 @@ public class StudyReader {
 			// var.setQuestion(qstnText.getString());
 		}
 
-		return var;
+		ds.addVariable(var);
+		writer.write(var, ds.getId());
 	}
 
 	/**

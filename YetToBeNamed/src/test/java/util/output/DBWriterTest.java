@@ -3,7 +3,6 @@ package util.output;
 import java.sql.SQLException;
 
 import org.apache.jena.rdf.model.ResourceFactory;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -40,34 +39,34 @@ public class DBWriterTest {
 
 	@Test
 	public void testWriteDataset() throws SQLException {
-		writer = new DBWriter("testsimple.sqlite", true);
+		writer = DBWriter.getInstance("testsimple.sqlite", true);
 		writer.write(dataset);
 		writer.write(dataset);
 	}
 
 	@Test
 	public void testWriteVariable() throws SQLException {
-		writer = new DBWriter("testsimple.sqlite", true);
+		writer = DBWriter.getInstance("testsimple.sqlite", true);
 		writer.write(v1, 1);
 		writer.write(v2, 1);
 	}
 
 	@Test
 	public void testWriteSingleRealData() {
-		StudyReader reader = new StudyReader(new DBWriter("testsingle.sqlite", true));
+		StudyReader reader = new StudyReader(DBWriter.getInstance("testsingle.sqlite", true));
 
 		reader.followDataset(ResourceFactory.createResource("http://zacat.gesis.org:80/obj/fStudy/ZA3779"));
 	}
 
 	@Test
 	public void testWriteNRealData() {
-		StudyReader reader = new StudyReader(new DBWriter("testN.sqlite", true));
+		StudyReader reader = new StudyReader(DBWriter.getInstance("testN.sqlite", true));
 
 		reader.read(10);
 	}
 
-	@AfterClass
-	public void printDatabases() throws SQLException {
-		writer.printDatabases();
-	}
+	// @AfterClass
+	// public void printDatabases() throws SQLException {
+	// writer.printDatabases();
+	// }
 }

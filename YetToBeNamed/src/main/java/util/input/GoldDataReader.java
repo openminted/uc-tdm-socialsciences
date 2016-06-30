@@ -47,6 +47,7 @@ public class GoldDataReader {
 	public Set<GoldData> readData() {
 		Set<GoldData> result = new HashSet<GoldData>();
 		for (Path path : toProcess) {
+			System.out.println("Reading from path " + path);
 			result.addAll(readData(path));
 		}
 		return result;

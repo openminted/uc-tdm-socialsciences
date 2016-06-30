@@ -24,12 +24,16 @@ public class DBWriter {
 	private static final String QSTNTEXT = "qstntext";
 	private static final String DATASET_ID = "dataset_id";
 
-	private String dbURL;
 	private Connection conn;
-	private Statement stmt;
+
+	private static DBWriter instance;
 
 	private static final String DATASETS = "Datasets";
 	private static final String VARIABLES = "Variables";
+
+	public DBWriter(Connection c) {
+		this.conn = c;
+	}
 
 	/**
 	 * @param path
@@ -38,52 +42,85 @@ public class DBWriter {
 	 *            specifies if all tables should be cleared
 	 *
 	 */
-	public DBWriter(String path, boolean dropTables) {
-		dbURL = "jdbc:sqlite:" + path;
+	public static DBWriter getInstance(String path, boolean dropTables) {
+		// return instance if it is not null and the connection is alive
+		try {
+			if (instance != null) {
+				if (instance.getConn() != null && !instance.getConn().isClosed()) {
+					return instance;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// create new connection and instance for it
+		Connection c = connect(path);
+
+		instance = new DBWriter(c);
+
+		if (dropTables) {
+			instance.dropAllTables();
+		}
+		instance.createTables();
+
+		return instance;
+	}
+
+	private static Connection connect(String path) {
+		String dbURL = "jdbc:sqlite:" + path;
+		Connection c = null;
 
 		try {
-			connect();
-			if (dropTables) {
-				dropAllTables();
-			}
-			createTables();
+			DriverManager.registerDriver(new JDBC());
+			c = DriverManager.getConnection(dbURL);
+
+			System.out.println("Connected to the database");
+			DatabaseMetaData dm = c.getMetaData();
+			System.out.println("Driver name: " + dm.getDriverName());
+			System.out.println("Driver version: " + dm.getDriverVersion());
+			System.out.println("Product name: " + dm.getDatabaseProductName());
+			System.out.println("Product version: " + dm.getDatabaseProductVersion());
+			System.out.println("--------------------\n");
+
+			c.setAutoCommit(false);
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+
+		return c;
+
+	}
+
+	private void dropAllTables() {
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			stmt.addBatch("DROP TABLE IF EXISTS " + DATASETS);
+			stmt.addBatch("DROP TABLE IF EXISTS " + VARIABLES);
+			stmt.executeBatch();
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
-	private void dropAllTables() throws SQLException {
-		stmt.addBatch("DROP TABLE IF EXISTS " + DATASETS);
-		stmt.addBatch("DROP TABLE IF EXISTS " + VARIABLES);
-		stmt.executeBatch();
-		conn.commit();
-	}
+	private void createTables() {
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			stmt.addBatch(
+					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
+							+ TITLE + " TEXT NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");
+			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES
+					+ "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," + NAME + " TEXT NOT NULL, " + LABEL
+					+ " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID + " INTEGER NOT NULL)");
+			stmt.executeBatch();
 
-	private void createTables() throws SQLException {
-		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
-				+ TITLE + " TEXT NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");/*  */
-		stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES
-				+ "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," + NAME + " TEXT NOT NULL, " + LABEL
-				+ " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID + " INTEGER NOT NULL)");
-		stmt.executeBatch();
-
-		conn.commit();
-	}
-
-	private void connect() throws SQLException {
-		DriverManager.registerDriver(new JDBC());
-		conn = DriverManager.getConnection(dbURL);
-
-		System.out.println("Connected to the database");
-		DatabaseMetaData dm = conn.getMetaData();
-		System.out.println("Driver name: " + dm.getDriverName());
-		System.out.println("Driver version: " + dm.getDriverVersion());
-		System.out.println("Product name: " + dm.getDatabaseProductName());
-		System.out.println("Product version: " + dm.getDatabaseProductVersion());
-		System.out.println("--------------------\n");
-
-		conn.setAutoCommit(false);
-		stmt = conn.createStatement();
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void write(Dataset dataset) {
@@ -118,9 +155,7 @@ public class DBWriter {
 
 			ps.executeBatch();
 
-			// stmt.close();
 			conn.commit();
-			// conn.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
@@ -128,7 +163,9 @@ public class DBWriter {
 
 	public void printDatabases() {
 		ResultSet rs;
+		Statement stmt;
 		try {
+			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM " + DATASETS + ";");
 			while (rs.next()) {
 				System.out.println("ID = " + rs.getInt(ID));
@@ -147,11 +184,13 @@ public class DBWriter {
 			}
 			rs.close();
 
-			// stmt.close();
 			conn.commit();
-			// conn.close();
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
+	}
+
+	public Connection getConn() {
+		return conn;
 	}
 }
