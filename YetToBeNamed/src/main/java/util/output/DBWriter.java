@@ -122,9 +122,9 @@ public class DBWriter {
 			stmt = conn.createStatement();
 			stmt.addBatch(
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
-							+ TITLE + " TEXT NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");
+							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES
-					+ " (id INTEGER NOT NULL PRIMARY KEY UNIQUE AUTOINCREMENT, " + NAME + " TEXT NOT NULL, " + LABEL
+					+ " (id INTEGER NOT NULL PRIMARY KEY UNIQUE AUTO_INCREMENT, " + NAME + " TEXT NOT NULL, " + LABEL
 					+ " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID + " INTEGER NOT NULL)");
 			stmt.executeBatch();
 
