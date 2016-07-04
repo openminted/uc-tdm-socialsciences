@@ -8,10 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.sqlite.JDBC;
-
 import datamodel.Dataset;
 import datamodel.Variable;
+import util.Property;
 
 public class DBWriter {
 
@@ -28,8 +27,8 @@ public class DBWriter {
 
 	private static DBWriter instance;
 
-	private static final String DATASETS = "Datasets";
-	private static final String VARIABLES = "Variables";
+	private static final String DATASETS = "datasets";
+	private static final String VARIABLES = "variables";
 
 	public DBWriter(Connection c) {
 		this.conn = c;
@@ -55,7 +54,7 @@ public class DBWriter {
 		}
 
 		// create new connection and instance for it
-		Connection c = connect(path);
+		Connection c = connect();
 
 		instance = new DBWriter(c);
 
@@ -67,14 +66,27 @@ public class DBWriter {
 		return instance;
 	}
 
-	private static Connection connect(String path) {
-		String dbURL = "jdbc:sqlite:" + path;
+	private static Connection connect() {
+		String connectionType = Property.load("type.connection");
+		String dbType = Property.load(connectionType + ".type");
+
+		String prefix = connectionType + "." + dbType;
+		String driver = Property.load(prefix + ".driver");
+		String url = Property.load(prefix + ".url");
+		String username = Property.load(prefix + ".username");
+		String password = Property.load(prefix + ".password");
+
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException cnfe) {
+			System.err.println("Couldn't find driver class:");
+			cnfe.printStackTrace();
+		}
+
 		Connection c = null;
 
 		try {
-			DriverManager.registerDriver(new JDBC());
-			c = DriverManager.getConnection(dbURL);
-
+			c = DriverManager.getConnection(url, username, password);
 			System.out.println("Connected to the database");
 			DatabaseMetaData dm = c.getMetaData();
 			System.out.println("Driver name: " + dm.getDriverName());
@@ -89,7 +101,6 @@ public class DBWriter {
 		}
 
 		return c;
-
 	}
 
 	private void dropAllTables() {
@@ -113,7 +124,7 @@ public class DBWriter {
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
 							+ TITLE + " TEXT NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES
-					+ "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE," + NAME + " TEXT NOT NULL, " + LABEL
+					+ " (id INTEGER NOT NULL PRIMARY KEY UNIQUE AUTOINCREMENT, " + NAME + " TEXT NOT NULL, " + LABEL
 					+ " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID + " INTEGER NOT NULL)");
 			stmt.executeBatch();
 
