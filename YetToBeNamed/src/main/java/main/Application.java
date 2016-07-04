@@ -19,8 +19,6 @@ public class Application {
 	public static void main(String[] args) {
 
 		String dbName = "studyData.sqlite";
-		String docFolder = "R:\\DATA-SETS\\OpenMinTeD\\Variable Extraction\\Corpus";
-		String goldDataPath = "H:\\OpenMinTeD\\WP9\\variable mentions\\Labeled Data";
 
 		if (!dbExists(dbName)) {
 			System.out.println("Database doesn't exist yet, have to read in study data...");
@@ -32,11 +30,11 @@ public class Application {
 		Set<Dataset> datasets = dbReader.readData();
 		System.out.println("Number of datasets: " + datasets.size());
 
-		DocReader docReader = new DocReader(Paths.get(docFolder));
+		DocReader docReader = new DocReader(Paths.get(ProjectConstants.docFolder));
 		Map<String, Document> documents = docReader.readDocuments();
 		System.out.println("Number of documents: " + documents.size());
 
-		GoldDataReader goldReader = new GoldDataReader(Paths.get(goldDataPath));
+		GoldDataReader goldReader = new GoldDataReader(Paths.get(ProjectConstants.goldDataPath));
 		Set<GoldData> goldData = goldReader.readData();
 
 		System.out.println("Number of gold data: " + goldData.size());
