@@ -17,7 +17,7 @@ import org.unbescape.html.HtmlEscape;
 
 import datamodel.Dataset;
 import datamodel.Variable;
-import util.output.DBWriter;
+import util.output.DBManager;
 
 public class StudyReader {
 
@@ -26,11 +26,11 @@ public class StudyReader {
 	private String startURL = "http://zacat.gesis.org/obj/fCatalog/ZACAT@datasets";
 
 	private String datasetURI = "http://zacat.gesis.org:80/obj/fCatalog/ZACAT@datasets";
-	// private String studyURIBase = "http://zacat.gesis.org:80/obj/fStudy/";
+	private String studyURIBase = "http://zacat.gesis.org:80/obj/fStudy/";
 
-	private DBWriter writer;
+	private DBManager writer;
 
-	public StudyReader(DBWriter writer) {
+	public StudyReader(DBManager writer) {
 		model = ModelFactory.createDefaultModel();
 		this.writer = writer;
 	}
@@ -68,6 +68,10 @@ public class StudyReader {
 			}
 		}
 		return result;
+	}
+
+	public void readDataset(String datasetID) {
+		followDataset(ResourceFactory.createResource(studyURIBase + datasetID));
 	}
 
 	public void followDataset(Resource dataset) {

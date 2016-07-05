@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import datamodel.Dataset;
-import util.output.DBWriter;
+import util.output.DBManager;
 
 public class StudyReaderTest {
 
@@ -28,7 +28,7 @@ public class StudyReaderTest {
 
 	@Test
 	public void testReadAll() {
-		StudyReader reader = new StudyReader(DBWriter.getInstance("testall.sqlite", true));
+		StudyReader reader = new StudyReader(DBManager.getInstance(true).dropAllTables().createTables());
 		reader.read(-1);
 	}
 
@@ -62,7 +62,7 @@ public class StudyReaderTest {
 
 	@Test
 	public void testReadN() {
-		StudyReader reader = new StudyReader(DBWriter.getInstance("testn.sqlite", true));
+		StudyReader reader = new StudyReader(DBManager.getInstance(true).dropAllTables().createTables());
 		reader.read(10);
 	}
 

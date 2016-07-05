@@ -8,14 +8,15 @@ import org.junit.Test;
 
 import datamodel.Dataset;
 import datamodel.Variable;
+import util.output.DBManager;
 
 public class DBReaderTest {
 
-	private static DBReader reader;
+	private static DBManager reader;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		reader = new DBReader("test.sqlite");
+		reader = DBManager.getInstance(true);
 	}
 
 	@Test

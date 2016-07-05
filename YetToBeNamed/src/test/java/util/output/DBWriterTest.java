@@ -15,7 +15,7 @@ public class DBWriterTest {
 	private static Dataset dataset;
 	private static Variable v1;
 	private static Variable v2;
-	private DBWriter writer;
+	private DBManager writer;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -39,34 +39,34 @@ public class DBWriterTest {
 
 	@Test
 	public void testWriteDataset() throws SQLException {
-		writer = DBWriter.getInstance("testsimple.sqlite", true);
+		writer = DBManager.getInstance(true).dropAllTables().createTables();
 		writer.write(dataset);
 		writer.write(dataset);
 	}
 
 	@Test
 	public void testWriteVariable() throws SQLException {
-		writer = DBWriter.getInstance("testsimple.sqlite", true);
+		writer = DBManager.getInstance(true).dropAllTables().createTables();
 		writer.write(v1, 1);
 		writer.write(v2, 1);
 	}
 
 	@Test
+	public void testCreateTables() {
+		writer = DBManager.getInstance(true).dropAllTables().createTables();
+	}
+
+	@Test
 	public void testWriteSingleRealData() {
-		StudyReader reader = new StudyReader(DBWriter.getInstance("testsingle.sqlite", true));
+		DBManager writer = DBManager.getInstance(true).dropAllTables().createTables();
+		StudyReader reader = new StudyReader(writer);
 
 		reader.followDataset(ResourceFactory.createResource("http://zacat.gesis.org:80/obj/fStudy/ZA3779"));
 	}
 
 	@Test
 	public void testWriteNRealData() {
-		StudyReader reader = new StudyReader(DBWriter.getInstance("testN.sqlite", true));
-
+		StudyReader reader = new StudyReader(DBManager.getInstance(true).dropAllTables().createTables());
 		reader.read(10);
 	}
-
-	// @AfterClass
-	// public void printDatabases() throws SQLException {
-	// writer.printDatabases();
-	// }
 }
