@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import util.convert.Converter;
 import util.convert.PDFConverter;
+import util.output.DBManager;
 
 public class DocReadingTest {
 
@@ -31,7 +32,7 @@ public class DocReadingTest {
 	public void testDocReader() {
 		DocReader reader = new DocReader(getFile(docLocation).toPath());
 
-		reader.readDocuments();
+		reader.readDocuments(DBManager.getInstance(true).createTables());
 	}
 
 	@Test

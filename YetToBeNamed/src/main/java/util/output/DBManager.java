@@ -228,8 +228,11 @@ public class DBManager {
 		PreparedStatement ps;
 		try {
 			// TODO
-			ps = conn.prepareStatement("INSERT INTO " + DOCUMENTS + " (" + ") VALUES (?, ?, ?, ?);");
+			ps = conn.prepareStatement(
+					"INSERT INTO " + DOCUMENTS + " (" + ID + ", " + NAME + ", " + TEXT + ") VALUES (?, ?, ?);");
 
+			ps.setString(2, docName);
+			ps.setString(3, docText);
 			ps.addBatch();
 
 			ps.executeBatch();

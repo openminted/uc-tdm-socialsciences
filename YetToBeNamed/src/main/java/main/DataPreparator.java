@@ -39,11 +39,11 @@ public class DataPreparator {
 	}
 
 	/*
-	 * TODO read documents from PDF to text and into DB
+	 * read documents from PDF to text and into DB
 	 */
 	private static void fillDocumentsDB() {
 		DocReader docReader = new DocReader(Paths.get(ProjectConstants.docFolder));
-		docReader.readDocuments();
+		docReader.readDocuments(DBManager.getInstance(false).createTables());
 	}
 
 	/*

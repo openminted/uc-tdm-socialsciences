@@ -9,6 +9,7 @@ import java.util.List;
 import util.PDFChecker;
 import util.convert.Converter;
 import util.convert.PDFConverter;
+import util.output.DBManager;
 
 public class DocReader {
 
@@ -29,10 +30,12 @@ public class DocReader {
 		}
 	}
 
-	public void readDocuments() {
+	public void readDocuments(DBManager writer) {
 		for (Path path : toProcess) {
 			String text = PDFConverter.convert(path, converter);
 			String docName = path.getFileName().toString();
+
+			writer.writeDocument(docName, text);
 		}
 	}
 }
