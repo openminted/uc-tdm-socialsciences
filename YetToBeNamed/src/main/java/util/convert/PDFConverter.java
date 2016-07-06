@@ -4,48 +4,47 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 
-import datamodel.Document;
-
 public class PDFConverter {
 
-	public static Document convert(File docFile, Converter converter) {
+	public static String convert(File docFile, Converter converter) {
 		return convert(docFile.toPath(), converter);
 	}
 
-	public static Document convert(Path docPath, Converter converter) {
+	public static String convert(Path docPath, Converter converter) {
 		Path fileName = docPath.getFileName();
 		if (fileName == null || !Files.isRegularFile(docPath)) {
 			return null;
 		}
-		Document doc = new Document(fileName.toString());
+		String text = null;
 
 		switch (converter) {
 		case GROBID:
-			convertWithGrobid(docPath, doc);
+			text = convertWithGrobid(docPath);
 			break;
 		case JPOD:
-			convertWithJPod(docPath, doc);
+			text = convertWithJPod(docPath);
 			break;
 		case PDFBOX:
-			convertWithPdfBox(docPath, doc);
+			text = convertWithPdfBox(docPath);
 			break;
 		case TIKA:
-			convertWithTika(docPath, doc);
+			text = convertWithTika(docPath);
 			break;
 		default:
 			break;
 		}
 
-		return doc;
+		return text;
 	}
 
-	private static void convertWithTika(Path docPath, Document doc) {
+	private static String convertWithTika(Path docPath) {
 		// Create a Tika instance with the default configuration
 		Tika tika = new Tika();
 		tika.setMaxStringLength(-1); // disable max length
@@ -57,26 +56,29 @@ public class PDFConverter {
 		} catch (IOException | TikaException e) {
 
 		}
-		doc.setText(text);
+		return text;
 	}
 
-	private static void convertWithPdfBox(Path docPath, Document doc) {
-
-	}
-
-	private static void convertWithJPod(Path docPath, Document doc) {
+	private static String convertWithPdfBox(Path docPath) {
+		return null;
 
 	}
 
-	private static void convertWithGrobid(Path docPath, Document doc) {
+	private static String convertWithJPod(Path docPath) {
+		return null;
 
 	}
 
-	public static List<Document> convert(List<Path> docPaths, Converter converter) {
-		List<Document> result = new ArrayList<Document>();
+	private static String convertWithGrobid(Path docPath) {
+		return null;
+
+	}
+
+	public static Map<String, String> convert(List<Path> docPaths, Converter converter) {
+		Map<String, String> result = new HashMap<>();
 
 		for (Path path : docPaths) {
-			result.add(convert(path, converter));
+			result.put(path.getFileName().toString(), convert(path, converter));
 		}
 		return result;
 	}

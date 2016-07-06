@@ -3,7 +3,6 @@ package main;
 import java.nio.file.Paths;
 import java.util.Set;
 
-import datamodel.Document;
 import eval.GoldData;
 import util.input.DocReader;
 import util.input.GoldDataReader;
@@ -44,9 +43,7 @@ public class DataPreparator {
 	 */
 	private static void fillDocumentsDB() {
 		DocReader docReader = new DocReader(Paths.get(ProjectConstants.docFolder));
-		Set<Document> documents = docReader.readDocuments();
-		System.out.println("Number of documents: " + documents.size());
-
+		docReader.readDocuments();
 	}
 
 	/*

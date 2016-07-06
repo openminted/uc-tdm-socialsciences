@@ -4,13 +4,13 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import datamodel.Document;
 import util.convert.Converter;
 import util.convert.PDFConverter;
 
@@ -31,24 +31,21 @@ public class DocReadingTest {
 	public void testDocReader() {
 		DocReader reader = new DocReader(getFile(docLocation).toPath());
 
-		Set<Document> readDocuments = reader.readDocuments();
-		for (Document doc : readDocuments) {
-			System.out.println(String.format("Document %s:\t%s", doc.getName(), doc.getText().trim().substring(0, 40)));
-		}
+		reader.readDocuments();
 	}
 
 	@Test
 	public void testReadSingleFile() {
 		File docFile = getFile(docLocation + shortPaperName);
-		Document doc = PDFConverter.convert(docFile, Converter.TIKA);
-		Assert.assertFalse(doc.isEmpty());
+		String doc = PDFConverter.convert(docFile, Converter.TIKA);
+		Assert.assertFalse(null == doc || doc.isEmpty());
 	}
 
 	@Test
 	public void testReadSinglePath() {
 		Path docPath = getFile(docLocation + shortPaperName).toPath();
-		Document doc = PDFConverter.convert(docPath, Converter.TIKA);
-		Assert.assertFalse(doc.isEmpty());
+		String doc = PDFConverter.convert(docPath, Converter.TIKA);
+		Assert.assertFalse(null == doc || doc.isEmpty());
 	}
 
 	@Test
@@ -56,13 +53,14 @@ public class DocReadingTest {
 		List<Path> docPaths = new ArrayList<Path>();
 		addPathsToList(docPaths, shortPaperName, longPaperName);
 
-		List<Document> docs = PDFConverter.convert(docPaths, Converter.TIKA);
+		Map<String, String> docs = PDFConverter.convert(docPaths, Converter.TIKA);
 
 		Assert.assertFalse(docs.isEmpty());
 
-		for (Document document : docs) {
-			Assert.assertFalse(document.isEmpty());
-			System.out.println(document.getText().substring(0, 200));
+		for (Entry<String, String> entry : docs.entrySet()) {
+			Assert.assertFalse(null == entry.getKey());
+			Assert.assertFalse(null == entry.getValue());
+			System.out.println(entry.getValue().substring(0, 200));
 		}
 
 	}

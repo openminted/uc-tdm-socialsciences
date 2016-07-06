@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import datamodel.Dataset;
-import datamodel.Document;
 import datamodel.Variable;
 import eval.GoldData;
 import util.Property;
@@ -225,14 +224,11 @@ public class DBManager {
 		}
 	}
 
-	public void writeDocument(Document doc) {
+	public void writeDocument(String docName, String docText) {
 		PreparedStatement ps;
 		try {
 			// TODO
 			ps = conn.prepareStatement("INSERT INTO " + DOCUMENTS + " (" + ") VALUES (?, ?, ?, ?);");
-
-			doc.getName();
-			doc.getText();
 
 			ps.addBatch();
 
