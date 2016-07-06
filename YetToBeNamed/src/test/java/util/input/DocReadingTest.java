@@ -4,8 +4,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -32,11 +31,9 @@ public class DocReadingTest {
 	public void testDocReader() {
 		DocReader reader = new DocReader(getFile(docLocation).toPath());
 
-		Map<String, Document> readDocuments = reader.readDocuments();
-		for (Entry<String, Document> entry : readDocuments.entrySet()) {
-			Document doc = entry.getValue();
-			System.out
-					.println(String.format("Document %s:\t%s", entry.getKey(), doc.getText().trim().substring(0, 40)));
+		Set<Document> readDocuments = reader.readDocuments();
+		for (Document doc : readDocuments) {
+			System.out.println(String.format("Document %s:\t%s", doc.getName(), doc.getText().trim().substring(0, 40)));
 		}
 	}
 

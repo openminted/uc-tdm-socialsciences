@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import datamodel.Document;
 import util.PDFChecker;
@@ -32,11 +32,12 @@ public class DocReader {
 		}
 	}
 
-	public Map<String, Document> readDocuments() {
-		Map<String, Document> result = new HashMap<>();
+	public Set<Document> readDocuments() {
+		Set<Document> result = new HashSet<>();
 		for (Path path : toProcess) {
 			Document doc = PDFConverter.convert(path, converter);
-			result.put(path.getFileName().toString(), doc);
+			String docName = path.getFileName().toString();
+			result.add(doc);
 		}
 		return result;
 	}

@@ -1,7 +1,6 @@
 package main;
 
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.Set;
 
 import datamodel.Document;
@@ -45,7 +44,7 @@ public class DataPreparator {
 	 */
 	private static void fillDocumentsDB() {
 		DocReader docReader = new DocReader(Paths.get(ProjectConstants.docFolder));
-		Map<String, Document> documents = docReader.readDocuments();
+		Set<Document> documents = docReader.readDocuments();
 		System.out.println("Number of documents: " + documents.size());
 
 	}
