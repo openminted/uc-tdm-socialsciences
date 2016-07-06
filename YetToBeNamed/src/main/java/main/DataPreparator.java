@@ -19,6 +19,33 @@ public class DataPreparator {
 	public static void main(String[] args) {
 
 		/*
+		 * TODO: die vorbereitenden Methoden auslagern
+		 */
+
+		/*
+		 * TODO: in GoldData weiß ich, welches Dokument welche Studie behandelt
+		 * (indirekt). Dieses Wissen nutzen, um gezielt die Variablen aus der
+		 * Studie im Dokument zu finden. Schlüssel: Dokumentname.
+		 *
+		 * Evtl. da auch noch was im StudyReader hinzufügen, was mir die
+		 * Variablen on the fly holt, weil die DB wegen Heap Overflow nicht
+		 * vollständig ist.
+		 *
+		 * neuer Workflow:
+		 *
+		 * erst gelabelte Daten einlesen
+		 *
+		 * parallel die Dokumente einlesen
+		 *
+		 * für jede neue Dokument ID zu jeder Studien ID die Studie und ihre
+		 * Variablen holen und in DB schreiben
+		 *
+		 * oder, da die vollständige DB ja nun da ist, diese nutzen
+		 *
+		 * jeweils über IDs Verknüpfungen herstellen
+		 */
+
+		/*
 		 * read study data from RDF into DB
 		 */
 		StudyReader studyReader = new StudyReader(DBManager.getInstance(false).createTables());
@@ -37,7 +64,6 @@ public class DataPreparator {
 		DocReader docReader = new DocReader(Paths.get(ProjectConstants.docFolder));
 		Map<String, Document> documents = docReader.readDocuments();
 		System.out.println("Number of documents: " + documents.size());
-
 
 		for (GoldData labeled : goldData) {
 			String datasetID = labeled.getDatasetID();
