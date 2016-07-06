@@ -240,7 +240,7 @@ public class DBManager {
 		}
 	}
 
-	public ResultSet query(String sqlQuery) {
+	public ResultSet query(final String sqlQuery) {
 		ResultSet rs = null;
 
 		try {
