@@ -4,19 +4,14 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 
-import datamodel.Dataset;
 import datamodel.Document;
 import eval.GoldData;
 import util.input.DocReader;
 import util.input.GoldDataReader;
-import util.output.DBManager;
 
 public class Application {
 
 	public static void main(String[] args) {
-
-		Set<Dataset> datasets = DBManager.getInstance(false).readData();
-		System.out.println("Number of datasets: " + datasets.size());
 
 		DocReader docReader = new DocReader(Paths.get(ProjectConstants.docFolder));
 		Map<String, Document> documents = docReader.readDocuments();
@@ -44,6 +39,8 @@ public class Application {
 		 *
 		 * für jede neue Dokument ID zu jeder Studien ID die Studie und ihre
 		 * Variablen holen und in DB schreiben
+		 *
+		 * oder, da die vollständige DB ja nun da ist, diese nutzen
 		 *
 		 * jeweils über IDs Verknüpfungen herstellen
 		 */

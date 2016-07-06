@@ -7,10 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import datamodel.Dataset;
 import datamodel.Document;
@@ -145,7 +141,9 @@ public class DBManager {
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
-			stmt.addBatch("PRAGMA foreign_keys = ON");
+			if (conn.getMetaData().getDatabaseProductName().equals("SQLite")) {
+				stmt.addBatch("PRAGMA foreign_keys = ON");
+			}
 			stmt.addBatch(
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
 							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");
@@ -257,56 +255,6 @@ public class DBManager {
 			e.printStackTrace();
 		}
 		return rs;
-	}
-
-	public Set<Dataset> readData() {
-		Set<Dataset> result = new HashSet<>();
-
-		Map<Dataset, Set<Variable>> temp = new HashMap<>();
-
-		String query = "SELECT Datasets.externalID, Datasets.title, Variables.name, Variables.label, "
-				+ "Variables.qstntext from Variables join Datasets on Variables.dataset_id = Datasets.id";
-		System.out.println(query);
-
-		try {
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-
-			String extid, name, label, qstn, title;
-
-			Dataset ds;
-			Variable var;
-
-			while (rs.next()) {
-				extid = rs.getString("externalID");
-				name = rs.getString("name");
-				label = rs.getString("label");
-				qstn = rs.getString("qstntext");
-				title = rs.getString("title");
-
-				ds = new Dataset(extid);
-				ds.setTitle(title);
-
-				temp.putIfAbsent(ds, new HashSet<Variable>());
-
-				var = new Variable();
-				var.setName(name);
-				var.setLabel(label);
-				var.setQuestion(qstn);
-
-				temp.get(ds).add(var);
-			}
-
-			temp.forEach((k, v) -> {
-				k.addVariables(v);
-				result.add(k);
-			});
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return result;
 	}
 
 	public void close(Statement stmt) {
