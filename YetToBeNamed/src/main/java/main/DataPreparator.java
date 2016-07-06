@@ -21,7 +21,7 @@ public class DataPreparator {
 		/*
 		 * read study data from RDF into DB
 		 */
-		StudyReader studyReader = new StudyReader(DBManager.getInstance(false));
+		StudyReader studyReader = new StudyReader(DBManager.getInstance(false).createTables());
 		studyReader.read(-1);
 
 		/*
