@@ -25,6 +25,11 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>backingdata</id>
+			<name>Backingdata repository</name>
+			<url>http://backingdata.org/dri/library/mavenRepo/</url>
+		</repository>
 	</repositories>
 
 	<dependencyManagement>
@@ -42,6 +47,11 @@
 			<groupId>pl.edu.icm.cermine</groupId>
 			<artifactId>cermine-impl</artifactId>
 			<version>${cermine.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.upf.taln.dri</groupId>
+			<artifactId>lib</artifactId>
+			<version>2.0</version>
 		</dependency>
 	</dependencies>
 </project>
