@@ -21,13 +21,14 @@ public class DrInventor
         throws IOException, DRIexception
     {
         //Set this to the correct path pointing to DRI properties file
-        System.setProperty("DDRIpropertyFile", "/home/local/UKP/kiaeeha/git/uc-tdm-socialsciences/eu.openminted.uc-tdm-socialsciences.tools-experiments/src/main/resources/DRIconfig.properties");
+        Factory.setDRIPropertyFilePath("/home/local/UKP/kiaeeha/git/uc-tdm-socialsciences/eu.openminted.uc-tdm-socialsciences.tools-experiments/src/main/resources/DRIconfig.properties");
 
         //Test documents can be obtained from the following URL
         //  https://drive.google.com/file/d/0Bx1HpGFsGYhnbFh2SjAzU3p3X3c/view?usp=sharing
-        final String[] fileNames = new String[] { "2819", "16597", "17527", "18479", "27939",
-                "27940", "28005", "28189", "28681", "28750", "28835", "28862", "29294", "31259",
-                "31451", "31457", "44921" };
+        final String[] fileNames = new String[] {
+                "2819", "16597", "17527", "18479", "27939",
+                "27940", "28005", "28189", "28681", "28750", "28835", "28862", "29294",
+                "31259", "31451", "31457", "44921" };
 
         for (String entry : fileNames) {
             String input = DATASET_DIRECTORY_PATH + entry + ".pdf";
