@@ -4,16 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import eval.GoldData;
+import util.output.DBManager;
 
 /**
  * Gold data is in xlsx format. This class reads the data from the tables and
@@ -25,6 +23,8 @@ import eval.GoldData;
 public class GoldDataReader {
 
 	private List<Path> toProcess;
+
+	private DBManager writer;
 
 	private static int VARIABLE;
 	private static int PAPER = 4;
@@ -44,43 +44,37 @@ public class GoldDataReader {
 		}
 	}
 
-	public Set<GoldData> readData() {
-		Set<GoldData> result = new HashSet<GoldData>();
+	public void readData(DBManager dbManager) {
+		this.writer = dbManager;
+
 		for (Path path : toProcess) {
 			System.out.println("Reading from path " + path);
-			result.addAll(readData(path));
+			readData(path);
 		}
-		return result;
 	}
 
-	private Set<GoldData> readData(Path file) {
-		Set<GoldData> result = new HashSet<GoldData>();
+	private void readData(Path file) {
 		try (XSSFWorkbook wb = new XSSFWorkbook(Files.newInputStream(file))) {
 			for (int i = 0; i < wb.getNumberOfSheets(); i++) {
-				result.add(processSheet(wb.getSheetAt(i)));
+				processSheet(wb.getSheetAt(i));
 			}
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		return result;
 	}
 
-	private GoldData processSheet(XSSFSheet sheet) {
+	private void processSheet(XSSFSheet sheet) {
 		String sheetName = sheet.getSheetName();
 		System.out.println("Processing sheet: " + sheetName);
 
 		String datasetID = sheetName;
 
-		GoldData gold = null;
 		Cell varCell, paperCell, refCell;
 		Row row;
 
 		String varRef = null, refText, paperRef;
 
 		setLabels(sheet.getRow(0));
-
-		gold = new GoldData();
-		gold.setDatasetID(datasetID);
 
 		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
 			row = sheet.getRow(i);
@@ -89,8 +83,6 @@ public class GoldDataReader {
 			paperCell = row.getCell(PAPER, Row.RETURN_BLANK_AS_NULL);
 			refCell = row.getCell(REFERENCE, Row.RETURN_BLANK_AS_NULL);
 
-			// TODO: in db schreiben
-
 			if (!(varCell.getCellType() == Cell.CELL_TYPE_BLANK)) {
 				varRef = varCell.getStringCellValue();
 			}
@@ -98,10 +90,8 @@ public class GoldDataReader {
 			refText = refCell.getStringCellValue();
 			paperRef = paperCell.getStringCellValue();
 
-			gold.addRef(varRef, refText, paperRef);
+			writer.writeReference(varRef, paperRef, datasetID, refText);
 		}
-
-		return gold;
 	}
 
 	private static void setLabels(Row row) {

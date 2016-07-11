@@ -1,9 +1,7 @@
 package main;
 
 import java.nio.file.Paths;
-import java.util.Set;
 
-import eval.GoldData;
 import util.input.DocReader;
 import util.input.GoldDataReader;
 import util.input.StudyReader;
@@ -47,13 +45,11 @@ public class DataPreparator {
 	}
 
 	/*
-	 * TODO read labeled data from Excel (xlsx) into DB
+	 * read labeled data from Excel (xlsx) into DB
 	 */
 	private static void fillLabeledDataDB() {
-
 		GoldDataReader goldReader = new GoldDataReader(Paths.get(ProjectConstants.goldDataPath));
-		Set<GoldData> goldData = goldReader.readData();
-		System.out.println("Number of gold data: " + goldData.size());
+		goldReader.readData(DBManager.getInstance(false).createTables());
 	}
 
 	/*
