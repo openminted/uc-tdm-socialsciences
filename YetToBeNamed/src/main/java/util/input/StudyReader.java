@@ -74,7 +74,7 @@ public class StudyReader {
 		followDataset(ResourceFactory.createResource(studyURIBase + datasetID));
 	}
 
-	public void followDataset(Resource dataset) {
+	private void followDataset(Resource dataset) {
 		try (InputStream content = URLConnector.getStreamFromURL(dataset.getURI())) {
 			if (content == null) {
 				return;

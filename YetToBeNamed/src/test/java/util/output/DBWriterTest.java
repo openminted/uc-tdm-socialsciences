@@ -2,7 +2,6 @@ package util.output;
 
 import java.sql.SQLException;
 
-import org.apache.jena.rdf.model.ResourceFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -61,7 +60,7 @@ public class DBWriterTest {
 		DBManager writer = DBManager.getInstance(true).dropAllTables().createTables();
 		StudyReader reader = new StudyReader(writer);
 
-		reader.followDataset(ResourceFactory.createResource("http://zacat.gesis.org:80/obj/fStudy/ZA3779"));
+		reader.readDataset("ZA3779");
 	}
 
 	@Test

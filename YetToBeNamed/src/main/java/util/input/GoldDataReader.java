@@ -89,6 +89,8 @@ public class GoldDataReader {
 			paperCell = row.getCell(PAPER, Row.RETURN_BLANK_AS_NULL);
 			refCell = row.getCell(REFERENCE, Row.RETURN_BLANK_AS_NULL);
 
+			// TODO: in db schreiben
+
 			if (!(varCell.getCellType() == Cell.CELL_TYPE_BLANK)) {
 				varRef = varCell.getStringCellValue();
 			}
