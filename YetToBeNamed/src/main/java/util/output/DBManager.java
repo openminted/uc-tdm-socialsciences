@@ -144,7 +144,7 @@ public class DBManager {
 			}
 			stmt.addBatch(
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
-							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL UNIQUE)");
+							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " VARCHAR(20) NOT NULL UNIQUE)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES + " (" + ID
 					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL, "
 					+ LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
@@ -155,7 +155,7 @@ public class DBManager {
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + REFERENCES + " (" + ID
 					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, "
 					+ STUDY_ID + " INTEGER NOT NULL, " + VAR_ID + " INTEGER NOT NULL, " + REFTEXT
-					+ " VARCHAR(255) NOT NULL, FOREIGN KEY (" + DOC_ID + ") REFERENCES " + DOCUMENTS + "(" + ID
+					+ " MEDIUMTEXT NOT NULL, FOREIGN KEY (" + DOC_ID + ") REFERENCES " + DOCUMENTS + "(" + ID
 					+ "), FOREIGN KEY (" + STUDY_ID + ") REFERENCES " + DATASETS + "(" + ID + "), FOREIGN KEY ("
 					+ VAR_ID + ") REFERENCES " + VARIABLES + "(" + ID + "))");
 
