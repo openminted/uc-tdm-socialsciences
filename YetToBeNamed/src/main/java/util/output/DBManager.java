@@ -10,7 +10,6 @@ import java.sql.Statement;
 
 import datamodel.Dataset;
 import datamodel.Variable;
-import eval.GoldData;
 import util.Property;
 
 public class DBManager {
@@ -145,14 +144,14 @@ public class DBManager {
 			}
 			stmt.addBatch(
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
-							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL)");
+							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " TEXT NOT NULL UNIQUE)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES + " (" + ID
-					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + NAME + " TEXT NOT NULL, " + LABEL
-					+ " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID + " INTEGER NOT NULL, FOREIGN KEY ("
-					+ DATASET_ID + ") REFERENCES " + DATASETS + "(" + ID + "))");
-			stmt.addBatch(
-					"CREATE TABLE IF NOT EXISTS " + DOCUMENTS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE "
-							+ autoincrement + ", " + NAME + " TEXT NOT NULL, " + TEXT + " VARCHAR(255) NOT NULL)");
+					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL, "
+					+ LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
+					+ " INTEGER NOT NULL, FOREIGN KEY (" + DATASET_ID + ") REFERENCES " + DATASETS + "(" + ID + "))");
+			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DOCUMENTS + " (" + ID
+					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + NAME
+					+ " VARCHAR(10) NOT NULL UNIQUE, " + TEXT + " LONGTEXT NOT NULL)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + REFERENCES + " (" + ID
 					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, "
 					+ STUDY_ID + " INTEGER NOT NULL, " + VAR_ID + " INTEGER NOT NULL, " + REFTEXT
@@ -208,11 +207,43 @@ public class DBManager {
 		}
 	}
 
-	public void writeReference(GoldData ref) {
+	public void writeReference(String varRef, String paperRef, String datasetID, String refText) {
 		PreparedStatement ps;
 		try {
-			// TODO
-			ps = conn.prepareStatement("INSERT INTO " + REFERENCES + " (" + ") VALUES (?, ?, ?, ?);");
+
+			ps = conn.prepareStatement("INSERT INTO " + REFERENCES + " (" + DOC_ID + ", " + STUDY_ID + ", " + VAR_ID
+					+ ", " + REFTEXT + ") VALUES (?, ?, ?, ?);");
+
+			/*
+			 * for dataset: get from datasets where externalID = datasetID
+			 *
+			 * for doc: get from documents where name = paperRef
+			 *
+			 * for var: get from variables where name = varRef && dataset_id =
+			 * foreignStudy
+			 *
+			 */
+
+			String sql = "SELECT " + ID + " FROM " + DATASETS + " WHERE " + EXT_ID + "='" + datasetID + "'";
+			ResultSet rs = conn.createStatement().executeQuery(sql);
+			rs.next();
+			int foreignStudy = rs.getInt(1);
+
+			sql = "SELECT " + ID + " FROM " + DOCUMENTS + " WHERE " + NAME + "='" + paperRef + ".pdf'";
+			rs = conn.createStatement().executeQuery(sql);
+			rs.next();
+			int foreignPaper = rs.getInt(1);
+
+			sql = "SELECT " + ID + " FROM " + VARIABLES + " WHERE " + NAME + "='" + varRef + "' and " + DATASET_ID + "="
+					+ foreignStudy;
+			rs = conn.createStatement().executeQuery(sql);
+			rs.next();
+			int foreignVar = rs.getInt(1);
+
+			ps.setInt(1, foreignPaper);
+			ps.setInt(2, foreignStudy);
+			ps.setInt(3, foreignVar);
+			ps.setString(4, refText);
 
 			ps.addBatch();
 
@@ -227,12 +258,10 @@ public class DBManager {
 	public void writeDocument(String docName, String docText) {
 		PreparedStatement ps;
 		try {
-			// TODO
-			ps = conn.prepareStatement(
-					"INSERT INTO " + DOCUMENTS + " (" + ID + ", " + NAME + ", " + TEXT + ") VALUES (?, ?, ?);");
+			ps = conn.prepareStatement("INSERT INTO " + DOCUMENTS + " (" + NAME + ", " + TEXT + ") VALUES (?, ?);");
 
-			ps.setString(2, docName);
-			ps.setString(3, docText);
+			ps.setString(1, docName);
+			ps.setString(2, docText);
 			ps.addBatch();
 
 			ps.executeBatch();

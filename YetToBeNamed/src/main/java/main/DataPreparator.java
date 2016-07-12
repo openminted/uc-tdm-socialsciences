@@ -11,29 +11,11 @@ public class DataPreparator {
 
 	public static void main(String[] args) {
 
-		fillStudyDB();
+		// fillStudyDB();
+
+		// fillDocumentsDB();
 
 		fillLabeledDataDB();
-
-		fillDocumentsDB();
-		/*
-		 * TODO: in GoldData weiß ich, welches Dokument welche Studie behandelt
-		 * (indirekt). Dieses Wissen nutzen, um gezielt die Variablen aus der
-		 * Studie im Dokument zu finden. Schlüssel: Dokumentname.
-		 *
-		 * alternativer Workflow:
-		 *
-		 * erst gelabelte Daten einlesen
-		 *
-		 * parallel die Dokumente einlesen
-		 *
-		 * für jede neue Dokument ID zu jeder Studien ID die Studie und ihre
-		 * Variablen holen und in DB schreiben
-		 *
-		 * oder, da die vollständige DB ja nun da ist, diese nutzen
-		 *
-		 * jeweils über IDs Verknüpfungen herstellen
-		 */
 	}
 
 	/*
