@@ -35,7 +35,9 @@ public class DocReader {
 			String text = PDFConverter.convert(path, converter);
 			String docName = path.getFileName().toString();
 
-			writer.writeDocument(docName, text);
+			if (text != null && !text.isEmpty()) {
+				writer.writeDocument(docName, text);
+			}
 		}
 	}
 }
