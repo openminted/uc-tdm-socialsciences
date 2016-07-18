@@ -1,10 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.gesis.openminted</groupId>
-	<artifactId>YetToBeNamed</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<description>The whole project for the use case</description>
+	<parent>
+		<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<!-- <groupId>eu.openminted.uc-tdm-socialsciences</groupId> <version>0.0.1-SNAPSHOT</version> -->
+	<artifactId>eu.openminted.uc-tdm-socialsciences.kb-preparation</artifactId>
 	<properties>
 		<dkpro.core.version>1.8.0</dkpro.core.version>
 	</properties>
@@ -97,6 +100,21 @@
 			<!-- stop word remover -->
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.stopwordremover-asl</artifactId>
+		</dependency>
+		<dependency>
+			<!-- case normalizer -->
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.textnormalizer-asl</artifactId>
+		</dependency>
+		<dependency>
+			<!-- snowball stemmer -->
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.snowball-asl</artifactId>
+		</dependency>
+		<dependency>
+			<!-- for text normalization, e.g. Hyphenationemover or RegexBasedTokenTranformer -->
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.textnormalizer-asl</artifactId>
 		</dependency>
 	</dependencies>
 </project>
