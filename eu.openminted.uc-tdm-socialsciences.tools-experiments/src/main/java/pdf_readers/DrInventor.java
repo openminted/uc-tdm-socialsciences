@@ -1,21 +1,20 @@
 package pdf_readers;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
-import org.jdom.Element;
-
 import edu.upf.taln.dri.lib.Factory;
 import edu.upf.taln.dri.lib.exception.DRIexception;
 import edu.upf.taln.dri.lib.model.Document;
+import util.Property;
 
 public class DrInventor
 {
-    private static final String DATASET_DIRECTORY_PATH = "/home/local/UKP/kiaeeha/workspace/Datasets/openminted/uc-ss/pdf/";
-    private static final String OUTPUT_DIRECTORY = "target/inventor/";
+	private static final String thiz = "drInventor";
 
     public static void main(String args[])
         throws IOException, DRIexception
@@ -30,9 +29,12 @@ public class DrInventor
                 "27940", "28005", "28189", "28681", "28750", "28835", "28862", "29294",
                 "31259", "31451", "31457", "44921" };
 
+		File outDir = new File(Property.load("out.base") + thiz + "/");
+		outDir.mkdir();
+
         for (String entry : fileNames) {
-            String input = DATASET_DIRECTORY_PATH + entry + ".pdf";
-            String output = OUTPUT_DIRECTORY + entry + ".xml";
+			String input = Property.load("doc.folder") + entry + ".pdf";
+			String output = outDir + "/" + entry + ".xml";
 
             convertPdfToXml(input, output);
         }
