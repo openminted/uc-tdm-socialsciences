@@ -33,6 +33,8 @@ db.sql.sqlite.password=
 db.sql.sqlite.autoincrement=AUTOINCREMENT
 ```
 
-For running the tests, you can put some pdf files under src/test/resources/pdf.
+For running the tests, you can put some pdf files under src/test/resources/pdf. Their names are currently hard-coded in the DocReadingTest, so you also have to adjust this.
 
 The Excel files to read in the labeled data have to reside in src/test/resources/xlsx. They follow a specific format: There are 5 columns. The first row contains the column labels "Variable", "Label", "Question", "Reference" and "Paper". Each sheet contains labeled data for one dataset and the sheet name is equal to the external ID of that dataset, e.g. "ZA2150".
+
+Example labeled data (xlsx files) can be obtained from: https://drive.google.com/open?id=0B9gxCbOD2BYRM0pNN3V0OWNJUnc
