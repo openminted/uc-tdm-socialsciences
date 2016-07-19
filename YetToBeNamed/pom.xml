@@ -102,7 +102,7 @@
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.stopwordremover-asl</artifactId>
 		</dependency>
 		<dependency>
-			<!-- case normalizer -->
+			<!-- for text normalization, e.g. Hyphenationemover or RegexBasedTokenTranformer, case normalizer -->
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.textnormalizer-asl</artifactId>
 		</dependency>
@@ -110,11 +110,6 @@
 			<!-- snowball stemmer -->
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.snowball-asl</artifactId>
-		</dependency>
-		<dependency>
-			<!-- for text normalization, e.g. Hyphenationemover or RegexBasedTokenTranformer -->
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.textnormalizer-asl</artifactId>
 		</dependency>
 	</dependencies>
 </project>
