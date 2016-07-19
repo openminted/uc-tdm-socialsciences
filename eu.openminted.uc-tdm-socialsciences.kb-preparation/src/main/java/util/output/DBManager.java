@@ -82,6 +82,7 @@ public class DBManager {
 		if (test) {
 			driver = "org.sqlite.JDBC";
 			url = "jdbc:sqlite:test.sqlite";
+			autoincrement = "AUTOINCREMENT";
 		} else {
 			String connectionType = Property.load("type.connection");
 			String dbType = Property.load(connectionType + ".type");
@@ -146,14 +147,14 @@ public class DBManager {
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
 							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " VARCHAR(20) NOT NULL UNIQUE)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES + " (" + ID
-					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL, "
+					+ " INTEGER NOT NULL PRIMARY KEY " + autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL, "
 					+ LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
 					+ " INTEGER NOT NULL, FOREIGN KEY (" + DATASET_ID + ") REFERENCES " + DATASETS + "(" + ID + "))");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DOCUMENTS + " (" + ID
-					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + NAME
+					+ " INTEGER NOT NULL PRIMARY KEY " + autoincrement + ", " + NAME
 					+ " VARCHAR(10) NOT NULL UNIQUE, " + TEXT + " LONGTEXT NOT NULL)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + REFERENCES + " (" + ID
-					+ " INTEGER NOT NULL PRIMARY KEY UNIQUE " + autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, "
+					+ " INTEGER NOT NULL PRIMARY KEY " + autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, "
 					+ STUDY_ID + " INTEGER NOT NULL, " + VAR_ID + " INTEGER NOT NULL, " + REFTEXT
 					+ " MEDIUMTEXT NOT NULL, FOREIGN KEY (" + DOC_ID + ") REFERENCES " + DOCUMENTS + "(" + ID
 					+ "), FOREIGN KEY (" + STUDY_ID + ") REFERENCES " + DATASETS + "(" + ID + "), FOREIGN KEY ("
