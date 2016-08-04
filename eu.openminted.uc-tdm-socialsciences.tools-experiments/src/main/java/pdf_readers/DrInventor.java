@@ -1,11 +1,9 @@
 package pdf_readers;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 
 import edu.upf.taln.dri.lib.Factory;
 import edu.upf.taln.dri.lib.exception.DRIexception;
@@ -29,11 +27,12 @@ public class DrInventor
                 "27940", "28005", "28189", "28681", "28750", "28835", "28862", "29294",
                 "31259", "31451", "31457", "44921" };
 
-		File outDir = new File(Property.load("out.base") + thiz + "/");
-		outDir.mkdir();
+		File outDir = new File(Property.load(Property.PROPERTY_OUT_BASE) + thiz + "/");
+        //noinspection ResultOfMethodCallIgnored
+        outDir.mkdir();
 
         for (String entry : fileNames) {
-			String input = Property.load("doc.folder") + entry + ".pdf";
+			String input = Property.load(Property.PROPERTY_DOC_FOLDER) + entry + ".pdf";
 			String output = outDir + "/" + entry + ".xml";
 
             convertPdfToXml(input, output);
@@ -41,7 +40,7 @@ public class DrInventor
     }
 
     private static void convertPdfToXml(final String input, final String output)
-        throws FileNotFoundException, UnsupportedEncodingException, IOException, DRIexception
+        throws IOException, DRIexception
     {
         //or Document doc_PDFpaperURL = Factory.getPDFloader().parsePDF(new URL("http://www2007.org/workshops/paper_45.pdf"));
         System.out.println("parsing [" + input + "]");

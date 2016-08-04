@@ -1,3 +1,6 @@
+# To setup on your machine, please initialize the property values for 'resourceFolder.fullPath' and 'babelnet.APIkey'
+# and rename this file to DRIconfig.properties
+
 # FULL PATH OF THE RESOURCE FOLDER
 # ATTENTION: the path should end WITHOUT the training slash
 # Example: /my/local/dri/resources/path

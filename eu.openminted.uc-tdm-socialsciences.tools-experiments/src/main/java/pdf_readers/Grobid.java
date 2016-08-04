@@ -24,11 +24,12 @@ public class Grobid {
 		final String[] fileNames = new String[] { "2819", "16597", "17527", "18479", "27939", "27940", "28005", "28189",
 				"28681", "28750", "28835", "28862", "29294", "31259", "31451", "31457", "44921" };
 
-		File outDir = new File(Property.load("out.base") + thiz + "/");
+		File outDir = new File(Property.load(Property.PROPERTY_OUT_BASE) + thiz + "/");
+		//noinspection ResultOfMethodCallIgnored
 		outDir.mkdir();
 
 		for (String entry : fileNames) {
-			String input = Property.load("doc.folder") + entry + ".pdf";
+			String input = Property.load(Property.PROPERTY_DOC_FOLDER) + entry + ".pdf";
 			String output = outDir + "/" + entry + ".xml";
 
 			convertPdfToXml(input, output);
@@ -38,8 +39,8 @@ public class Grobid {
 	private static void convertPdfToXml(String input, String output) {
 		try {
 
-			String home = Property.load("grobid.home");
-			String properties = Property.load("grobid.properties");
+			String home = Property.load(Property.PROPERTY_GROBID_HOME);
+			String properties = Property.load(Property.PROPERTY_GROBID_PROPERTIES);
 
 			MockContext.setInitialContext(home, properties);
 			GrobidProperties.getInstance();
