@@ -1,6 +1,4 @@
-package eu.openminted.uc_tdm_socialsciences.io.jatz;
-
-import static org.apache.commons.lang.StringUtils.isNotBlank;
+package eu.openminted.uc_tdm_socialsciences.io.jats;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
 import org.apache.uima.UimaContext;
@@ -24,7 +22,7 @@ import de.tudarmstadt.ukp.dkpro.core.io.xml.XmlTextReader;
                 "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
                 "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
                 "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph"})
-public class JatzXmlReader
+public class JatsXmlReader
         extends XmlTextReader
 {
     /**

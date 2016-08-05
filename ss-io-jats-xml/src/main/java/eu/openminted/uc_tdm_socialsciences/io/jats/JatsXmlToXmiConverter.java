@@ -1,4 +1,4 @@
-package eu.openminted.uc_tdm_socialsciences.io.jatz;
+package eu.openminted.uc_tdm_socialsciences.io.jats;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import org.apache.uima.UIMAException;
@@ -9,7 +9,7 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
-public class JatzXmlToXmiConverter {
+public class JatsXmlToXmiConverter {
 
     //todo: extract these hardcoded input/output paths
     public static final String INPUT_RESOURCE = "scixml-reader/src/test/resources/article1.xml";
@@ -17,9 +17,9 @@ public class JatzXmlToXmiConverter {
 
     public static void main(String[] args) throws UIMAException, IOException {
         runPipeline(
-                createReaderDescription(JatzXmlReader.class,
-                        JatzXmlReader.PARAM_LANGUAGE, "en",
-                        JatzXmlReader.PARAM_SOURCE_LOCATION, INPUT_RESOURCE),
+                createReaderDescription(JatsXmlReader.class,
+                        JatsXmlReader.PARAM_LANGUAGE, "en",
+                        JatsXmlReader.PARAM_SOURCE_LOCATION, INPUT_RESOURCE),
                 createEngineDescription(XmiWriter.class,
                         XmiWriter.PARAM_TARGET_LOCATION, OUTPUT_RESOURCE_XMI)
         );
