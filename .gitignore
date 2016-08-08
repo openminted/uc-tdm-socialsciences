@@ -1,17 +1,18 @@
+target/
+
 ##Eclipse
-/.metadata
-/.settings/
+.metadata
+.settings/
 
 # Eclipse Core
-/.project
+.project
 
 # JDT-specific (Eclipse Java Development Tools)
-/.classpath
+.classpath
 
 ##Intellij IDEA
-/.idea
-/.settings
+.idea
+.settings
 /eu.openminted.uc-tdm-socialsciences.iml
-
 ##Generic
 /target/
