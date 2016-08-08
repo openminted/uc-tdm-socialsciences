@@ -79,8 +79,9 @@ public class PdfxXmlReader
 
         private String documentId = null;
         private int paragraphStart = -1;
-        private int sentenceStart = -1;
 
+        //todo: add a '.' mark at the end of paragraph if it doesn't have one?
+        //todo: retain footer and header in the jcas with proper annotation
         @Override
         public void startElement(String aUri, String aLocalName, String aName,
                                  Attributes aAttributes)
@@ -105,16 +106,6 @@ public class PdfxXmlReader
             }
         }
 
-        private void makeParagraph() {
-            if(isParamAppendNewLineAfterParagraph){
-                int emptySentenceStart = getBuffer().length();
-                getBuffer().append(System.lineSeparator());
-                new Sentence(getJCas(), emptySentenceStart, getBuffer().length()).addToIndexes();
-            }
-            new Paragraph(getJCas(), paragraphStart, getBuffer().length()).addToIndexes();
-            paragraphStart = getBuffer().length();
-        }
-
         @Override
         public void endElement(String aUri, String aLocalName, String aName)
                 throws SAXException
@@ -130,12 +121,20 @@ public class PdfxXmlReader
             }
             else if (TAG_REGION.equals(aName)){
                 if(isInsideSentence) {
-                    /*new Sentence(getJCas(), sentenceStart, getBuffer().length()).addToIndexes();
-                    sentenceStart = -1;*/
                     makeParagraph();
                     captureText = false;
                 }
             }
+        }
+
+        private void makeParagraph() {
+            if(isParamAppendNewLineAfterParagraph){
+                int emptySentenceStart = getBuffer().length();
+                getBuffer().append(System.lineSeparator());
+                new Sentence(getJCas(), emptySentenceStart, getBuffer().length()).addToIndexes();
+            }
+            new Paragraph(getJCas(), paragraphStart, getBuffer().length()).addToIndexes();
+            paragraphStart = getBuffer().length();
         }
 
         @Override
