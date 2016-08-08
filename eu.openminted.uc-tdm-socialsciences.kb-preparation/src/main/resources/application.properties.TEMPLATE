@@ -1,0 +1,12 @@
+# the connection type is sql
+type.connection=db.sql
+
+## switch database type here (e.g. sqlite, mysql) and use it in the other properties
+db.sql.type={connection-type}
+
+## adjust settings here
+db.sql.{connection-type}.driver=name-of-driver
+db.sql.{connection-type}.url=url-to-your-db
+db.sql.{connection-type}.username=username
+db.sql.{connection-type}.password=password
+db.sql.{connection-type}.autoincrement=keyword-for-autoincrement
