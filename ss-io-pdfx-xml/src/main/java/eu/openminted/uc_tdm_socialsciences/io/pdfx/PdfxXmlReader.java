@@ -30,19 +30,25 @@ public class PdfxXmlReader
      */
     private static final String TAG_ARTICLE_TITLE = "TITLE";
 
+    public static final String ATTR_CLASS = "class";
+    public static final String ATTR_TYPE = "type";
     /**
      * a sentence in main body
      */
     public static final String TAG_REGION = "region";
-    public static final String ATTR_CLASS = "class";
     public static final String ATTR_REGION_CLASS_VALUE_UNKNOWN = "unknown";
     public static final String ATTR_REGION_CLASS_VALUE_TEXTCHUNK = "DoCO:TextChunk";
+
+    /**
+     * a sentence
+     */
+    public static final String TAG_S = "s";
+    //todo: add sentence annotation
 
     /**
      * a marker is used for indicating breaks (e.g. paragraph end, page break, etc.)
      */
     public static final String TAG_MARKER = "marker";
-    public static final String ATTR_TYPE = "type";
     /**
      * 'block' value for 'type' attribute in 'marker' tag indicates end of paragraph
      */
