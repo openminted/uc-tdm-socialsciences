@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ss-io-jats-xml</artifactId>
+    <artifactId>ss-io-pdfx-xml</artifactId>
 
 
     <dependencies>

@@ -1,4 +1,4 @@
-package eu.openminted.uc_tdm_socialsciences.io.jats;
+package eu.openminted.uc_tdm_socialsciences.io.pdfx;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import org.apache.uima.UIMAException;
@@ -17,9 +17,9 @@ public class JatsXmlToXmiConverter {
 
     public static void main(String[] args) throws UIMAException, IOException {
         runPipeline(
-                createReaderDescription(JatsXmlReader.class,
-                        JatsXmlReader.PARAM_LANGUAGE, "en",
-                        JatsXmlReader.PARAM_SOURCE_LOCATION, INPUT_RESOURCE),
+                createReaderDescription(PdfxXmlReader.class,
+                        PdfxXmlReader.PARAM_LANGUAGE, "en",
+                        PdfxXmlReader.PARAM_SOURCE_LOCATION, INPUT_RESOURCE),
                 createEngineDescription(XmiWriter.class,
                         XmiWriter.PARAM_TARGET_LOCATION, OUTPUT_RESOURCE_XMI)
         );
