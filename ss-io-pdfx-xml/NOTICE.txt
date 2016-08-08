@@ -1,0 +1,5 @@
+File 2819-pdfx.xml is produced by running pdfx service (http://pdfx.cs.man.ac.uk/) on the pdf document retrieved from
+http://nbn-resolving.de/urn:nbn:de:0168-ssoar-28197
+
+The original pdf document is distributed with the following license:
+' Deposit Licence - No Redistribution, No Modifications '
