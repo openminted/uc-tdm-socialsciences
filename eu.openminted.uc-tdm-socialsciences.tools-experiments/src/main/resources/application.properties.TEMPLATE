@@ -1,0 +1,8 @@
+#please update the property values in this file to correspond to your environment settings then rename the file to 'application.properties'
+
+grobid.home=H:\\git\\grobid\\grobid-home
+grobid.properties=H:\\git\\grobid\\grobid-home\\config\\grobid.properties
+
+doc.folder=H:\\OpenMinTeD\\WP9\\01 data harmonization\\documents\\
+
+out.base=target/
