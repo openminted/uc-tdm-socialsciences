@@ -12,3 +12,6 @@
 /.idea
 /.settings
 /eu.openminted.uc-tdm-socialsciences.iml
+
+##Generic
+/target/

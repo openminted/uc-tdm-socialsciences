@@ -18,7 +18,7 @@ public class DrInventor
         throws IOException, DRIexception
     {
         //Set this to the correct path pointing to DRI properties file
-        Factory.setDRIPropertyFilePath("/home/local/UKP/kiaeeha/git/uc-tdm-socialsciences/eu.openminted.uc-tdm-socialsciences.tools-experiments/src/main/resources/DRIconfig.properties");
+        Factory.setDRIPropertyFilePath(Property.load(Property.PROPERTY_DRINVENTOR_PROPERTIES));
 
         //Test documents can be obtained from the following URL
         //  https://drive.google.com/file/d/0Bx1HpGFsGYhnbFh2SjAzU3p3X3c/view?usp=sharing
@@ -29,7 +29,7 @@ public class DrInventor
 
 		File outDir = new File(Property.load(Property.PROPERTY_OUT_BASE) + thiz + "/");
         //noinspection ResultOfMethodCallIgnored
-        outDir.mkdir();
+        outDir.mkdirs();
 
         for (String entry : fileNames) {
 			String input = Property.load(Property.PROPERTY_DOC_FOLDER) + entry + ".pdf";

@@ -10,6 +10,7 @@ public class Property {
 	public static final String PROPERTY_GROBID_PROPERTIES = "grobid.properties";
 	public static final String PROPERTY_DOC_FOLDER = "doc.folder";
 	public static final String PROPERTY_OUT_BASE = "out.base";
+	public static final String PROPERTY_DRINVENTOR_PROPERTIES = "drinventor.properties";
 
 	private static Properties properties = null;
 

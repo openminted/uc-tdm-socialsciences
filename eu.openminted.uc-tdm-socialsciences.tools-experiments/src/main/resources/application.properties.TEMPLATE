@@ -3,6 +3,8 @@
 grobid.home=H:\\git\\grobid\\grobid-home
 grobid.properties=H:\\git\\grobid\\grobid-home\\config\\grobid.properties
 
+drinventor.properties=path-to-your-DrInventor-properties-file
+
 doc.folder=H:\\OpenMinTeD\\WP9\\01 data harmonization\\documents\\
 
 out.base=target/
