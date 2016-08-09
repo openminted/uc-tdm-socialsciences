@@ -86,7 +86,6 @@ public class PdfxXmlReader
         private int paragraphBegin = -1;
         private int sentenceBegin = -1;
 
-        //todo: add a '.' mark at the end of paragraph if it doesn't have one?
         //todo: retain footer and header in the jcas with proper annotation
         @Override
         public void startElement(String aUri, String aLocalName, String aName,
