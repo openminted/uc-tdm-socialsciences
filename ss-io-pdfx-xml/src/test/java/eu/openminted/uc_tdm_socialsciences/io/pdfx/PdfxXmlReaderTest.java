@@ -41,15 +41,16 @@ public class PdfxXmlReaderTest {
     @Test
     public void testReadArticle1() throws Exception
     {
+/*
         testOneWay(
                 createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en"),
                 TEST_RESOURCE_ARTICLE1_DUMP,
                 TEST_RESOURCE_ARTICLE1);
+*/
 
         //After applying a change to the reader that changes its underlying jcas, this part should be uncommented
         // and run once to create a new dump test resource file to be used in one-way test
-/*
         runPipeline(
                 createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en",
@@ -58,21 +59,21 @@ public class PdfxXmlReaderTest {
                         CasDumpWriter.PARAM_TARGET_LOCATION, TEST_RESOURCE_ARTICLE1_DUMP_PATH,
                         CasDumpWriter.PARAM_SORT, true)
         );
-*/
     }
 
     @Test
     public void testReadArticle2() throws Exception
     {
+/*
         testOneWay(
                 createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en"),
                 TEST_RESOURCE_ARTICLE2_DUMP,
                 TEST_RESOURCE_ARTICLE2);
+*/
 
         //After applying a change to the reader that changes its underlying jcas, this part should be uncommented
         // and run once to create a new dump test resource file to be used in one-way test
-/*
         runPipeline(
                 createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en",
@@ -81,22 +82,22 @@ public class PdfxXmlReaderTest {
                         CasDumpWriter.PARAM_TARGET_LOCATION, TEST_RESOURCE_ARTICLE2_DUMP_PATH,
                         CasDumpWriter.PARAM_SORT, true)
         );
-*/
     }
 
     @Test
     public void testReadArticle1WithAppendNewLine() throws Exception
     {
+/*
         testOneWay(
                 createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en",
                         PdfxXmlReader.PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, true),
                 TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP,
                 TEST_RESOURCE_ARTICLE1);
+*/
 
         //After applying a change to the reader that changes its underlying jcas, this part should be uncommented
         // and run once to create a new dump test resource file to be used in one-way test
-/*
         runPipeline(
                 createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en",
@@ -106,7 +107,6 @@ public class PdfxXmlReaderTest {
                         CasDumpWriter.PARAM_TARGET_LOCATION, TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH,
                         CasDumpWriter.PARAM_SORT, true)
         );
-*/
     }
 
     @Rule
