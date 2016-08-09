@@ -145,7 +145,7 @@ public class PdfxXmlReader
         private void makeParagraph() {
             if(isParamAppendNewLineAfterParagraph){
                 int emptySentenceStart = getBuffer().length();
-                getBuffer().append(System.lineSeparator());
+				getBuffer().append("\n");
                 new Sentence(getJCas(), emptySentenceStart, getBuffer().length()).addToIndexes();
             }
             new Paragraph(getJCas(), paragraphBegin, getBuffer().length()).addToIndexes();
