@@ -2,6 +2,7 @@ package eu.openminted.uc_tdm_socialsciences.io.pdfx;
 
 import de.tudarmstadt.ukp.dkpro.core.testing.DkproTestContext;
 import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -84,7 +85,7 @@ public class PdfxXmlReaderTest {
 */
     }
 
-    @Test
+    @Ignore
     public void testReadArticle1WithAppendNewLine() throws Exception
     {
         testOneWay(
