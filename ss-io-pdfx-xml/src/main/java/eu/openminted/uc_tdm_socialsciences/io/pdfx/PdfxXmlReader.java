@@ -57,6 +57,7 @@ public class PdfxXmlReader
     public static final String ATTR_MARKER_TYPE_VALUE_BLOCK = "block";
 
     public static final String PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH = "false";
+    public static final String NEWLINE_SEPARATOR = "\r\n";
     @ConfigurationParameter(name = PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, mandatory = false)
     protected boolean isParamAppendNewLineAfterParagraph;
 
@@ -145,7 +146,7 @@ public class PdfxXmlReader
         private void makeParagraph() {
             if(isParamAppendNewLineAfterParagraph){
                 int emptySentenceStart = getBuffer().length();
-				getBuffer().append(System.lineSeparator());
+				getBuffer().append(NEWLINE_SEPARATOR);
                 new Sentence(getJCas(), emptySentenceStart, getBuffer().length()).addToIndexes();
             }
             new Paragraph(getJCas(), paragraphBegin, getBuffer().length()).addToIndexes();
