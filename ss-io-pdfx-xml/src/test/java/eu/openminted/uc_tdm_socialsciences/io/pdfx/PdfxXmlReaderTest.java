@@ -13,20 +13,33 @@ import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 public class PdfxXmlReaderTest {
     public static final String TEST_RESOURCES_PATH = "src/test/resources/";
+
     public static final String TEST_RESOURCE_ARTICLE1 = "2819-pdfx.xml";
+    public static final String TEST_RESOURCE_ARTICLE2 = "27939-pdfx.xml";
+
     public static final String TEST_RESOURCE_ARTICLE1_PATH = TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE1;
+    public static final String TEST_RESOURCE_ARTICLE2_PATH = TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE2;
+
     public static final String TEST_RESOURCE_ARTICLE1_DUMP = "2819-pdfx.xml.dump";
+    public static final String TEST_RESOURCE_ARTICLE2_DUMP = "27939-pdfx.xml.dump";
+
     public static final String TEST_RESOURCE_ARTICLE1_DUMP_PATH = TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE1_DUMP;
+    public static final String TEST_RESOURCE_ARTICLE2_DUMP_PATH = TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE2_DUMP;
+
     public static final String TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP = "2819-pdfx-appended.xml.dump";
+    public static final String TEST_RESOURCE_ARTICLE2_APPENDED_XML_DUMP = "27939-pdfx-appended.xml.dump";
+
     public static final String TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH = TEST_RESOURCES_PATH +
             TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP;
+    public static final String TEST_RESOURCE_ARTICLE2_APPENDED_XML_DUMP_PATH = TEST_RESOURCES_PATH +
+            TEST_RESOURCE_ARTICLE2_APPENDED_XML_DUMP;
 
     public PdfxXmlReaderTest(){
 
     }
 
     @Test
-    public void testRead() throws Exception
+    public void testReadArticle1() throws Exception
     {
         testOneWay(
                 createReaderDescription(PdfxXmlReader.class,
@@ -49,7 +62,30 @@ public class PdfxXmlReaderTest {
     }
 
     @Test
-    public void testReadWithAppendNewLine() throws Exception
+    public void testReadArticle2() throws Exception
+    {
+        testOneWay(
+                createReaderDescription(PdfxXmlReader.class,
+                        PdfxXmlReader.PARAM_LANGUAGE, "en"),
+                TEST_RESOURCE_ARTICLE2_DUMP,
+                TEST_RESOURCE_ARTICLE2);
+
+        //After applying a change to the reader that changes its underlying jcas, this part should be uncommented
+        // and run once to create a new dump test resource file to be used in one-way test
+/*
+        runPipeline(
+                createReaderDescription(PdfxXmlReader.class,
+                        PdfxXmlReader.PARAM_LANGUAGE, "en",
+                        PdfxXmlReader.PARAM_SOURCE_LOCATION, TEST_RESOURCE_ARTICLE2_PATH),
+                createEngineDescription(CasDumpWriter.class,
+                        CasDumpWriter.PARAM_TARGET_LOCATION, TEST_RESOURCE_ARTICLE2_DUMP_PATH,
+                        CasDumpWriter.PARAM_SORT, true)
+        );
+*/
+    }
+
+    @Test
+    public void testReadArticle1WithAppendNewLine() throws Exception
     {
         testOneWay(
                 createReaderDescription(PdfxXmlReader.class,

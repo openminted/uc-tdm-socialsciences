@@ -43,7 +43,6 @@ public class PdfxXmlReader
      * a sentence
      */
     public static final String TAG_S = "s";
-    //todo: add sentence annotation
 
     /**
      * a marker is used for indicating breaks (e.g. paragraph end, page break, etc.)
@@ -84,7 +83,8 @@ public class PdfxXmlReader
         private boolean isInsideSentence = false;
 
         private String documentId = null;
-        private int paragraphStart = -1;
+        private int paragraphBegin = -1;
+        private int sentenceBegin = -1;
 
         //todo: add a '.' mark at the end of paragraph if it doesn't have one?
         //todo: retain footer and header in the jcas with proper annotation
@@ -95,15 +95,16 @@ public class PdfxXmlReader
         {
             if (TAG_ARTICLE_TITLE.equals(aName)) {
                 captureText = true;
-            }
-            else if (TAG_REGION.equals(aName)){
+            }else if (TAG_REGION.equals(aName)){
                 isInsideSentence = false;
                 if(ATTR_REGION_CLASS_VALUE_UNKNOWN.equals(aAttributes.getValue(ATTR_CLASS)) ||
                         ATTR_REGION_CLASS_VALUE_TEXTCHUNK.equals(aAttributes.getValue(ATTR_CLASS))) {
-                    paragraphStart = getBuffer().length();
+                    paragraphBegin = getBuffer().length();
                     captureText = true;
                     isInsideSentence = true;
                 }
+            }else if(TAG_S.equals(aName)){
+                sentenceBegin = getBuffer().length();
             }else if(TAG_MARKER.equals(aName)){
                 if(ATTR_MARKER_TYPE_VALUE_BLOCK.equals(aAttributes.getValue(ATTR_TYPE))){
                     //paragraph end indicator
@@ -124,12 +125,14 @@ public class PdfxXmlReader
                 DocumentMetaData.get(getJCas()).setDocumentId(documentId);
                 getBuffer().setLength(0);
                 captureText = false;
-            }
-            else if (TAG_REGION.equals(aName)){
+            }else if (TAG_REGION.equals(aName)){
                 if(isInsideSentence) {
                     makeParagraph();
                     captureText = false;
                 }
+            }else if(TAG_S.equals(aName)){
+                new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
+                sentenceBegin = -1;
             }
         }
 
@@ -139,8 +142,8 @@ public class PdfxXmlReader
                 getBuffer().append(System.lineSeparator());
                 new Sentence(getJCas(), emptySentenceStart, getBuffer().length()).addToIndexes();
             }
-            new Paragraph(getJCas(), paragraphStart, getBuffer().length()).addToIndexes();
-            paragraphStart = getBuffer().length();
+            new Paragraph(getJCas(), paragraphBegin, getBuffer().length()).addToIndexes();
+            paragraphBegin = getBuffer().length();
         }
 
         @Override
