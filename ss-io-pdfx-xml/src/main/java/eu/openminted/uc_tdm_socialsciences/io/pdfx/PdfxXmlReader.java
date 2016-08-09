@@ -1,6 +1,5 @@
 package eu.openminted.uc_tdm_socialsciences.io.pdfx;
 
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
 import org.apache.uima.UimaContext;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -10,12 +9,16 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.io.xml.XmlTextReader;
 
 /**
  * Reader for PDFX XML format
- *
+ * <br>
+ * schema available at : http://pdfx.cs.man.ac.uk/static/article-schema.xsd
+ * <br>
+ * web-based tool available at : http://pdfx.cs.man.ac.uk/
  */
 @TypeCapability(
         outputs = {
