@@ -99,11 +99,13 @@ public class PdfxXmlReader
                 isInsideSentence = false;
                 if(ATTR_REGION_CLASS_VALUE_UNKNOWN.equals(aAttributes.getValue(ATTR_CLASS)) ||
                         ATTR_REGION_CLASS_VALUE_TEXTCHUNK.equals(aAttributes.getValue(ATTR_CLASS))) {
+                    //paragraph begin
                     paragraphBegin = getBuffer().length();
                     captureText = true;
                     isInsideSentence = true;
                 }
             }else if(TAG_S.equals(aName)){
+                //sentence begin
                 sentenceBegin = getBuffer().length();
             }else if(TAG_MARKER.equals(aName)){
                 if(ATTR_MARKER_TYPE_VALUE_BLOCK.equals(aAttributes.getValue(ATTR_TYPE))){
@@ -127,10 +129,12 @@ public class PdfxXmlReader
                 captureText = false;
             }else if (TAG_REGION.equals(aName)){
                 if(isInsideSentence) {
+                    //end of paragraph
                     makeParagraph();
                     captureText = false;
                 }
             }else if(TAG_S.equals(aName)){
+                //end of sentence
                 new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
                 sentenceBegin = -1;
             }
