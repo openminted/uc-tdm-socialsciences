@@ -93,6 +93,11 @@
 				<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
 				<version>${dkpro.core.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.core.textnormalizer-asl</artifactId>
+				<version>${dkpro.core.version}</version>
+			</dependency>
 			<!-- https://mvnrepository.com/artifact/junit/junit -->
 			<dependency>
 				<groupId>junit</groupId>
