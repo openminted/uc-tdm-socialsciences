@@ -56,3 +56,8 @@ local.properties
 # Code Recommenders
 .recommenders/
 /output/
+
+##Intellij IDEA
+.idea
+.settings
+*.iml
