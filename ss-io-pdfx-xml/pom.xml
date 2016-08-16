@@ -16,7 +16,6 @@
 		<dependency>
 			<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
 			<artifactId>eu.openminted.uc-tdm-socialsciences.kb-preparation</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- Apache HTTPClient -->
 		<dependency>

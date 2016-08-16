@@ -28,6 +28,23 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- submodules-->
+			<dependency>
+				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+				<artifactId>eu.openminted.uc-tdm-socialsciences.kb-preparation</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+				<artifactId>eu.openminted.uc-tdm-socialsciences.tools-experiments</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+				<artifactId>ss-io-pdfx-xml</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<!-- end submodules-->
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 				<artifactId>de.tudarmstadt.ukp.dkpro.core.api.io-asl</artifactId>
