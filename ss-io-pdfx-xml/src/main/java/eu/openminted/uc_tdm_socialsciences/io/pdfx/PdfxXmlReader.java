@@ -17,6 +17,7 @@ import de.tudarmstadt.ukp.dkpro.core.io.xml.XmlTextReader;
  * Reader for PDFX XML format
  * <br>
  * schema available at : http://pdfx.cs.man.ac.uk/static/article-schema.xsd
+ * schema mapping to JATS/NLM DTD available at : http://pdfx.cs.man.ac.uk/serve/pdfx-to-nlm3_v1.2.xsl
  * <br>
  * web-based tool available at : http://pdfx.cs.man.ac.uk/
  */
