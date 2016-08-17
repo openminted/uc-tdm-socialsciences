@@ -21,7 +21,9 @@ public class PdfxXmlCreatorTest {
 	public void test() {
 		Path inputDir = Paths.get(inputPath);
 		try {
-			PdfxXmlCreator.process(inputDir, "");
+			PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
+			pdfxXmlCreator.setOverwriteOutput(true);
+			pdfxXmlCreator.process(inputDir, "");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

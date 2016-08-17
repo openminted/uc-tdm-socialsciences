@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +21,18 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import org.apache.log4j.Logger;
 import util.PDFChecker;
 
 public class PdfxXmlCreator {
+	private static final Logger logger = Logger.getLogger(PdfxXmlCreator.class);
+	private boolean overwriteOutput = false;
 
 	public static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
 
-	public static void process(Path inputDir, String outputDir) throws IOException {
+	public void process(Path inputDir, String outputDir) throws IOException {
 		if (!inputDir.toFile().isDirectory()) {
-			System.err.println("Provided path is no directory.");
+			logger.error("Provided path is no directory.");
 			return;
 		}
 
@@ -36,7 +40,7 @@ public class PdfxXmlCreator {
 		Path out = inputDir.resolve(outputDir);
 		if (!Files.exists(out)) {
 			Files.createDirectory(out);
-			System.out.println("Successfully created output directory " + out.toUri());
+			logger.info("Successfully created output directory " + out.toUri());
 		}
 
 		// process each PDF in the input directory
@@ -58,7 +62,7 @@ public class PdfxXmlCreator {
 		return toProcess;
 	}
 
-	private static void processWithPdfx(File pdf, Path outFile) {
+	private void processWithPdfx(File pdf, Path outFile) {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 
 		HttpEntity entity = getFirstResponse(pdf, httpclient);
@@ -89,7 +93,7 @@ public class PdfxXmlCreator {
 				// System.out.println(response);
 
 				if (response.contains("error")) {
-					System.err.println("Request for " + pdf.getName() + " was unsuccessful: "
+					logger.error("Request for " + pdf.getName() + " was unsuccessful: "
 							+ response.split(":")[1].split("\"")[1]);
 					return;
 				}
@@ -114,12 +118,18 @@ public class PdfxXmlCreator {
 	}
 
 	// TODO decide if overwrite existing or ignore
-	private static void writeToFile(InputStream content, Path outputDir) {
+	private void writeToFile(InputStream content, Path outputDir) {
 		try {
-			Files.copy(content,
-					outputDir/* , StandardCopyOption.REPLACE_EXISTING */);
+			if (overwriteOutput){
+				Files.copy(content,
+						outputDir , StandardCopyOption.REPLACE_EXISTING );
+			}else{
+				Files.copy(content,
+						outputDir);
+			}
 		} catch (FileAlreadyExistsException e) {
-			System.err.println("Output file already exists.");
+			logger.error("Output file ["+e.getFile()+"] already exists. Set 'overwriteOutput' attribute to true " +
+					"to overwrite existing files.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -137,7 +147,7 @@ public class PdfxXmlCreator {
 		try {
 			response = httpclient.execute(httpPost);
 			if (response.getStatusLine().getStatusCode() != 200) {
-				System.err.println("Request for " + pdf.getName() + " was unsuccessful: "
+				logger.error("Request for " + pdf.getName() + " was unsuccessful: "
 						+ response.getStatusLine().getReasonPhrase());
 				return null;
 			}
@@ -148,5 +158,13 @@ public class PdfxXmlCreator {
 		}
 
 		return null;
+	}
+
+	public boolean isOverwriteOutput() {
+		return overwriteOutput;
+	}
+
+	public void setOverwriteOutput(boolean overwriteOutput) {
+		this.overwriteOutput = overwriteOutput;
 	}
 }
