@@ -93,15 +93,14 @@ public class PdfxXmlCreator {
 				MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 				builder.addTextBody("job_id", jobId);
 				builder.addTextBody("client", "web-interface");
-				builder.addTextBody("sent-splitter", "punkt");
+				builder.addTextBody("sent_splitter", "punkt");
 				httpPost.setEntity(builder.build());
 				String response = EntityUtils.toString(httpclient.execute(httpPost).getEntity());
 				// System.out.println(response);
 
 				if (response.contains("error")) {
-					System.err.println(
-							"Request for " + pdf.getName() + " was unsuccessful: "
-									+ response.split(":")[1].split("\"")[1]);
+					System.err.println("Request for " + pdf.getName() + " was unsuccessful: "
+							+ response.split(":")[1].split("\"")[1]);
 					return;
 				}
 
@@ -139,12 +138,11 @@ public class PdfxXmlCreator {
 	private static HttpEntity getFirstResponse(File pdf, CloseableHttpClient httpclient) {
 		HttpPost httpPost = new HttpPost(SERVICE_URL);
 
-		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-		builder.addTextBody("sent-splitter", "punkt");
-		builder.addTextBody("client", "web-interface");
-		builder.addBinaryBody("userfile", pdf, ContentType.create("application/pdf"), pdf.getName());
+		HttpEntity entity = MultipartEntityBuilder.create().addTextBody("sent_splitter", "punkt")
+				.addTextBody("client", "web-interface")
+				.addBinaryBody("userfile", pdf, ContentType.create("application/pdf"), pdf.getName()).build();
 
-		httpPost.setEntity(builder.build());
+		httpPost.setEntity(entity);
 		CloseableHttpResponse response;
 		try {
 			response = httpclient.execute(httpPost);
