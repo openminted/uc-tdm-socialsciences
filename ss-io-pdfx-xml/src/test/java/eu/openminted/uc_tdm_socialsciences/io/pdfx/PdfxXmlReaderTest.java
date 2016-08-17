@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -22,7 +21,7 @@ import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
 public class PdfxXmlReaderTest {
 	public static final String TEST_RESOURCES_PATH = "src/test/resources/";
 
-	public static final String TEST_RESOURCE_ARTICLE1 = "2819-pdfx.xml";
+	public static final String TEST_RESOURCE_ARTICLE1 = "2819.pdf.xml";
 
 	public static final String TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP = "2819-pdfx-appended.xml.dump";
 	public static final String TEST_RESOURCE_ARTICLE2_APPENDED_XML_DUMP = "27939-pdfx-appended.xml.dump";
@@ -76,27 +75,26 @@ public class PdfxXmlReaderTest {
 		return toProcess;
 	}
 
-	@Ignore
+	// @Ignore
+	@Test
 	public void testReadArticle1WithAppendNewLine() throws Exception {
+		// After applying a change to the reader that changes its underlying
+		// jcas, this part should be uncommented
+		// and run once to create a new dump test resource file to be used in
+		// one-way test
+
+		runPipeline(
+				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
+						PdfxXmlReader.PARAM_SOURCE_LOCATION, TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE1,
+						PdfxXmlReader.PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, true),
+				createEngineDescription(CasDumpWriter.class, CasDumpWriter.PARAM_TARGET_LOCATION,
+						TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH, CasDumpWriter.PARAM_SORT, true));
+
 		testOneWay(
 				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
 						PdfxXmlReader.PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, true),
 				TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP, TEST_RESOURCE_ARTICLE1);
 
-		// After applying a change to the reader that changes its underlying
-		// jcas, this part should be uncommented
-		// and run once to create a new dump test resource file to be used in
-		// one-way test
-		/*
-		 * runPipeline( createReaderDescription(PdfxXmlReader.class,
-		 * PdfxXmlReader.PARAM_LANGUAGE, "en",
-		 * PdfxXmlReader.PARAM_SOURCE_LOCATION, TEST_RESOURCE_ARTICLE1_PATH,
-		 * PdfxXmlReader.PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, true),
-		 * createEngineDescription(CasDumpWriter.class,
-		 * CasDumpWriter.PARAM_TARGET_LOCATION,
-		 * TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH,
-		 * CasDumpWriter.PARAM_SORT, true) );
-		 */
 	}
 
 	@Rule
