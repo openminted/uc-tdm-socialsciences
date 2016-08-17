@@ -100,6 +100,7 @@ public class StudyReader {
 			ds.setTitle(title.getString());
 		}
 		System.out.println("create new dataset: " + ds.toString());
+		writer.write(ds);
 
 		Statement varRefStmt = model.getProperty(dataset, ResourceFactory.createProperty(n39 + "variables"));
 		if (varRefStmt != null) {
@@ -111,7 +112,6 @@ public class StudyReader {
 			System.err.println("No variables found for var " + dataset);
 		}
 
-		writer.write(ds);
 	}
 
 	private void followVars(Resource varsRef, Dataset ds) {
