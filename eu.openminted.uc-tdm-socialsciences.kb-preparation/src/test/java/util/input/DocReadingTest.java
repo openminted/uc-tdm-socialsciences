@@ -2,7 +2,7 @@ package util.input;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,43 +18,45 @@ import util.output.DBManager;
 public class DocReadingTest {
 
 	private static String docLocation;
-	private static String shortPaperName;
-	private static String longPaperName;
 
 	@BeforeClass
 	public static void setUp() throws Exception {
-		docLocation = "/pdf/";
-		shortPaperName = "2819.pdf";
-		longPaperName = "29294.pdf";
+		docLocation = "src/test/resources/pdf";
 	}
 
 	@Test
 	public void testDocReader() {
-		DocReader reader = new DocReader(getFile(docLocation).toPath());
+		DocReader reader = new DocReader(Paths.get(docLocation));
 
 		reader.readDocuments(DBManager.getInstance(true).createTables());
 	}
 
 	@Test
 	public void testReadSingleFile() {
-		File docFile = getFile(docLocation + shortPaperName);
+		DocReader reader = new DocReader(Paths.get(docLocation));
+		List<Path> files = reader.getToProcess();
+		Assert.assertTrue(!files.isEmpty());
+		File docFile = files.get(0).toFile();
 		String doc = PDFConverter.convert(docFile, Converter.TIKA);
 		Assert.assertFalse(null == doc || doc.isEmpty());
 	}
 
 	@Test
 	public void testReadSinglePath() {
-		Path docPath = getFile(docLocation + shortPaperName).toPath();
+		DocReader reader = new DocReader(Paths.get(docLocation));
+		List<Path> files = reader.getToProcess();
+		Assert.assertTrue(!files.isEmpty());
+		Path docPath = files.get(0);
 		String doc = PDFConverter.convert(docPath, Converter.TIKA);
 		Assert.assertFalse(null == doc || doc.isEmpty());
 	}
 
 	@Test
 	public void testReadMultipleFiles() {
-		List<Path> docPaths = new ArrayList<Path>();
-		addPathsToList(docPaths, shortPaperName, longPaperName);
+		DocReader reader = new DocReader(Paths.get(docLocation));
+		List<Path> files = reader.getToProcess();
 
-		Map<String, String> docs = PDFConverter.convert(docPaths, Converter.TIKA);
+		Map<String, String> docs = PDFConverter.convert(files, Converter.TIKA);
 
 		Assert.assertFalse(docs.isEmpty());
 
@@ -63,18 +65,5 @@ public class DocReadingTest {
 			Assert.assertFalse(null == entry.getValue());
 			System.out.println(entry.getValue().substring(0, 200));
 		}
-
 	}
-
-	private void addPathsToList(List<Path> docPaths, String... paperNames) {
-		for (String paper : paperNames) {
-			docPaths.add(new File(getClass().getResource(docLocation + paper).getFile()).toPath());
-		}
-
-	}
-
-	private File getFile(String relativePath) {
-		return new File(getClass().getResource(relativePath).getFile());
-	}
-
 }

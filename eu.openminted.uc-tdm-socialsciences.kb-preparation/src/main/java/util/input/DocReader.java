@@ -40,4 +40,8 @@ public class DocReader {
 			}
 		}
 	}
+
+	public List<Path> getToProcess() {
+		return toProcess;
+	}
 }
