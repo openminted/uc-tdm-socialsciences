@@ -47,11 +47,13 @@ public class PdfxXmlReaderTest {
 			System.out.println(filePath);
 			System.out.println(expectedFilePath);
 
+/*
 			runPipeline(
 					createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
 							PdfxXmlReader.PARAM_SOURCE_LOCATION, filePath),
 					createEngineDescription(CasDumpWriter.class, CasDumpWriter.PARAM_TARGET_LOCATION, expectedFilePath,
 							CasDumpWriter.PARAM_SORT, true));
+*/
 
 			String fileName = xml.getFileName().toString();
 			String expectedFileName = fileName + ".dump";
@@ -83,12 +85,14 @@ public class PdfxXmlReaderTest {
 		// and run once to create a new dump test resource file to be used in
 		// one-way test
 
+/*
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE1,
 						PdfxXmlReader.PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, true),
 				createEngineDescription(CasDumpWriter.class, CasDumpWriter.PARAM_TARGET_LOCATION,
 						TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH, CasDumpWriter.PARAM_SORT, true));
+*/
 
 		testOneWay(
 				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
