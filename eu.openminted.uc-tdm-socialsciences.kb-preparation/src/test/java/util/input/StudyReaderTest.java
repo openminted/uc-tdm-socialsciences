@@ -13,13 +13,13 @@ public class StudyReaderTest {
 	@Test
 	@Ignore
 	public void testReadAll() {
-		StudyReader reader = new StudyReader(DBManager.getInstance(true).dropAllTables().createTables());
+		StudyReader reader = new StudyReader(DBManager.getInstance(true).createTables());
 		reader.read(-1);
 	}
 
 	@Test
 	public void testReadN() {
-		StudyReader reader = new StudyReader(DBManager.getInstance(true).dropAllTables().createTables());
-		reader.read(10);
+		StudyReader reader = new StudyReader(DBManager.getInstance(true).createTables());
+		reader.read(4);
 	}
 }
