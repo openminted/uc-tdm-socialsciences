@@ -9,9 +9,7 @@
 
 
 	<modules>
-		<module>
-			eu.openminted.uc-tdm-socialsciences.tools-experiments
-		</module>
+		<module>ss-tools-experiments</module>
 		<module>
 			eu.openminted.uc-tdm-socialsciences.kb-preparation
 		</module>

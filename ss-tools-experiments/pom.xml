@@ -6,7 +6,7 @@
 		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>eu.openminted.uc-tdm-socialsciences.tools-experiments</artifactId>
+	<artifactId>ss-tools-experiments</artifactId>
 
 	<properties>
 		<cermine.version>1.8</cermine.version>

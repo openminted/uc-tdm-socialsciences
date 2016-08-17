@@ -1,4 +1,4 @@
-package pdf_readers;
+package eu.openminted.uc_tdm_socialsciences.tools_experiments.pdf_readers;
 
 import java.io.File;
 import java.io.FileOutputStream;
