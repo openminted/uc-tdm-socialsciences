@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import datamodel.Dataset;
 import datamodel.Variable;
-import util.input.StudyReader;
 
 public class DBWriterTest {
 
@@ -38,35 +37,16 @@ public class DBWriterTest {
 
 	@Test
 	public void testWriteDataset() throws SQLException {
-		writer = DBManager.getInstance(true).dropAllTables().createTables();
+		writer = DBManager.getInstance(true).createTables();
 		writer.write(dataset);
 		writer.write(dataset);
 	}
 
 	@Test
 	public void testWriteVariable() throws SQLException {
-		writer = DBManager.getInstance(true).dropAllTables().createTables();
+		writer = DBManager.getInstance(true).createTables();
 		writer.write(dataset);
 		writer.write(v1, dataset.getId());
 		writer.write(v2, dataset.getId());
-	}
-
-	@Test
-	public void testCreateTables() {
-		writer = DBManager.getInstance(true).dropAllTables().createTables();
-	}
-
-	@Test
-	public void testWriteSingleRealData() {
-		DBManager writer = DBManager.getInstance(true).dropAllTables().createTables();
-		StudyReader reader = new StudyReader(writer);
-
-		reader.readDataset("ZA3779");
-	}
-
-	@Test
-	public void testWriteNRealData() {
-		StudyReader reader = new StudyReader(DBManager.getInstance(true).dropAllTables().createTables());
-		reader.read(10);
 	}
 }
