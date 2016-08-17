@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +27,10 @@ public class PdfxXmlCreator {
 	public static final String OUTPUT_RESOURCE_DIR_NAME = "pdfx-out";
 	public static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
 
-	public static void main(String[] args) throws IOException {
-		if (args.length != 1) {
-			System.out.println("Please provide path to pdf dir as parameter. Exiting...");
-			System.exit(0);
-		}
-
-		// take argument as input directory
-		Path inputDir = Paths.get(args[0]);
+	public static void process(Path inputDir) throws IOException {
 		if (!inputDir.toFile().isDirectory()) {
 			System.err.println("Provided path is no directory.");
-			System.exit(0);
+			return;
 		}
 
 		// create output directory
@@ -55,7 +47,6 @@ public class PdfxXmlCreator {
 			// TODO: process each pdf in own thread?
 			processWithPdfx(pdffile.toFile(), out);
 		}
-
 	}
 
 	private static List<Path> getPdfsFromDir(Path inputDir) {
