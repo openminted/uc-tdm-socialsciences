@@ -24,28 +24,27 @@ import util.PDFChecker;
 
 public class PdfxXmlCreator {
 
-	public static final String OUTPUT_RESOURCE_DIR_NAME = "pdfx-out";
 	public static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
 
-	public static void process(Path inputDir) throws IOException {
+	public static void process(Path inputDir, String outputDir) throws IOException {
 		if (!inputDir.toFile().isDirectory()) {
 			System.err.println("Provided path is no directory.");
 			return;
 		}
 
 		// create output directory
-		Path outputDir = inputDir.resolve(OUTPUT_RESOURCE_DIR_NAME);
-		if (!Files.exists(outputDir)) {
-			Files.createDirectory(outputDir);
-			System.out.println("Successfully created output directory " + outputDir.toUri());
+		Path out = inputDir.resolve(outputDir);
+		if (!Files.exists(out)) {
+			Files.createDirectory(out);
+			System.out.println("Successfully created output directory " + out.toUri());
 		}
 
 		// process each PDF in the input directory
 		List<Path> pdffiles = getPdfsFromDir(inputDir);
 		for (Path pdffile : pdffiles) {
-			Path out = outputDir.resolve(pdffile.getFileName() + ".xml");
+			Path outFile = out.resolve(pdffile.getFileName() + ".xml");
 			// TODO: process each pdf in own thread?
-			processWithPdfx(pdffile.toFile(), out);
+			processWithPdfx(pdffile.toFile(), outFile);
 		}
 	}
 
@@ -75,9 +74,9 @@ public class PdfxXmlCreator {
 					resultPos = 4;
 				}
 
-				String progressUrl = SERVICE_URL + (body.split(":")[1]).split("\"")[1];
-				String jobId = (body.split(":")[2]).split("\"")[1];
-				String resultUrl = SERVICE_URL + (body.split(":")[resultPos]).split("\"")[1];
+				String progressUrl = SERVICE_URL + body.split(":")[1].split("\"")[1];
+				String jobId = body.split(":")[2].split("\"")[1];
+				String resultUrl = SERVICE_URL + body.split(":")[resultPos].split("\"")[1];
 
 				// second post
 				HttpPost httpPost = new HttpPost(SERVICE_URL);

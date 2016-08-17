@@ -2,7 +2,6 @@ package eu.openminted.uc_tdm_socialsciences.io.pdfx;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -15,17 +14,14 @@ public class PdfxXmlCreatorTest {
 
 	@Before
 	public void setUp() throws URISyntaxException {
-		String docFolder = "documents";
-		URL docFolderURL = getClass().getClassLoader().getResource(docFolder);
-		// inputPath = new File(docFolderURL.toURI()).getAbsolutePath();
-		inputPath = "src/test/resources/documents";
+		inputPath = "src/test/resources";
 	}
 
 	@Test
 	public void test() {
 		Path inputDir = Paths.get(inputPath);
 		try {
-			PdfxXmlCreator.process(inputDir);
+			PdfxXmlCreator.process(inputDir, "");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
