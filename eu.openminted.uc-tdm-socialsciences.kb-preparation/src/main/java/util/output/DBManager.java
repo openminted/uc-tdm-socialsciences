@@ -227,17 +227,29 @@ public class DBManager {
 
 			String sql = "SELECT " + ID + " FROM " + DATASETS + " WHERE " + EXT_ID + "='" + datasetID + "'";
 			ResultSet rs = conn.createStatement().executeQuery(sql);
+			if (rs.isClosed()) {
+				close(ps);
+				return;
+			}
 			rs.next();
 			int foreignStudy = rs.getInt(1);
 
 			sql = "SELECT " + ID + " FROM " + DOCUMENTS + " WHERE " + NAME + "='" + paperRef + ".pdf'";
 			rs = conn.createStatement().executeQuery(sql);
+			if (rs.isClosed()) {
+				close(ps);
+				return;
+			}
 			rs.next();
 			int foreignPaper = rs.getInt(1);
 
 			sql = "SELECT " + ID + " FROM " + VARIABLES + " WHERE " + NAME + "='" + varRef + "' and " + DATASET_ID + "="
 					+ foreignStudy;
 			rs = conn.createStatement().executeQuery(sql);
+			if (rs.isClosed()) {
+				close(ps);
+				return;
+			}
 			rs.next();
 			int foreignVar = rs.getInt(1);
 
