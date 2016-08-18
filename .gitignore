@@ -12,7 +12,6 @@ target/
 
 ##Intellij IDEA
 .idea
-.settings
 /*.iml
 ##Generic
-/target/
+/grobid.log
