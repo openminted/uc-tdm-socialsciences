@@ -33,6 +33,7 @@ public class PdfxXmlCreator {
     public static final String REQUEST_PARAM_SENT_SPLITTER_VALUE_PUNKT = "punkt";
     public static final String REQUEST_PARAM_USERFILE = "userfile";
     public static final String REQUEST_PARAM_USERFILE_TYPE_APPLICATION_PDF = "application/pdf";
+    public static final String REQUEST_RESPONSE_VALUE_ERROR = "error";
     private boolean overwriteOutput = false;
 
     public static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
@@ -51,14 +52,14 @@ public class PdfxXmlCreator {
         }
 
         // process each PDF in the input directory
-        List<Path> pdfFiles = getPdfsFromDir(inputDir);
+        List<Path> pdfFiles = getPdfListFromDirectory(inputDir);
         for (Path pdfFile : pdfFiles) {
             Path outFile = out.resolve(pdfFile.getFileName() + ".xml");
             processWithPdfx(pdfFile.toFile(), outFile);
         }
     }
 
-    private static List<Path> getPdfsFromDir(Path inputDir) {
+    private static List<Path> getPdfListFromDirectory(Path inputDir) {
         List<Path> toProcess = new ArrayList<>();
         try {
             Files.walk(inputDir).filter(Files::isRegularFile).filter(PDFChecker::isPDFFile).forEach(toProcess::add);
@@ -103,7 +104,7 @@ public class PdfxXmlCreator {
                 String response = EntityUtils.toString(httpclient.execute(httpPost).getEntity());
                 // System.out.println(response);
 
-                if (response.contains("error")) {
+                if (response.contains(REQUEST_RESPONSE_VALUE_ERROR)) {
                     logger.error("Request for " + pdf.getName() + " was unsuccessful: "
                             + response.split(":")[1].split("\"")[1]);
                     return;
@@ -147,6 +148,7 @@ public class PdfxXmlCreator {
     }
 
     private static HttpEntity getFirstResponse(File pdf, CloseableHttpClient httpclient) {
+        HttpEntity result = null;
         HttpPost httpPost = new HttpPost(SERVICE_URL);
 
         HttpEntity entity = MultipartEntityBuilder.create().
@@ -162,15 +164,14 @@ public class PdfxXmlCreator {
             if (response.getStatusLine().getStatusCode() != 200) {
                 logger.error("Request for " + pdf.getName() + " was unsuccessful: "
                         + response.getStatusLine().getReasonPhrase());
-                return null;
             }
 
-            return response.getEntity();
+            result = response.getEntity();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return result;
     }
 
     public boolean isOverwriteOutput() {
