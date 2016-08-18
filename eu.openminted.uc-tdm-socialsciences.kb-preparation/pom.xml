@@ -7,7 +7,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<!-- <groupId>eu.openminted.uc-tdm-socialsciences</groupId> <version>0.0.1-SNAPSHOT</version> -->
-	<artifactId>eu.openminted.uc-tdm-socialsciences.kb-preparation</artifactId>
+	<artifactId>ss-kb-preparation</artifactId>
 	<properties>
 		<dkpro.core.version>1.8.0</dkpro.core.version>
 	</properties>
