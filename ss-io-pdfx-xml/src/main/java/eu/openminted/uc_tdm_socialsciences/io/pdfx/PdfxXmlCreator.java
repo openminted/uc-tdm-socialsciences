@@ -48,7 +48,7 @@ public class PdfxXmlCreator {
 
     public void process(Path inputDirectoryPath, Path outputDirectoryPath) throws IOException {
         logger.info("PdfxXmlCreator process stated...");
-        logger.info("Output directory: " + inputDirectoryPath.toUri());
+		logger.info("Input directory: " + inputDirectoryPath.toUri());
         logger.info("Output directory: " + outputDirectoryPath.toUri());
 
         if (!inputDirectoryPath.toFile().isDirectory()) {
