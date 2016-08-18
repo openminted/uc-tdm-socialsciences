@@ -68,7 +68,7 @@ public class Application {
 					.createEngineDescription(BreakIteratorSegmenter.class);
 
 			/*
-			 * remove stop words TODO model??
+			 * remove hyphens TODO model??
 			 */
 			final AnalysisEngineDescription hyphenRemover = AnalysisEngineFactory
 					.createEngineDescription(HyphenationRemover.class, HyphenationRemover.PARAM_MODEL_LOCATION, "?");
