@@ -22,7 +22,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import org.apache.log4j.Logger;
-import util.PDFChecker;
+
+import eu.openminted.uc_tdm_socialsciences.kb.preparation.util.PDFChecker;
 
 public class PdfxXmlCreator {
     private static final Logger logger = Logger.getLogger(PdfxXmlCreator.class);
