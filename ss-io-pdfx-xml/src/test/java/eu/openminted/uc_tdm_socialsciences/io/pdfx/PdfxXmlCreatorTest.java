@@ -19,11 +19,10 @@ public class PdfxXmlCreatorTest {
 
 	@Test
 	public void test() {
-		Path inputDir = Paths.get(inputPath);
 		try {
 			PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
 			pdfxXmlCreator.setOverwriteOutput(true);
-			pdfxXmlCreator.process(inputDir, "");
+			pdfxXmlCreator.process(inputPath, "");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

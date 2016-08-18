@@ -3,10 +3,7 @@ package eu.openminted.uc_tdm_socialsciences.io.pdfx;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,29 +38,36 @@ public class PdfxXmlCreator {
 
     private boolean overwriteOutput = false;
 
-    public void process(Path inputDir, String outputDir) throws IOException {
-        logger.info("PdfxXmlCreator process stated...");
-        logger.info("Output directory: " + inputDir.toUri());
-        logger.info("Output directory: " + outputDir);
+    public void process(String inputDirectory, String outputDirectory) throws IOException {
+        Path inputDirectoryPath = Paths.get(inputDirectory);
+        //create output directory inside input directory
+        Path outputDirectoryPath = inputDirectoryPath.resolve(outputDirectory);
 
-        if (!inputDir.toFile().isDirectory()) {
+        process(inputDirectoryPath, outputDirectoryPath);
+    }
+
+    public void process(Path inputDirectoryPath, Path outputDirectoryPath) throws IOException {
+        logger.info("PdfxXmlCreator process stated...");
+        logger.info("Output directory: " + inputDirectoryPath.toUri());
+        logger.info("Output directory: " + outputDirectoryPath.toUri());
+
+        if (!inputDirectoryPath.toFile().isDirectory()) {
             //todo throw exception
-            logger.error("Provided path is not a directory: " + inputDir.toUri());
+            logger.error("Provided path is not a directory: " + inputDirectoryPath.toUri());
             return;
         }
 
         // create output directory
-        Path out = inputDir.resolve(outputDir);
-        if (!Files.exists(out)) {
-            Files.createDirectory(out);
-            logger.info("Successfully created output directory: " + out.toUri());
+        if (!Files.exists(outputDirectoryPath)) {
+            Files.createDirectory(outputDirectoryPath);
+            logger.info("Successfully created output directory: " + outputDirectoryPath.toUri());
         }
 
         // process each PDF in the input directory
-        List<Path> pdfFiles = getPdfListFromDirectory(inputDir);
+        List<Path> pdfFiles = getPdfListFromDirectory(inputDirectoryPath);
         logger.info(pdfFiles.size() + " pdf files found.");
         for (Path pdfFile : pdfFiles) {
-            Path outFile = out.resolve(pdfFile.getFileName() + ".xml");
+            Path outFile = outputDirectoryPath.resolve(pdfFile.getFileName() + ".xml");
             processWithPdfx(pdfFile.toFile(), outFile);
         }
 
@@ -141,9 +145,11 @@ public class PdfxXmlCreator {
             if (overwriteOutput) {
                 Files.copy(content,
                         outputFilePath, StandardCopyOption.REPLACE_EXISTING);
+                logger.info("File [" + outputFilePath.toUri() + "] created.");
             } else {
                 Files.copy(content,
                         outputFilePath);
+                logger.info("File [" + outputFilePath.toUri() + "] created.");
             }
         } catch (FileAlreadyExistsException e) {
             logger.error("Output file [" + e.getFile() + "] already exists. Set 'overwriteOutput' attribute to true " +
@@ -189,9 +195,8 @@ public class PdfxXmlCreator {
         builder.addTextBody(REQUEST_PARAM_CLIENT, REQUEST_PARAM_CLIENT_VALUE_WEB_INTERFACE);
         builder.addTextBody(REQUEST_PARAM_SENT_SPLITTER, REQUEST_PARAM_SENT_SPLITTER_VALUE_PUNKT);
         httpPost.setEntity(builder.build());
-        HttpEntity httpEntity = httpclient.execute(httpPost).getEntity();
 
-        return httpEntity;
+        return httpclient.execute(httpPost).getEntity();
     }
 
     public static boolean isHttpResponseSuccessful(CloseableHttpResponse response){
