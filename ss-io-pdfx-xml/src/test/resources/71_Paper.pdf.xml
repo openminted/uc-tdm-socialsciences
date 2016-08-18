@@ -1,0 +1,617 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
+  <meta>
+    <job>da2cf9d5c9c893a218c1ec7b422a8109ae16596a50879b61992bfa6a5d19713d</job>
+    <base_name>ks</base_name>
+    <doi confidence="possible" alt_doi="http://dx.doi.org/10.1002/14651858.cd000340.pub2">http://dx.doi.org/10.1002/14651858.cd000340</doi>
+    <warning>Name identification was not possible. </warning>
+  </meta>
+  <article>
+    <front class="DoCO:FrontMatter">
+      <title-group>
+        <article-title class="DoCO:Title" id="2"><s id="1" sid="1">The CIRDO Corpus: Comprehensive Audio/Video Database of Domestic Falls of Elderly People</s></article-title>
+      </title-group>
+    </front>
+    <body class="DoCO:BodyMatter">
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="3" page="1" column="1">M. Vacher, S. Bouakaz, M.-E. Bobillier Chaumon, F. Aman, R. A. Khan, S. Bekkadja, F. Portet, E. Guillou, S. Rossato, B. Lecouteux</h1>
+        <region class="DoCO:TextChunk" id="9" confidence="possible" page="1" column="1"><s id="4" sid="2">CNRS, LIG, F-38000 Grenoble, France Univ.</s><s id="5" sid="3"> Grenoble Alpes, LIG, F-38000, Grenoble, France LIRIS, UMR 5205 CNRS/Université Claude Bernard Lyon 1, F-69622 Villeurbanne, France GRePS, Université Lyon 2, F-69676 Bron, France <email id="6">Michel.Vacher@imag.fr</email>, <email id="7">saida.bouakaz@univ-lyon1.fr</email>, <email id="8">marc-eric.bobillier-chaumon@univ-lyon2.fr</email></s></region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="10" confidence="possible" page="1" column="1">IRDO</h1>
+        <region class="unknown" id="11" page="1" column="1">Abstract Ambient Assisted Living aims at enhancing the quality of life of older and disabled people at home thanks to Smart Homes. In particular, regarding elderly living alone at home, the detection of distress situation after a fall is very important to reassure this kind of population. However, many studies do not include tests in real settings, because data collection in this domain is very expensive and challenging and because of the few available data sets. The C corpus is a dataset recorded in realistic conditions in D , a fully equipped Smart Home with microphones and home automation sensors, in which participants performed scenarios including real falls on a carpet and calls for help. These scenarios were elaborated thanks to a field study involving elderly persons. Experiments related in a first part to distress detection in real-time using audio and speech analysis and in a second part to fall detection using video analysis are presented. Results show the difficulty of the task. The database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance. Keywords: audio and video data set, multimodal corpus, natural language and multimodal interaction, Ambient Assisted Living (AAL), distress situation.</region>
+      </section>
+      <section class="deo:Introduction">
+        <h1 class="DoCO:SectionTitle" id="12" page="1" column="1">1. Introduction</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="25" page="1" column="1"><s id="13" sid="4">Twenty first century is witnessing a rapid growth in population over 65 years old worldwide (Who, 2013).</s><s id="14" sid="5"> This change in demography put pressure on governments which are incurring unprecedented expenditure to support ageing population since ageing is correlated with an increase in health and daily living support.</s><s id="15" sid="6"> For instance, in France, 12 million out of 66 million people are receiving the per- sonalized allocation of autonomy (PAA) 1 , a government financial aid for elderly person to support them in their daily life.</s><s id="16" sid="7"> This demographic change is very challenging to the society, governments and to technologists to come up with reliable and sustainable solutions to help ageing population to live as independently and safely as possible while reliev- ing their family’s emotional and financial burden.</s><s id="17" sid="8"> However this trend also provides the opportunity to come up with technologies that can help ageing population to carry on with their lives without compromising their privacy and at the same time provide assistance to caregivers i.e.</s><s id="18" sid="9"> nurse, partner, children etc.</s><s id="19" sid="10"> One of the main sources of stress in the ageing population for which technology can be of help is the fall incident.</s><s id="20" sid="11"> Indeed fall is a major source of injury for elderly people, between 20 and 40 percent of adults over 65 who live at home fall (Saim, 2014).</s><s id="21" sid="12"> Fall could lead elderly persons to faint or become unconscious.</s><s id="22" sid="13"> Another emergency situation is the inability to call for a help in distress situation of some aged persons due to their reduced mobility.</s><s id="23" sid="14"> In the absences of another person in the home (such as a carer), these situations could have disastrous effect.</s><s id="24" sid="15"> Several studies had worked on an ICT solutions to bring autonomy and security back to the user (Popescu et al., 2008;</s></region>
+      <region class="DoCO:TextChunk" id="27" confidence="possible" page="1" column="1"><s id="26" sid="16">1 This allowance from the state is given to people over 60 years old in loss of autonomy</s></region>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="28" confidence="possible" page="1" column="2">OMUS</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="53" page="1" column="2"><s id="29" sid="17">Hamill et al., 2009; Young and Mihailidis, 2010; Bloch et al., 2011).</s><s id="30" sid="18"> These studies have followed the paradigm shift in Human Computer Interaction design, from computer- centred designs to human-centred designs (Pantic et al., 2006).</s><s id="31" sid="19"> Thus reliable and robust analysis of ageing population’s gesture and voice has become inevitable in many application areas, such as social robots, emergency situation detection, behaviour monitoring, communication support, etc.</s><s id="32" sid="20"> Since many of these studies are based on statisti- cal analysis (either for modelling or for machine learning), there is a dire need of databases of audio and video recordings to build and evaluate performance of systems that can analyse ageing population’s gesture and voice.</s><s id="33" sid="21"> Indeed evaluation and benchmarking of systems / algorithms must be performed on standardized and accessible databases for meaningful comparison.</s><s id="34" sid="22"> In the absence of comparative tests on such standardized databases it is difficult to exhibits the relative strengths and weaknesses of these systems.</s><s id="35" sid="23"> To the best of our knowledge there exists no such database that has video with audio recordings of aged persons during fall and distress situations while it is recognised as one of the major problem in the evaluation of fall detectors (Igual et al., 2013).</s><s id="36" sid="24"> Young and Mihailidis (Young and Mihailidis, 2013) have collected a corpus of spontaneous speech, read sentences, and emergency scenarios from adult actors aged 23–91 years but it is in English and do not contain videos recording.</s><s id="37" sid="25"> This could be due to the fact that it is very difficult to setup a camera and microphone to record such events.</s><s id="38" sid="26"> Secondly, there is an ethical issue associated with recording aged person in distress situation and later making it available to pub- lic.</s><s id="39" sid="27"> Very few studies were able to record real falls of elderly persons (Kangas et al., 2012; Klenk et al., 2011) but those were only concerned with accelerometer sensors.</s><s id="40" sid="28"> To overcome this bottleneck in the research and development<marker type="page" number="2"/><marker type="column" number="1"/><marker type="block"/> of emergency situation detectors, we introduce the C IRDO database which is part of the C IRDO project (Bouakaz et al., 2014) whose aim was to develop an audio/video emergency detection system for elderly persons.</s><s id="50" sid="29"> The C IRDO database contains video with audio (French language) recordings of aged persons during falls and distress situations.</s><s id="51" sid="30"> C IRDO database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance.</s><s id="52" sid="31"> In this article, we provide all the details related to various steps that have been carried out to record data in such a challenging situation.</s></region>
+      <outsider class="DoCO:TextBox" type="page_nr" id="42" page="1" column="2">1389</outsider>
+      <region class="DoCO:FigureBox" id="F1">
+        <image class="DoCO:Figure" src="ks.page_002.image_01.png" thmb="ks.page_002.image_01-thumb.png"/>
+        <image class="DoCO:Figure" src="ks.page_002.image_02.png" thmb="ks.page_002.image_02-thumb.png"/>
+        <caption class="deo:Caption" id="45" page="2" column="1"><s id="44" sid="32">Figure 1: (a) Experimental room of the LIG with its equipment and (b) screen shot of a young participant wearing a simulator during the training phase.</s></caption>
+      </region>
+      <region class="DoCO:TableBox" id="Tx46">
+        <content>
+          <table class="DoCO:Table" number="1" page="2">
+            <thead class="table">
+              <tr class="table">
+                <th class="table"> Reference</th>
+                <th class="table"> Age</th>
+                <th class="table"> Sex</th>
+                <th class="table"> Reference</th>
+                <th class="table"> Age</th>
+                <th class="table"> Sex</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table">
+                <td class="table"> Y01</td>
+                <td class="table"> 30</td>
+                <td class="table"> M</td>
+                <td class="table"> Y07</td>
+                <td class="table"> 52</td>
+                <td class="table"> M</td>
+              </tr>
+              <tr class="table">
+                <td class="table"> Y02</td>
+                <td class="table"> 24</td>
+                <td class="table"> F</td>
+                <td class="table"> Y08</td>
+                <td class="table"> 28</td>
+                <td class="table"> M</td>
+              </tr>
+              <tr class="table">
+                <td class="table"> S01</td>
+                <td class="table"> 83</td>
+                <td class="table"> F</td>
+                <td class="table"> S04</td>
+                <td class="table"> 66</td>
+                <td class="table"> M</td>
+              </tr>
+              <tr class="table">
+                <td class="table"> Y03</td>
+                <td class="table"> 29</td>
+                <td class="table"> M</td>
+                <td class="table"> Y09</td>
+                <td class="table"> 52</td>
+                <td class="table"> F</td>
+              </tr>
+              <tr class="table">
+                <td class="table"> S02</td>
+                <td class="table"> 64</td>
+                <td class="table"> F</td>
+                <td class="table"> Y10</td>
+                <td class="table"> 23</td>
+                <td class="table"> M</td>
+              </tr>
+              <tr class="table">
+                <td class="table"> S03</td>
+                <td class="table"> 61</td>
+                <td class="table"> M</td>
+                <td class="table"> Y11</td>
+                <td class="table"> 40</td>
+                <td class="table"> F</td>
+              </tr>
+              <tr class="table">
+                <td class="table"> Y04</td>
+                <td class="table"> 44</td>
+                <td class="table"> M</td>
+                <td class="table"> Y12</td>
+                <td class="table"> 40</td>
+                <td class="table"> F</td>
+              </tr>
+              <tr class="table">
+                <td class="table"> Y05</td>
+                <td class="table"> 16</td>
+                <td class="table"> M</td>
+                <td class="table"> Y13</td>
+                <td class="table"> 25</td>
+                <td class="table"> F</td>
+              </tr>
+              <tr class="table">
+                <td class="table"> Y06</td>
+                <td class="table"> 16</td>
+                <td class="table"> M</td>
+                <td class="table"></td>
+                <td class="table"></td>
+                <td class="table"></td>
+              </tr>
+            </tbody>
+          </table>
+        </content>
+        <region class="TableInfo" id="47" confidence="possible" page="2" column="1">Reference Age Sex Reference Age Sex Y01 30 M Y07 52 M Y02 24 F Y08 28 M S01 83 F S04 66 M Y03 29 M Y09 52 F S02 64 F Y10 23 M S03 61 M Y11 40 F Y04 44 M Y12 40 F Y05 16 M Y13 25 F Y06 16 M</region>
+        <caption class="deo:Caption" id="49" page="2" column="1"><s id="48" sid="33">Table 1: Characteristics of the participants of the records (Sxx: senior people - Yxx: younger people)</s></caption>
+      </region>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="54" page="2" column="1">2. Data Acquisition</h1>
+        <region class="DoCO:TextChunk" id="62" page="2" column="1"><s id="55" sid="34">Recording sessions were based on written scenarios.</s><s id="56" sid="35"> These scenarios were well elaborated thanks to a field study involving 15 elderly persons (Bobillier-Chaumon et al., 2012).</s><s id="57" sid="36"> Four scenarios were related to fall (F1 to F4), one to blocked hip (B) and two were true negative (TN1 and TN2).</s><s id="58" sid="37"> Recording sessions were conducted in the D OMUS smart room of the LIG laboratory configured to look like a standard room (chairs, carpet, coffee table, TV.</s><s id="59" sid="38"> .</s><s id="60" sid="39"> .</s><s id="61" sid="40"> ).</s></region>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="63" page="2" column="1">2.1. Participants</h2>
+          <region class="DoCO:TextChunk" id="73" page="2" column="1"><s id="64" sid="41">Ideally scenarios should be played by elderly people.</s><s id="65" sid="42"> However, it is cumbersome to find elder person who is capa- ble and willing to play such scenarios (refer Section 2.2.).</s><s id="66" sid="43"> To record realistic data (but not necessarily played by elder person), people under 60 were recruited.</s><s id="67" sid="44"> Then, these vol- unteers were instructed to wear an equipment i.e.</s><s id="68" sid="45"> old age simulator (see <xref ref-type="fig" rid="F1" id="69" class="deo:Reference">Figure 1</xref>).</s><s id="70" sid="46"> Old age simulator hampered mobility, reduced vision and hearing.</s><s id="71" sid="47"> Overall 17 participants were recruited (9 men and 8 women) with mean age of 40 years (SD 19.5).</s><s id="72" sid="48"> Among them 13 people were under 60 and worn the simulator.</s></region>
+          <region class="DoCO:FigureBox" id="F2">
+            <image class="DoCO:Figure" src="ks.page_002.image_03.png" thmb="ks.page_002.image_03-thumb.png"/>
+            <caption class="deo:Caption" id="76" page="2" column="2"><s id="75" sid="49">Figure 2: Excerpt of 2 video records showing each the fall of an elderly participant.</s></caption>
+          </region>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="77" page="2" column="2">2.2. Experimental Protocol</h2>
+          <region class="DoCO:TextChunk" id="89" page="2" column="2"><s id="78" sid="50">Each participant was introduced to the context of the research and was invited to sign a consent form.</s><s id="79" sid="51"> The participants played five types of fall chosen from 28 risky situations identified as: slip, stumble, falls in a stationary position and a position of hip blocked on the sofa.</s><s id="80" sid="52"> <xref ref-type="fig" rid="F2" id="81" class="deo:Reference">Figure 2</xref> shows two elderly participants when they fall on the carpet.</s><s id="82" sid="53"> These situations were selected because they were represen- tative falls in domestic environment and could be played safely.</s><s id="83" sid="54"> Two other scenarios, called “true-false”, were added for the evaluation and verification of automatic fall detection.</s><s id="84" sid="55"> The first “true-false” situation consists of a rapid ac- tion of picking up of magazines from the floor (close to a situation of fall), while the second was to try to hold a remote control from the coffee table when the person is sit- ting on sofa (close to a situation in which the person has a blocked hip).</s><s id="85" sid="56"> Scenarios included call for help sentences.</s><s id="86" sid="57"> These sentences were chosen based on sentences identified during the field study and on sentences extracted from the AD80 corpus (Aman et al., 2013) which was built with the aim of elderly voice study.</s><s id="87" sid="58"> <xref ref-type="table" rid="T2" id="88" class="deo:Reference">Table 2</xref> gives some examples.</s></region>
+        </section>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="90" confidence="possible" page="2" column="2">Distress Sentence AD80 Sentence Aïe aïe aïe Aidez-moi Oh là Au secours Merde e-lio, appelle du secours Je suis tombé e-lio appelle ma fille Je peux pas me relever Appelle quelqu’un e-lio Qu’est-ce qu’il m’arrive e-lio, appelle quelqu’un Aïe ! J’ai mal e-lio appelle ma fille Oh là ! Je saigne ! Je me suis blessé e-lio appelle le SAMU</h1>
+        <region class="DoCO:TableBox" id="T2">
+          <caption class="deo:Caption" id="92" page="2" column="2"><s id="91" sid="59">Table 2: Some examples sentences [in French] identified for inclusion in the scenarios</s></caption>
+        </region>
+        <region class="DoCO:TextChunk" id="116" page="2" column="2"><s id="93" sid="60">Before each recording session, the experimenter explained the scenario to the participant.</s><s id="94" sid="61"> Scenario has following sub- components: physical location, time of the day, activity (what the person intends to do and what eventually hap- pens), gesture (way of falling), and the spoken sentences.</s><s id="95" sid="62"> The participant rehearsed the scenario several times before final acquisition of data.</s><s id="96" sid="63"> On average, the duration of acquisition was 2 hours and 30 minutes per person.</s><marker type="block"/> <s id="98" sid="64">2.3.</s><s id="99" sid="65"> Equipment and Tools The studio and the equipment used are shown in <xref ref-type="fig" rid="F1" id="100" class="deo:Reference">Figure 1</xref>.</s><s id="101" sid="66"> Moreover, the DOMUS smart home was equipped with the<marker type="page" number="3"/><marker type="column" number="1"/><marker type="block"/> social inclusion product e-lio 2 .</s><s id="104" sid="67"> Regarding audio analysis, we conducted a multi-source capture with two wireless Sennheiser microphones.</s><s id="105" sid="68"> A eW-300-G2 type ME2 microphone was placed on the sus- pended ceiling of the studio, and a SKM-300-G2 microphone was placed on a furniture close to the participant.</s><s id="106" sid="69"> The recording was performed in the technical room by a computer connected to the microphones high-frequency re- ceivers by National Instruments PCI-6220 8-channel card.</s><s id="107" sid="70"> A loudspeaker in the control room enabled experimenters to hear the progression of the scene in the studio.</s><s id="108" sid="71"> The National Instruments PCI-6220 card was controlled by the StreamHIS software (Vacher et al., 2011) developed by the GETALP team that enables data acquisition.</s><s id="109" sid="72"> Regarding video analysis, we conducted the video capture with two webcam cameras (Sony PSEye: 640x480 60Hz connected by a USB 2.0).</s><s id="110" sid="73"> Cameras were fixed to the wall, one in front of the Sofa and other at an angle of 45 degrees.</s><s id="111" sid="74"> Moreover, we acquired depth image with Microsoft Kinect.</s><s id="112" sid="75"> Synchronization and recording of video streams from all three cameras were performed in the technical room by computer (Intel i3 3.2GHz, 4GB RAM, NVidia GeForce GTS 450 512MB).</s><s id="113" sid="76"> The tools that enable video acquisition was developed by the team SAARA (based on the OpenCV library).</s><s id="114" sid="77"> Video processing (background learning and subtraction, body parts segmentation) was performed on a PC cluster, taking advantage of algorithms parallelization on CPU and GPU.</s><s id="115" sid="78"> Motion tracking and identification of haz- ardous situations was done on a PC (Intel i7 3.5GHz, 4GB RAM, NVIDIA GTX 660 4GB GeFore).</s></region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="103" page="2" column="2">1390</outsider>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="117" page="3" column="1">3. The Acquired Corpus</h1>
+        <region class="DoCO:TextChunk" id="124" page="3" column="1"><s id="118" sid="79">The C IRDO corpus is divided into three parts, the audio corpus for sound and speech analysis, the video corpus and a third part with the annotations.</s><s id="119" sid="80"> The corpus is detailed in Sections 3.1. and 3.2..</s><s id="120" sid="81"> The audio and video corpus was annotated for the video part, with the Advene software 3 , developed at the LIRIS laboratory, and for the sound part, with Transcriber.</s><s id="121" sid="82"> The C IRDO corpus is a web-based data library, hosted at LIRIS and accessible for the academic and research pur- pose.</s><s id="122" sid="83"> The license to use the C IRDO corpus is granted on a case-by-case basis.</s><s id="123" sid="84"> We can also grant permission to researchers to extend the corpus given they fulfil the required conditions and sign agreement.</s></region>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="125" page="3" column="1">3.1. Audio Corpus</h2>
+          <region class="DoCO:TextChunk" id="132" page="3" column="1"><s id="126" sid="85">When they played the scenarios, some participants produced sighs, grunts, coughs, cries, groans, panting or throat clearings.</s><s id="127" sid="86"> As our current studies are in the domain of automatic speech recognition, these sounds were not considered during the annotation process, but this can be done in the framework of future studies.</s><s id="128" sid="87"> In the same way, speeches mixed with sound produced by the fall were ignored.</s><s id="129" sid="88"> At the end, each speaker uttered between 10 and 65 short sentences or interjections (“ah”, “oh”, “aïe”, etc.)</s><s id="130" sid="89"> as shown <xref ref-type="table" rid="T3" id="131" class="deo:Reference">Table 3</xref>.</s></region>
+          <region class="unknown" id="135" page="3" column="1">2 <ext-link ext-link-type="uri" href="http://www.technosens.fr" id="133">http://www.technosens.fr</ext-link> 3 <ext-link ext-link-type="uri" href="http://liris.cnrs.fr/advene/" id="134">http://liris.cnrs.fr/advene/</ext-link></region>
+          <region class="unknown" id="136" page="3" column="2">All Call for help</region>
+        </section>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="137" confidence="possible" page="3" column="2">Nb. of interjections Spk. or short sentences Size (s) Y01 22 14 37.59 Y02 16 15 27.51 Y03 24 21 35.59 Y04 25 15 43.97 Y05 32 21 38.16 Y06 19 15 48.25 Y07 12 12 18.75 Y08 15 12 23.58 Y09 23 21 39.86 Y10 20 19 29.83 Y11 29 27 43.96 Y12 24 21 33.54 Y13 17 14 25.32 S01 65 53 92.07 S02 23 19 31.21 S03 23 21 26.02 S04 24 21 50.33 ALL 413 341 645.54</h1>
+        <region class="DoCO:TableBox" id="T3">
+          <caption class="deo:Caption" id="139" page="3" column="2"><s id="138" sid="90">Table 3: Composition of the audio corpus Cirdo-set</s></caption>
+          <content>
+            <h1 class="table"> No Occurrence number of each scenario Time</h1>
+            <table class="DoCO:Table" number="4" page="3">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"></th>
+                  <th class="table"> F1</th>
+                  <th class="table"> F2</th>
+                  <th class="table"> F3</th>
+                  <th class="table"> F4</th>
+                  <th class="table"> B</th>
+                  <th class="table"> TN1</th>
+                  <th class="table"> TN2</th>
+                  <th class="table"></th>
+                </tr>
+                <tr class="table">
+                  <th class="table"> Y01</th>
+                  <th class="table"> 1</th>
+                  <th class="table"> 2</th>
+                  <th class="table"> 1</th>
+                  <th class="table"> 1</th>
+                  <th class="table"> 1</th>
+                  <th class="table"> 1</th>
+                  <th class="table"> 1</th>
+                  <th class="table"> 8mn 40s</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table">
+                  <td class="table"> Y02</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 4mn 35s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y03</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 3</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 6mn 30s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y04</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 5mn 54s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y05</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 3</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 8mn 50s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y06</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 5mn 07s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y07</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 5mn 17s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y08</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 7mn 04s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y09</td>
+                  <td class="table"> 3</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 6mn 48s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y10</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 3</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 5mn 50s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y11</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 3</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 7mn 31s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y12</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 8mn 01s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Y13</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 5mn 54s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> S01</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 3</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 3</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 9mn 07s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> S02</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 6mn 31s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> S03</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 3</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 6mn 00s</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> S04</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 1</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 2</td>
+                  <td class="table"> 7mn 16s</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="table">
+                  <th class="table"> ALL</th>
+                  <th class="table"> 21</th>
+                  <th class="table"> 19</th>
+                  <th class="table"> 23</th>
+                  <th class="table"> 31</th>
+                  <th class="table"> 22</th>
+                  <th class="table"> 19</th>
+                  <th class="table"> 26</th>
+                  <th class="table"> 1h 55mn</th>
+                </tr>
+              </tfoot>
+            </table>
+          </content>
+          <region class="TableInfo" id="140" confidence="possible" page="3" column="2">No Occurrence number of each scenario Time F1 F2 F3 F4 B TN1 TN2 Y01 1 2 1 1 1 1 1 8mn 40s Y02 1 1 1 1 1 1 1 4mn 35s Y03 1 1 1 3 1 1 2 6mn 30s Y04 1 1 1 2 1 1 1 5mn 54s Y05 1 1 1 3 2 1 2 8mn 50s Y06 1 1 1 1 1 1 1 5mn 07s Y07 1 1 1 1 1 1 2 5mn 17s Y08 1 1 2 1 1 1 2 7mn 04s Y09 3 1 1 1 1 1 2 6mn 48s Y10 1 1 2 3 1 1 1 5mn 50s Y11 2 1 2 3 1 1 1 7mn 31s Y12 1 1 1 2 2 1 2 8mn 01s Y13 2 2 1 1 1 1 1 5mn 54s S01 1 1 3 2 3 2 2 9mn 07s S02 1 2 1 2 1 1 2 6mn 31s S03 1 1 1 3 1 1 1 6mn 00s S04 1 1 2 1 2 2 2 7mn 16s ALL 21 19 23 31 22 19 26 1h 55mn</region>
+        </region>
+        <region class="DoCO:TableBox" id="T4">
+          <caption class="deo:Caption" id="142" page="3" column="2"><s id="141" sid="91">Table 4: Video Corpus for the two group of participants</s></caption>
+        </region>
+        <region class="DoCO:TextChunk" id="153" page="3" column="2"><s id="143" sid="92">Sentences were often close to those identified during the field studies (“je peux pas me relever - I can’t get up”, “e- lio appelle du secours - e-lio call for help”, etc.),</s><s id="144" sid="93"> some were different (“oh bein on est bien là tiens - oh I am in a sticky situation”).</s><s id="145" sid="94"> In practice, participants cut some sentences (i.e., inserted a delay between “e-lio” and “appelle ma fille - call my daughter”), uttered some spontaneous sentences, interjections or non-verbal sounds (i.e., groan)<marker type="block"/> The content of the video corpus is displayed in <xref ref-type="table" rid="T4" id="148" class="deo:Reference">Table 4</xref> As mentioned above, the video corpus includes various types of fall according to the scenarios defined in the Protocol (refer Section 2.2.).</s><s id="149" sid="95"> Each scenario includes a background sequence (300-600 frames) which usually is required for human body extraction.</s><s id="150" sid="96"> Description of the corpus is given in <xref ref-type="table" rid="T4" id="151" class="deo:Reference">Table 4</xref> wherein F1 to F4 are the fall scenarios, B blocked hip and TN1, TN2 true negatives.</s><s id="152" sid="97"> The total duration of the recordings is equal to 1 hour and 55 minutes, with a total of 162 video segments.</s></region>
+        <region class="unknown" id="147" page="3" column="2">3.2. Video Corpus</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="154" page="3" column="2">1391</outsider>
+      </section>
+      <section class="deo:Conclusion">
+        <h1 class="DoCO:SectionTitle" id="155" page="4" column="1">4. Conclusion Drawing from Feedback from the Participants</h1>
+        <region class="DoCO:TextChunk" id="189" page="4" column="1"><s id="156" sid="98">Feedback from the participants were analyzed and allowed some conclusions (Body-Bekkadja et al., 2015).</s><s id="157" sid="99"> A high- lighted domestic accident, outlined (for oneself and for others) by C IRDO , leads the elderly individual to relate to the falls in other ways.</s><s id="158" sid="100"> They suddenly attempt to further regu- late and control it, sometimes by risking a profound change in behavior that may not be detected by C IRDO .</s><s id="159" sid="101"> More specifically, in our various studies (simulated C IRDO use), it was observed that: The elderly developed two oppos- ing conducts in the management of their fall monitored via C IRDO .</s><s id="160" sid="102"> Some of them chose to boost their falling movement or overplay screams to make sure the device will recognize the danger.</s><s id="161" sid="103"> They were also the same elderly that, as we mentioned in Study 2, used tangible remote monitoring systems (inset).</s><s id="162" sid="104"> They doubted the ability of the new am- bient system to detect their accident, and thus they risk a more serious injury.</s><s id="163" sid="105"> Others, however, in order to hide these incidents from the entourage, try to control the fall: They do not scream, and try to recover at all costs, even though it could exacerbate the deleterious effects of the fall.</s><s id="164" sid="106"> In both cases, we see that the falling movement choreography (falling is unintentional by nature) will be intentionally modified by the subjects, whether to be seen to fall, and, hence, be better recognized, or otherwise to be hidden from the technology and its supervision.</s><s id="165" sid="107"> Thus, the presence of technological artifacts changes the dynamic of the fall, because this behaviour will be addressed, directed toward a target (technology object), and also to other involved individuals.</s><s id="166" sid="108"> As mentioned by Clot (Clot, 1999), the movements of the falls are not only directed by the conduct of the sub- ject; they are also directed through the use of the technical object, and toward others (the representation they have of the system and the possible recipients of the alert).</s><s id="167" sid="109"> The fall choreography is influenced by what the individual wants to show to, or hide from, the device.</s><s id="168" sid="110"> Therefore, the risk of non-detecting these movements is possible, because they sometimes tend to veer too far from programmed scripts.</s><s id="169" sid="111"> Another more symbolical consequence involves the status and the legitimacy that C IRDO will give the fall.</s><s id="170" sid="112"> While, in the past, the word of the victim, or of a third party, used to be enough to prove the occurrence of a fall, these days, surveillance technologies are used to validate/approve the occurrence of an incident.</s><s id="171" sid="113"> We could even add that, they also assess whether this fall is acceptable, and conform to pre-defined scripts.</s><s id="172" sid="114"> In other words, the non-detection (non- recognition) of a fall by C IRDO may mean that: (1) The individual has poorly conducted the choreography of the falling; or (2) the movement cannot be categorized as a risk movement.</s><s id="173" sid="115"> This can therefore lead to a denial of risk and recognition of the elderly individual’s status of "victim", thereby throwing suspicion on their statements.</s><s id="174" sid="116"> As a result, C IRDO may operate a transfer of the risk recognition: It is the technology that gives official status to a fall in a domestic incident.</s><s id="175" sid="117"> It gives credibility and legitimacy to it.</s><s id="176" sid="118"> Thus, technological reliability wins against the word of the elderly; and then the latter can be discredited, for ex-<marker type="column" number="2"/><marker type="block"/> ample, if the user talks about incidents not recognized by technology: “If the system is not triggered, then the fall did not occur."</s><s id="178" sid="119"> In both cases, setting C IRDO service in the domestic social system can either redefine the falls choreography, or redefine their status.</s><s id="179" sid="120"> All these reasons may be caused by malfunction or rejection.</s><s id="180" sid="121"> Several recommendations can be addressed to the design- ers.</s><s id="181" sid="122"> In addition to reassuring, involving, and properly training to use the new system (Hwang and Thorn, 1999)(Ku- jala, 2003), by including demonstrations and updates in real situations adapted to their habits and lifestyle practices (to demonstrate the system works efficiently in detecting falls, and avoiding any worsening of movements), design- ers should create programs and falls-detection algorithms more flexible, to cover a larger spectrum of falls choreography, and not rely solely on fixed scripts in risk behavior.</s><s id="182" sid="123"> In the same way, effective articulation between Audio and Video detections should be ensured to allow better falls- recognition and validation.</s><s id="183" sid="124"> As part of a participatory design through use (He and King, 2008), it would be interesting to adjust from feed- backs in the field, the location of the sensors and the level of falls scripts detection, by taking into account conduct- adjustments and daily risk evolutions from the moment the technological artifact is introduced.</s><s id="184" sid="125"> This requires a situated analysis of the actual device’s uses, in order to re-design it from its usage (Norman and Draper, 1986).</s><s id="185" sid="126"> This reinforced monitoring system will ask the elderly to make an oral (con- firmation) emergency call to an outside third party.</s><s id="186" sid="127"> This alert is then triggered only in case of a positive response, or a lack of response from the individual, enabling them to properly control the system (at to avoid false alarms).</s><s id="187" sid="128"> Finally, this new device for monitoring the activity will be meaningful only if it serves and supports its users’ quality of life.</s><s id="188" sid="129"> Therefore, one must be careful to involve and assist the various participants during all phases of C IRDO design, in an inclusive approach (as in the Living lab approach of (Pino et al., 2015), especially to anticipate reconfigurations at work in the social framework, as we shall now see.</s></region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="190" page="4" column="2">5. Call for Help Recognition from Audio Analysis</h1>
+        <region class="DoCO:TextChunk" id="200" page="4" column="2"><s id="191" sid="130">The audio corpus was used for studies related to call for help recognition in Distant Speech conditions thanks to online speech analysis using SGMM acoustic modelling (Vacher et al., 2015a) (Vacher et al., 2015b).</s><s id="192" sid="131"> Non-speech analysis might bring information of high interest but it was not considered in our study because of the lack of training data.</s><s id="193" sid="132"> Currently non-speech audio analysis is a relatively unexplored field due not only to the lack of data but also to the unexpected sound classes that can be recorded at home in unconstrained conditions (Vacher et al., 2011).</s><s id="194" sid="133"> Moreover, non-speech sounds are made of non-verbal sounds (i.e.</s><s id="195" sid="134"> groans, panting, throat clearings, etc.)</s><s id="196" sid="135"> and of daily living sounds (i.e.</s><s id="197" sid="136"> falling objects, door slap, etc.)</s><s id="198" sid="137"> which represent different semantic information and are difficult to differentiate.</s><s id="199" sid="138"> For these reasons, only speech analysis was considered.</s></region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="201" page="4" column="2">1392</outsider>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="202" page="5" column="1">5.1. Acoustic modelling</h2>
+          <region class="DoCO:TextChunk" id="211" page="5" column="1"><s id="203" sid="139">The Kaldi speech recognition tool-kit (Povey et al., 2011b) was chosen as ASR system.</s><s id="204" sid="140"> Kaldi is an open-source state- of-the-art Automatic Speech Recognition (ASR) system with a high number of tools and a strong support from the community.</s><s id="205" sid="141"> In the experiments, the acoustic models were context-dependent classical three-state left-right HMMs.</s><s id="206" sid="142"> Acoustic features were based on Mel-frequency cepstral coefficients, 13 MFCC-features coefficients were first extracted and then expanded with delta and double delta features and energy (40 features).</s><s id="207" sid="143"> Acoustic models were composed of 11,000 context-dependent states and 150,000 Gaussians.</s><s id="208" sid="144"> The state tying is performed using a decision tree based on a tree-clustering of the phones.</s><s id="209" sid="145"> In addition, off-line fMLLR linear transformation acoustic adap- tation was performed.</s><s id="210" sid="146"> The acoustic models were trained on 500 hours of transcribed French speech composed of the ESTER 1&amp;2 (broadcast news and conversational speech recorded on the radio) and REPERE (TV news and talk-shows) challenges as well as from 7 hours of transcribed French speech of the S WEET -H OME corpus (Vacher et al., 2014) which consists of records of 60 speakers interacting within a smart home and from 28 minutes of the Voix-détresse corpus (Aman, 2014) which is made of records of speakers eliciting a distress emotion.</s></region>
+          <section class="DoCO:Section">
+            <h3 class="DoCO:SectionTitle" id="212" page="5" column="1">5.1.1. Subspace GMM Acoustic Modelling</h3>
+            <region class="DoCO:TextChunk" id="215" page="5" column="1"><s id="213" sid="147">The GMM and Subspace GMM (SGMM) both model emis- sion probability of each HMM state with a Gaussian mixture model, but in the SGMM approach, the Gaussian means and the mixture component weights are generated from the phonetic and speaker subspaces along with a set of weight projections.</s><s id="214" sid="148"> The SGMM model (Povey et al., 2011a) is described in the following equations:</s></region>
+            <disp-formula class="DoCO:FormulaBox" id="F1">
+              <label class="DoCO:Label" id="216">1</label>
+              <content class="DoCO:Formula" id="217" confidence="possible" page="5" column="1"> M j I    m=1 jm i=1 jmi jmi i</content>
+            </disp-formula>
+            <disp-formula class="DoCO:FormulaBox" id="F1">
+              <label class="DoCO:Label" id="218">1</label>
+              <content class="DoCO:Formula" id="219" page="5" column="1">μ jmi = M i v jm ,     w jmi = i I exp =1 exp w i T w v jm i T v jm .</content>
+            </disp-formula>
+            <region class="DoCO:TextChunk" id="232" page="5" column="1"><s id="220" sid="149">where x denotes the feature vector, j ∈ {1..J} is the HMM state, i is the Gaussian index, m is the substate and c jm is the substate weight.</s><s id="221" sid="150"> Each state j is associated to a vector v jm ∈ R S (S is the phonetic subspace dimension) which derives the means, μ jmi and mixture weights, w jmi and it has a shared number of Gaussians, I.</s><s id="222" sid="151"> The phonetic subspace M i , weight projections w i T and covariance matrices Σ i i.e; the globally shared parameters Φ i = {M i , w i T , Σ i } are common across all states.</s><s id="223" sid="152"> These parameters can be shared and estimated over multiple record conditions.</s><s id="224" sid="153"> A generic mixture of I Gaussians, denoted as Universal Background Model (UBM), models all the speech training data for the initialization of the SGMM.</s><s id="225" sid="154"> Our experiments aims at obtaining SGMM shared parameters using both S WEET -H OME data (7h), Voix-détresse (28mn) and clean data (ESTER+REPERE 500h).</s><s id="226" sid="155"> Regarding the GMM part, the three training data set are just<marker type="column" number="2"/><marker type="block"/> merged in a single one.</s><s id="228" sid="156"> (Povey et al., 2011a) showed that the model is also effective with large amount of training data.</s><s id="229" sid="157"> Therefore, three UBMs were trained respectively on S WEET -H OME data, Voix-détresse and clean data.</s><s id="230" sid="158"> These tree UBMs contained 1K gaussians and were merged into a single one mixed down to 1K gaussian (closest Gaussians pairs were merged (Zouari and Chollet, 2006)).</s><s id="231" sid="159"> The aim is to bias specifically the acoustic model towards distant speech home and expressive speech conditions.</s></region>
+          </section>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="233" page="5" column="2">5.2. Recognition of distress calls</h2>
+          <region class="DoCO:TextChunk" id="237" page="5" column="2"><s id="234" sid="160">The recognition of distress calls consists in computing the phonetic distance of an hypothesis to a list of predefined distress calls.</s><s id="235" sid="161"> Each ASR hypothesis H i is phonetized, every predefined voice command T j is aligned to H i using Levenshtein distance.</s><s id="236" sid="162"> The deletion, insertion and substitu- tion costs were computed empirically while the cumulative distance γ(i, j) between H j and T i is given by Equation 2.</s></region>
+          <disp-formula class="DoCO:FormulaBox" id="F2">
+            <label class="DoCO:Label" id="238">2</label>
+            <content class="DoCO:Formula" id="239" page="5" column="2">γ(i, j) = d(T i , H j )+ min{γ(i − 1, j − 1), γ(i − 1, j), γ(i, j − 1)}</content>
+          </disp-formula>
+          <region class="DoCO:TextChunk" id="246" page="5" column="2"><s id="240" sid="163">The decision to select or not a detected sentence is then taken according a detection threshold on the aligned sym- bol score (phonems) of each identified call.</s><s id="241" sid="164"> This approach takes into account some recognition errors like word end- ings or light variations.</s><s id="242" sid="165"> Moreover, in a lot of cases, a miss- decoded word is phonetically close to the good one (due to the close pronunciation).</s><s id="243" sid="166"> From this the CER (Call Error Rate i.e., distress call error rate) is defined as: Number of missed calls CER = (3) Number of calls This measure was chosen because of the content of the corpus Cirdo-set used in this study.</s><s id="244" sid="167"> Indeed, this corpus is made of sentences and interjections.</s><s id="245" sid="168"> All sentences are calls for help, without any other kind of sentences (e.g., colloquial sentences), and therefore it is not possible to determine a false alarm rate in this framework.</s></region>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="247" page="5" column="2">5.3. Off line experiments</h2>
+          <region class="DoCO:TextChunk" id="274" page="5" column="2"><s id="248" sid="169">The methods presented in previous sections were run on the Cirdo-set audio corpus presented in Section 3.1.</s><s id="249" sid="170"> The SGMM model presented in Section 5.1. was used as acoutic model.</s><s id="250" sid="171"> The generic language model (LM) was estimated from French newswire collected in the Gigaword corpus.</s><s id="251" sid="172"> It was 1- gram with 13,304 words.</s><s id="252" sid="173"> Moreover, to reduce the linguistic variability, a 3-gram domain language model, the specialized language model was learnt from the sentences used during the corpus collection described in Section 2.2., with 99 1-gram, 225 2-gram and 273 3-gram models.</s><s id="253" sid="174"> Finally, the language model was a 3-gram-type which resulted from the combination of the generic LM (with a 10% weight) and the specialized LM (with 90% weight).</s><s id="254" sid="175"> This combination has been shown as leading to the best WER for domain specific application (Lecouteux et al., 2011).</s><s id="255" sid="176"> The interest of such combination is to bias the recognition towards the domain LM but when the speaker deviates from the domain, the general LM makes it possible to avoid the recognition of sentences leading to “false- positive” detection.</s><marker type="page" number="6"/><marker type="column" number="1"/><marker type="block"/> <s id="265" sid="177">Results on manually annotated data are given <xref ref-type="table" rid="T5" id="266" class="deo:Reference">Table 5</xref>.</s><s id="267" sid="178"> The most important performance measures are the Word Error Rate (WER) of the overall decoded speech and those of the specific distress calls as well as the Call Error Rate (CER: c.f.</s><s id="268" sid="179"> equation 3).</s><s id="269" sid="180"> Considering distress calls only, the average WER is 34.0% whereas it a 39.3% when all interjections and sentences are taken into account.</s><s id="270" sid="181"> On average, CER is equal to 26.8% with an important dis- parity between the speakers.</s><s id="271" sid="182"> Unfortunately and as mentioned above, the used corpus does not allow to determine a False Alarm Rate.</s><s id="272" sid="183"> Previous studies based on the AD80 corpus showed recall, precision and F-measure equal to 88.4%, 86.9% and 87.2% (Aman et al., 2013).</s><s id="273" sid="184"> Nevertheless, this corpus was recorded in very different conditions, text reading in a studio, in contrary of those of Cirdo-set.</s></region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="257" page="5" column="2">1393</outsider>
+          <region class="DoCO:TableBox" id="Tx258">
+            <content>
+              <h1 class="table"> WER (%) WER (%)</h1>
+              <table class="DoCO:Table" number="5" page="6">
+                <thead class="table">
+                  <tr class="table">
+                    <th class="table"> Spk. Spk.</th>
+                    <th class="table"> All</th>
+                    <th class="table"> Call for</th>
+                    <th class="table"> CER CER</th>
+                    <th class="table"> Spk. Spk.</th>
+                    <th class="table"> All</th>
+                    <th class="table"> Call</th>
+                    <th class="table"> CER CER</th>
+                  </tr>
+                  <tr class="table">
+                    <th class="table"></th>
+                    <th class="table"></th>
+                    <th class="table"> help</th>
+                    <th class="table"> (%) (%)</th>
+                    <th class="table"></th>
+                    <th class="table"></th>
+                    <th class="table"> for help</th>
+                    <th class="table"> (%) (%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table">
+                    <td class="table"> Y01 Y01</td>
+                    <td class="table"> 45.0 45.0</td>
+                    <td class="table"> 39.1 39.1</td>
+                    <td class="table"> 27.8 27.8</td>
+                    <td class="table"> Y07 Y07</td>
+                    <td class="table"> 21.3 21.3</td>
+                    <td class="table"> 17.0 17.0</td>
+                    <td class="table"> 16.7 16.7</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> Y02 Y02</td>
+                    <td class="table"> 41.4 41.4</td>
+                    <td class="table"> 44.4 44.4</td>
+                    <td class="table"> 40.0 40.0</td>
+                    <td class="table"> S04 S04</td>
+                    <td class="table"> 30.8 30.8</td>
+                    <td class="table"> 25.0 25.0</td>
+                    <td class="table"> 25.0 25.0</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> S01 S01</td>
+                    <td class="table"> 51.9 51.9</td>
+                    <td class="table"> 49.6 49.6</td>
+                    <td class="table"> 34.0 34.0</td>
+                    <td class="table"> Y08 Y08</td>
+                    <td class="table"> 45.9 45.9</td>
+                    <td class="table"> 43.6 43.6</td>
+                    <td class="table"> 23.8 23.8</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> Y03 Y03</td>
+                    <td class="table"> 19.1 19.1</td>
+                    <td class="table"> 15.4 15.4</td>
+                    <td class="table"> 14.3 14.3</td>
+                    <td class="table"> Y09 Y09</td>
+                    <td class="table"> 67.0 67.0</td>
+                    <td class="table"> 54.8 54.8</td>
+                    <td class="table"> 50.0 50.0</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> S02 S02</td>
+                    <td class="table"> 39.2 39.2</td>
+                    <td class="table"> 34.3 34.3</td>
+                    <td class="table"> 26.3 26.3</td>
+                    <td class="table"> Y10 Y10</td>
+                    <td class="table"> 21.5 21.5</td>
+                    <td class="table"> 19.5 19.5</td>
+                    <td class="table"> 5.3 5.3</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> S03 S03</td>
+                    <td class="table"> 21.2 21.2</td>
+                    <td class="table"> 20.3 20.3</td>
+                    <td class="table"> 28.6 28.6</td>
+                    <td class="table"> Y11 Y11</td>
+                    <td class="table"> 14.9 14.9</td>
+                    <td class="table"> 11.76 11.76</td>
+                    <td class="table"> 7.4 7.4</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> Y04 Y04</td>
+                    <td class="table"> 61.8 61.8</td>
+                    <td class="table"> 50.8 50.8</td>
+                    <td class="table"> 20.0 20.0</td>
+                    <td class="table"> Y12 Y12</td>
+                    <td class="table"> 21.4 21.4</td>
+                    <td class="table"> 22.4 22.4</td>
+                    <td class="table"> 19.0 19.0</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> Y05 Y05</td>
+                    <td class="table"> 49.4 49.4</td>
+                    <td class="table"> 41.2 41.2</td>
+                    <td class="table"> 33.3 33.3</td>
+                    <td class="table"> Y13 Y13</td>
+                    <td class="table"> 57.7 57.7</td>
+                    <td class="table"> 44.9 44.9</td>
+                    <td class="table"> 71.4 71.4</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> Y06 Y06</td>
+                    <td class="table"> 24.5 24.5</td>
+                    <td class="table"> 22.4 22.4</td>
+                    <td class="table"> 14.3 14.3</td>
+                    <td class="table"> All All</td>
+                    <td class="table"> 39.3 39.3</td>
+                    <td class="table"> 34.0 34.0</td>
+                    <td class="table"> 26.8 26.8</td>
+                  </tr>
+                </tbody>
+              </table>
+            </content>
+            <region class="TableInfo" id="259" confidence="possible" page="6" column="1">WER (%) WER (%) Spk. All Call for CER Spk. All Call CER help (%) for help (%) Y01 45.0 39.1 27.8 Y07 21.3 17.0 16.7 Y02 41.4 44.4 40.0 S04 30.8 25.0 25.0 S01 51.9 49.6 34.0 Y08 45.9 43.6 23.8 Y03 19.1 15.4 14.3 Y09 67.0 54.8 50.0 S02 39.2 34.3 26.3 Y10 21.5 19.5 5.3 S03 21.2 20.3 28.6 Y11 14.9 11.76 7.4 Y04 61.8 50.8 20.0 Y12 21.4 22.4 19.0 Y05 49.4 41.2 33.3 Y13 57.7 44.9 71.4 Y06 24.5 22.4 14.3 All 39.3 34.0 26.8</region>
+            <caption class="deo:Caption" id="261" page="6" column="1"><s id="260" sid="185">Table 5: Word and Call Error Rate for each participant</s></caption>
+          </region>
+          <region class="DoCO:FigureBox" id="F3">
+            <image class="DoCO:Figure" src="ks.page_006.image_04.png" thmb="ks.page_006.image_04-thumb.png"/>
+            <caption class="deo:Caption" id="264" page="6" column="1"><s id="263" sid="186">Figure 3: Event detection, video pipeline.</s></caption>
+          </region>
+        </section>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="275" page="6" column="1">6. Fall Detection from Video Analysis</h1>
+        <region class="DoCO:TextChunk" id="282" page="6" column="1"><s id="276" sid="187">The video analysis framework for fall events labeling is based on the silhouette extraction.</s><s id="277" sid="188"> The silhouette is extracted by removal of background pixels within the video scene using.</s><s id="278" sid="189"> The background subtraction is performed by Mixture of Gaussian based approach, and eigenbackground (PCA) approach (Deeb et al., 2012), (Priyank Shah, 2014).</s><s id="279" sid="190"> The extracted shape is then used to obtain discriminative features to detect anomaly in person’s movement in the scene.</s><s id="280" sid="191"> The overview of proposed framework is shown in <xref ref-type="fig" rid="F3" id="281" class="deo:Reference">Figure 3</xref>.</s></region>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="283" page="6" column="2">6.1. Foreground Extraction and Modeling of Body Parts</h2>
+          <region class="DoCO:TextChunk" id="289" page="6" column="2"><s id="284" sid="192">After silhouette extraction the human body is segmented into colored connected components.</s><s id="285" sid="193"> Colored connected components regarded as regions are extracted by applying region growing technique.</s><s id="286" sid="194"> Each component with similar color are fitted into blob (Hsieh et al., 2010).</s><s id="287" sid="195"> Blob is repre- sented by spatial color Gaussian mixture model, assuming that spatial color components are de-correlated.</s><s id="288" sid="196"> The probability of an observation X t of that pixel at time t to belong to the background is given by equation 4.</s></region>
+          <disp-formula class="DoCO:FormulaBox" id="F4">
+            <label class="DoCO:Label" id="290">4</label>
+            <content class="DoCO:Formula" id="291" page="6" column="2">L P (X t ) = ω k,t .η(X t , μ k,t , Σ k,t ) k=1</content>
+          </disp-formula>
+          <region class="DoCO:TextChunk" id="293" page="6" column="2"><s id="292" sid="197">where L is the number of gaussian, η is Gaussian probability density function, Σ k,t is an estimates of weight and ω k,t is covariance matrix of the k-th Gaussian in the mixture at time t. In the last, an energy based function is formulated over the unknown labels of every pixel in the form of a first order Markov random field (MRF) energy function:</s></region>
+          <disp-formula class="DoCO:FormulaBox" id="F5">
+            <label class="DoCO:Label" id="294">5</label>
+            <content class="DoCO:Formula" id="295" page="6" column="2">E(f ) = D p (f p ) + λ V p,q (f p , f q ) p∈P p,q∈N e</content>
+          </disp-formula>
+          <region class="DoCO:TextChunk" id="299" page="6" column="2"><s id="296" sid="198">Here, N e is neighboring pixels and the data energy Σ p∈P D p (f p ) evaluates the likelihood of each pixel to take a label.</s><s id="297" sid="199"> Finally, energy function is minimized with a graph cut algorithm via a swap approach (Miguel Angel Bautista, 2015).</s><s id="298" sid="200"> Background model is updated selectively with an online EM algorithm (Moon, 1996).</s></region>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="300" page="6" column="2">6.2. Tracking of Body Parts</h2>
+          <region class="DoCO:TextChunk" id="311" page="6" column="2"><s id="301" sid="201">Our method begins with an iterative process and considers that person is in standing position.</s><s id="302" sid="202"> Body is decomposed in three parts i.e.</s><s id="303" sid="203"> head, torso and lower part.</s><s id="304" sid="204"> Then, dynamic processing technique is used to obtain different level of body details (i.e.</s><s id="305" sid="205"> number of blobs), if required.</s><s id="306" sid="206"> At first, a blob (k-th blob) is built for each connected component with a feature vector containing: color, center’s coordinates C k , a predicted change of color P k and velocity V k .</s><s id="307" sid="207"> Set of current colored connected components are extracted from the smoothed foreground by region growing.</s><s id="308" sid="208"> By considering tracking of blobs as a matching process, we introduce a novel cost function to obtain distance between two blobs.</s><s id="309" sid="209"> The cost function is given by:<marker type="block"/> Cost(j, k) = α 1 ( P k −P j t /V k )+α 2 ( C j −C k M / C k ) (6) where C j t and P j t respectively, the color and the center’s coordinates of the j-th connected component extracted at time t.</s></region>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="312" page="6" column="2">6.3. Pose Recognition and Labeling of Events</h2>
+          <region class="DoCO:TextChunk" id="324" page="6" column="2"><s id="313" sid="210">The labeling of events is based on the scenario define above.</s><s id="314" sid="211"> To identify poses, the extracted silhouette from the body parts was used.</s><s id="315" sid="212"> To recognize and label different poses from the video data, an histogram based approach was used as they runs in real time and improves its accu- racy with the passage of run time The recognition wss based<marker type="page" number="7"/><marker type="column" number="1"/><marker type="block"/> on comparison of two histograms i.e.</s><s id="321" sid="213"> key pose frame histogram and histogram of frame in hand (Barnachon et al., 2012).</s><s id="322" sid="214"> The histograms were then compared with the Bhattacharyya distance and warped by a dynamic time warping process to achieve their optimal alignment (Barnachon et al., 2014).</s><s id="323" sid="215"> Bhattacharyya distance is calculated using:</s></region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="317" page="6" column="2">1394</outsider>
+          <region class="DoCO:FigureBox" id="F4">
+            <image class="DoCO:Figure" src="ks.page_007.image_05.png" thmb="ks.page_007.image_05-thumb.png"/>
+            <caption class="deo:Caption" id="320" page="7" column="1"><s id="319" sid="216">Figure 4: Event detection, results</s></caption>
+          </region>
+          <disp-formula class="DoCO:FormulaBox" id="F7">
+            <label class="DoCO:Label" id="325">7</label>
+            <content class="DoCO:Formula" id="326" page="7" column="1">H 1 (I).H 2 (I) d(H 1 , H 2 ) = 1 − Σ I Σ I H 1 (I).Σ I H 2 (I)</content>
+          </disp-formula>
+          <region class="DoCO:TextChunk" id="332" page="7" column="1"><s id="327" sid="217">Where H 1 and H 2 are integral histograms.</s><s id="328" sid="218"> In this study we focused on the analysis of posture to detect event of distress.</s><s id="329" sid="219"> Our framework for fall detection could further be enhanced by considering other factors as well, i.e.</s><s id="330" sid="220"> facial expression analysis.</s><s id="331" sid="221"> Analysis of facial expressions to detect pain can be very advantageous in case of prolonged immobility of elderly person (Khan et al., 2013).</s></region>
+        </section>
+      </section>
+      <section class="deo:Conclusion">
+        <h1 class="DoCO:SectionTitle" id="333" page="7" column="1">7. Conclusion</h1>
+        <region class="DoCO:TextChunk" id="344" page="7" column="1"><s id="334" sid="222">This paper investigated smart home technology and recorded comprehensive audio/video corpus of domestic falls.</s><s id="335" sid="223"> For elderly, the fall is one of the most feared and recurring problems.</s><s id="336" sid="224"> Surveillance technologies tries to provide solution to this issue by alerting contact person in case of fall.</s><s id="337" sid="225"> There is lot of work which focuses on this problem but to the best of our knowledge there is no common database for comparing results.</s><s id="338" sid="226"> To address this issue we have made available a database composed of audio/video records of falls and prolonged immobility.</s><s id="339" sid="227"> In this paper, studies using this database for the automatic identification of these events were also presented.</s><s id="340" sid="228"> The C IRDO corpus was recorded in a smart environment reproducing a typical living room containing an e-lio communication device equipped with microphone and camera.</s><s id="341" sid="229"> The experiment was guided by an ethnographic study which detailed the various events related to distress situations faced by elderly people.</s><s id="342" sid="230"> Various scenarios were estab- lished from this study that describes pattern of postures in case of fall so that acted falls were as close to real situation as possible.</s><s id="343" sid="231"> The database can thus be useful to researchers of the community studying video or audio emergency situations as well as to model the relationship between audio/video events and learn fall model using machine learning.</s></region>
+      </section>
+      <section class="deo:Acknowledgements">
+        <h1 class="DoCO:SectionTitle" id="345" page="7" column="1">Acknowledgements</h1>
+        <region class="DoCO:TextChunk" id="349" page="7" column="1"><s id="346" sid="232">This work was supported by the French funding agen- cies ANR and CNSA through C IRDO project (ANR-2010-<marker type="column" number="2"/><marker type="block"/> TECS-012).</s><s id="348" sid="233"> The authors would like to thanks the persons who agreed to participate in the survey or in the recordings.</s></region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="350" page="7" column="2">Bibliographical References</h1>
+        <region class="DoCO:TextChunk" id="493" page="7" column="2"><s id="351" sid="234">Aman, F., Vacher, M., Rossato, S., and Portet, F. (2013).</s><s id="352" sid="235"> Speech Recognition of Aged Voices in the AAL Context: Detection of Distress Sentences.</s><s id="353" sid="236"> In The 7th Int.</s><s id="354" sid="237"> Conf.</s><s id="355" sid="238"> on Speech Technology and Human-Computer Dialogue, SpeD 2013, pages 177–184.</s><s id="356" sid="239"> Aman, F. (2014).</s><s id="357" sid="240"> Reconnaissance automatique de la pa- role de personnes âgées pour les services d’assistance à domicile.</s><s id="358" sid="241"> Ph.D. thesis, Université de Grenoble, Ecole doctorale MSTII.</s><s id="359" sid="242"> Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2012).</s><s id="360" sid="243"> Human actions recognition from streamed mo- tion capture.</s><s id="361" sid="244"> In Pattern Recognition (ICPR), Int.</s><s id="362" sid="245"> Conf.</s><s id="363" sid="246"> on, pages 3807–3810.</s><s id="364" sid="247"> IEEE.</s><s id="365" sid="248"> Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2014).</s><s id="366" sid="249"> Ongoing Human Action Recognition with Motion Capture.</s><s id="367" sid="250"> Pattern Recognition, 47(1):238–247.</s><s id="368" sid="251"> Bloch, F., Gautier, V., Noury, N., Lundy, J., Poujaud, J., Claessens, Y., and Rigaud, A.</s><s id="369" sid="252"> (2011).</s><s id="370" sid="253"> Evaluation under real-life conditions of a stand-alone fall detector for the elderly subjects.</s><s id="371" sid="254"> Annals of Physical and Rehabilitation Medicine, 54:391–398.</s><s id="372" sid="255"> Bobillier-Chaumon, M.-E., Cuvillier, B., Bouakaz, S., and Vacher, M. (2012).</s><s id="373" sid="256"> Démarche de développement de technologies ambiantes pour le maintien à domicile des personnes dépendantes : vers une triangulation des méth- odes et des approches.</s><s id="374" sid="257"> In Actes du 1er Congrès Eu- ropéen de Stimulation Cognitive, pages 121–122, Dijon, France.</s><s id="375" sid="258"> Body-Bekkadja, S., Bobillier-Chaumon, M.-E., Cuvillier, B., and Cros, F. (2015).</s><s id="376" sid="259"> Understanding the Socio- Domestic Activity: A Challenge for the Ambient Technologies Acceptance in the Case of Homecare Assis- tance.</s><s id="377" sid="260"> In HCI International, volume Part II of LNCS 9194, pages 399–411.</s><s id="378" sid="261"> Bouakaz, S., Vacher, M., Bobillier-Chaumon, M.-E., FrédéricAman, Bekkadja, Portet, Guillou, E., Rossato, S., Desserée, E., Traineau, P., Vimon, J.-P., and Cheva- lier, T. (2014).</s><s id="379" sid="262"> CIRDO: Smart companion for helping elderly to live at home for longer.</s><s id="380" sid="263"> Innovation and Re- search in BioMedical engineering, 35(2):101–108.</s><s id="381" sid="264"> Clot, Y.</s><s id="382" sid="265"> (1999).</s><s id="383" sid="266"> La fonction psychologique du travail.</s><s id="384" sid="267"> PUF, Paris, France.</s><s id="385" sid="268"> Deeb, R., Desseree, E., and Bouakaz, S. (2012).</s><s id="386" sid="269"> Real-time two-level foreground detection and person-silhouette extraction enhanced by body-parts tracking.</s><s id="387" sid="270"> In Proc.</s><s id="388" sid="271"> SPIE, volume 83010R, pages 1–8.</s><s id="389" sid="272"> Hamill, M., Young, V., Boger, J., and Mihailidis, A.</s><s id="390" sid="273"> (2009).</s><s id="391" sid="274"> Development of an automated speech recognition interface for personal emergency response systems.</s><s id="392" sid="275"> Journal of NeuroEngineering and Rehabilitation, 6(1):26.</s><s id="393" sid="276"> He, J. and King, W. (2008).</s><s id="394" sid="277"> The role of user participa- tion in information systems development: Implications from a meta-analysis.</s><s id="395" sid="278"> Journal of Management Information Systems, 25(1):301–331.</s><marker type="page" number="8"/><marker type="column" number="1"/><marker type="block"/> <s id="398" sid="279">Hsieh, C., Chuang, S., Chen, S., Chen, C., and Fan, K. (2010).</s><s id="399" sid="280"> Segmentation of human body parts using de- formable triangulation.</s><s id="400" sid="281"> IEEE Transactions on Systems, Man, and Cybernetics Part A: Systems and Humans, 40(3):596–610.</s><s id="401" sid="282"> Hwang, M. and Thorn, R. (1999).</s><s id="402" sid="283"> The effect of user en- gagement on system success: A meta-analytical integra- tion of research findings.</s><s id="403" sid="284"> Information and Management, 35(4):229–236.</s><s id="404" sid="285"> Igual, R., Medrano, C., and Plaza, I.</s><s id="405" sid="286"> (2013).</s><s id="406" sid="287"> Challenges, issues and trends in fall detection systems.</s><s id="407" sid="288"> BioMedical Engineering OnLine, 12(1):1–24.</s><s id="408" sid="289"> Kangas, M., Vikman, I., Nyberg, L., Korpelainen, R., Lind- blom, J., and Jämsä, T. (2012).</s><s id="409" sid="290"> Comparison of real-life accidental falls in older people with experimental falls in middle-aged test subjects.</s><s id="410" sid="291"> Gait &amp; Posture, 35(3):500 – 505.</s><s id="411" sid="292"> Khan, R. A., Meyer, A., Konik, H., and Bouakaz, S. (2013).</s><s id="412" sid="293"> Pain detection through shape and appearance features.</s><s id="413" sid="294"> In Multimedia and Expo (ICME), 2013 IEEE International Conference on, pages 1–6, July.</s><s id="414" sid="295"> Klenk, J., Becker, C., Lieken, F., Nicolai, S., Maetzler, W., Alt, W., Zijlstra, W., Hausdorff, J., van Lummel, R., Chiari, L., and Lindemann, U.</s><s id="415" sid="296"> (2011).</s><s id="416" sid="297"> Comparison of acceleration signals of simulated and real-world back- ward falls.</s><s id="417" sid="298"> Medical Engineering &amp; Physics, 33(3):368 – 373.</s><s id="418" sid="299"> Kujala, S. (2003).</s><s id="419" sid="300"> User involvement: A review of the ben- efits and challenges.</s><s id="420" sid="301"> Behaviour and Information Technology, 22(1):1–16.</s><s id="421" sid="302"> Lecouteux, B., Vacher, M., and Portet, F. (2011).</s><s id="422" sid="303"> Distant Speech Recognition in a Smart Home: Comparison of Several Multisource ASRs in Realistic Conditions.</s><s id="423" sid="304"> In In- terspeech 2011, pages 1–4, Florence, Italy.</s><s id="424" sid="305"> Miguel Angel Bautista, Sergio Escalera, D. S. (2015).</s><s id="425" sid="306"> Hupba8k: Dataset and ecoc-graph-cut based segmentation of human limbs.</s><s id="426" sid="307"> Neurocomputing, 150(A):173–188.</s><s id="427" sid="308"> Moon, T. K. (1996).</s><s id="428" sid="309"> The expectation-maximization algorithm.</s><s id="429" sid="310"> IEEE Signal Processing Magazine, 13(6):47–60.</s><s id="430" sid="311"> Norman, D. A. and Draper, S. W. (1986).</s><s id="431" sid="312"> User Centered System Design; New Perspectives on Human-Computer Interaction.</s><s id="432" sid="313"> L. Erlbaum Associates Inc. Pantic, M., Pentland, A., Nijholt, A., and Huang, T. (2006).</s><s id="433" sid="314"> Human computing and machine understanding of human behavior: survey.</s><s id="434" sid="315"> In ACM Int.</s><s id="435" sid="316"> Conf.</s><s id="436" sid="317"> on Multimodal In- terfaces.</s><s id="437" sid="318"> Pino, M., Moget, C., Benveniste, S., Picard, R., and Rigaud, A.-S. (2015).</s><s id="438" sid="319"> Innovative technology-based healthcare and support services for older adults: How and why in- dustrial initiatives convert to the living lab approach.</s><s id="439" sid="320"> In HCI International, volume Part II of LNCS 9194, pages 158–169.</s><s id="440" sid="321"> Springer International Publishing.</s><s id="441" sid="322"> Popescu, M., Li, Y., Skubic, M., and Rantz, M. (2008).</s><s id="442" sid="323"> An acoustic fall detector system that uses sound height information to reduce the false alarm rate.</s><s id="443" sid="324"> In Proc.</s><s id="444" sid="325"> 30th Annual Int.</s><s id="445" sid="326"> Conference of the IEEE-EMBS 2008, pages 4628–4631, 20–25 Aug. Povey, D., Burget, L., Agarwal, M., Akyazi, P., Kai, F., Ghoshal, A., Glembek, O., Goel, N., Karafiát, M.,<marker type="column" number="2"/><marker type="block"/> Rastrow, A., Rose, R. C., Schwarz, P., and Thomas, S. (2011a).</s><s id="447" sid="327"> The subspace gaussian mixture model—a structured model for speech recognition.</s><s id="448" sid="328"> Computer Speech &amp; Language, 25(2):404 – 439.</s><s id="449" sid="329"> Povey, D., Ghoshal, A., Boulianne, G., Burget, L., Glembek, O., Goel, N., Hannemann, M., Motlicek, P., Qian, Y., Schwarz, P., Silovsky, J., Stemmer, G., and Vesely, K. (2011b).</s><s id="450" sid="330"> The Kaldi Speech Recognition Toolkit.</s><s id="451" sid="331"> In IEEE 2011 Workshop on Automatic Speech Recognition and Understanding.</s><s id="452" sid="332"> IEEE Signal Processing Soci- ety, December.</s><s id="453" sid="333"> IEEE Catalog No.:</s><s id="454" sid="334"> CFP11SRW-USB.</s><s id="455" sid="335"> Priyank Shah, H. M. (2014).</s><s id="456" sid="336"> Comperehensive study and comparative analysis of different types of background subtraction algorithms.</s><s id="457" sid="337"> International Journal of Im- age,Graphics and Signal Processing, 6(8):47–52.</s><s id="458" sid="338"> Saim, R. (2014).</s><s id="459" sid="339"> Accidental falls amongst the elderly: Health impact and effective intervention strategies.</s><s id="460" sid="340"> Mas- ter’s thesis.</s><s id="461" sid="341"> Vacher, M., Portet, F., Fleury, A., and Noury, N. (2011).</s><s id="462" sid="342"> Development of Audio Sensing Technology for Ambient Assisted Living: Applications and Challenges.</s><s id="463" sid="343"> International journal of E-Health and medical communications, 2(1):35–54, March.</s><s id="464" sid="344"> Vacher, M., Lecouteux, B., Chahuara, P., Portet, F., Meil- lon, B., and Bonnefond, N. (2014).</s><s id="465" sid="345"> The Sweet-Home speech and multimodal corpus for home automation interaction.</s><s id="466" sid="346"> In The 9th edition of the Language Resources and Evaluation Conference (LREC), pages 4499–4506, Reykjavik, Iceland.</s><s id="467" sid="347"> Vacher, M., Aman, F., Rossato, S., and Portet, F. (2015a).</s><s id="468" sid="348"> Development of Automatic Speech Recognition Tech- niques for Elderly Home Support: Applications and Challenges.</s><s id="469" sid="349"> In J. Zou et al., editors, HCI International, volume Part II of LNCS 9194, pages 341–353, Los An- geles, CA, United States, August.</s><s id="470" sid="350"> Springer International Publishing Switzerland.</s><s id="471" sid="351"> Vacher, M., Lecouteux, B., Aman, F., Rossato, S., and Portet, F. (2015b).</s><s id="472" sid="352"> Recognition of Distress Calls in Distant Speech Setting: a Preliminary Experiment in a Smart Home.</s><s id="473" sid="353"> In 6th Workshop on Speech and Language Processing for Assistive Technologies, pages 1–7, Dresden, Germany, September.</s><s id="474" sid="354"> SIG-SLPAT.</s><s id="475" sid="355"> Who.</s><s id="476" sid="356"> (2013).</s><s id="477" sid="357"> World population ageing: 1950-2050.</s><s id="478" sid="358"> Tech- nical report, Executive report, United Nations, Depart- ment of Economic and Social Affairs, Population Divi- sion.</s><s id="479" sid="359"> Young, V. and Mihailidis, A.</s><s id="480" sid="360"> (2010).</s><s id="481" sid="361"> An automated, speech-based emergency response system for the older adult.</s><s id="482" sid="362"> Gerontechnology, 9(2):261.</s><s id="483" sid="363"> Young, V. and Mihailidis, A.</s><s id="484" sid="364"> (2013).</s><s id="485" sid="365"> The CARES corpus: a database of older adult actor simulated emergency dia- logue for developing a personal emergency response system.</s><s id="486" sid="366"> I. J.</s><s id="487" sid="367"> Speech Technology, 16(1):55–73.</s><s id="488" sid="368"> Zouari, L. and Chollet, G. (2006).</s><s id="489" sid="369"> Efficient gaussian mixture for speech recognition.</s><s id="490" sid="370"> In Pattern Recognition, 2006.</s><s id="491" sid="371"> ICPR 2006.</s><s id="492" sid="372"> 18th International Conference on, volume 4, pages 294–297.</s></region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="397" page="7" column="2">1395</outsider>
+        <outsider class="DoCO:TextBox" type="page_nr" id="494" page="8" column="2">1396</outsider>
+      </section>
+    </body>
+  </article>
+</pdfx>
