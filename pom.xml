@@ -28,12 +28,12 @@
 			<!-- submodules-->
 			<dependency>
 				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-				<artifactId>eu.openminted.uc-tdm-socialsciences.kb-preparation</artifactId>
+				<artifactId>ss-kb-preparation</artifactId>
 				<version>${version}</version>
 			</dependency>
 			<dependency>
 				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-				<artifactId>eu.openminted.uc-tdm-socialsciences.tools-experiments</artifactId>
+				<artifactId>ss-tools-experiments</artifactId>
 				<version>${version}</version>
 			</dependency>
 			<dependency>
