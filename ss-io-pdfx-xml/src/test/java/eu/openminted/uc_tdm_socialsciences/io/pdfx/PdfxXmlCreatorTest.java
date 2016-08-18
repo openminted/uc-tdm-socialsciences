@@ -10,22 +10,19 @@ import org.junit.Test;
 
 public class PdfxXmlCreatorTest {
 
-	private String inputPath;
+    private String inputPath;
 
-	@Before
-	public void setUp() throws URISyntaxException {
-		inputPath = "src/test/resources";
-	}
+    @Before
+    public void setUp() throws URISyntaxException {
+        inputPath = "src/test/resources";
+    }
 
-	@Test
-	public void test() {
-		try {
-			PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
-			pdfxXmlCreator.setOverwriteOutput(true);
-			pdfxXmlCreator.process(inputPath, "");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//todo check if all of the xml files have been created
-	}
+    @Test
+    public void test() throws IOException {
+        PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
+        pdfxXmlCreator.setOverwriteOutput(true);
+
+        pdfxXmlCreator.process(inputPath, "");
+        //todo check if all of the xml files have been created
+    }
 }
