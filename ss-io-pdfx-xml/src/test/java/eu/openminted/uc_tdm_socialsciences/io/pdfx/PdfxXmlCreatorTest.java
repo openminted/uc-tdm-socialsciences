@@ -27,6 +27,6 @@ public class PdfxXmlCreatorTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//todo check if all of the xml files have been created
 	}
-
 }
