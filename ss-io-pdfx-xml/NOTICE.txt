@@ -1,11 +1,6 @@
-Following files
-    - '2819-pdfx.xml'
-    - '27939-pdfx.xml'
-    - '27490-pdfx.xml'
-are produced by running pdfx service (http://pdfx.cs.man.ac.uk/) on the pdf documents retrieved from the following urls
-    - http://nbn-resolving.de/urn:nbn:de:0168-ssoar-28197
-    - http://nbn-resolving.de/urn:nbn:de:0168-ssoar-279395
-    - http://nbn-resolving.de/urn:nbn:de:0168-ssoar-279405
-
-The original pdf documents are distributed with the following license:
-' Deposit Licence - No Redistribution, No Modifications '
+Following file
+    - '42466_Paper.pdf'
+is retrieved from the following urls
+    - http://nbn-resolving.de/urn:nbn:de:0168-ssoar-424669
+And was originally distributed with the following license:
+Creative Commons - Attribution-NonCommercial-ShareAlike : http://creativecommons.org/licenses/by-nc-sa/3.0/
