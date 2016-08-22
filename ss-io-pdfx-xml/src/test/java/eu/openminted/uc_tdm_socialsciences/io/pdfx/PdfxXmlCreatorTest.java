@@ -36,7 +36,7 @@ public class PdfxXmlCreatorTest {
 
         pdfxXmlCreator.setOverwriteOutput(false);
         List<Path> outputFiles = pdfxXmlCreator.process(inputPath, inputPath);
-        assert pdfxXmlCreator.isOverwriteOutput() && (outputFiles == null || outputFiles.size() == 0);
+        assert !pdfxXmlCreator.isOverwriteOutput() && (outputFiles == null || outputFiles.size() == 0);
     }
 
     @Test

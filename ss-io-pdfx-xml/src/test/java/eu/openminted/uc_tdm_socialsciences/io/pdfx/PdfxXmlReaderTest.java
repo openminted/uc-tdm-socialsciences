@@ -38,17 +38,18 @@ public class PdfxXmlReaderTest {
 		List<Path> xmlFiles = getXmlFilesFromDir(Paths.get(TEST_RESOURCES_PATH));
 
 		for (Path xml : xmlFiles) {
+			String filePath = xml.toString();
+			String expectedFilePath = filePath + ".dump";
 
-			/*
-			 * String filePath = xml.toString(); String expectedFilePath =
-			 * xml.toString() + ".dump"; runPipeline(
-			 * createReaderDescription(PdfxXmlReader.class,
-			 * PdfxXmlReader.PARAM_LANGUAGE, "en",
-			 * PdfxXmlReader.PARAM_SOURCE_LOCATION, filePath),
-			 * createEngineDescription(CasDumpWriter.class,
-			 * CasDumpWriter.PARAM_TARGET_LOCATION, expectedFilePath,
-			 * CasDumpWriter.PARAM_SORT, true));
-			 */
+/*
+			runPipeline(
+					createReaderDescription(PdfxXmlReader.class,
+							PdfxXmlReader.PARAM_LANGUAGE, "en",
+							PdfxXmlReader.PARAM_SOURCE_LOCATION, filePath),
+					createEngineDescription(CasDumpWriter.class,
+							CasDumpWriter.PARAM_TARGET_LOCATION, expectedFilePath,
+							CasDumpWriter.PARAM_SORT, true));
+*/
 
 			String fileName = xml.getFileName().toString();
 			String expectedFileName = fileName + ".dump";
@@ -78,17 +79,16 @@ public class PdfxXmlReaderTest {
 		// one-way test
 
 
-		/*
-		 * runPipeline( createReaderDescription(PdfxXmlReader.class,
-		 * PdfxXmlReader.PARAM_LANGUAGE, "en",
-		 * PdfxXmlReader.PARAM_SOURCE_LOCATION, TEST_RESOURCES_PATH +
-		 * TEST_RESOURCE_ARTICLE1,
-		 * PdfxXmlReader.PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, true),
-		 * createEngineDescription(CasDumpWriter.class,
-		 * CasDumpWriter.PARAM_TARGET_LOCATION,
-		 * TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH,
-		 * CasDumpWriter.PARAM_SORT, true));
-		 */
+/*
+		runPipeline(createReaderDescription(PdfxXmlReader.class,
+				PdfxXmlReader.PARAM_LANGUAGE, "en",
+				PdfxXmlReader.PARAM_SOURCE_LOCATION, TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE1,
+				PdfxXmlReader.PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, true),
+				createEngineDescription(CasDumpWriter.class,
+						CasDumpWriter.PARAM_TARGET_LOCATION,
+						TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH,
+						CasDumpWriter.PARAM_SORT, true));
+*/
 
 		testOneWay(
 				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
