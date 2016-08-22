@@ -39,8 +39,7 @@ public class PdfxXmlCreator {
 
     public List<Path> process(String inputDirectory, String outputDirectory) throws IOException {
         Path inputDirectoryPath = Paths.get(inputDirectory);
-        //create output directory inside input directory
-        Path outputDirectoryPath = inputDirectoryPath.resolve(outputDirectory);
+        Path outputDirectoryPath = Paths.get(outputDirectory);
 
         return process(inputDirectoryPath, outputDirectoryPath);
     }
