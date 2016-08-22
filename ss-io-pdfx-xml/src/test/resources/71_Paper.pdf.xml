@@ -2,7 +2,7 @@
 <pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
   <meta>
     <job>da2cf9d5c9c893a218c1ec7b422a8109ae16596a50879b61992bfa6a5d19713d</job>
-    <base_name>ks</base_name>
+    <base_name>pp</base_name>
     <doi confidence="possible" alt_doi="http://dx.doi.org/10.1002/14651858.cd000340.pub2">http://dx.doi.org/10.1002/14651858.cd000340</doi>
     <warning>Name identification was not possible. </warning>
   </meta>
@@ -32,8 +32,8 @@
       <region class="DoCO:TextChunk" id="53" page="1" column="2"><s id="29" sid="17">Hamill et al., 2009; Young and Mihailidis, 2010; Bloch et al., 2011).</s><s id="30" sid="18"> These studies have followed the paradigm shift in Human Computer Interaction design, from computer- centred designs to human-centred designs (Pantic et al., 2006).</s><s id="31" sid="19"> Thus reliable and robust analysis of ageing population’s gesture and voice has become inevitable in many application areas, such as social robots, emergency situation detection, behaviour monitoring, communication support, etc.</s><s id="32" sid="20"> Since many of these studies are based on statisti- cal analysis (either for modelling or for machine learning), there is a dire need of databases of audio and video recordings to build and evaluate performance of systems that can analyse ageing population’s gesture and voice.</s><s id="33" sid="21"> Indeed evaluation and benchmarking of systems / algorithms must be performed on standardized and accessible databases for meaningful comparison.</s><s id="34" sid="22"> In the absence of comparative tests on such standardized databases it is difficult to exhibits the relative strengths and weaknesses of these systems.</s><s id="35" sid="23"> To the best of our knowledge there exists no such database that has video with audio recordings of aged persons during fall and distress situations while it is recognised as one of the major problem in the evaluation of fall detectors (Igual et al., 2013).</s><s id="36" sid="24"> Young and Mihailidis (Young and Mihailidis, 2013) have collected a corpus of spontaneous speech, read sentences, and emergency scenarios from adult actors aged 23–91 years but it is in English and do not contain videos recording.</s><s id="37" sid="25"> This could be due to the fact that it is very difficult to setup a camera and microphone to record such events.</s><s id="38" sid="26"> Secondly, there is an ethical issue associated with recording aged person in distress situation and later making it available to pub- lic.</s><s id="39" sid="27"> Very few studies were able to record real falls of elderly persons (Kangas et al., 2012; Klenk et al., 2011) but those were only concerned with accelerometer sensors.</s><s id="40" sid="28"> To overcome this bottleneck in the research and development<marker type="page" number="2"/><marker type="column" number="1"/><marker type="block"/> of emergency situation detectors, we introduce the C IRDO database which is part of the C IRDO project (Bouakaz et al., 2014) whose aim was to develop an audio/video emergency detection system for elderly persons.</s><s id="50" sid="29"> The C IRDO database contains video with audio (French language) recordings of aged persons during falls and distress situations.</s><s id="51" sid="30"> C IRDO database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance.</s><s id="52" sid="31"> In this article, we provide all the details related to various steps that have been carried out to record data in such a challenging situation.</s></region>
       <outsider class="DoCO:TextBox" type="page_nr" id="42" page="1" column="2">1389</outsider>
       <region class="DoCO:FigureBox" id="F1">
-        <image class="DoCO:Figure" src="ks.page_002.image_01.png" thmb="ks.page_002.image_01-thumb.png"/>
-        <image class="DoCO:Figure" src="ks.page_002.image_02.png" thmb="ks.page_002.image_02-thumb.png"/>
+        <image class="DoCO:Figure" src="pp.page_002.image_01.png" thmb="pp.page_002.image_01-thumb.png"/>
+        <image class="DoCO:Figure" src="pp.page_002.image_02.png" thmb="pp.page_002.image_02-thumb.png"/>
         <caption class="deo:Caption" id="45" page="2" column="1"><s id="44" sid="32">Figure 1: (a) Experimental room of the LIG with its equipment and (b) screen shot of a young participant wearing a simulator during the training phase.</s></caption>
       </region>
       <region class="DoCO:TableBox" id="Tx46">
@@ -135,7 +135,7 @@
           <h2 class="DoCO:SectionTitle" id="63" page="2" column="1">2.1. Participants</h2>
           <region class="DoCO:TextChunk" id="73" page="2" column="1"><s id="64" sid="41">Ideally scenarios should be played by elderly people.</s><s id="65" sid="42"> However, it is cumbersome to find elder person who is capa- ble and willing to play such scenarios (refer Section 2.2.).</s><s id="66" sid="43"> To record realistic data (but not necessarily played by elder person), people under 60 were recruited.</s><s id="67" sid="44"> Then, these vol- unteers were instructed to wear an equipment i.e.</s><s id="68" sid="45"> old age simulator (see <xref ref-type="fig" rid="F1" id="69" class="deo:Reference">Figure 1</xref>).</s><s id="70" sid="46"> Old age simulator hampered mobility, reduced vision and hearing.</s><s id="71" sid="47"> Overall 17 participants were recruited (9 men and 8 women) with mean age of 40 years (SD 19.5).</s><s id="72" sid="48"> Among them 13 people were under 60 and worn the simulator.</s></region>
           <region class="DoCO:FigureBox" id="F2">
-            <image class="DoCO:Figure" src="ks.page_002.image_03.png" thmb="ks.page_002.image_03-thumb.png"/>
+            <image class="DoCO:Figure" src="pp.page_002.image_03.png" thmb="pp.page_002.image_03-thumb.png"/>
             <caption class="deo:Caption" id="76" page="2" column="2"><s id="75" sid="49">Figure 2: Excerpt of 2 video records showing each the fall of an elderly participant.</s></caption>
           </region>
         </section>
@@ -415,7 +415,7 @@
             </disp-formula>
             <disp-formula class="DoCO:FormulaBox" id="F1">
               <label class="DoCO:Label" id="218">1</label>
-              <content class="DoCO:Formula" id="219" page="5" column="1">μ jmi = M i v jm ,     w jmi = i I exp =1 exp w i T w v jm i T v jm .</content>
+              <content class="DoCO:Formula" id="219" page="5" column="1">μ jmi = M i v jm ,     w jmi = I i exp =1 exp w i T w v jm i T v jm .</content>
             </disp-formula>
             <region class="DoCO:TextChunk" id="232" page="5" column="1"><s id="220" sid="149">where x denotes the feature vector, j ∈ {1..J} is the HMM state, i is the Gaussian index, m is the substate and c jm is the substate weight.</s><s id="221" sid="150"> Each state j is associated to a vector v jm ∈ R S (S is the phonetic subspace dimension) which derives the means, μ jmi and mixture weights, w jmi and it has a shared number of Gaussians, I.</s><s id="222" sid="151"> The phonetic subspace M i , weight projections w i T and covariance matrices Σ i i.e; the globally shared parameters Φ i = {M i , w i T , Σ i } are common across all states.</s><s id="223" sid="152"> These parameters can be shared and estimated over multiple record conditions.</s><s id="224" sid="153"> A generic mixture of I Gaussians, denoted as Universal Background Model (UBM), models all the speech training data for the initialization of the SGMM.</s><s id="225" sid="154"> Our experiments aims at obtaining SGMM shared parameters using both S WEET -H OME data (7h), Voix-détresse (28mn) and clean data (ESTER+REPERE 500h).</s><s id="226" sid="155"> Regarding the GMM part, the three training data set are just<marker type="column" number="2"/><marker type="block"/> merged in a single one.</s><s id="228" sid="156"> (Povey et al., 2011a) showed that the model is also effective with large amount of training data.</s><s id="229" sid="157"> Therefore, three UBMs were trained respectively on S WEET -H OME data, Voix-détresse and clean data.</s><s id="230" sid="158"> These tree UBMs contained 1K gaussians and were merged into a single one mixed down to 1K gaussian (closest Gaussians pairs were merged (Zouari and Chollet, 2006)).</s><s id="231" sid="159"> The aim is to bias specifically the acoustic model towards distant speech home and expressive speech conditions.</s></region>
           </section>
@@ -557,7 +557,7 @@
             <caption class="deo:Caption" id="261" page="6" column="1"><s id="260" sid="185">Table 5: Word and Call Error Rate for each participant</s></caption>
           </region>
           <region class="DoCO:FigureBox" id="F3">
-            <image class="DoCO:Figure" src="ks.page_006.image_04.png" thmb="ks.page_006.image_04-thumb.png"/>
+            <image class="DoCO:Figure" src="pp.page_006.image_04.png" thmb="pp.page_006.image_04-thumb.png"/>
             <caption class="deo:Caption" id="264" page="6" column="1"><s id="263" sid="186">Figure 3: Event detection, video pipeline.</s></caption>
           </region>
         </section>
@@ -588,7 +588,7 @@
           <region class="DoCO:TextChunk" id="324" page="6" column="2"><s id="313" sid="210">The labeling of events is based on the scenario define above.</s><s id="314" sid="211"> To identify poses, the extracted silhouette from the body parts was used.</s><s id="315" sid="212"> To recognize and label different poses from the video data, an histogram based approach was used as they runs in real time and improves its accu- racy with the passage of run time The recognition wss based<marker type="page" number="7"/><marker type="column" number="1"/><marker type="block"/> on comparison of two histograms i.e.</s><s id="321" sid="213"> key pose frame histogram and histogram of frame in hand (Barnachon et al., 2012).</s><s id="322" sid="214"> The histograms were then compared with the Bhattacharyya distance and warped by a dynamic time warping process to achieve their optimal alignment (Barnachon et al., 2014).</s><s id="323" sid="215"> Bhattacharyya distance is calculated using:</s></region>
           <outsider class="DoCO:TextBox" type="page_nr" id="317" page="6" column="2">1394</outsider>
           <region class="DoCO:FigureBox" id="F4">
-            <image class="DoCO:Figure" src="ks.page_007.image_05.png" thmb="ks.page_007.image_05-thumb.png"/>
+            <image class="DoCO:Figure" src="pp.page_007.image_05.png" thmb="pp.page_007.image_05-thumb.png"/>
             <caption class="deo:Caption" id="320" page="7" column="1"><s id="319" sid="216">Figure 4: Event detection, results</s></caption>
           </region>
           <disp-formula class="DoCO:FormulaBox" id="F7">

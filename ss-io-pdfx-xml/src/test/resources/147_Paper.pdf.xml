@@ -2,7 +2,7 @@
 <pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
   <meta>
     <job>edc3184b2de7049efd9e457f8c1ed6dc08c19f3c03422f206ebff721c01a9fe8</job>
-    <base_name>kq</base_name>
+    <base_name>ps</base_name>
     <doi confidence="possible" alt_doi="http://dx.doi.org/10.17562/pb-53-5">http://dx.doi.org/10.1007/978-3-540-78646-7_19</doi>
     <warning>Name identification was not possible. </warning>
   </meta>
@@ -43,9 +43,9 @@
       <region class="DoCO:TextChunk" id="61" page="1" column="2"><s id="60" sid="60">Numerous annotation projects have shown that assist- ing annotators with good pre-annotations is essential to an-</s></region>
       <outsider class="DoCO:TextBox" type="page_nr" id="62" page="1" column="2">140</outsider>
       <region class="DoCO:FigureBox" id="Fx63">
-        <image class="DoCO:Figure" src="kq.page_002.image_03.png" thmb="kq.page_002.image_03-thumb.png"/>
-        <image class="DoCO:Figure" src="kq.page_002.image_02.png" thmb="kq.page_002.image_02-thumb.png"/>
-        <image class="DoCO:Figure" src="kq.page_002.image_01.png" thmb="kq.page_002.image_01-thumb.png"/>
+        <image class="DoCO:Figure" src="ps.page_002.image_03.png" thmb="ps.page_002.image_03-thumb.png"/>
+        <image class="DoCO:Figure" src="ps.page_002.image_02.png" thmb="ps.page_002.image_02-thumb.png"/>
+        <image class="DoCO:Figure" src="ps.page_002.image_01.png" thmb="ps.page_002.image_01-thumb.png"/>
       </region>
       <region class="DoCO:TextChunk" id="65" confidence="possible" page="2" column="1"><s id="64" sid="61">(a) Corpus annotation with a pre-defined, un- changing annotation scheme</s></region>
       <region class="DoCO:FigureBox" id="F1">

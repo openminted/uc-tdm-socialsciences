@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.ParseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -38,23 +37,24 @@ public class PdfxXmlCreator {
 
     private boolean overwriteOutput = false;
 
-    public void process(String inputDirectory, String outputDirectory) throws IOException {
+    public List<Path> process(String inputDirectory, String outputDirectory) throws IOException {
         Path inputDirectoryPath = Paths.get(inputDirectory);
         //create output directory inside input directory
         Path outputDirectoryPath = inputDirectoryPath.resolve(outputDirectory);
 
-        process(inputDirectoryPath, outputDirectoryPath);
+        return process(inputDirectoryPath, outputDirectoryPath);
     }
 
-    public void process(Path inputDirectoryPath, Path outputDirectoryPath) throws IOException {
+    public List<Path> process(Path inputDirectoryPath, Path outputDirectoryPath) throws IOException {
         logger.info("PdfxXmlCreator process stated...");
 		logger.info("Input directory: " + inputDirectoryPath.toUri());
         logger.info("Output directory: " + outputDirectoryPath.toUri());
 
         if (!inputDirectoryPath.toFile().isDirectory()) {
             //todo throw exception
+            //todo or better, support single files as well
             logger.error("Provided path is not a directory: " + inputDirectoryPath.toUri());
-            return;
+            return null;
         }
 
         // create output directory
@@ -65,13 +65,24 @@ public class PdfxXmlCreator {
 
         // process each PDF in the input directory
         List<Path> pdfFiles = getPdfListFromDirectory(inputDirectoryPath);
+        List<Path> outputFiles = new ArrayList<>();
         logger.info(pdfFiles.size() + " pdf files found.");
         for (Path pdfFile : pdfFiles) {
             Path outFile = outputDirectoryPath.resolve(pdfFile.getFileName() + ".xml");
-            processWithPdfx(pdfFile.toFile(), outFile);
+            try{
+                logger.info("processing file: " + outFile.toUri());
+                if(processWithPdfx(pdfFile.toFile(), outFile))
+                    //output file was created
+                    outputFiles.add(outFile);
+                logger.info("processing file [" + pdfFile.toUri() + "] finished.");
+            }catch (Exception x){
+                logger.error(x.getMessage());
+                logger.error("failure!", x);
+            }
         }
 
         logger.info("PdfxXmlCreator process finished.");
+        return outputFiles;
     }
 
     private static List<Path> getPdfListFromDirectory(Path inputDir) {
@@ -86,109 +97,108 @@ public class PdfxXmlCreator {
         return toProcess;
     }
 
-    private void processWithPdfx(File pdf, Path outFile) {
-        logger.info("processing file: " + pdf.getName());
+    private boolean processWithPdfx(File pdf, Path outFile)
+            throws IOException
+    {
+        //todo skip the process if file already exists and overwriteOutput == false
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
         HttpEntity httpEntity = getFirstResponse(pdf, httpclient);
 
-        if (httpEntity != null) {
-            String messageBody;
-            try {
-                messageBody = EntityUtils.toString(httpEntity);
+        String messageBody;
 
-                final int progressUrlPosition = 1;
-                final int jobIdPosition = 2;
-                int resultPosition = 3;
+        messageBody = EntityUtils.toString(httpEntity);
 
-                if (messageBody.split(":").length == 5) {
-                    //resource was previously processed by the server
-                    resultPosition = 4;
-                }
+        final int progressUrlPosition = 1;
+        final int jobIdPosition = 2;
+        int resultPosition = 3;
 
-                String progressUrl = SERVICE_URL + messageBody.split(":")[progressUrlPosition].split("\"")[1];
-                String jobId = messageBody.split(":")[jobIdPosition].split("\"")[1];
-                String resultUrl = SERVICE_URL + messageBody.split(":")[resultPosition].split("\"")[1];
-
-                //dispose httpEntity
-                EntityUtils.consume(httpEntity);
-
-                // second post
-                httpEntity = getSecondResponse(httpclient, jobId);
-                String response = EntityUtils.toString(httpEntity);
-                EntityUtils.consume(httpEntity);
-
-                if (response.contains(REQUEST_RESPONSE_VALUE_ERROR)) {
-                    logger.error("Request for '" + pdf.getName() + "' was unsuccessful: "
-                            + response.split(":")[1].split("\"")[1]);
-                    return;
-                }
-
-                // final post
-                HttpGet httpGet = new HttpGet(resultUrl + ".xml");
-                CloseableHttpResponse result = httpclient.execute(httpGet);
-                InputStream content = result.getEntity().getContent();
-                writeToFile(content, outFile);
-
-                result.close();
-            } catch (ParseException | IOException e) {
-                //todo throw exception
-                e.printStackTrace();
-            }
+        if (messageBody.split(":").length == 5) {
+            //resource was previously processed by the server
+            resultPosition = 4;
         }
 
-        logger.info("processing file [" + pdf.getName() + "] finished.");
+        String progressUrl = SERVICE_URL + messageBody.split(":")[progressUrlPosition].split("\"")[1];
+        String jobId = messageBody.split(":")[jobIdPosition].split("\"")[1];
+        String resultUrl = SERVICE_URL + messageBody.split(":")[resultPosition].split("\"")[1];
+
+        //dispose httpEntity
+        EntityUtils.consume(httpEntity);
+
+        // second post
+        httpEntity = getSecondResponse(httpclient, jobId);
+        String response = EntityUtils.toString(httpEntity);
+        EntityUtils.consume(httpEntity);
+
+        if (response.contains(REQUEST_RESPONSE_VALUE_ERROR)) {
+            logger.error("Request for '" + pdf.getName() + "' was unsuccessful: "
+                    + response.split(":")[1].split("\"")[1]);
+            throw new IOException("Second POST request failed." + System.lineSeparator() +
+                    "HTTP response: " + response);
+        }
+
+        // final post
+        HttpGet httpGet = new HttpGet(resultUrl + ".xml");
+        CloseableHttpResponse result = httpclient.execute(httpGet);
+        InputStream content = result.getEntity().getContent();
+        boolean outputFileCreated = writeToFile(content, outFile);
+
+        result.close();
+
+        return outputFileCreated;
     }
 
-    private void writeToFile(InputStream content, Path outputFilePath) {
+    private boolean writeToFile(InputStream content, Path outputFilePath) throws IOException
+    {
+        boolean fileWritten = false;
         try {
             if (overwriteOutput) {
                 Files.copy(content,
                         outputFilePath, StandardCopyOption.REPLACE_EXISTING);
-                logger.info("File [" + outputFilePath.toUri() + "] created.");
             } else {
                 Files.copy(content,
                         outputFilePath);
-                logger.info("File [" + outputFilePath.toUri() + "] created.");
             }
+            logger.info("File [" + outputFilePath.toUri() + "] created.");
+            fileWritten = true;
         } catch (FileAlreadyExistsException e) {
             logger.error("Output file [" + e.getFile() + "] already exists. Set 'overwriteOutput' attribute to true " +
                     "to overwrite existing files.");
-        } catch (IOException e) {
-            //todo throw exception or log error?
-            e.printStackTrace();
         }
+        return fileWritten;
     }
 
-    private static HttpEntity getFirstResponse(File pdf, CloseableHttpClient httpClient) {
-        HttpEntity result = null;
+    private static HttpEntity getFirstResponse(File pdf, CloseableHttpClient httpClient)
+            throws IOException
+    {
+        HttpEntity result;
         HttpPost httpPost = new HttpPost(SERVICE_URL);
 
         HttpEntity entity = MultipartEntityBuilder.create().
                 addTextBody(REQUEST_PARAM_SENT_SPLITTER, REQUEST_PARAM_SENT_SPLITTER_VALUE_PUNKT)
                 .addTextBody(REQUEST_PARAM_CLIENT, REQUEST_PARAM_CLIENT_VALUE_WEB_INTERFACE)
                 .addBinaryBody(REQUEST_PARAM_USERFILE, pdf,
-                        ContentType.create(REQUEST_PARAM_USERFILE_TYPE_APPLICATION_PDF), pdf.getName()).build();
+                        ContentType.create(REQUEST_PARAM_USERFILE_TYPE_APPLICATION_PDF), pdf.getPath()).build();
 
         httpPost.setEntity(entity);
         CloseableHttpResponse response;
-        try {
-            response = httpClient.execute(httpPost);
-            if (isHttpResponseSuccessful(response)) {
-                result = response.getEntity();
-            } else {
-                logger.error("Request for " + pdf.getName() + " was unsuccessful: "
-                        + response.getStatusLine().getReasonPhrase());
-            }
-        } catch (IOException e) {
-            //todo throw exception?
-            e.printStackTrace();
+
+        response = httpClient.execute(httpPost);
+        if (isHttpResponseSuccessful(response)) {
+            result = response.getEntity();
+        } else {
+            logger.error("Request for " + pdf.getPath() + " was unsuccessful: "
+                    + response.getStatusLine().getReasonPhrase());
+            throw new IllegalArgumentException("Server returned null for parse request of file [" + pdf.getPath() + "]." +
+                    System.lineSeparator() + " Entity contents: " + EntityUtils.toString(entity));
         }
 
         return result;
     }
 
-    private HttpEntity getSecondResponse(CloseableHttpClient httpclient, String jobId) throws IOException {
+    private HttpEntity getSecondResponse(CloseableHttpClient httpclient, String jobId)
+            throws IOException
+    {
         HttpPost httpPost = new HttpPost(SERVICE_URL);
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.addTextBody(REQUEST_PARAM_JOB_ID, jobId);
