@@ -98,10 +98,10 @@ public class PdfxXmlReader
     @Override
     protected Handler newSaxHandler()
     {
-        return new SciXmlHandler();
+        return new PdfxXmlHandler();
     }
 
-    public class SciXmlHandler
+    public class PdfxXmlHandler
             extends TextExtractor
     {
         private boolean captureText = false;
@@ -123,34 +123,58 @@ public class PdfxXmlReader
                 throws SAXException
         {
             if (TAG_ARTICLE_TITLE.equals(aName)) {
-                captureText = true;
-                beginParagraph();
+                startElementArticleTitle();
             }else if (TAG_ABSTRACT.equals(aName)){
+                startElementAbstract();
+            }else if (TAG_REGION.equals(aName)){
+                startElementRegion(aAttributes);
+            }else if(TAG_S.equals(aName)){
+                startElementS();
+            }else if(TAG_MARKER.equals(aName)){
+                startElementMarker(aAttributes);
+            }else if(TAG_REF.equals(aName)){
+                startElementRef(aAttributes);
+            }
+        }
+
+        protected void startElementRef(Attributes aAttributes) {
+            String referenceType = aAttributes.getValue(ATTR_REF_REF_TYPE);
+            String referenceId = aAttributes.getValue(ATTR_REF_REF_ID);
+            //todo also include id <xref rid=referenceId id="...">
+            this.referenceType = (referenceType == null ? UNKNOWN_VALUE : referenceType);
+            this.referenceRId = (referenceId == null? UNKNOWN_VALUE : referenceId);
+            referenceStart = getBuffer().length();
+        }
+
+        protected void startElementMarker(Attributes aAttributes) {
+            if(ATTR_MARKER_TYPE_VALUE_BLOCK.equals(aAttributes.getValue(ATTR_TYPE))){
+                //paragraph end indicator
+                makeParagraph();
+            }
+        }
+
+        protected void startElementS() {
+            //sentence begin
+            sentenceBegin = getBuffer().length();
+        }
+
+        protected void startElementRegion(Attributes aAttributes) {
+            isInsideSentence = false;
+            if(ATTR_REGION_CLASS_VALUE_UNKNOWN.equals(aAttributes.getValue(ATTR_CLASS)) ||
+                    ATTR_REGION_CLASS_VALUE_TEXTCHUNK.equals(aAttributes.getValue(ATTR_CLASS))) {
                 //paragraph begin
                 beginParagraph();
-            }else if (TAG_REGION.equals(aName)){
-                isInsideSentence = false;
-                if(ATTR_REGION_CLASS_VALUE_UNKNOWN.equals(aAttributes.getValue(ATTR_CLASS)) ||
-                        ATTR_REGION_CLASS_VALUE_TEXTCHUNK.equals(aAttributes.getValue(ATTR_CLASS))) {
-                    //paragraph begin
-                    beginParagraph();
-                }
-            }else if(TAG_S.equals(aName)){
-                //sentence begin
-                sentenceBegin = getBuffer().length();
-            }else if(TAG_MARKER.equals(aName)){
-                if(ATTR_MARKER_TYPE_VALUE_BLOCK.equals(aAttributes.getValue(ATTR_TYPE))){
-                    //paragraph end indicator
-                    makeParagraph();
-                }
-            }else if(TAG_REF.equals(aName)){
-                String referenceType = aAttributes.getValue(ATTR_REF_REF_TYPE);
-                String referenceId = aAttributes.getValue(ATTR_REF_REF_ID);
-                //todo also include id <xref rid=referenceId id="...">
-                this.referenceType = (referenceType == null ? UNKNOWN_VALUE : referenceType);
-                this.referenceRId = (referenceId == null? UNKNOWN_VALUE : referenceId);
-                referenceStart = getBuffer().length();
             }
+        }
+
+        protected void startElementAbstract() {
+            //paragraph begin
+            beginParagraph();
+        }
+
+        protected void startElementArticleTitle() {
+            captureText = true;
+            beginParagraph();
         }
 
         @Override
@@ -158,36 +182,56 @@ public class PdfxXmlReader
                 throws SAXException
         {
             if (TAG_ARTICLE_TITLE.equals(aName)) {
-                String documentTitle = getBuffer().toString().trim();
-                documentId = documentTitle;
-
-                DocumentMetaData.get(getJCas()).setDocumentTitle(documentTitle);
-                DocumentMetaData.get(getJCas()).setDocumentId(documentId);
-
-                makeParagraph();
-                captureText = false;
+                endElementArticleTitle();
             }else if (TAG_ABSTRACT.equals(aName)){
+                endElementAbstract();
+            }else if (TAG_REGION.equals(aName)){
+                endElementRegion();
+            }else if(TAG_S.equals(aName)){
+                endElementS();
+            }else if(TAG_REF.equals(aName)){
+                endElementRef();
+            }
+        }
+
+        protected void endElementRef() {
+            if(isNotBlank(getBuffer().substring(referenceStart, getBuffer().length()))){
+                Reference reference = new Reference(getJCas(), referenceStart, getBuffer().length());
+                reference.setRefId(referenceRId);
+                reference.setRefType(referenceType);
+                reference.addToIndexes();
+            }
+        }
+
+        protected void endElementS() {
+            //end of sentence
+            new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
+            sentenceBegin = -1;
+        }
+
+        protected void endElementRegion() {
+            if(isInsideSentence) {
                 //end of paragraph
                 makeParagraph();
                 captureText = false;
-            }else if (TAG_REGION.equals(aName)){
-                if(isInsideSentence) {
-                    //end of paragraph
-                    makeParagraph();
-                    captureText = false;
-                }
-            }else if(TAG_S.equals(aName)){
-                //end of sentence
-                new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
-                sentenceBegin = -1;
-            }else if(TAG_REF.equals(aName)){
-                if(isNotBlank(getBuffer().substring(referenceStart, getBuffer().length()))){
-                    Reference reference = new Reference(getJCas(), referenceStart, getBuffer().length());
-                    reference.setRefId(referenceRId);
-                    reference.setRefType(referenceType);
-                    reference.addToIndexes();
-                }
             }
+        }
+
+        protected void endElementAbstract() {
+            //end of paragraph
+            makeParagraph();
+            captureText = false;
+        }
+
+        protected void endElementArticleTitle() {
+            String documentTitle = getBuffer().toString().trim();
+            documentId = documentTitle;
+
+            DocumentMetaData.get(getJCas()).setDocumentTitle(documentTitle);
+            DocumentMetaData.get(getJCas()).setDocumentId(documentId);
+
+            makeParagraph();
+            captureText = false;
         }
 
         private void beginParagraph() {
