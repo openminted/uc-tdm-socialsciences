@@ -21,11 +21,16 @@ import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRe
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 
 public class PdfxXmlToXmiConverter {
-	public static final String WORD_DICTIONARY_PATH = "src/main/resources/german-words-dictionary.txt";
+    //todo fix me
+	public static final String WORD_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader().
+            getResource("german-words-dictionary.txt").getFile();
 
 	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
 
+    //todo pipeline is only configured for English
 	public static void main(String[] args) throws UIMAException, IOException {
+        logger.debug("WORD DICTIONARY: " + WORD_DICTIONARY_PATH);
+
 		String inputPath = null;
 		if (args.length == 1) {
 			inputPath = args[0];
@@ -61,22 +66,35 @@ public class PdfxXmlToXmiConverter {
 
 	public static void convert(String inputResource, String outputResource) throws UIMAException, IOException {
 		runPipeline(
-				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
+				createReaderDescription(PdfxXmlReader.class,
+                        PdfxXmlReader.PARAM_LANGUAGE, "en",
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-				createEngineDescription(HyphenationRemover.class, HyphenationRemover.PARAM_MODEL_LOCATION,
-						WORD_DICTIONARY_PATH, HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),
-				createEngineDescription(BreakIteratorSegmenter.class, BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
+                //todo hyphenation remover causes loss of all previous cas annotations,
+                // find another solution to fix this
+				/*createEngineDescription(HyphenationRemover.class,
+                        HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
+                        HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),*/
+                //uncomment the following to get Token annotations
+                /*createEngineDescription(BreakIteratorSegmenter.class,
+                        BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
+                        BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),*/
 				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
 						XmiWriter.PARAM_OVERWRITE, true));
 	}
 
 	public static void createCasDump(String inputResource, String outputResource) throws UIMAException, IOException {
 		runPipeline(
-				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
+				createReaderDescription(PdfxXmlReader.class,
+                        PdfxXmlReader.PARAM_LANGUAGE, "en",
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-				createEngineDescription(HyphenationRemover.class, HyphenationRemover.PARAM_MODEL_LOCATION,
-						WORD_DICTIONARY_PATH, HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),
-				createEngineDescription(BreakIteratorSegmenter.class, BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
-				createEngineDescription(CasDumpWriter.class, CasDumpWriter.PARAM_TARGET_LOCATION, outputResource));
+				/*createEngineDescription(HyphenationRemover.class,
+                        HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
+                        HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),*/
+                //uncomment the following to get Token annotations
+				/*createEngineDescription(BreakIteratorSegmenter.class,
+                        BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
+                        BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),*/
+				createEngineDescription(CasDumpWriter.class,
+                        CasDumpWriter.PARAM_TARGET_LOCATION, outputResource));
 	}
 }

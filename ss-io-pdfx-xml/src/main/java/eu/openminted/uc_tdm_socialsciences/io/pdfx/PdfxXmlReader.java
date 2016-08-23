@@ -36,8 +36,15 @@ public class PdfxXmlReader
 
     public static final String ATTR_CLASS = "class";
     public static final String ATTR_TYPE = "type";
+
     /**
-     * a sentence in main body
+     * abstract section
+     */
+    public static final String TAG_ABSTRACT = "abstract";
+
+
+    /**
+     * a section in main body
      */
     public static final String TAG_REGION = "region";
     public static final String ATTR_REGION_CLASS_VALUE_UNKNOWN = "unknown";
@@ -92,6 +99,8 @@ public class PdfxXmlReader
         private int sentenceBegin = -1;
 
         //todo: retain footer and header in the jcas with proper annotation
+        //todo read section titles, too?
+        //todo include reference annotations, too. <xref>
         @Override
         public void startElement(String aUri, String aLocalName, String aName,
                                  Attributes aAttributes)
@@ -99,14 +108,16 @@ public class PdfxXmlReader
         {
             if (TAG_ARTICLE_TITLE.equals(aName)) {
                 captureText = true;
+                beginParagraph();
+            }else if (TAG_ABSTRACT.equals(aName)){
+                //paragraph begin
+                beginParagraph();
             }else if (TAG_REGION.equals(aName)){
                 isInsideSentence = false;
                 if(ATTR_REGION_CLASS_VALUE_UNKNOWN.equals(aAttributes.getValue(ATTR_CLASS)) ||
                         ATTR_REGION_CLASS_VALUE_TEXTCHUNK.equals(aAttributes.getValue(ATTR_CLASS))) {
                     //paragraph begin
-                    paragraphBegin = getBuffer().length();
-                    captureText = true;
-                    isInsideSentence = true;
+                    beginParagraph();
                 }
             }else if(TAG_S.equals(aName)){
                 //sentence begin
@@ -129,7 +140,12 @@ public class PdfxXmlReader
 
                 DocumentMetaData.get(getJCas()).setDocumentTitle(documentTitle);
                 DocumentMetaData.get(getJCas()).setDocumentId(documentId);
-                getBuffer().setLength(0);
+
+                makeParagraph();
+                captureText = false;
+            }else if (TAG_ABSTRACT.equals(aName)){
+                //end of paragraph
+                makeParagraph();
                 captureText = false;
             }else if (TAG_REGION.equals(aName)){
                 if(isInsideSentence) {
@@ -142,6 +158,12 @@ public class PdfxXmlReader
                 new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
                 sentenceBegin = -1;
             }
+        }
+
+        private void beginParagraph() {
+            paragraphBegin = getBuffer().length();
+            captureText = true;
+            isInsideSentence = true;
         }
 
         private void makeParagraph() {

@@ -5,2099 +5,2104 @@
 DocumentMetaData
    sofa: _InitialView
    begin: 0
-   end: 39116
+   end: 39204
    language: "en"
-   documentTitle: "71_Paper.pdf.xml"
-   documentId: "71_Paper.pdf.xml"
+   documentTitle: "The CIRDO Corpus: Comprehensive Audio/Video Database of Domestic Falls of Elderly People"
+   documentId: "The CIRDO Corpus: Comprehensive Audio/Video Database of Domestic Falls of Elderly People"
    isLastSegment: false
 
 CAS-Text:
-CNRS, LIG, F-38000 Grenoble, France Univ. Grenoble Alpes, LIG, F-38000, Grenoble, France LIRIS, UMR 5205 CNRS/Université Claude Bernard Lyon 1, F-69622 Villeurbanne, France GRePS, Université Lyon 2, F-69676 Bron, France Michel.Vacher@imag.fr, saida.bouakaz@univ-lyon1.fr, marc-eric.bobillier-chaumon@univ-lyon2.frAbstract Ambient Assisted Living aims at enhancing the quality of life of older and disabled people at home thanks to Smart Homes. In particular, regarding elderly living alone at home, the detection of distress situation after a fall is very important to reassure this kind of population. However, many studies do not include tests in real settings, because data collection in this domain is very expensive and challenging and because of the few available data sets. The C corpus is a dataset recorded in realistic conditions in D , a fully equipped Smart Home with microphones and home automation sensors, in which participants performed scenarios including real falls on a carpet and calls for help. These scenarios were elaborated thanks to a field study involving elderly persons. Experiments related in a first part to distress detection in real-time using audio and speech analysis and in a second part to fall detection using video analysis are presented. Results show the difficulty of the task. The database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance. Keywords: audio and video data set, multimodal corpus, natural language and multimodal interaction, Ambient Assisted Living (AAL), distress situation.Twenty first century is witnessing a rapid growth in population over 65 years old worldwide (Who, 2013). This change in demography put pressure on governments which are incurring unprecedented expenditure to support ageing population since ageing is correlated with an increase in health and daily living support. For instance, in France, 12 million out of 66 million people are receiving the per- sonalized allocation of autonomy (PAA) 1 , a government financial aid for elderly person to support them in their daily life. This demographic change is very challenging to the society, governments and to technologists to come up with reliable and sustainable solutions to help ageing population to live as independently and safely as possible while reliev- ing their family’s emotional and financial burden. However this trend also provides the opportunity to come up with technologies that can help ageing population to carry on with their lives without compromising their privacy and at the same time provide assistance to caregivers i.e. nurse, partner, children etc. One of the main sources of stress in the ageing population for which technology can be of help is the fall incident. Indeed fall is a major source of injury for elderly people, between 20 and 40 percent of adults over 65 who live at home fall (Saim, 2014). Fall could lead elderly persons to faint or become unconscious. Another emergency situation is the inability to call for a help in distress situation of some aged persons due to their reduced mobility. In the absences of another person in the home (such as a carer), these situations could have disastrous effect. Several studies had worked on an ICT solutions to bring autonomy and security back to the user (Popescu et al., 2008;1 This allowance from the state is given to people over 60 years old in loss of autonomyHamill et al., 2009; Young and Mihailidis, 2010; Bloch et al., 2011). These studies have followed the paradigm shift in Human Computer Interaction design, from computer- centred designs to human-centred designs (Pantic et al., 2006). Thus reliable and robust analysis of ageing population’s gesture and voice has become inevitable in many application areas, such as social robots, emergency situation detection, behaviour monitoring, communication support, etc. Since many of these studies are based on statisti- cal analysis (either for modelling or for machine learning), there is a dire need of databases of audio and video recordings to build and evaluate performance of systems that can analyse ageing population’s gesture and voice. Indeed evaluation and benchmarking of systems / algorithms must be performed on standardized and accessible databases for meaningful comparison. In the absence of comparative tests on such standardized databases it is difficult to exhibits the relative strengths and weaknesses of these systems. To the best of our knowledge there exists no such database that has video with audio recordings of aged persons during fall and distress situations while it is recognised as one of the major problem in the evaluation of fall detectors (Igual et al., 2013). Young and Mihailidis (Young and Mihailidis, 2013) have collected a corpus of spontaneous speech, read sentences, and emergency scenarios from adult actors aged 23–91 years but it is in English and do not contain videos recording. This could be due to the fact that it is very difficult to setup a camera and microphone to record such events. Secondly, there is an ethical issue associated with recording aged person in distress situation and later making it available to pub- lic. Very few studies were able to record real falls of elderly persons (Kangas et al., 2012; Klenk et al., 2011) but those were only concerned with accelerometer sensors. To overcome this bottleneck in the research and development of emergency situation detectors, we introduce the C IRDO database which is part of the C IRDO project (Bouakaz et al., 2014) whose aim was to develop an audio/video emergency detection system for elderly persons. The C IRDO database contains video with audio (French language) recordings of aged persons during falls and distress situations. C IRDO database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance. In this article, we provide all the details related to various steps that have been carried out to record data in such a challenging situation.Recording sessions were based on written scenarios. These scenarios were well elaborated thanks to a field study involving 15 elderly persons (Bobillier-Chaumon et al., 2012). Four scenarios were related to fall (F1 to F4), one to blocked hip (B) and two were true negative (TN1 and TN2). Recording sessions were conducted in the D OMUS smart room of the LIG laboratory configured to look like a standard room (chairs, carpet, coffee table, TV. . . ).Ideally scenarios should be played by elderly people. However, it is cumbersome to find elder person who is capa- ble and willing to play such scenarios (refer Section 2.2.). To record realistic data (but not necessarily played by elder person), people under 60 were recruited. Then, these vol- unteers were instructed to wear an equipment i.e. old age simulator (see Figure 1). Old age simulator hampered mobility, reduced vision and hearing. Overall 17 participants were recruited (9 men and 8 women) with mean age of 40 years (SD 19.5). Among them 13 people were under 60 and worn the simulator.Each participant was introduced to the context of the research and was invited to sign a consent form. The participants played five types of fall chosen from 28 risky situations identified as: slip, stumble, falls in a stationary position and a position of hip blocked on the sofa. Figure 2 shows two elderly participants when they fall on the carpet. These situations were selected because they were represen- tative falls in domestic environment and could be played safely. Two other scenarios, called “true-false”, were added for the evaluation and verification of automatic fall detection. The first “true-false” situation consists of a rapid ac- tion of picking up of magazines from the floor (close to a situation of fall), while the second was to try to hold a remote control from the coffee table when the person is sit- ting on sofa (close to a situation in which the person has a blocked hip). Scenarios included call for help sentences. These sentences were chosen based on sentences identified during the field study and on sentences extracted from the AD80 corpus (Aman et al., 2013) which was built with the aim of elderly voice study. Table 2 gives some examples.Before each recording session, the experimenter explained the scenario to the participant. Scenario has following sub- components: physical location, time of the day, activity (what the person intends to do and what eventually hap- pens), gesture (way of falling), and the spoken sentences. The participant rehearsed the scenario several times before final acquisition of data. On average, the duration of acquisition was 2 hours and 30 minutes per person. 2.3. Equipment and Tools The studio and the equipment used are shown in Figure 1. Moreover, the DOMUS smart home was equipped with the social inclusion product e-lio 2 . Regarding audio analysis, we conducted a multi-source capture with two wireless Sennheiser microphones. A eW-300-G2 type ME2 microphone was placed on the sus- pended ceiling of the studio, and a SKM-300-G2 microphone was placed on a furniture close to the participant. The recording was performed in the technical room by a computer connected to the microphones high-frequency re- ceivers by National Instruments PCI-6220 8-channel card. A loudspeaker in the control room enabled experimenters to hear the progression of the scene in the studio. The National Instruments PCI-6220 card was controlled by the StreamHIS software (Vacher et al., 2011) developed by the GETALP team that enables data acquisition. Regarding video analysis, we conducted the video capture with two webcam cameras (Sony PSEye: 640x480 60Hz connected by a USB 2.0). Cameras were fixed to the wall, one in front of the Sofa and other at an angle of 45 degrees. Moreover, we acquired depth image with Microsoft Kinect. Synchronization and recording of video streams from all three cameras were performed in the technical room by computer (Intel i3 3.2GHz, 4GB RAM, NVidia GeForce GTS 450 512MB). The tools that enable video acquisition was developed by the team SAARA (based on the OpenCV library). Video processing (background learning and subtraction, body parts segmentation) was performed on a PC cluster, taking advantage of algorithms parallelization on CPU and GPU. Motion tracking and identification of haz- ardous situations was done on a PC (Intel i7 3.5GHz, 4GB RAM, NVIDIA GTX 660 4GB GeFore).The C IRDO corpus is divided into three parts, the audio corpus for sound and speech analysis, the video corpus and a third part with the annotations. The corpus is detailed in Sections 3.1. and 3.2.. The audio and video corpus was annotated for the video part, with the Advene software 3 , developed at the LIRIS laboratory, and for the sound part, with Transcriber. The C IRDO corpus is a web-based data library, hosted at LIRIS and accessible for the academic and research pur- pose. The license to use the C IRDO corpus is granted on a case-by-case basis. We can also grant permission to researchers to extend the corpus given they fulfil the required conditions and sign agreement.When they played the scenarios, some participants produced sighs, grunts, coughs, cries, groans, panting or throat clearings. As our current studies are in the domain of automatic speech recognition, these sounds were not considered during the annotation process, but this can be done in the framework of future studies. In the same way, speeches mixed with sound produced by the fall were ignored. At the end, each speaker uttered between 10 and 65 short sentences or interjections (“ah”, “oh”, “aïe”, etc.) as shown Table 3.2 http://www.technosens.fr 3 http://liris.cnrs.fr/advene/All Call for helpSentences were often close to those identified during the field studies (“je peux pas me relever - I can’t get up”, “e- lio appelle du secours - e-lio call for help”, etc.), some were different (“oh bein on est bien là tiens - oh I am in a sticky situation”). In practice, participants cut some sentences (i.e., inserted a delay between “e-lio” and “appelle ma fille - call my daughter”), uttered some spontaneous sentences, interjections or non-verbal sounds (i.e., groan) The content of the video corpus is displayed in Table 4 As mentioned above, the video corpus includes various types of fall according to the scenarios defined in the Protocol (refer Section 2.2.). Each scenario includes a background sequence (300-600 frames) which usually is required for human body extraction. Description of the corpus is given in Table 4 wherein F1 to F4 are the fall scenarios, B blocked hip and TN1, TN2 true negatives. The total duration of the recordings is equal to 1 hour and 55 minutes, with a total of 162 video segments.3.2. Video CorpusFeedback from the participants were analyzed and allowed some conclusions (Body-Bekkadja et al., 2015). A high- lighted domestic accident, outlined (for oneself and for others) by C IRDO , leads the elderly individual to relate to the falls in other ways. They suddenly attempt to further regu- late and control it, sometimes by risking a profound change in behavior that may not be detected by C IRDO . More specifically, in our various studies (simulated C IRDO use), it was observed that: The elderly developed two oppos- ing conducts in the management of their fall monitored via C IRDO . Some of them chose to boost their falling movement or overplay screams to make sure the device will recognize the danger. They were also the same elderly that, as we mentioned in Study 2, used tangible remote monitoring systems (inset). They doubted the ability of the new am- bient system to detect their accident, and thus they risk a more serious injury. Others, however, in order to hide these incidents from the entourage, try to control the fall: They do not scream, and try to recover at all costs, even though it could exacerbate the deleterious effects of the fall. In both cases, we see that the falling movement choreography (falling is unintentional by nature) will be intentionally modified by the subjects, whether to be seen to fall, and, hence, be better recognized, or otherwise to be hidden from the technology and its supervision. Thus, the presence of technological artifacts changes the dynamic of the fall, because this behaviour will be addressed, directed toward a target (technology object), and also to other involved individuals. As mentioned by Clot (Clot, 1999), the movements of the falls are not only directed by the conduct of the sub- ject; they are also directed through the use of the technical object, and toward others (the representation they have of the system and the possible recipients of the alert). The fall choreography is influenced by what the individual wants to show to, or hide from, the device. Therefore, the risk of non-detecting these movements is possible, because they sometimes tend to veer too far from programmed scripts. Another more symbolical consequence involves the status and the legitimacy that C IRDO will give the fall. While, in the past, the word of the victim, or of a third party, used to be enough to prove the occurrence of a fall, these days, surveillance technologies are used to validate/approve the occurrence of an incident. We could even add that, they also assess whether this fall is acceptable, and conform to pre-defined scripts. In other words, the non-detection (non- recognition) of a fall by C IRDO may mean that: (1) The individual has poorly conducted the choreography of the falling; or (2) the movement cannot be categorized as a risk movement. This can therefore lead to a denial of risk and recognition of the elderly individual’s status of "victim", thereby throwing suspicion on their statements. As a result, C IRDO may operate a transfer of the risk recognition: It is the technology that gives official status to a fall in a domestic incident. It gives credibility and legitimacy to it. Thus, technological reliability wins against the word of the elderly; and then the latter can be discredited, for ex- ample, if the user talks about incidents not recognized by technology: “If the system is not triggered, then the fall did not occur." In both cases, setting C IRDO service in the domestic social system can either redefine the falls choreography, or redefine their status. All these reasons may be caused by malfunction or rejection. Several recommendations can be addressed to the design- ers. In addition to reassuring, involving, and properly training to use the new system (Hwang and Thorn, 1999)(Ku- jala, 2003), by including demonstrations and updates in real situations adapted to their habits and lifestyle practices (to demonstrate the system works efficiently in detecting falls, and avoiding any worsening of movements), design- ers should create programs and falls-detection algorithms more flexible, to cover a larger spectrum of falls choreography, and not rely solely on fixed scripts in risk behavior. In the same way, effective articulation between Audio and Video detections should be ensured to allow better falls- recognition and validation. As part of a participatory design through use (He and King, 2008), it would be interesting to adjust from feed- backs in the field, the location of the sensors and the level of falls scripts detection, by taking into account conduct- adjustments and daily risk evolutions from the moment the technological artifact is introduced. This requires a situated analysis of the actual device’s uses, in order to re-design it from its usage (Norman and Draper, 1986). This reinforced monitoring system will ask the elderly to make an oral (con- firmation) emergency call to an outside third party. This alert is then triggered only in case of a positive response, or a lack of response from the individual, enabling them to properly control the system (at to avoid false alarms). Finally, this new device for monitoring the activity will be meaningful only if it serves and supports its users’ quality of life. Therefore, one must be careful to involve and assist the various participants during all phases of C IRDO design, in an inclusive approach (as in the Living lab approach of (Pino et al., 2015), especially to anticipate reconfigurations at work in the social framework, as we shall now see.The audio corpus was used for studies related to call for help recognition in Distant Speech conditions thanks to online speech analysis using SGMM acoustic modelling (Vacher et al., 2015a) (Vacher et al., 2015b). Non-speech analysis might bring information of high interest but it was not considered in our study because of the lack of training data. Currently non-speech audio analysis is a relatively unexplored field due not only to the lack of data but also to the unexpected sound classes that can be recorded at home in unconstrained conditions (Vacher et al., 2011). Moreover, non-speech sounds are made of non-verbal sounds (i.e. groans, panting, throat clearings, etc.) and of daily living sounds (i.e. falling objects, door slap, etc.) which represent different semantic information and are difficult to differentiate. For these reasons, only speech analysis was considered.The Kaldi speech recognition tool-kit (Povey et al., 2011b) was chosen as ASR system. Kaldi is an open-source state- of-the-art Automatic Speech Recognition (ASR) system with a high number of tools and a strong support from the community. In the experiments, the acoustic models were context-dependent classical three-state left-right HMMs. Acoustic features were based on Mel-frequency cepstral coefficients, 13 MFCC-features coefficients were first extracted and then expanded with delta and double delta features and energy (40 features). Acoustic models were composed of 11,000 context-dependent states and 150,000 Gaussians. The state tying is performed using a decision tree based on a tree-clustering of the phones. In addition, off-line fMLLR linear transformation acoustic adap- tation was performed. The acoustic models were trained on 500 hours of transcribed French speech composed of the ESTER 1&2 (broadcast news and conversational speech recorded on the radio) and REPERE (TV news and talk-shows) challenges as well as from 7 hours of transcribed French speech of the S WEET -H OME corpus (Vacher et al., 2014) which consists of records of 60 speakers interacting within a smart home and from 28 minutes of the Voix-détresse corpus (Aman, 2014) which is made of records of speakers eliciting a distress emotion.The GMM and Subspace GMM (SGMM) both model emis- sion probability of each HMM state with a Gaussian mixture model, but in the SGMM approach, the Gaussian means and the mixture component weights are generated from the phonetic and speaker subspaces along with a set of weight projections. The SGMM model (Povey et al., 2011a) is described in the following equations:where x denotes the feature vector, j ∈ {1..J} is the HMM state, i is the Gaussian index, m is the substate and c jm is the substate weight. Each state j is associated to a vector v jm ∈ R S (S is the phonetic subspace dimension) which derives the means, μ jmi and mixture weights, w jmi and it has a shared number of Gaussians, I. The phonetic subspace M i , weight projections w i T and covariance matrices Σ i i.e; the globally shared parameters Φ i = {M i , w i T , Σ i } are common across all states. These parameters can be shared and estimated over multiple record conditions. A generic mixture of I Gaussians, denoted as Universal Background Model (UBM), models all the speech training data for the initialization of the SGMM. Our experiments aims at obtaining SGMM shared parameters using both S WEET -H OME data (7h), Voix-détresse (28mn) and clean data (ESTER+REPERE 500h). Regarding the GMM part, the three training data set are just merged in a single one. (Povey et al., 2011a) showed that the model is also effective with large amount of training data. Therefore, three UBMs were trained respectively on S WEET -H OME data, Voix-détresse and clean data. These tree UBMs contained 1K gaussians and were merged into a single one mixed down to 1K gaussian (closest Gaussians pairs were merged (Zouari and Chollet, 2006)). The aim is to bias specifically the acoustic model towards distant speech home and expressive speech conditions.The recognition of distress calls consists in computing the phonetic distance of an hypothesis to a list of predefined distress calls. Each ASR hypothesis H i is phonetized, every predefined voice command T j is aligned to H i using Levenshtein distance. The deletion, insertion and substitu- tion costs were computed empirically while the cumulative distance γ(i, j) between H j and T i is given by Equation 2.The decision to select or not a detected sentence is then taken according a detection threshold on the aligned sym- bol score (phonems) of each identified call. This approach takes into account some recognition errors like word end- ings or light variations. Moreover, in a lot of cases, a miss- decoded word is phonetically close to the good one (due to the close pronunciation). From this the CER (Call Error Rate i.e., distress call error rate) is defined as: Number of missed calls CER = (3) Number of calls This measure was chosen because of the content of the corpus Cirdo-set used in this study. Indeed, this corpus is made of sentences and interjections. All sentences are calls for help, without any other kind of sentences (e.g., colloquial sentences), and therefore it is not possible to determine a false alarm rate in this framework.The methods presented in previous sections were run on the Cirdo-set audio corpus presented in Section 3.1. The SGMM model presented in Section 5.1. was used as acoutic model. The generic language model (LM) was estimated from French newswire collected in the Gigaword corpus. It was 1- gram with 13,304 words. Moreover, to reduce the linguistic variability, a 3-gram domain language model, the specialized language model was learnt from the sentences used during the corpus collection described in Section 2.2., with 99 1-gram, 225 2-gram and 273 3-gram models. Finally, the language model was a 3-gram-type which resulted from the combination of the generic LM (with a 10% weight) and the specialized LM (with 90% weight). This combination has been shown as leading to the best WER for domain specific application (Lecouteux et al., 2011). The interest of such combination is to bias the recognition towards the domain LM but when the speaker deviates from the domain, the general LM makes it possible to avoid the recognition of sentences leading to “false- positive” detection. Results on manually annotated data are given Table 5. The most important performance measures are the Word Error Rate (WER) of the overall decoded speech and those of the specific distress calls as well as the Call Error Rate (CER: c.f. equation 3). Considering distress calls only, the average WER is 34.0% whereas it a 39.3% when all interjections and sentences are taken into account. On average, CER is equal to 26.8% with an important dis- parity between the speakers. Unfortunately and as mentioned above, the used corpus does not allow to determine a False Alarm Rate. Previous studies based on the AD80 corpus showed recall, precision and F-measure equal to 88.4%, 86.9% and 87.2% (Aman et al., 2013). Nevertheless, this corpus was recorded in very different conditions, text reading in a studio, in contrary of those of Cirdo-set.The video analysis framework for fall events labeling is based on the silhouette extraction. The silhouette is extracted by removal of background pixels within the video scene using. The background subtraction is performed by Mixture of Gaussian based approach, and eigenbackground (PCA) approach (Deeb et al., 2012), (Priyank Shah, 2014). The extracted shape is then used to obtain discriminative features to detect anomaly in person’s movement in the scene. The overview of proposed framework is shown in Figure 3.After silhouette extraction the human body is segmented into colored connected components. Colored connected components regarded as regions are extracted by applying region growing technique. Each component with similar color are fitted into blob (Hsieh et al., 2010). Blob is repre- sented by spatial color Gaussian mixture model, assuming that spatial color components are de-correlated. The probability of an observation X t of that pixel at time t to belong to the background is given by equation 4.where L is the number of gaussian, η is Gaussian probability density function, Σ k,t is an estimates of weight and ω k,t is covariance matrix of the k-th Gaussian in the mixture at time t. In the last, an energy based function is formulated over the unknown labels of every pixel in the form of a first order Markov random field (MRF) energy function:Here, N e is neighboring pixels and the data energy Σ p∈P D p (f p ) evaluates the likelihood of each pixel to take a label. Finally, energy function is minimized with a graph cut algorithm via a swap approach (Miguel Angel Bautista, 2015). Background model is updated selectively with an online EM algorithm (Moon, 1996).Our method begins with an iterative process and considers that person is in standing position. Body is decomposed in three parts i.e. head, torso and lower part. Then, dynamic processing technique is used to obtain different level of body details (i.e. number of blobs), if required. At first, a blob (k-th blob) is built for each connected component with a feature vector containing: color, center’s coordinates C k , a predicted change of color P k and velocity V k . Set of current colored connected components are extracted from the smoothed foreground by region growing. By considering tracking of blobs as a matching process, we introduce a novel cost function to obtain distance between two blobs. The cost function is given by: Cost(j, k) = α 1 ( P k −P j t /V k )+α 2 ( C j −C k M / C k ) (6) where C j t and P j t respectively, the color and the center’s coordinates of the j-th connected component extracted at time t.The labeling of events is based on the scenario define above. To identify poses, the extracted silhouette from the body parts was used. To recognize and label different poses from the video data, an histogram based approach was used as they runs in real time and improves its accu- racy with the passage of run time The recognition wss based on comparison of two histograms i.e. key pose frame histogram and histogram of frame in hand (Barnachon et al., 2012). The histograms were then compared with the Bhattacharyya distance and warped by a dynamic time warping process to achieve their optimal alignment (Barnachon et al., 2014). Bhattacharyya distance is calculated using:Where H 1 and H 2 are integral histograms. In this study we focused on the analysis of posture to detect event of distress. Our framework for fall detection could further be enhanced by considering other factors as well, i.e. facial expression analysis. Analysis of facial expressions to detect pain can be very advantageous in case of prolonged immobility of elderly person (Khan et al., 2013).This paper investigated smart home technology and recorded comprehensive audio/video corpus of domestic falls. For elderly, the fall is one of the most feared and recurring problems. Surveillance technologies tries to provide solution to this issue by alerting contact person in case of fall. There is lot of work which focuses on this problem but to the best of our knowledge there is no common database for comparing results. To address this issue we have made available a database composed of audio/video records of falls and prolonged immobility. In this paper, studies using this database for the automatic identification of these events were also presented. The C IRDO corpus was recorded in a smart environment reproducing a typical living room containing an e-lio communication device equipped with microphone and camera. The experiment was guided by an ethnographic study which detailed the various events related to distress situations faced by elderly people. Various scenarios were estab- lished from this study that describes pattern of postures in case of fall so that acted falls were as close to real situation as possible. The database can thus be useful to researchers of the community studying video or audio emergency situations as well as to model the relationship between audio/video events and learn fall model using machine learning.This work was supported by the French funding agen- cies ANR and CNSA through C IRDO project (ANR-2010- TECS-012). The authors would like to thanks the persons who agreed to participate in the survey or in the recordings.Aman, F., Vacher, M., Rossato, S., and Portet, F. (2013). Speech Recognition of Aged Voices in the AAL Context: Detection of Distress Sentences. In The 7th Int. Conf. on Speech Technology and Human-Computer Dialogue, SpeD 2013, pages 177–184. Aman, F. (2014). Reconnaissance automatique de la pa- role de personnes âgées pour les services d’assistance à domicile. Ph.D. thesis, Université de Grenoble, Ecole doctorale MSTII. Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2012). Human actions recognition from streamed mo- tion capture. In Pattern Recognition (ICPR), Int. Conf. on, pages 3807–3810. IEEE. Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2014). Ongoing Human Action Recognition with Motion Capture. Pattern Recognition, 47(1):238–247. Bloch, F., Gautier, V., Noury, N., Lundy, J., Poujaud, J., Claessens, Y., and Rigaud, A. (2011). Evaluation under real-life conditions of a stand-alone fall detector for the elderly subjects. Annals of Physical and Rehabilitation Medicine, 54:391–398. Bobillier-Chaumon, M.-E., Cuvillier, B., Bouakaz, S., and Vacher, M. (2012). Démarche de développement de technologies ambiantes pour le maintien à domicile des personnes dépendantes : vers une triangulation des méth- odes et des approches. In Actes du 1er Congrès Eu- ropéen de Stimulation Cognitive, pages 121–122, Dijon, France. Body-Bekkadja, S., Bobillier-Chaumon, M.-E., Cuvillier, B., and Cros, F. (2015). Understanding the Socio- Domestic Activity: A Challenge for the Ambient Technologies Acceptance in the Case of Homecare Assis- tance. In HCI International, volume Part II of LNCS 9194, pages 399–411. Bouakaz, S., Vacher, M., Bobillier-Chaumon, M.-E., FrédéricAman, Bekkadja, Portet, Guillou, E., Rossato, S., Desserée, E., Traineau, P., Vimon, J.-P., and Cheva- lier, T. (2014). CIRDO: Smart companion for helping elderly to live at home for longer. Innovation and Re- search in BioMedical engineering, 35(2):101–108. Clot, Y. (1999). La fonction psychologique du travail. PUF, Paris, France. Deeb, R., Desseree, E., and Bouakaz, S. (2012). Real-time two-level foreground detection and person-silhouette extraction enhanced by body-parts tracking. In Proc. SPIE, volume 83010R, pages 1–8. Hamill, M., Young, V., Boger, J., and Mihailidis, A. (2009). Development of an automated speech recognition interface for personal emergency response systems. Journal of NeuroEngineering and Rehabilitation, 6(1):26. He, J. and King, W. (2008). The role of user participa- tion in information systems development: Implications from a meta-analysis. Journal of Management Information Systems, 25(1):301–331. Hsieh, C., Chuang, S., Chen, S., Chen, C., and Fan, K. (2010). Segmentation of human body parts using de- formable triangulation. IEEE Transactions on Systems, Man, and Cybernetics Part A: Systems and Humans, 40(3):596–610. Hwang, M. and Thorn, R. (1999). The effect of user en- gagement on system success: A meta-analytical integra- tion of research findings. Information and Management, 35(4):229–236. Igual, R., Medrano, C., and Plaza, I. (2013). Challenges, issues and trends in fall detection systems. BioMedical Engineering OnLine, 12(1):1–24. Kangas, M., Vikman, I., Nyberg, L., Korpelainen, R., Lind- blom, J., and Jämsä, T. (2012). Comparison of real-life accidental falls in older people with experimental falls in middle-aged test subjects. Gait & Posture, 35(3):500 – 505. Khan, R. A., Meyer, A., Konik, H., and Bouakaz, S. (2013). Pain detection through shape and appearance features. In Multimedia and Expo (ICME), 2013 IEEE International Conference on, pages 1–6, July. Klenk, J., Becker, C., Lieken, F., Nicolai, S., Maetzler, W., Alt, W., Zijlstra, W., Hausdorff, J., van Lummel, R., Chiari, L., and Lindemann, U. (2011). Comparison of acceleration signals of simulated and real-world back- ward falls. Medical Engineering & Physics, 33(3):368 – 373. Kujala, S. (2003). User involvement: A review of the ben- efits and challenges. Behaviour and Information Technology, 22(1):1–16. Lecouteux, B., Vacher, M., and Portet, F. (2011). Distant Speech Recognition in a Smart Home: Comparison of Several Multisource ASRs in Realistic Conditions. In In- terspeech 2011, pages 1–4, Florence, Italy. Miguel Angel Bautista, Sergio Escalera, D. S. (2015). Hupba8k: Dataset and ecoc-graph-cut based segmentation of human limbs. Neurocomputing, 150(A):173–188. Moon, T. K. (1996). The expectation-maximization algorithm. IEEE Signal Processing Magazine, 13(6):47–60. Norman, D. A. and Draper, S. W. (1986). User Centered System Design; New Perspectives on Human-Computer Interaction. L. Erlbaum Associates Inc. Pantic, M., Pentland, A., Nijholt, A., and Huang, T. (2006). Human computing and machine understanding of human behavior: survey. In ACM Int. Conf. on Multimodal In- terfaces. Pino, M., Moget, C., Benveniste, S., Picard, R., and Rigaud, A.-S. (2015). Innovative technology-based healthcare and support services for older adults: How and why in- dustrial initiatives convert to the living lab approach. In HCI International, volume Part II of LNCS 9194, pages 158–169. Springer International Publishing. Popescu, M., Li, Y., Skubic, M., and Rantz, M. (2008). An acoustic fall detector system that uses sound height information to reduce the false alarm rate. In Proc. 30th Annual Int. Conference of the IEEE-EMBS 2008, pages 4628–4631, 20–25 Aug. Povey, D., Burget, L., Agarwal, M., Akyazi, P., Kai, F., Ghoshal, A., Glembek, O., Goel, N., Karafiát, M., Rastrow, A., Rose, R. C., Schwarz, P., and Thomas, S. (2011a). The subspace gaussian mixture model—a structured model for speech recognition. Computer Speech & Language, 25(2):404 – 439. Povey, D., Ghoshal, A., Boulianne, G., Burget, L., Glembek, O., Goel, N., Hannemann, M., Motlicek, P., Qian, Y., Schwarz, P., Silovsky, J., Stemmer, G., and Vesely, K. (2011b). The Kaldi Speech Recognition Toolkit. In IEEE 2011 Workshop on Automatic Speech Recognition and Understanding. IEEE Signal Processing Soci- ety, December. IEEE Catalog No.: CFP11SRW-USB. Priyank Shah, H. M. (2014). Comperehensive study and comparative analysis of different types of background subtraction algorithms. International Journal of Im- age,Graphics and Signal Processing, 6(8):47–52. Saim, R. (2014). Accidental falls amongst the elderly: Health impact and effective intervention strategies. Mas- ter’s thesis. Vacher, M., Portet, F., Fleury, A., and Noury, N. (2011). Development of Audio Sensing Technology for Ambient Assisted Living: Applications and Challenges. International journal of E-Health and medical communications, 2(1):35–54, March. Vacher, M., Lecouteux, B., Chahuara, P., Portet, F., Meil- lon, B., and Bonnefond, N. (2014). The Sweet-Home speech and multimodal corpus for home automation interaction. In The 9th edition of the Language Resources and Evaluation Conference (LREC), pages 4499–4506, Reykjavik, Iceland. Vacher, M., Aman, F., Rossato, S., and Portet, F. (2015a). Development of Automatic Speech Recognition Tech- niques for Elderly Home Support: Applications and Challenges. In J. Zou et al., editors, HCI International, volume Part II of LNCS 9194, pages 341–353, Los An- geles, CA, United States, August. Springer International Publishing Switzerland. Vacher, M., Lecouteux, B., Aman, F., Rossato, S., and Portet, F. (2015b). Recognition of Distress Calls in Distant Speech Setting: a Preliminary Experiment in a Smart Home. In 6th Workshop on Speech and Language Processing for Assistive Technologies, pages 1–7, Dresden, Germany, September. SIG-SLPAT. Who. (2013). World population ageing: 1950-2050. Tech- nical report, Executive report, United Nations, Depart- ment of Economic and Social Affairs, Population Divi- sion. Young, V. and Mihailidis, A. (2010). An automated, speech-based emergency response system for the older adult. Gerontechnology, 9(2):261. Young, V. and Mihailidis, A. (2013). The CARES corpus: a database of older adult actor simulated emergency dia- logue for developing a personal emergency response system. I. J. Speech Technology, 16(1):55–73. Zouari, L. and Chollet, G. (2006). Efficient gaussian mixture for speech recognition. In Pattern Recognition, 2006. ICPR 2006. 18th International Conference on, volume 4, pages 294–297.
+The CIRDO Corpus: Comprehensive Audio/Video Database of Domestic Falls of Elderly PeopleCNRS, LIG, F-38000 Grenoble, France Univ. Grenoble Alpes, LIG, F-38000, Grenoble, France LIRIS, UMR 5205 CNRS/Université Claude Bernard Lyon 1, F-69622 Villeurbanne, France GRePS, Université Lyon 2, F-69676 Bron, France Michel.Vacher@imag.fr, saida.bouakaz@univ-lyon1.fr, marc-eric.bobillier-chaumon@univ-lyon2.frAbstract Ambient Assisted Living aims at enhancing the quality of life of older and disabled people at home thanks to Smart Homes. In particular, regarding elderly living alone at home, the detection of distress situation after a fall is very important to reassure this kind of population. However, many studies do not include tests in real settings, because data collection in this domain is very expensive and challenging and because of the few available data sets. The C corpus is a dataset recorded in realistic conditions in D , a fully equipped Smart Home with microphones and home automation sensors, in which participants performed scenarios including real falls on a carpet and calls for help. These scenarios were elaborated thanks to a field study involving elderly persons. Experiments related in a first part to distress detection in real-time using audio and speech analysis and in a second part to fall detection using video analysis are presented. Results show the difficulty of the task. The database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance. Keywords: audio and video data set, multimodal corpus, natural language and multimodal interaction, Ambient Assisted Living (AAL), distress situation.Twenty first century is witnessing a rapid growth in population over 65 years old worldwide (Who, 2013). This change in demography put pressure on governments which are incurring unprecedented expenditure to support ageing population since ageing is correlated with an increase in health and daily living support. For instance, in France, 12 million out of 66 million people are receiving the per- sonalized allocation of autonomy (PAA) 1 , a government financial aid for elderly person to support them in their daily life. This demographic change is very challenging to the society, governments and to technologists to come up with reliable and sustainable solutions to help ageing population to live as independently and safely as possible while reliev- ing their family’s emotional and financial burden. However this trend also provides the opportunity to come up with technologies that can help ageing population to carry on with their lives without compromising their privacy and at the same time provide assistance to caregivers i.e. nurse, partner, children etc. One of the main sources of stress in the ageing population for which technology can be of help is the fall incident. Indeed fall is a major source of injury for elderly people, between 20 and 40 percent of adults over 65 who live at home fall (Saim, 2014). Fall could lead elderly persons to faint or become unconscious. Another emergency situation is the inability to call for a help in distress situation of some aged persons due to their reduced mobility. In the absences of another person in the home (such as a carer), these situations could have disastrous effect. Several studies had worked on an ICT solutions to bring autonomy and security back to the user (Popescu et al., 2008;1 This allowance from the state is given to people over 60 years old in loss of autonomyHamill et al., 2009; Young and Mihailidis, 2010; Bloch et al., 2011). These studies have followed the paradigm shift in Human Computer Interaction design, from computer- centred designs to human-centred designs (Pantic et al., 2006). Thus reliable and robust analysis of ageing population’s gesture and voice has become inevitable in many application areas, such as social robots, emergency situation detection, behaviour monitoring, communication support, etc. Since many of these studies are based on statisti- cal analysis (either for modelling or for machine learning), there is a dire need of databases of audio and video recordings to build and evaluate performance of systems that can analyse ageing population’s gesture and voice. Indeed evaluation and benchmarking of systems / algorithms must be performed on standardized and accessible databases for meaningful comparison. In the absence of comparative tests on such standardized databases it is difficult to exhibits the relative strengths and weaknesses of these systems. To the best of our knowledge there exists no such database that has video with audio recordings of aged persons during fall and distress situations while it is recognised as one of the major problem in the evaluation of fall detectors (Igual et al., 2013). Young and Mihailidis (Young and Mihailidis, 2013) have collected a corpus of spontaneous speech, read sentences, and emergency scenarios from adult actors aged 23–91 years but it is in English and do not contain videos recording. This could be due to the fact that it is very difficult to setup a camera and microphone to record such events. Secondly, there is an ethical issue associated with recording aged person in distress situation and later making it available to pub- lic. Very few studies were able to record real falls of elderly persons (Kangas et al., 2012; Klenk et al., 2011) but those were only concerned with accelerometer sensors. To overcome this bottleneck in the research and development of emergency situation detectors, we introduce the C IRDO database which is part of the C IRDO project (Bouakaz et al., 2014) whose aim was to develop an audio/video emergency detection system for elderly persons. The C IRDO database contains video with audio (French language) recordings of aged persons during falls and distress situations. C IRDO database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance. In this article, we provide all the details related to various steps that have been carried out to record data in such a challenging situation.Recording sessions were based on written scenarios. These scenarios were well elaborated thanks to a field study involving 15 elderly persons (Bobillier-Chaumon et al., 2012). Four scenarios were related to fall (F1 to F4), one to blocked hip (B) and two were true negative (TN1 and TN2). Recording sessions were conducted in the D OMUS smart room of the LIG laboratory configured to look like a standard room (chairs, carpet, coffee table, TV. . . ).Ideally scenarios should be played by elderly people. However, it is cumbersome to find elder person who is capa- ble and willing to play such scenarios (refer Section 2.2.). To record realistic data (but not necessarily played by elder person), people under 60 were recruited. Then, these vol- unteers were instructed to wear an equipment i.e. old age simulator (see Figure 1). Old age simulator hampered mobility, reduced vision and hearing. Overall 17 participants were recruited (9 men and 8 women) with mean age of 40 years (SD 19.5). Among them 13 people were under 60 and worn the simulator.Each participant was introduced to the context of the research and was invited to sign a consent form. The participants played five types of fall chosen from 28 risky situations identified as: slip, stumble, falls in a stationary position and a position of hip blocked on the sofa. Figure 2 shows two elderly participants when they fall on the carpet. These situations were selected because they were represen- tative falls in domestic environment and could be played safely. Two other scenarios, called “true-false”, were added for the evaluation and verification of automatic fall detection. The first “true-false” situation consists of a rapid ac- tion of picking up of magazines from the floor (close to a situation of fall), while the second was to try to hold a remote control from the coffee table when the person is sit- ting on sofa (close to a situation in which the person has a blocked hip). Scenarios included call for help sentences. These sentences were chosen based on sentences identified during the field study and on sentences extracted from the AD80 corpus (Aman et al., 2013) which was built with the aim of elderly voice study. Table 2 gives some examples.Before each recording session, the experimenter explained the scenario to the participant. Scenario has following sub- components: physical location, time of the day, activity (what the person intends to do and what eventually hap- pens), gesture (way of falling), and the spoken sentences. The participant rehearsed the scenario several times before final acquisition of data. On average, the duration of acquisition was 2 hours and 30 minutes per person. 2.3. Equipment and Tools The studio and the equipment used are shown in Figure 1. Moreover, the DOMUS smart home was equipped with the social inclusion product e-lio 2 . Regarding audio analysis, we conducted a multi-source capture with two wireless Sennheiser microphones. A eW-300-G2 type ME2 microphone was placed on the sus- pended ceiling of the studio, and a SKM-300-G2 microphone was placed on a furniture close to the participant. The recording was performed in the technical room by a computer connected to the microphones high-frequency re- ceivers by National Instruments PCI-6220 8-channel card. A loudspeaker in the control room enabled experimenters to hear the progression of the scene in the studio. The National Instruments PCI-6220 card was controlled by the StreamHIS software (Vacher et al., 2011) developed by the GETALP team that enables data acquisition. Regarding video analysis, we conducted the video capture with two webcam cameras (Sony PSEye: 640x480 60Hz connected by a USB 2.0). Cameras were fixed to the wall, one in front of the Sofa and other at an angle of 45 degrees. Moreover, we acquired depth image with Microsoft Kinect. Synchronization and recording of video streams from all three cameras were performed in the technical room by computer (Intel i3 3.2GHz, 4GB RAM, NVidia GeForce GTS 450 512MB). The tools that enable video acquisition was developed by the team SAARA (based on the OpenCV library). Video processing (background learning and subtraction, body parts segmentation) was performed on a PC cluster, taking advantage of algorithms parallelization on CPU and GPU. Motion tracking and identification of haz- ardous situations was done on a PC (Intel i7 3.5GHz, 4GB RAM, NVIDIA GTX 660 4GB GeFore).The C IRDO corpus is divided into three parts, the audio corpus for sound and speech analysis, the video corpus and a third part with the annotations. The corpus is detailed in Sections 3.1. and 3.2.. The audio and video corpus was annotated for the video part, with the Advene software 3 , developed at the LIRIS laboratory, and for the sound part, with Transcriber. The C IRDO corpus is a web-based data library, hosted at LIRIS and accessible for the academic and research pur- pose. The license to use the C IRDO corpus is granted on a case-by-case basis. We can also grant permission to researchers to extend the corpus given they fulfil the required conditions and sign agreement.When they played the scenarios, some participants produced sighs, grunts, coughs, cries, groans, panting or throat clearings. As our current studies are in the domain of automatic speech recognition, these sounds were not considered during the annotation process, but this can be done in the framework of future studies. In the same way, speeches mixed with sound produced by the fall were ignored. At the end, each speaker uttered between 10 and 65 short sentences or interjections (“ah”, “oh”, “aïe”, etc.) as shown Table 3.2 http://www.technosens.fr 3 http://liris.cnrs.fr/advene/All Call for helpSentences were often close to those identified during the field studies (“je peux pas me relever - I can’t get up”, “e- lio appelle du secours - e-lio call for help”, etc.), some were different (“oh bein on est bien là tiens - oh I am in a sticky situation”). In practice, participants cut some sentences (i.e., inserted a delay between “e-lio” and “appelle ma fille - call my daughter”), uttered some spontaneous sentences, interjections or non-verbal sounds (i.e., groan) The content of the video corpus is displayed in Table 4 As mentioned above, the video corpus includes various types of fall according to the scenarios defined in the Protocol (refer Section 2.2.). Each scenario includes a background sequence (300-600 frames) which usually is required for human body extraction. Description of the corpus is given in Table 4 wherein F1 to F4 are the fall scenarios, B blocked hip and TN1, TN2 true negatives. The total duration of the recordings is equal to 1 hour and 55 minutes, with a total of 162 video segments.3.2. Video CorpusFeedback from the participants were analyzed and allowed some conclusions (Body-Bekkadja et al., 2015). A high- lighted domestic accident, outlined (for oneself and for others) by C IRDO , leads the elderly individual to relate to the falls in other ways. They suddenly attempt to further regu- late and control it, sometimes by risking a profound change in behavior that may not be detected by C IRDO . More specifically, in our various studies (simulated C IRDO use), it was observed that: The elderly developed two oppos- ing conducts in the management of their fall monitored via C IRDO . Some of them chose to boost their falling movement or overplay screams to make sure the device will recognize the danger. They were also the same elderly that, as we mentioned in Study 2, used tangible remote monitoring systems (inset). They doubted the ability of the new am- bient system to detect their accident, and thus they risk a more serious injury. Others, however, in order to hide these incidents from the entourage, try to control the fall: They do not scream, and try to recover at all costs, even though it could exacerbate the deleterious effects of the fall. In both cases, we see that the falling movement choreography (falling is unintentional by nature) will be intentionally modified by the subjects, whether to be seen to fall, and, hence, be better recognized, or otherwise to be hidden from the technology and its supervision. Thus, the presence of technological artifacts changes the dynamic of the fall, because this behaviour will be addressed, directed toward a target (technology object), and also to other involved individuals. As mentioned by Clot (Clot, 1999), the movements of the falls are not only directed by the conduct of the sub- ject; they are also directed through the use of the technical object, and toward others (the representation they have of the system and the possible recipients of the alert). The fall choreography is influenced by what the individual wants to show to, or hide from, the device. Therefore, the risk of non-detecting these movements is possible, because they sometimes tend to veer too far from programmed scripts. Another more symbolical consequence involves the status and the legitimacy that C IRDO will give the fall. While, in the past, the word of the victim, or of a third party, used to be enough to prove the occurrence of a fall, these days, surveillance technologies are used to validate/approve the occurrence of an incident. We could even add that, they also assess whether this fall is acceptable, and conform to pre-defined scripts. In other words, the non-detection (non- recognition) of a fall by C IRDO may mean that: (1) The individual has poorly conducted the choreography of the falling; or (2) the movement cannot be categorized as a risk movement. This can therefore lead to a denial of risk and recognition of the elderly individual’s status of "victim", thereby throwing suspicion on their statements. As a result, C IRDO may operate a transfer of the risk recognition: It is the technology that gives official status to a fall in a domestic incident. It gives credibility and legitimacy to it. Thus, technological reliability wins against the word of the elderly; and then the latter can be discredited, for ex- ample, if the user talks about incidents not recognized by technology: “If the system is not triggered, then the fall did not occur." In both cases, setting C IRDO service in the domestic social system can either redefine the falls choreography, or redefine their status. All these reasons may be caused by malfunction or rejection. Several recommendations can be addressed to the design- ers. In addition to reassuring, involving, and properly training to use the new system (Hwang and Thorn, 1999)(Ku- jala, 2003), by including demonstrations and updates in real situations adapted to their habits and lifestyle practices (to demonstrate the system works efficiently in detecting falls, and avoiding any worsening of movements), design- ers should create programs and falls-detection algorithms more flexible, to cover a larger spectrum of falls choreography, and not rely solely on fixed scripts in risk behavior. In the same way, effective articulation between Audio and Video detections should be ensured to allow better falls- recognition and validation. As part of a participatory design through use (He and King, 2008), it would be interesting to adjust from feed- backs in the field, the location of the sensors and the level of falls scripts detection, by taking into account conduct- adjustments and daily risk evolutions from the moment the technological artifact is introduced. This requires a situated analysis of the actual device’s uses, in order to re-design it from its usage (Norman and Draper, 1986). This reinforced monitoring system will ask the elderly to make an oral (con- firmation) emergency call to an outside third party. This alert is then triggered only in case of a positive response, or a lack of response from the individual, enabling them to properly control the system (at to avoid false alarms). Finally, this new device for monitoring the activity will be meaningful only if it serves and supports its users’ quality of life. Therefore, one must be careful to involve and assist the various participants during all phases of C IRDO design, in an inclusive approach (as in the Living lab approach of (Pino et al., 2015), especially to anticipate reconfigurations at work in the social framework, as we shall now see.The audio corpus was used for studies related to call for help recognition in Distant Speech conditions thanks to online speech analysis using SGMM acoustic modelling (Vacher et al., 2015a) (Vacher et al., 2015b). Non-speech analysis might bring information of high interest but it was not considered in our study because of the lack of training data. Currently non-speech audio analysis is a relatively unexplored field due not only to the lack of data but also to the unexpected sound classes that can be recorded at home in unconstrained conditions (Vacher et al., 2011). Moreover, non-speech sounds are made of non-verbal sounds (i.e. groans, panting, throat clearings, etc.) and of daily living sounds (i.e. falling objects, door slap, etc.) which represent different semantic information and are difficult to differentiate. For these reasons, only speech analysis was considered.The Kaldi speech recognition tool-kit (Povey et al., 2011b) was chosen as ASR system. Kaldi is an open-source state- of-the-art Automatic Speech Recognition (ASR) system with a high number of tools and a strong support from the community. In the experiments, the acoustic models were context-dependent classical three-state left-right HMMs. Acoustic features were based on Mel-frequency cepstral coefficients, 13 MFCC-features coefficients were first extracted and then expanded with delta and double delta features and energy (40 features). Acoustic models were composed of 11,000 context-dependent states and 150,000 Gaussians. The state tying is performed using a decision tree based on a tree-clustering of the phones. In addition, off-line fMLLR linear transformation acoustic adap- tation was performed. The acoustic models were trained on 500 hours of transcribed French speech composed of the ESTER 1&2 (broadcast news and conversational speech recorded on the radio) and REPERE (TV news and talk-shows) challenges as well as from 7 hours of transcribed French speech of the S WEET -H OME corpus (Vacher et al., 2014) which consists of records of 60 speakers interacting within a smart home and from 28 minutes of the Voix-détresse corpus (Aman, 2014) which is made of records of speakers eliciting a distress emotion.The GMM and Subspace GMM (SGMM) both model emis- sion probability of each HMM state with a Gaussian mixture model, but in the SGMM approach, the Gaussian means and the mixture component weights are generated from the phonetic and speaker subspaces along with a set of weight projections. The SGMM model (Povey et al., 2011a) is described in the following equations:where x denotes the feature vector, j ∈ {1..J} is the HMM state, i is the Gaussian index, m is the substate and c jm is the substate weight. Each state j is associated to a vector v jm ∈ R S (S is the phonetic subspace dimension) which derives the means, μ jmi and mixture weights, w jmi and it has a shared number of Gaussians, I. The phonetic subspace M i , weight projections w i T and covariance matrices Σ i i.e; the globally shared parameters Φ i = {M i , w i T , Σ i } are common across all states. These parameters can be shared and estimated over multiple record conditions. A generic mixture of I Gaussians, denoted as Universal Background Model (UBM), models all the speech training data for the initialization of the SGMM. Our experiments aims at obtaining SGMM shared parameters using both S WEET -H OME data (7h), Voix-détresse (28mn) and clean data (ESTER+REPERE 500h). Regarding the GMM part, the three training data set are just merged in a single one. (Povey et al., 2011a) showed that the model is also effective with large amount of training data. Therefore, three UBMs were trained respectively on S WEET -H OME data, Voix-détresse and clean data. These tree UBMs contained 1K gaussians and were merged into a single one mixed down to 1K gaussian (closest Gaussians pairs were merged (Zouari and Chollet, 2006)). The aim is to bias specifically the acoustic model towards distant speech home and expressive speech conditions.The recognition of distress calls consists in computing the phonetic distance of an hypothesis to a list of predefined distress calls. Each ASR hypothesis H i is phonetized, every predefined voice command T j is aligned to H i using Levenshtein distance. The deletion, insertion and substitu- tion costs were computed empirically while the cumulative distance γ(i, j) between H j and T i is given by Equation 2.The decision to select or not a detected sentence is then taken according a detection threshold on the aligned sym- bol score (phonems) of each identified call. This approach takes into account some recognition errors like word end- ings or light variations. Moreover, in a lot of cases, a miss- decoded word is phonetically close to the good one (due to the close pronunciation). From this the CER (Call Error Rate i.e., distress call error rate) is defined as: Number of missed calls CER = (3) Number of calls This measure was chosen because of the content of the corpus Cirdo-set used in this study. Indeed, this corpus is made of sentences and interjections. All sentences are calls for help, without any other kind of sentences (e.g., colloquial sentences), and therefore it is not possible to determine a false alarm rate in this framework.The methods presented in previous sections were run on the Cirdo-set audio corpus presented in Section 3.1. The SGMM model presented in Section 5.1. was used as acoutic model. The generic language model (LM) was estimated from French newswire collected in the Gigaword corpus. It was 1- gram with 13,304 words. Moreover, to reduce the linguistic variability, a 3-gram domain language model, the specialized language model was learnt from the sentences used during the corpus collection described in Section 2.2., with 99 1-gram, 225 2-gram and 273 3-gram models. Finally, the language model was a 3-gram-type which resulted from the combination of the generic LM (with a 10% weight) and the specialized LM (with 90% weight). This combination has been shown as leading to the best WER for domain specific application (Lecouteux et al., 2011). The interest of such combination is to bias the recognition towards the domain LM but when the speaker deviates from the domain, the general LM makes it possible to avoid the recognition of sentences leading to “false- positive” detection. Results on manually annotated data are given Table 5. The most important performance measures are the Word Error Rate (WER) of the overall decoded speech and those of the specific distress calls as well as the Call Error Rate (CER: c.f. equation 3). Considering distress calls only, the average WER is 34.0% whereas it a 39.3% when all interjections and sentences are taken into account. On average, CER is equal to 26.8% with an important dis- parity between the speakers. Unfortunately and as mentioned above, the used corpus does not allow to determine a False Alarm Rate. Previous studies based on the AD80 corpus showed recall, precision and F-measure equal to 88.4%, 86.9% and 87.2% (Aman et al., 2013). Nevertheless, this corpus was recorded in very different conditions, text reading in a studio, in contrary of those of Cirdo-set.The video analysis framework for fall events labeling is based on the silhouette extraction. The silhouette is extracted by removal of background pixels within the video scene using. The background subtraction is performed by Mixture of Gaussian based approach, and eigenbackground (PCA) approach (Deeb et al., 2012), (Priyank Shah, 2014). The extracted shape is then used to obtain discriminative features to detect anomaly in person’s movement in the scene. The overview of proposed framework is shown in Figure 3.After silhouette extraction the human body is segmented into colored connected components. Colored connected components regarded as regions are extracted by applying region growing technique. Each component with similar color are fitted into blob (Hsieh et al., 2010). Blob is repre- sented by spatial color Gaussian mixture model, assuming that spatial color components are de-correlated. The probability of an observation X t of that pixel at time t to belong to the background is given by equation 4.where L is the number of gaussian, η is Gaussian probability density function, Σ k,t is an estimates of weight and ω k,t is covariance matrix of the k-th Gaussian in the mixture at time t. In the last, an energy based function is formulated over the unknown labels of every pixel in the form of a first order Markov random field (MRF) energy function:Here, N e is neighboring pixels and the data energy Σ p∈P D p (f p ) evaluates the likelihood of each pixel to take a label. Finally, energy function is minimized with a graph cut algorithm via a swap approach (Miguel Angel Bautista, 2015). Background model is updated selectively with an online EM algorithm (Moon, 1996).Our method begins with an iterative process and considers that person is in standing position. Body is decomposed in three parts i.e. head, torso and lower part. Then, dynamic processing technique is used to obtain different level of body details (i.e. number of blobs), if required. At first, a blob (k-th blob) is built for each connected component with a feature vector containing: color, center’s coordinates C k , a predicted change of color P k and velocity V k . Set of current colored connected components are extracted from the smoothed foreground by region growing. By considering tracking of blobs as a matching process, we introduce a novel cost function to obtain distance between two blobs. The cost function is given by: Cost(j, k) = α 1 ( P k −P j t /V k )+α 2 ( C j −C k M / C k ) (6) where C j t and P j t respectively, the color and the center’s coordinates of the j-th connected component extracted at time t.The labeling of events is based on the scenario define above. To identify poses, the extracted silhouette from the body parts was used. To recognize and label different poses from the video data, an histogram based approach was used as they runs in real time and improves its accu- racy with the passage of run time The recognition wss based on comparison of two histograms i.e. key pose frame histogram and histogram of frame in hand (Barnachon et al., 2012). The histograms were then compared with the Bhattacharyya distance and warped by a dynamic time warping process to achieve their optimal alignment (Barnachon et al., 2014). Bhattacharyya distance is calculated using:Where H 1 and H 2 are integral histograms. In this study we focused on the analysis of posture to detect event of distress. Our framework for fall detection could further be enhanced by considering other factors as well, i.e. facial expression analysis. Analysis of facial expressions to detect pain can be very advantageous in case of prolonged immobility of elderly person (Khan et al., 2013).This paper investigated smart home technology and recorded comprehensive audio/video corpus of domestic falls. For elderly, the fall is one of the most feared and recurring problems. Surveillance technologies tries to provide solution to this issue by alerting contact person in case of fall. There is lot of work which focuses on this problem but to the best of our knowledge there is no common database for comparing results. To address this issue we have made available a database composed of audio/video records of falls and prolonged immobility. In this paper, studies using this database for the automatic identification of these events were also presented. The C IRDO corpus was recorded in a smart environment reproducing a typical living room containing an e-lio communication device equipped with microphone and camera. The experiment was guided by an ethnographic study which detailed the various events related to distress situations faced by elderly people. Various scenarios were estab- lished from this study that describes pattern of postures in case of fall so that acted falls were as close to real situation as possible. The database can thus be useful to researchers of the community studying video or audio emergency situations as well as to model the relationship between audio/video events and learn fall model using machine learning.This work was supported by the French funding agen- cies ANR and CNSA through C IRDO project (ANR-2010- TECS-012). The authors would like to thanks the persons who agreed to participate in the survey or in the recordings.Aman, F., Vacher, M., Rossato, S., and Portet, F. (2013). Speech Recognition of Aged Voices in the AAL Context: Detection of Distress Sentences. In The 7th Int. Conf. on Speech Technology and Human-Computer Dialogue, SpeD 2013, pages 177–184. Aman, F. (2014). Reconnaissance automatique de la pa- role de personnes âgées pour les services d’assistance à domicile. Ph.D. thesis, Université de Grenoble, Ecole doctorale MSTII. Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2012). Human actions recognition from streamed mo- tion capture. In Pattern Recognition (ICPR), Int. Conf. on, pages 3807–3810. IEEE. Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2014). Ongoing Human Action Recognition with Motion Capture. Pattern Recognition, 47(1):238–247. Bloch, F., Gautier, V., Noury, N., Lundy, J., Poujaud, J., Claessens, Y., and Rigaud, A. (2011). Evaluation under real-life conditions of a stand-alone fall detector for the elderly subjects. Annals of Physical and Rehabilitation Medicine, 54:391–398. Bobillier-Chaumon, M.-E., Cuvillier, B., Bouakaz, S., and Vacher, M. (2012). Démarche de développement de technologies ambiantes pour le maintien à domicile des personnes dépendantes : vers une triangulation des méth- odes et des approches. In Actes du 1er Congrès Eu- ropéen de Stimulation Cognitive, pages 121–122, Dijon, France. Body-Bekkadja, S., Bobillier-Chaumon, M.-E., Cuvillier, B., and Cros, F. (2015). Understanding the Socio- Domestic Activity: A Challenge for the Ambient Technologies Acceptance in the Case of Homecare Assis- tance. In HCI International, volume Part II of LNCS 9194, pages 399–411. Bouakaz, S., Vacher, M., Bobillier-Chaumon, M.-E., FrédéricAman, Bekkadja, Portet, Guillou, E., Rossato, S., Desserée, E., Traineau, P., Vimon, J.-P., and Cheva- lier, T. (2014). CIRDO: Smart companion for helping elderly to live at home for longer. Innovation and Re- search in BioMedical engineering, 35(2):101–108. Clot, Y. (1999). La fonction psychologique du travail. PUF, Paris, France. Deeb, R., Desseree, E., and Bouakaz, S. (2012). Real-time two-level foreground detection and person-silhouette extraction enhanced by body-parts tracking. In Proc. SPIE, volume 83010R, pages 1–8. Hamill, M., Young, V., Boger, J., and Mihailidis, A. (2009). Development of an automated speech recognition interface for personal emergency response systems. Journal of NeuroEngineering and Rehabilitation, 6(1):26. He, J. and King, W. (2008). The role of user participa- tion in information systems development: Implications from a meta-analysis. Journal of Management Information Systems, 25(1):301–331. Hsieh, C., Chuang, S., Chen, S., Chen, C., and Fan, K. (2010). Segmentation of human body parts using de- formable triangulation. IEEE Transactions on Systems, Man, and Cybernetics Part A: Systems and Humans, 40(3):596–610. Hwang, M. and Thorn, R. (1999). The effect of user en- gagement on system success: A meta-analytical integra- tion of research findings. Information and Management, 35(4):229–236. Igual, R., Medrano, C., and Plaza, I. (2013). Challenges, issues and trends in fall detection systems. BioMedical Engineering OnLine, 12(1):1–24. Kangas, M., Vikman, I., Nyberg, L., Korpelainen, R., Lind- blom, J., and Jämsä, T. (2012). Comparison of real-life accidental falls in older people with experimental falls in middle-aged test subjects. Gait & Posture, 35(3):500 – 505. Khan, R. A., Meyer, A., Konik, H., and Bouakaz, S. (2013). Pain detection through shape and appearance features. In Multimedia and Expo (ICME), 2013 IEEE International Conference on, pages 1–6, July. Klenk, J., Becker, C., Lieken, F., Nicolai, S., Maetzler, W., Alt, W., Zijlstra, W., Hausdorff, J., van Lummel, R., Chiari, L., and Lindemann, U. (2011). Comparison of acceleration signals of simulated and real-world back- ward falls. Medical Engineering & Physics, 33(3):368 – 373. Kujala, S. (2003). User involvement: A review of the ben- efits and challenges. Behaviour and Information Technology, 22(1):1–16. Lecouteux, B., Vacher, M., and Portet, F. (2011). Distant Speech Recognition in a Smart Home: Comparison of Several Multisource ASRs in Realistic Conditions. In In- terspeech 2011, pages 1–4, Florence, Italy. Miguel Angel Bautista, Sergio Escalera, D. S. (2015). Hupba8k: Dataset and ecoc-graph-cut based segmentation of human limbs. Neurocomputing, 150(A):173–188. Moon, T. K. (1996). The expectation-maximization algorithm. IEEE Signal Processing Magazine, 13(6):47–60. Norman, D. A. and Draper, S. W. (1986). User Centered System Design; New Perspectives on Human-Computer Interaction. L. Erlbaum Associates Inc. Pantic, M., Pentland, A., Nijholt, A., and Huang, T. (2006). Human computing and machine understanding of human behavior: survey. In ACM Int. Conf. on Multimodal In- terfaces. Pino, M., Moget, C., Benveniste, S., Picard, R., and Rigaud, A.-S. (2015). Innovative technology-based healthcare and support services for older adults: How and why in- dustrial initiatives convert to the living lab approach. In HCI International, volume Part II of LNCS 9194, pages 158–169. Springer International Publishing. Popescu, M., Li, Y., Skubic, M., and Rantz, M. (2008). An acoustic fall detector system that uses sound height information to reduce the false alarm rate. In Proc. 30th Annual Int. Conference of the IEEE-EMBS 2008, pages 4628–4631, 20–25 Aug. Povey, D., Burget, L., Agarwal, M., Akyazi, P., Kai, F., Ghoshal, A., Glembek, O., Goel, N., Karafiát, M., Rastrow, A., Rose, R. C., Schwarz, P., and Thomas, S. (2011a). The subspace gaussian mixture model—a structured model for speech recognition. Computer Speech & Language, 25(2):404 – 439. Povey, D., Ghoshal, A., Boulianne, G., Burget, L., Glembek, O., Goel, N., Hannemann, M., Motlicek, P., Qian, Y., Schwarz, P., Silovsky, J., Stemmer, G., and Vesely, K. (2011b). The Kaldi Speech Recognition Toolkit. In IEEE 2011 Workshop on Automatic Speech Recognition and Understanding. IEEE Signal Processing Soci- ety, December. IEEE Catalog No.: CFP11SRW-USB. Priyank Shah, H. M. (2014). Comperehensive study and comparative analysis of different types of background subtraction algorithms. International Journal of Im- age,Graphics and Signal Processing, 6(8):47–52. Saim, R. (2014). Accidental falls amongst the elderly: Health impact and effective intervention strategies. Mas- ter’s thesis. Vacher, M., Portet, F., Fleury, A., and Noury, N. (2011). Development of Audio Sensing Technology for Ambient Assisted Living: Applications and Challenges. International journal of E-Health and medical communications, 2(1):35–54, March. Vacher, M., Lecouteux, B., Chahuara, P., Portet, F., Meil- lon, B., and Bonnefond, N. (2014). The Sweet-Home speech and multimodal corpus for home automation interaction. In The 9th edition of the Language Resources and Evaluation Conference (LREC), pages 4499–4506, Reykjavik, Iceland. Vacher, M., Aman, F., Rossato, S., and Portet, F. (2015a). Development of Automatic Speech Recognition Tech- niques for Elderly Home Support: Applications and Challenges. In J. Zou et al., editors, HCI International, volume Part II of LNCS 9194, pages 341–353, Los An- geles, CA, United States, August. Springer International Publishing Switzerland. Vacher, M., Lecouteux, B., Aman, F., Rossato, S., and Portet, F. (2015b). Recognition of Distress Calls in Distant Speech Setting: a Preliminary Experiment in a Smart Home. In 6th Workshop on Speech and Language Processing for Assistive Technologies, pages 1–7, Dresden, Germany, September. SIG-SLPAT. Who. (2013). World population ageing: 1950-2050. Tech- nical report, Executive report, United Nations, Depart- ment of Economic and Social Affairs, Population Divi- sion. Young, V. and Mihailidis, A. (2010). An automated, speech-based emergency response system for the older adult. Gerontechnology, 9(2):261. Young, V. and Mihailidis, A. (2013). The CARES corpus: a database of older adult actor simulated emergency dia- logue for developing a personal emergency response system. I. J. Speech Technology, 16(1):55–73. Zouari, L. and Chollet, G. (2006). Efficient gaussian mixture for speech recognition. In Pattern Recognition, 2006. ICPR 2006. 18th International Conference on, volume 4, pages 294–297.
+[The CIRDO Corpus: Comprehensive Audio/Video Database of Domestic Falls of Elderly People]
+Paragraph
+   sofa: _InitialView
+   begin: 0
+   end: 88
+[The CIRDO Corpus: Comprehensive Audio/Video Database of Domestic Falls of Elderly People]
+Sentence
+   sofa: _InitialView
+   begin: 0
+   end: 88
 [CNRS, LIG, F-38000 Grenoble, France Univ. Grenoble Alpes, LIG, F-38000, Grenoble, France LIRIS, UMR 5205 CNRS/Université Claude Bernard Lyon 1, F-69622 Villeurbanne, France GRePS, Université Lyon 2, F-69676 Bron, France Michel.Vacher@imag.fr, saida.bouakaz@univ-lyon1.fr, marc-eric.bobillier-chaumon@univ-lyon2.fr]
 Paragraph
    sofa: _InitialView
-   begin: 0
-   end: 313
+   begin: 88
+   end: 401
 [CNRS, LIG, F-38000 Grenoble, France Univ.]
 Sentence
    sofa: _InitialView
-   begin: 0
-   end: 41
-[]
-Sentence
-   sofa: _InitialView
-   begin: 0
-   end: 0
+   begin: 88
+   end: 129
 [ Grenoble Alpes, LIG, F-38000, Grenoble, France LIRIS, UMR 5205 CNRS/Université Claude Bernard Lyon 1, F-69622 Villeurbanne, France GRePS, Université Lyon 2, F-69676 Bron, France Michel.Vacher@imag.fr, saida.bouakaz@univ-lyon1.fr, marc-eric.bobillier-chaumon@univ-lyon2.fr]
 Sentence
    sofa: _InitialView
-   begin: 41
-   end: 313
+   begin: 129
+   end: 401
 [Abstract Ambient Assisted Living aims at enhancing the quality of life of older and disabled people at home thanks to Smart Homes. In particular, regarding elderly living alone at home, the detection of distress situation after a fall is very important to reassure this kind of population. However, many studies do not include tests in real settings, because data collection in this domain is very expensive and challenging and because of the few available data sets. The C corpus is a dataset recorded in realistic conditions in D , a fully equipped Smart Home with microphones and home automation sensors, in which participants performed scenarios including real falls on a carpet and calls for help. These scenarios were elaborated thanks to a field study involving elderly persons. Experiments related in a first part to distress detection in real-time using audio and speech analysis and in a second part to fall detection using video analysis are presented. Results show the difficulty of the task. The database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance. Keywords: audio and video data set, multimodal corpus, natural language and multimodal interaction, Ambient Assisted Living (AAL), distress situation.]
 Paragraph
    sofa: _InitialView
-   begin: 313
-   end: 1604
+   begin: 401
+   end: 1692
 [Twenty first century is witnessing a rapid growth in population over 65 years old worldwide (Who, 2013). This change in demography put pressure on governments which are incurring unprecedented expenditure to support ageing population since ageing is correlated with an increase in health and daily living support. For instance, in France, 12 million out of 66 million people are receiving the per- sonalized allocation of autonomy (PAA) 1 , a government financial aid for elderly person to support them in their daily life. This demographic change is very challenging to the society, governments and to technologists to come up with reliable and sustainable solutions to help ageing population to live as independently and safely as possible while reliev- ing their family’s emotional and financial burden. However this trend also provides the opportunity to come up with technologies that can help ageing population to carry on with their lives without compromising their privacy and at the same time provide assistance to caregivers i.e. nurse, partner, children etc. One of the main sources of stress in the ageing population for which technology can be of help is the fall incident. Indeed fall is a major source of injury for elderly people, between 20 and 40 percent of adults over 65 who live at home fall (Saim, 2014). Fall could lead elderly persons to faint or become unconscious. Another emergency situation is the inability to call for a help in distress situation of some aged persons due to their reduced mobility. In the absences of another person in the home (such as a carer), these situations could have disastrous effect. Several studies had worked on an ICT solutions to bring autonomy and security back to the user (Popescu et al., 2008;]
 Paragraph
    sofa: _InitialView
-   begin: 1604
-   end: 3362
+   begin: 1692
+   end: 3450
 [Twenty first century is witnessing a rapid growth in population over 65 years old worldwide (Who, 2013).]
 Sentence
    sofa: _InitialView
-   begin: 1604
-   end: 1708
+   begin: 1692
+   end: 1796
 [ This change in demography put pressure on governments which are incurring unprecedented expenditure to support ageing population since ageing is correlated with an increase in health and daily living support.]
 Sentence
    sofa: _InitialView
-   begin: 1708
-   end: 1917
+   begin: 1796
+   end: 2005
 [ For instance, in France, 12 million out of 66 million people are receiving the per- sonalized allocation of autonomy (PAA) 1 , a government financial aid for elderly person to support them in their daily life.]
 Sentence
    sofa: _InitialView
-   begin: 1917
-   end: 2127
+   begin: 2005
+   end: 2215
 [ This demographic change is very challenging to the society, governments and to technologists to come up with reliable and sustainable solutions to help ageing population to live as independently and safely as possible while reliev- ing their family’s emotional and financial burden.]
 Sentence
    sofa: _InitialView
-   begin: 2127
-   end: 2410
+   begin: 2215
+   end: 2498
 [ However this trend also provides the opportunity to come up with technologies that can help ageing population to carry on with their lives without compromising their privacy and at the same time provide assistance to caregivers i.e.]
 Sentence
    sofa: _InitialView
-   begin: 2410
-   end: 2643
+   begin: 2498
+   end: 2731
 [ nurse, partner, children etc.]
 Sentence
    sofa: _InitialView
-   begin: 2643
-   end: 2673
+   begin: 2731
+   end: 2761
 [ One of the main sources of stress in the ageing population for which technology can be of help is the fall incident.]
 Sentence
    sofa: _InitialView
-   begin: 2673
-   end: 2790
+   begin: 2761
+   end: 2878
 [ Indeed fall is a major source of injury for elderly people, between 20 and 40 percent of adults over 65 who live at home fall (Saim, 2014).]
 Sentence
    sofa: _InitialView
-   begin: 2790
-   end: 2930
+   begin: 2878
+   end: 3018
 [ Fall could lead elderly persons to faint or become unconscious.]
 Sentence
    sofa: _InitialView
-   begin: 2930
-   end: 2994
+   begin: 3018
+   end: 3082
 [ Another emergency situation is the inability to call for a help in distress situation of some aged persons due to their reduced mobility.]
 Sentence
    sofa: _InitialView
-   begin: 2994
-   end: 3132
+   begin: 3082
+   end: 3220
 [ In the absences of another person in the home (such as a carer), these situations could have disastrous effect.]
 Sentence
    sofa: _InitialView
-   begin: 3132
-   end: 3244
+   begin: 3220
+   end: 3332
 [ Several studies had worked on an ICT solutions to bring autonomy and security back to the user (Popescu et al., 2008;]
 Sentence
    sofa: _InitialView
-   begin: 3244
-   end: 3362
+   begin: 3332
+   end: 3450
 [1 This allowance from the state is given to people over 60 years old in loss of autonomy]
 Paragraph
    sofa: _InitialView
-   begin: 3362
-   end: 3450
+   begin: 3450
+   end: 3538
 [1 This allowance from the state is given to people over 60 years old in loss of autonomy]
 Sentence
    sofa: _InitialView
-   begin: 3362
-   end: 3450
+   begin: 3450
+   end: 3538
 [Hamill et al., 2009; Young and Mihailidis, 2010; Bloch et al., 2011). These studies have followed the paradigm shift in Human Computer Interaction design, from computer- centred designs to human-centred designs (Pantic et al., 2006). Thus reliable and robust analysis of ageing population’s gesture and voice has become inevitable in many application areas, such as social robots, emergency situation detection, behaviour monitoring, communication support, etc. Since many of these studies are based on statisti- cal analysis (either for modelling or for machine learning), there is a dire need of databases of audio and video recordings to build and evaluate performance of systems that can analyse ageing population’s gesture and voice. Indeed evaluation and benchmarking of systems / algorithms must be performed on standardized and accessible databases for meaningful comparison. In the absence of comparative tests on such standardized databases it is difficult to exhibits the relative strengths and weaknesses of these systems. To the best of our knowledge there exists no such database that has video with audio recordings of aged persons during fall and distress situations while it is recognised as one of the major problem in the evaluation of fall detectors (Igual et al., 2013). Young and Mihailidis (Young and Mihailidis, 2013) have collected a corpus of spontaneous speech, read sentences, and emergency scenarios from adult actors aged 23–91 years but it is in English and do not contain videos recording. This could be due to the fact that it is very difficult to setup a camera and microphone to record such events. Secondly, there is an ethical issue associated with recording aged person in distress situation and later making it available to pub- lic. Very few studies were able to record real falls of elderly persons (Kangas et al., 2012; Klenk et al., 2011) but those were only concerned with accelerometer sensors. To overcome this bottleneck in the research and development]
 Paragraph
    sofa: _InitialView
-   begin: 3450
-   end: 5449
+   begin: 3538
+   end: 5537
 [Hamill et al., 2009; Young and Mihailidis, 2010; Bloch et al., 2011).]
 Sentence
    sofa: _InitialView
-   begin: 3450
-   end: 3519
+   begin: 3538
+   end: 3607
 [ These studies have followed the paradigm shift in Human Computer Interaction design, from computer- centred designs to human-centred designs (Pantic et al., 2006).]
 Sentence
    sofa: _InitialView
-   begin: 3519
-   end: 3683
+   begin: 3607
+   end: 3771
 [ Thus reliable and robust analysis of ageing population’s gesture and voice has become inevitable in many application areas, such as social robots, emergency situation detection, behaviour monitoring, communication support, etc.]
 Sentence
    sofa: _InitialView
-   begin: 3683
-   end: 3911
+   begin: 3771
+   end: 3999
 [ Since many of these studies are based on statisti- cal analysis (either for modelling or for machine learning), there is a dire need of databases of audio and video recordings to build and evaluate performance of systems that can analyse ageing population’s gesture and voice.]
 Sentence
    sofa: _InitialView
-   begin: 3911
-   end: 4188
+   begin: 3999
+   end: 4276
 [ Indeed evaluation and benchmarking of systems / algorithms must be performed on standardized and accessible databases for meaningful comparison.]
 Sentence
    sofa: _InitialView
-   begin: 4188
-   end: 4333
+   begin: 4276
+   end: 4421
 [ In the absence of comparative tests on such standardized databases it is difficult to exhibits the relative strengths and weaknesses of these systems.]
 Sentence
    sofa: _InitialView
-   begin: 4333
-   end: 4484
+   begin: 4421
+   end: 4572
 [ To the best of our knowledge there exists no such database that has video with audio recordings of aged persons during fall and distress situations while it is recognised as one of the major problem in the evaluation of fall detectors (Igual et al., 2013).]
 Sentence
    sofa: _InitialView
-   begin: 4484
-   end: 4741
+   begin: 4572
+   end: 4829
 [ Young and Mihailidis (Young and Mihailidis, 2013) have collected a corpus of spontaneous speech, read sentences, and emergency scenarios from adult actors aged 23–91 years but it is in English and do not contain videos recording.]
 Sentence
    sofa: _InitialView
-   begin: 4741
-   end: 4971
+   begin: 4829
+   end: 5059
 [ This could be due to the fact that it is very difficult to setup a camera and microphone to record such events.]
 Sentence
    sofa: _InitialView
-   begin: 4971
-   end: 5083
+   begin: 5059
+   end: 5171
 [ Secondly, there is an ethical issue associated with recording aged person in distress situation and later making it available to pub- lic.]
 Sentence
    sofa: _InitialView
-   begin: 5083
-   end: 5222
+   begin: 5171
+   end: 5310
 [ Very few studies were able to record real falls of elderly persons (Kangas et al., 2012; Klenk et al., 2011) but those were only concerned with accelerometer sensors.]
 Sentence
    sofa: _InitialView
-   begin: 5222
-   end: 5389
+   begin: 5310
+   end: 5477
 [ To overcome this bottleneck in the research and development of emergency situation detectors, we introduce the C IRDO database which is part of the C IRDO project (Bouakaz et al., 2014) whose aim was to develop an audio/video emergency detection system for elderly persons.]
 Sentence
    sofa: _InitialView
-   begin: 5389
-   end: 5663
+   begin: 5477
+   end: 5751
 [ of emergency situation detectors, we introduce the C IRDO database which is part of the C IRDO project (Bouakaz et al., 2014) whose aim was to develop an audio/video emergency detection system for elderly persons. The C IRDO database contains video with audio (French language) recordings of aged persons during falls and distress situations. C IRDO database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance. In this article, we provide all the details related to various steps that have been carried out to record data in such a challenging situation.]
 Paragraph
    sofa: _InitialView
-   begin: 5449
-   end: 6075
+   begin: 5537
+   end: 6163
 [ The C IRDO database contains video with audio (French language) recordings of aged persons during falls and distress situations.]
 Sentence
    sofa: _InitialView
-   begin: 5663
-   end: 5792
+   begin: 5751
+   end: 5880
 [ C IRDO database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance.]
 Sentence
    sofa: _InitialView
-   begin: 5792
-   end: 5931
+   begin: 5880
+   end: 6019
 [ In this article, we provide all the details related to various steps that have been carried out to record data in such a challenging situation.]
 Sentence
    sofa: _InitialView
-   begin: 5931
-   end: 6075
+   begin: 6019
+   end: 6163
 [Recording sessions were based on written scenarios. These scenarios were well elaborated thanks to a field study involving 15 elderly persons (Bobillier-Chaumon et al., 2012). Four scenarios were related to fall (F1 to F4), one to blocked hip (B) and two were true negative (TN1 and TN2). Recording sessions were conducted in the D OMUS smart room of the LIG laboratory configured to look like a standard room (chairs, carpet, coffee table, TV. . . ).]
 Paragraph
    sofa: _InitialView
-   begin: 6075
-   end: 6526
+   begin: 6163
+   end: 6614
 [Recording sessions were based on written scenarios.]
 Sentence
    sofa: _InitialView
-   begin: 6075
-   end: 6126
+   begin: 6163
+   end: 6214
 []
 Sentence
    sofa: _InitialView
-   begin: 6075
-   end: 6075
+   begin: 6163
+   end: 6163
 []
 Sentence
    sofa: _InitialView
-   begin: 6075
-   end: 6075
+   begin: 6163
+   end: 6163
 [ These scenarios were well elaborated thanks to a field study involving 15 elderly persons (Bobillier-Chaumon et al., 2012).]
 Sentence
    sofa: _InitialView
-   begin: 6126
-   end: 6250
+   begin: 6214
+   end: 6338
 [ Four scenarios were related to fall (F1 to F4), one to blocked hip (B) and two were true negative (TN1 and TN2).]
 Sentence
    sofa: _InitialView
-   begin: 6250
-   end: 6363
+   begin: 6338
+   end: 6451
 [ Recording sessions were conducted in the D OMUS smart room of the LIG laboratory configured to look like a standard room (chairs, carpet, coffee table, TV.]
 Sentence
    sofa: _InitialView
-   begin: 6363
-   end: 6519
+   begin: 6451
+   end: 6607
 [ .]
 Sentence
    sofa: _InitialView
-   begin: 6519
-   end: 6521
+   begin: 6607
+   end: 6609
 [ .]
 Sentence
    sofa: _InitialView
-   begin: 6521
-   end: 6523
+   begin: 6609
+   end: 6611
 [ ).]
 Sentence
    sofa: _InitialView
-   begin: 6523
-   end: 6526
+   begin: 6611
+   end: 6614
 [Ideally scenarios should be played by elderly people. However, it is cumbersome to find elder person who is capa- ble and willing to play such scenarios (refer Section 2.2.). To record realistic data (but not necessarily played by elder person), people under 60 were recruited. Then, these vol- unteers were instructed to wear an equipment i.e. old age simulator (see Figure 1). Old age simulator hampered mobility, reduced vision and hearing. Overall 17 participants were recruited (9 men and 8 women) with mean age of 40 years (SD 19.5). Among them 13 people were under 60 and worn the simulator.]
 Paragraph
    sofa: _InitialView
-   begin: 6526
-   end: 7124
+   begin: 6614
+   end: 7212
 [Ideally scenarios should be played by elderly people.]
 Sentence
    sofa: _InitialView
-   begin: 6526
-   end: 6579
+   begin: 6614
+   end: 6667
 [ However, it is cumbersome to find elder person who is capa- ble and willing to play such scenarios (refer Section 2.2.).]
 Sentence
    sofa: _InitialView
-   begin: 6579
-   end: 6700
+   begin: 6667
+   end: 6788
 [ To record realistic data (but not necessarily played by elder person), people under 60 were recruited.]
 Sentence
    sofa: _InitialView
-   begin: 6700
-   end: 6803
+   begin: 6788
+   end: 6891
 [ Then, these vol- unteers were instructed to wear an equipment i.e.]
 Sentence
    sofa: _InitialView
-   begin: 6803
-   end: 6870
+   begin: 6891
+   end: 6958
 [ old age simulator (see Figure 1).]
 Sentence
    sofa: _InitialView
-   begin: 6870
-   end: 6904
+   begin: 6958
+   end: 6992
 [ Old age simulator hampered mobility, reduced vision and hearing.]
 Sentence
    sofa: _InitialView
-   begin: 6904
-   end: 6969
+   begin: 6992
+   end: 7057
 [ Overall 17 participants were recruited (9 men and 8 women) with mean age of 40 years (SD 19.5).]
 Sentence
    sofa: _InitialView
-   begin: 6969
-   end: 7065
+   begin: 7057
+   end: 7153
 [ Among them 13 people were under 60 and worn the simulator.]
 Sentence
    sofa: _InitialView
-   begin: 7065
-   end: 7124
+   begin: 7153
+   end: 7212
 [Each participant was introduced to the context of the research and was invited to sign a consent form. The participants played five types of fall chosen from 28 risky situations identified as: slip, stumble, falls in a stationary position and a position of hip blocked on the sofa. Figure 2 shows two elderly participants when they fall on the carpet. These situations were selected because they were represen- tative falls in domestic environment and could be played safely. Two other scenarios, called “true-false”, were added for the evaluation and verification of automatic fall detection. The first “true-false” situation consists of a rapid ac- tion of picking up of magazines from the floor (close to a situation of fall), while the second was to try to hold a remote control from the coffee table when the person is sit- ting on sofa (close to a situation in which the person has a blocked hip). Scenarios included call for help sentences. These sentences were chosen based on sentences identified during the field study and on sentences extracted from the AD80 corpus (Aman et al., 2013) which was built with the aim of elderly voice study. Table 2 gives some examples.]
 Paragraph
    sofa: _InitialView
-   begin: 7124
-   end: 8302
+   begin: 7212
+   end: 8390
 [Each participant was introduced to the context of the research and was invited to sign a consent form.]
 Sentence
    sofa: _InitialView
-   begin: 7124
-   end: 7226
+   begin: 7212
+   end: 7314
 []
 Sentence
    sofa: _InitialView
-   begin: 7124
-   end: 7124
+   begin: 7212
+   end: 7212
 [ The participants played five types of fall chosen from 28 risky situations identified as: slip, stumble, falls in a stationary position and a position of hip blocked on the sofa.]
 Sentence
    sofa: _InitialView
-   begin: 7226
-   end: 7405
+   begin: 7314
+   end: 7493
 [ Figure 2 shows two elderly participants when they fall on the carpet.]
 Sentence
    sofa: _InitialView
-   begin: 7405
-   end: 7475
+   begin: 7493
+   end: 7563
 [ These situations were selected because they were represen- tative falls in domestic environment and could be played safely.]
 Sentence
    sofa: _InitialView
-   begin: 7475
-   end: 7599
+   begin: 7563
+   end: 7687
 [ Two other scenarios, called “true-false”, were added for the evaluation and verification of automatic fall detection.]
 Sentence
    sofa: _InitialView
-   begin: 7599
-   end: 7717
+   begin: 7687
+   end: 7805
 [ The first “true-false” situation consists of a rapid ac- tion of picking up of magazines from the floor (close to a situation of fall), while the second was to try to hold a remote control from the coffee table when the person is sit- ting on sofa (close to a situation in which the person has a blocked hip).]
 Sentence
    sofa: _InitialView
-   begin: 7717
-   end: 8027
+   begin: 7805
+   end: 8115
 [ Scenarios included call for help sentences.]
 Sentence
    sofa: _InitialView
-   begin: 8027
-   end: 8071
+   begin: 8115
+   end: 8159
 [ These sentences were chosen based on sentences identified during the field study and on sentences extracted from the AD80 corpus (Aman et al., 2013) which was built with the aim of elderly voice study.]
 Sentence
    sofa: _InitialView
-   begin: 8071
-   end: 8273
+   begin: 8159
+   end: 8361
 [ Table 2 gives some examples.]
 Sentence
    sofa: _InitialView
-   begin: 8273
-   end: 8302
+   begin: 8361
+   end: 8390
 [Before each recording session, the experimenter explained the scenario to the participant. Scenario has following sub- components: physical location, time of the day, activity (what the person intends to do and what eventually hap- pens), gesture (way of falling), and the spoken sentences. The participant rehearsed the scenario several times before final acquisition of data. On average, the duration of acquisition was 2 hours and 30 minutes per person.]
 Paragraph
    sofa: _InitialView
-   begin: 8302
-   end: 8758
+   begin: 8390
+   end: 8846
 [Before each recording session, the experimenter explained the scenario to the participant.]
 Sentence
    sofa: _InitialView
-   begin: 8302
-   end: 8392
+   begin: 8390
+   end: 8480
 []
 Sentence
    sofa: _InitialView
-   begin: 8302
-   end: 8302
+   begin: 8390
+   end: 8390
 [ Scenario has following sub- components: physical location, time of the day, activity (what the person intends to do and what eventually hap- pens), gesture (way of falling), and the spoken sentences.]
 Sentence
    sofa: _InitialView
-   begin: 8392
-   end: 8592
+   begin: 8480
+   end: 8680
 [ The participant rehearsed the scenario several times before final acquisition of data.]
 Sentence
    sofa: _InitialView
-   begin: 8592
-   end: 8679
+   begin: 8680
+   end: 8767
 [ On average, the duration of acquisition was 2 hours and 30 minutes per person.]
 Sentence
    sofa: _InitialView
-   begin: 8679
-   end: 8758
+   begin: 8767
+   end: 8846
 [ 2.3. Equipment and Tools The studio and the equipment used are shown in Figure 1. Moreover, the DOMUS smart home was equipped with the]
 Paragraph
    sofa: _InitialView
-   begin: 8758
-   end: 8893
+   begin: 8846
+   end: 8981
 [2.3.]
 Sentence
    sofa: _InitialView
-   begin: 8759
-   end: 8763
+   begin: 8847
+   end: 8851
 [ Equipment and Tools The studio and the equipment used are shown in Figure 1.]
 Sentence
    sofa: _InitialView
-   begin: 8763
-   end: 8840
+   begin: 8851
+   end: 8928
 [ Moreover, the DOMUS smart home was equipped with the social inclusion product e-lio 2 .]
 Sentence
    sofa: _InitialView
-   begin: 8840
-   end: 8928
+   begin: 8928
+   end: 9016
 [ social inclusion product e-lio 2 . Regarding audio analysis, we conducted a multi-source capture with two wireless Sennheiser microphones. A eW-300-G2 type ME2 microphone was placed on the sus- pended ceiling of the studio, and a SKM-300-G2 microphone was placed on a furniture close to the participant. The recording was performed in the technical room by a computer connected to the microphones high-frequency re- ceivers by National Instruments PCI-6220 8-channel card. A loudspeaker in the control room enabled experimenters to hear the progression of the scene in the studio. The National Instruments PCI-6220 card was controlled by the StreamHIS software (Vacher et al., 2011) developed by the GETALP team that enables data acquisition. Regarding video analysis, we conducted the video capture with two webcam cameras (Sony PSEye: 640x480 60Hz connected by a USB 2.0). Cameras were fixed to the wall, one in front of the Sofa and other at an angle of 45 degrees. Moreover, we acquired depth image with Microsoft Kinect. Synchronization and recording of video streams from all three cameras were performed in the technical room by computer (Intel i3 3.2GHz, 4GB RAM, NVidia GeForce GTS 450 512MB). The tools that enable video acquisition was developed by the team SAARA (based on the OpenCV library). Video processing (background learning and subtraction, body parts segmentation) was performed on a PC cluster, taking advantage of algorithms parallelization on CPU and GPU. Motion tracking and identification of haz- ardous situations was done on a PC (Intel i7 3.5GHz, 4GB RAM, NVIDIA GTX 660 4GB GeFore).]
 Paragraph
    sofa: _InitialView
-   begin: 8893
-   end: 10506
+   begin: 8981
+   end: 10594
 [ Regarding audio analysis, we conducted a multi-source capture with two wireless Sennheiser microphones.]
 Sentence
    sofa: _InitialView
-   begin: 8928
-   end: 9032
+   begin: 9016
+   end: 9120
 [ A eW-300-G2 type ME2 microphone was placed on the sus- pended ceiling of the studio, and a SKM-300-G2 microphone was placed on a furniture close to the participant.]
 Sentence
    sofa: _InitialView
-   begin: 9032
-   end: 9197
+   begin: 9120
+   end: 9285
 [ The recording was performed in the technical room by a computer connected to the microphones high-frequency re- ceivers by National Instruments PCI-6220 8-channel card.]
 Sentence
    sofa: _InitialView
-   begin: 9197
-   end: 9366
+   begin: 9285
+   end: 9454
 [ A loudspeaker in the control room enabled experimenters to hear the progression of the scene in the studio.]
 Sentence
    sofa: _InitialView
-   begin: 9366
-   end: 9474
+   begin: 9454
+   end: 9562
 [ The National Instruments PCI-6220 card was controlled by the StreamHIS software (Vacher et al., 2011) developed by the GETALP team that enables data acquisition.]
 Sentence
    sofa: _InitialView
-   begin: 9474
-   end: 9636
+   begin: 9562
+   end: 9724
 [ Regarding video analysis, we conducted the video capture with two webcam cameras (Sony PSEye: 640x480 60Hz connected by a USB 2.0).]
 Sentence
    sofa: _InitialView
-   begin: 9636
-   end: 9768
+   begin: 9724
+   end: 9856
 [ Cameras were fixed to the wall, one in front of the Sofa and other at an angle of 45 degrees.]
 Sentence
    sofa: _InitialView
-   begin: 9768
-   end: 9862
+   begin: 9856
+   end: 9950
 [ Moreover, we acquired depth image with Microsoft Kinect.]
 Sentence
    sofa: _InitialView
-   begin: 9862
-   end: 9919
+   begin: 9950
+   end: 10007
 [ Synchronization and recording of video streams from all three cameras were performed in the technical room by computer (Intel i3 3.2GHz, 4GB RAM, NVidia GeForce GTS 450 512MB).]
 Sentence
    sofa: _InitialView
-   begin: 9919
-   end: 10096
+   begin: 10007
+   end: 10184
 [ The tools that enable video acquisition was developed by the team SAARA (based on the OpenCV library).]
 Sentence
    sofa: _InitialView
-   begin: 10096
-   end: 10199
+   begin: 10184
+   end: 10287
 [ Video processing (background learning and subtraction, body parts segmentation) was performed on a PC cluster, taking advantage of algorithms parallelization on CPU and GPU.]
 Sentence
    sofa: _InitialView
-   begin: 10199
-   end: 10373
+   begin: 10287
+   end: 10461
 [ Motion tracking and identification of haz- ardous situations was done on a PC (Intel i7 3.5GHz, 4GB RAM, NVIDIA GTX 660 4GB GeFore).]
 Sentence
    sofa: _InitialView
-   begin: 10373
-   end: 10506
+   begin: 10461
+   end: 10594
 [The C IRDO corpus is divided into three parts, the audio corpus for sound and speech analysis, the video corpus and a third part with the annotations. The corpus is detailed in Sections 3.1. and 3.2.. The audio and video corpus was annotated for the video part, with the Advene software 3 , developed at the LIRIS laboratory, and for the sound part, with Transcriber. The C IRDO corpus is a web-based data library, hosted at LIRIS and accessible for the academic and research pur- pose. The license to use the C IRDO corpus is granted on a case-by-case basis. We can also grant permission to researchers to extend the corpus given they fulfil the required conditions and sign agreement.]
 Paragraph
    sofa: _InitialView
-   begin: 10506
-   end: 11192
+   begin: 10594
+   end: 11280
 [The C IRDO corpus is divided into three parts, the audio corpus for sound and speech analysis, the video corpus and a third part with the annotations.]
 Sentence
    sofa: _InitialView
-   begin: 10506
-   end: 10656
+   begin: 10594
+   end: 10744
 [ The corpus is detailed in Sections 3.1. and 3.2..]
 Sentence
    sofa: _InitialView
-   begin: 10656
-   end: 10706
+   begin: 10744
+   end: 10794
 [ The audio and video corpus was annotated for the video part, with the Advene software 3 , developed at the LIRIS laboratory, and for the sound part, with Transcriber.]
 Sentence
    sofa: _InitialView
-   begin: 10706
-   end: 10873
+   begin: 10794
+   end: 10961
 [ The C IRDO corpus is a web-based data library, hosted at LIRIS and accessible for the academic and research pur- pose.]
 Sentence
    sofa: _InitialView
-   begin: 10873
-   end: 10992
+   begin: 10961
+   end: 11080
 [ The license to use the C IRDO corpus is granted on a case-by-case basis.]
 Sentence
    sofa: _InitialView
-   begin: 10992
-   end: 11065
+   begin: 11080
+   end: 11153
 [ We can also grant permission to researchers to extend the corpus given they fulfil the required conditions and sign agreement.]
 Sentence
    sofa: _InitialView
-   begin: 11065
-   end: 11192
+   begin: 11153
+   end: 11280
 [When they played the scenarios, some participants produced sighs, grunts, coughs, cries, groans, panting or throat clearings. As our current studies are in the domain of automatic speech recognition, these sounds were not considered during the annotation process, but this can be done in the framework of future studies. In the same way, speeches mixed with sound produced by the fall were ignored. At the end, each speaker uttered between 10 and 65 short sentences or interjections (“ah”, “oh”, “aïe”, etc.) as shown Table 3.]
 Paragraph
    sofa: _InitialView
-   begin: 11192
-   end: 11718
+   begin: 11280
+   end: 11806
 [When they played the scenarios, some participants produced sighs, grunts, coughs, cries, groans, panting or throat clearings.]
 Sentence
    sofa: _InitialView
-   begin: 11192
-   end: 11317
+   begin: 11280
+   end: 11405
 [ As our current studies are in the domain of automatic speech recognition, these sounds were not considered during the annotation process, but this can be done in the framework of future studies.]
 Sentence
    sofa: _InitialView
-   begin: 11317
-   end: 11512
+   begin: 11405
+   end: 11600
 [ In the same way, speeches mixed with sound produced by the fall were ignored.]
 Sentence
    sofa: _InitialView
-   begin: 11512
-   end: 11590
+   begin: 11600
+   end: 11678
 [ At the end, each speaker uttered between 10 and 65 short sentences or interjections (“ah”, “oh”, “aïe”, etc.)]
 Sentence
    sofa: _InitialView
-   begin: 11590
-   end: 11700
+   begin: 11678
+   end: 11788
 [ as shown Table 3.]
 Sentence
    sofa: _InitialView
-   begin: 11700
-   end: 11718
+   begin: 11788
+   end: 11806
 [2 http://www.technosens.fr 3 http://liris.cnrs.fr/advene/]
 Paragraph
    sofa: _InitialView
-   begin: 11718
-   end: 11775
+   begin: 11806
+   end: 11863
 [All Call for help]
 Paragraph
    sofa: _InitialView
-   begin: 11775
-   end: 11792
+   begin: 11863
+   end: 11880
 [Sentences were often close to those identified during the field studies (“je peux pas me relever - I can’t get up”, “e- lio appelle du secours - e-lio call for help”, etc.), some were different (“oh bein on est bien là tiens - oh I am in a sticky situation”). In practice, participants cut some sentences (i.e., inserted a delay between “e-lio” and “appelle ma fille - call my daughter”), uttered some spontaneous sentences, interjections or non-verbal sounds (i.e., groan)]
 Paragraph
    sofa: _InitialView
-   begin: 11792
-   end: 12265
+   begin: 11880
+   end: 12353
 [Sentences were often close to those identified during the field studies (“je peux pas me relever - I can’t get up”, “e- lio appelle du secours - e-lio call for help”, etc.),]
 Sentence
    sofa: _InitialView
-   begin: 11792
-   end: 11965
+   begin: 11880
+   end: 12053
 []
 Sentence
    sofa: _InitialView
-   begin: 11792
-   end: 11792
+   begin: 11880
+   end: 11880
 []
 Sentence
    sofa: _InitialView
-   begin: 11792
-   end: 11792
+   begin: 11880
+   end: 11880
 [ some were different (“oh bein on est bien là tiens - oh I am in a sticky situation”).]
 Sentence
    sofa: _InitialView
-   begin: 11965
-   end: 12051
+   begin: 12053
+   end: 12139
 [ In practice, participants cut some sentences (i.e., inserted a delay between “e-lio” and “appelle ma fille - call my daughter”), uttered some spontaneous sentences, interjections or non-verbal sounds (i.e., groan) The content of the video corpus is displayed in Table 4 As mentioned above, the video corpus includes various types of fall according to the scenarios defined in the Protocol (refer Section 2.2.).]
 Sentence
    sofa: _InitialView
-   begin: 12051
-   end: 12462
+   begin: 12139
+   end: 12550
 [ The content of the video corpus is displayed in Table 4 As mentioned above, the video corpus includes various types of fall according to the scenarios defined in the Protocol (refer Section 2.2.). Each scenario includes a background sequence (300-600 frames) which usually is required for human body extraction. Description of the corpus is given in Table 4 wherein F1 to F4 are the fall scenarios, B blocked hip and TN1, TN2 true negatives. The total duration of the recordings is equal to 1 hour and 55 minutes, with a total of 162 video segments.]
 Paragraph
    sofa: _InitialView
-   begin: 12265
-   end: 12815
+   begin: 12353
+   end: 12903
 [ Each scenario includes a background sequence (300-600 frames) which usually is required for human body extraction.]
 Sentence
    sofa: _InitialView
-   begin: 12462
-   end: 12577
+   begin: 12550
+   end: 12665
 [ Description of the corpus is given in Table 4 wherein F1 to F4 are the fall scenarios, B blocked hip and TN1, TN2 true negatives.]
 Sentence
    sofa: _InitialView
-   begin: 12577
-   end: 12707
+   begin: 12665
+   end: 12795
 [ The total duration of the recordings is equal to 1 hour and 55 minutes, with a total of 162 video segments.]
 Sentence
    sofa: _InitialView
-   begin: 12707
-   end: 12815
+   begin: 12795
+   end: 12903
 [3.2. Video Corpus]
 Paragraph
    sofa: _InitialView
-   begin: 12815
-   end: 12832
+   begin: 12903
+   end: 12920
 [Feedback from the participants were analyzed and allowed some conclusions (Body-Bekkadja et al., 2015). A high- lighted domestic accident, outlined (for oneself and for others) by C IRDO , leads the elderly individual to relate to the falls in other ways. They suddenly attempt to further regu- late and control it, sometimes by risking a profound change in behavior that may not be detected by C IRDO . More specifically, in our various studies (simulated C IRDO use), it was observed that: The elderly developed two oppos- ing conducts in the management of their fall monitored via C IRDO . Some of them chose to boost their falling movement or overplay screams to make sure the device will recognize the danger. They were also the same elderly that, as we mentioned in Study 2, used tangible remote monitoring systems (inset). They doubted the ability of the new am- bient system to detect their accident, and thus they risk a more serious injury. Others, however, in order to hide these incidents from the entourage, try to control the fall: They do not scream, and try to recover at all costs, even though it could exacerbate the deleterious effects of the fall. In both cases, we see that the falling movement choreography (falling is unintentional by nature) will be intentionally modified by the subjects, whether to be seen to fall, and, hence, be better recognized, or otherwise to be hidden from the technology and its supervision. Thus, the presence of technological artifacts changes the dynamic of the fall, because this behaviour will be addressed, directed toward a target (technology object), and also to other involved individuals. As mentioned by Clot (Clot, 1999), the movements of the falls are not only directed by the conduct of the sub- ject; they are also directed through the use of the technical object, and toward others (the representation they have of the system and the possible recipients of the alert). The fall choreography is influenced by what the individual wants to show to, or hide from, the device. Therefore, the risk of non-detecting these movements is possible, because they sometimes tend to veer too far from programmed scripts. Another more symbolical consequence involves the status and the legitimacy that C IRDO will give the fall. While, in the past, the word of the victim, or of a third party, used to be enough to prove the occurrence of a fall, these days, surveillance technologies are used to validate/approve the occurrence of an incident. We could even add that, they also assess whether this fall is acceptable, and conform to pre-defined scripts. In other words, the non-detection (non- recognition) of a fall by C IRDO may mean that: (1) The individual has poorly conducted the choreography of the falling; or (2) the movement cannot be categorized as a risk movement. This can therefore lead to a denial of risk and recognition of the elderly individual’s status of "victim", thereby throwing suspicion on their statements. As a result, C IRDO may operate a transfer of the risk recognition: It is the technology that gives official status to a fall in a domestic incident. It gives credibility and legitimacy to it. Thus, technological reliability wins against the word of the elderly; and then the latter can be discredited, for ex-]
 Paragraph
    sofa: _InitialView
-   begin: 12832
-   end: 16128
+   begin: 12920
+   end: 16216
 [Feedback from the participants were analyzed and allowed some conclusions (Body-Bekkadja et al., 2015).]
 Sentence
    sofa: _InitialView
-   begin: 12832
-   end: 12935
+   begin: 12920
+   end: 13023
 [ A high- lighted domestic accident, outlined (for oneself and for others) by C IRDO , leads the elderly individual to relate to the falls in other ways.]
 Sentence
    sofa: _InitialView
-   begin: 12935
-   end: 13087
+   begin: 13023
+   end: 13175
 [ They suddenly attempt to further regu- late and control it, sometimes by risking a profound change in behavior that may not be detected by C IRDO .]
 Sentence
    sofa: _InitialView
-   begin: 13087
-   end: 13235
+   begin: 13175
+   end: 13323
 [ More specifically, in our various studies (simulated C IRDO use), it was observed that: The elderly developed two oppos- ing conducts in the management of their fall monitored via C IRDO .]
 Sentence
    sofa: _InitialView
-   begin: 13235
-   end: 13424
+   begin: 13323
+   end: 13512
 [ Some of them chose to boost their falling movement or overplay screams to make sure the device will recognize the danger.]
 Sentence
    sofa: _InitialView
-   begin: 13424
-   end: 13546
+   begin: 13512
+   end: 13634
 [ They were also the same elderly that, as we mentioned in Study 2, used tangible remote monitoring systems (inset).]
 Sentence
    sofa: _InitialView
-   begin: 13546
-   end: 13661
+   begin: 13634
+   end: 13749
 [ They doubted the ability of the new am- bient system to detect their accident, and thus they risk a more serious injury.]
 Sentence
    sofa: _InitialView
-   begin: 13661
-   end: 13782
+   begin: 13749
+   end: 13870
 [ Others, however, in order to hide these incidents from the entourage, try to control the fall: They do not scream, and try to recover at all costs, even though it could exacerbate the deleterious effects of the fall.]
 Sentence
    sofa: _InitialView
-   begin: 13782
-   end: 13999
+   begin: 13870
+   end: 14087
 [ In both cases, we see that the falling movement choreography (falling is unintentional by nature) will be intentionally modified by the subjects, whether to be seen to fall, and, hence, be better recognized, or otherwise to be hidden from the technology and its supervision.]
 Sentence
    sofa: _InitialView
-   begin: 13999
-   end: 14274
+   begin: 14087
+   end: 14362
 [ Thus, the presence of technological artifacts changes the dynamic of the fall, because this behaviour will be addressed, directed toward a target (technology object), and also to other involved individuals.]
 Sentence
    sofa: _InitialView
-   begin: 14274
-   end: 14481
+   begin: 14362
+   end: 14569
 [ As mentioned by Clot (Clot, 1999), the movements of the falls are not only directed by the conduct of the sub- ject; they are also directed through the use of the technical object, and toward others (the representation they have of the system and the possible recipients of the alert).]
 Sentence
    sofa: _InitialView
-   begin: 14481
-   end: 14767
+   begin: 14569
+   end: 14855
 [ The fall choreography is influenced by what the individual wants to show to, or hide from, the device.]
 Sentence
    sofa: _InitialView
-   begin: 14767
-   end: 14870
+   begin: 14855
+   end: 14958
 [ Therefore, the risk of non-detecting these movements is possible, because they sometimes tend to veer too far from programmed scripts.]
 Sentence
    sofa: _InitialView
-   begin: 14870
-   end: 15005
+   begin: 14958
+   end: 15093
 [ Another more symbolical consequence involves the status and the legitimacy that C IRDO will give the fall.]
 Sentence
    sofa: _InitialView
-   begin: 15005
-   end: 15112
+   begin: 15093
+   end: 15200
 [ While, in the past, the word of the victim, or of a third party, used to be enough to prove the occurrence of a fall, these days, surveillance technologies are used to validate/approve the occurrence of an incident.]
 Sentence
    sofa: _InitialView
-   begin: 15112
-   end: 15328
+   begin: 15200
+   end: 15416
 [ We could even add that, they also assess whether this fall is acceptable, and conform to pre-defined scripts.]
 Sentence
    sofa: _InitialView
-   begin: 15328
-   end: 15438
+   begin: 15416
+   end: 15526
 [ In other words, the non-detection (non- recognition) of a fall by C IRDO may mean that: (1) The individual has poorly conducted the choreography of the falling; or (2) the movement cannot be categorized as a risk movement.]
 Sentence
    sofa: _InitialView
-   begin: 15438
-   end: 15661
+   begin: 15526
+   end: 15749
 [ This can therefore lead to a denial of risk and recognition of the elderly individual’s status of "victim", thereby throwing suspicion on their statements.]
 Sentence
    sofa: _InitialView
-   begin: 15661
-   end: 15817
+   begin: 15749
+   end: 15905
 [ As a result, C IRDO may operate a transfer of the risk recognition: It is the technology that gives official status to a fall in a domestic incident.]
 Sentence
    sofa: _InitialView
-   begin: 15817
-   end: 15967
+   begin: 15905
+   end: 16055
 [ It gives credibility and legitimacy to it.]
 Sentence
    sofa: _InitialView
-   begin: 15967
-   end: 16010
+   begin: 16055
+   end: 16098
 [ Thus, technological reliability wins against the word of the elderly; and then the latter can be discredited, for ex- ample, if the user talks about incidents not recognized by technology: “If the system is not triggered, then the fall did not occur."]
 Sentence
    sofa: _InitialView
-   begin: 16010
-   end: 16262
+   begin: 16098
+   end: 16350
 [ ample, if the user talks about incidents not recognized by technology: “If the system is not triggered, then the fall did not occur." In both cases, setting C IRDO service in the domestic social system can either redefine the falls choreography, or redefine their status. All these reasons may be caused by malfunction or rejection. Several recommendations can be addressed to the design- ers. In addition to reassuring, involving, and properly training to use the new system (Hwang and Thorn, 1999)(Ku- jala, 2003), by including demonstrations and updates in real situations adapted to their habits and lifestyle practices (to demonstrate the system works efficiently in detecting falls, and avoiding any worsening of movements), design- ers should create programs and falls-detection algorithms more flexible, to cover a larger spectrum of falls choreography, and not rely solely on fixed scripts in risk behavior. In the same way, effective articulation between Audio and Video detections should be ensured to allow better falls- recognition and validation. As part of a participatory design through use (He and King, 2008), it would be interesting to adjust from feed- backs in the field, the location of the sensors and the level of falls scripts detection, by taking into account conduct- adjustments and daily risk evolutions from the moment the technological artifact is introduced. This requires a situated analysis of the actual device’s uses, in order to re-design it from its usage (Norman and Draper, 1986). This reinforced monitoring system will ask the elderly to make an oral (con- firmation) emergency call to an outside third party. This alert is then triggered only in case of a positive response, or a lack of response from the individual, enabling them to properly control the system (at to avoid false alarms). Finally, this new device for monitoring the activity will be meaningful only if it serves and supports its users’ quality of life. Therefore, one must be careful to involve and assist the various participants during all phases of C IRDO design, in an inclusive approach (as in the Living lab approach of (Pino et al., 2015), especially to anticipate reconfigurations at work in the social framework, as we shall now see.]
 Paragraph
    sofa: _InitialView
-   begin: 16128
-   end: 18382
+   begin: 16216
+   end: 18470
 [ In both cases, setting C IRDO service in the domestic social system can either redefine the falls choreography, or redefine their status.]
 Sentence
    sofa: _InitialView
-   begin: 16262
-   end: 16400
+   begin: 16350
+   end: 16488
 [ All these reasons may be caused by malfunction or rejection.]
 Sentence
    sofa: _InitialView
-   begin: 16400
-   end: 16461
+   begin: 16488
+   end: 16549
 [ Several recommendations can be addressed to the design- ers.]
 Sentence
    sofa: _InitialView
-   begin: 16461
-   end: 16522
+   begin: 16549
+   end: 16610
 [ In addition to reassuring, involving, and properly training to use the new system (Hwang and Thorn, 1999)(Ku- jala, 2003), by including demonstrations and updates in real situations adapted to their habits and lifestyle practices (to demonstrate the system works efficiently in detecting falls, and avoiding any worsening of movements), design- ers should create programs and falls-detection algorithms more flexible, to cover a larger spectrum of falls choreography, and not rely solely on fixed scripts in risk behavior.]
 Sentence
    sofa: _InitialView
-   begin: 16522
-   end: 17045
+   begin: 16610
+   end: 17133
 [ In the same way, effective articulation between Audio and Video detections should be ensured to allow better falls- recognition and validation.]
 Sentence
    sofa: _InitialView
-   begin: 17045
-   end: 17189
+   begin: 17133
+   end: 17277
 [ As part of a participatory design through use (He and King, 2008), it would be interesting to adjust from feed- backs in the field, the location of the sensors and the level of falls scripts detection, by taking into account conduct- adjustments and daily risk evolutions from the moment the technological artifact is introduced.]
 Sentence
    sofa: _InitialView
-   begin: 17189
-   end: 17519
+   begin: 17277
+   end: 17607
 [ This requires a situated analysis of the actual device’s uses, in order to re-design it from its usage (Norman and Draper, 1986).]
 Sentence
    sofa: _InitialView
-   begin: 17519
-   end: 17649
+   begin: 17607
+   end: 17737
 [ This reinforced monitoring system will ask the elderly to make an oral (con- firmation) emergency call to an outside third party.]
 Sentence
    sofa: _InitialView
-   begin: 17649
-   end: 17779
+   begin: 17737
+   end: 17867
 [ This alert is then triggered only in case of a positive response, or a lack of response from the individual, enabling them to properly control the system (at to avoid false alarms).]
 Sentence
    sofa: _InitialView
-   begin: 17779
-   end: 17961
+   begin: 17867
+   end: 18049
 [ Finally, this new device for monitoring the activity will be meaningful only if it serves and supports its users’ quality of life.]
 Sentence
    sofa: _InitialView
-   begin: 17961
-   end: 18092
+   begin: 18049
+   end: 18180
 [ Therefore, one must be careful to involve and assist the various participants during all phases of C IRDO design, in an inclusive approach (as in the Living lab approach of (Pino et al., 2015), especially to anticipate reconfigurations at work in the social framework, as we shall now see.]
 Sentence
    sofa: _InitialView
-   begin: 18092
-   end: 18382
+   begin: 18180
+   end: 18470
 [The audio corpus was used for studies related to call for help recognition in Distant Speech conditions thanks to online speech analysis using SGMM acoustic modelling (Vacher et al., 2015a) (Vacher et al., 2015b). Non-speech analysis might bring information of high interest but it was not considered in our study because of the lack of training data. Currently non-speech audio analysis is a relatively unexplored field due not only to the lack of data but also to the unexpected sound classes that can be recorded at home in unconstrained conditions (Vacher et al., 2011). Moreover, non-speech sounds are made of non-verbal sounds (i.e. groans, panting, throat clearings, etc.) and of daily living sounds (i.e. falling objects, door slap, etc.) which represent different semantic information and are difficult to differentiate. For these reasons, only speech analysis was considered.]
 Paragraph
    sofa: _InitialView
-   begin: 18382
-   end: 19267
+   begin: 18470
+   end: 19355
 [The audio corpus was used for studies related to call for help recognition in Distant Speech conditions thanks to online speech analysis using SGMM acoustic modelling (Vacher et al., 2015a) (Vacher et al., 2015b).]
 Sentence
    sofa: _InitialView
-   begin: 18382
-   end: 18595
+   begin: 18470
+   end: 18683
 [ Non-speech analysis might bring information of high interest but it was not considered in our study because of the lack of training data.]
 Sentence
    sofa: _InitialView
-   begin: 18595
-   end: 18733
+   begin: 18683
+   end: 18821
 [ Currently non-speech audio analysis is a relatively unexplored field due not only to the lack of data but also to the unexpected sound classes that can be recorded at home in unconstrained conditions (Vacher et al., 2011).]
 Sentence
    sofa: _InitialView
-   begin: 18733
-   end: 18956
+   begin: 18821
+   end: 19044
 [ Moreover, non-speech sounds are made of non-verbal sounds (i.e.]
 Sentence
    sofa: _InitialView
-   begin: 18956
-   end: 19020
+   begin: 19044
+   end: 19108
 [ groans, panting, throat clearings, etc.)]
 Sentence
    sofa: _InitialView
-   begin: 19020
-   end: 19061
+   begin: 19108
+   end: 19149
 [ and of daily living sounds (i.e.]
 Sentence
    sofa: _InitialView
-   begin: 19061
-   end: 19094
+   begin: 19149
+   end: 19182
 [ falling objects, door slap, etc.)]
 Sentence
    sofa: _InitialView
-   begin: 19094
-   end: 19128
+   begin: 19182
+   end: 19216
 [ which represent different semantic information and are difficult to differentiate.]
 Sentence
    sofa: _InitialView
-   begin: 19128
-   end: 19211
+   begin: 19216
+   end: 19299
 [ For these reasons, only speech analysis was considered.]
 Sentence
    sofa: _InitialView
-   begin: 19211
-   end: 19267
+   begin: 19299
+   end: 19355
 [The Kaldi speech recognition tool-kit (Povey et al., 2011b) was chosen as ASR system. Kaldi is an open-source state- of-the-art Automatic Speech Recognition (ASR) system with a high number of tools and a strong support from the community. In the experiments, the acoustic models were context-dependent classical three-state left-right HMMs. Acoustic features were based on Mel-frequency cepstral coefficients, 13 MFCC-features coefficients were first extracted and then expanded with delta and double delta features and energy (40 features). Acoustic models were composed of 11,000 context-dependent states and 150,000 Gaussians. The state tying is performed using a decision tree based on a tree-clustering of the phones. In addition, off-line fMLLR linear transformation acoustic adap- tation was performed. The acoustic models were trained on 500 hours of transcribed French speech composed of the ESTER 1&2 (broadcast news and conversational speech recorded on the radio) and REPERE (TV news and talk-shows) challenges as well as from 7 hours of transcribed French speech of the S WEET -H OME corpus (Vacher et al., 2014) which consists of records of 60 speakers interacting within a smart home and from 28 minutes of the Voix-détresse corpus (Aman, 2014) which is made of records of speakers eliciting a distress emotion.]
 Paragraph
    sofa: _InitialView
-   begin: 19267
-   end: 20593
+   begin: 19355
+   end: 20681
 [The Kaldi speech recognition tool-kit (Povey et al., 2011b) was chosen as ASR system.]
 Sentence
    sofa: _InitialView
-   begin: 19267
-   end: 19352
+   begin: 19355
+   end: 19440
 [ Kaldi is an open-source state- of-the-art Automatic Speech Recognition (ASR) system with a high number of tools and a strong support from the community.]
 Sentence
    sofa: _InitialView
-   begin: 19352
-   end: 19505
+   begin: 19440
+   end: 19593
 [ In the experiments, the acoustic models were context-dependent classical three-state left-right HMMs.]
 Sentence
    sofa: _InitialView
-   begin: 19505
-   end: 19607
+   begin: 19593
+   end: 19695
 [ Acoustic features were based on Mel-frequency cepstral coefficients, 13 MFCC-features coefficients were first extracted and then expanded with delta and double delta features and energy (40 features).]
 Sentence
    sofa: _InitialView
-   begin: 19607
-   end: 19808
+   begin: 19695
+   end: 19896
 [ Acoustic models were composed of 11,000 context-dependent states and 150,000 Gaussians.]
 Sentence
    sofa: _InitialView
-   begin: 19808
-   end: 19896
+   begin: 19896
+   end: 19984
 [ The state tying is performed using a decision tree based on a tree-clustering of the phones.]
 Sentence
    sofa: _InitialView
-   begin: 19896
-   end: 19989
+   begin: 19984
+   end: 20077
 [ In addition, off-line fMLLR linear transformation acoustic adap- tation was performed.]
 Sentence
    sofa: _InitialView
-   begin: 19989
-   end: 20076
+   begin: 20077
+   end: 20164
 [ The acoustic models were trained on 500 hours of transcribed French speech composed of the ESTER 1&2 (broadcast news and conversational speech recorded on the radio) and REPERE (TV news and talk-shows) challenges as well as from 7 hours of transcribed French speech of the S WEET -H OME corpus (Vacher et al., 2014) which consists of records of 60 speakers interacting within a smart home and from 28 minutes of the Voix-détresse corpus (Aman, 2014) which is made of records of speakers eliciting a distress emotion.]
 Sentence
    sofa: _InitialView
-   begin: 20076
-   end: 20593
+   begin: 20164
+   end: 20681
 [The GMM and Subspace GMM (SGMM) both model emis- sion probability of each HMM state with a Gaussian mixture model, but in the SGMM approach, the Gaussian means and the mixture component weights are generated from the phonetic and speaker subspaces along with a set of weight projections. The SGMM model (Povey et al., 2011a) is described in the following equations:]
 Paragraph
    sofa: _InitialView
-   begin: 20593
-   end: 20958
+   begin: 20681
+   end: 21046
 [The GMM and Subspace GMM (SGMM) both model emis- sion probability of each HMM state with a Gaussian mixture model, but in the SGMM approach, the Gaussian means and the mixture component weights are generated from the phonetic and speaker subspaces along with a set of weight projections.]
 Sentence
    sofa: _InitialView
-   begin: 20593
-   end: 20880
+   begin: 20681
+   end: 20968
 [ The SGMM model (Povey et al., 2011a) is described in the following equations:]
 Sentence
    sofa: _InitialView
-   begin: 20880
-   end: 20958
+   begin: 20968
+   end: 21046
 [where x denotes the feature vector, j ∈ {1..J} is the HMM state, i is the Gaussian index, m is the substate and c jm is the substate weight. Each state j is associated to a vector v jm ∈ R S (S is the phonetic subspace dimension) which derives the means, μ jmi and mixture weights, w jmi and it has a shared number of Gaussians, I. The phonetic subspace M i , weight projections w i T and covariance matrices Σ i i.e; the globally shared parameters Φ i = {M i , w i T , Σ i } are common across all states. These parameters can be shared and estimated over multiple record conditions. A generic mixture of I Gaussians, denoted as Universal Background Model (UBM), models all the speech training data for the initialization of the SGMM. Our experiments aims at obtaining SGMM shared parameters using both S WEET -H OME data (7h), Voix-détresse (28mn) and clean data (ESTER+REPERE 500h). Regarding the GMM part, the three training data set are just]
 Paragraph
    sofa: _InitialView
-   begin: 20958
-   end: 21903
+   begin: 21046
+   end: 21991
 [where x denotes the feature vector, j ∈ {1..J} is the HMM state, i is the Gaussian index, m is the substate and c jm is the substate weight.]
 Sentence
    sofa: _InitialView
-   begin: 20958
-   end: 21098
+   begin: 21046
+   end: 21186
 [ Each state j is associated to a vector v jm ∈ R S (S is the phonetic subspace dimension) which derives the means, μ jmi and mixture weights, w jmi and it has a shared number of Gaussians, I.]
 Sentence
    sofa: _InitialView
-   begin: 21098
-   end: 21289
+   begin: 21186
+   end: 21377
 [ The phonetic subspace M i , weight projections w i T and covariance matrices Σ i i.e; the globally shared parameters Φ i = {M i , w i T , Σ i } are common across all states.]
 Sentence
    sofa: _InitialView
-   begin: 21289
-   end: 21463
+   begin: 21377
+   end: 21551
 [ These parameters can be shared and estimated over multiple record conditions.]
 Sentence
    sofa: _InitialView
-   begin: 21463
-   end: 21541
+   begin: 21551
+   end: 21629
 [ A generic mixture of I Gaussians, denoted as Universal Background Model (UBM), models all the speech training data for the initialization of the SGMM.]
 Sentence
    sofa: _InitialView
-   begin: 21541
-   end: 21692
+   begin: 21629
+   end: 21780
 [ Our experiments aims at obtaining SGMM shared parameters using both S WEET -H OME data (7h), Voix-détresse (28mn) and clean data (ESTER+REPERE 500h).]
 Sentence
    sofa: _InitialView
-   begin: 21692
-   end: 21842
+   begin: 21780
+   end: 21930
 [ Regarding the GMM part, the three training data set are just merged in a single one.]
 Sentence
    sofa: _InitialView
-   begin: 21842
-   end: 21927
+   begin: 21930
+   end: 22015
 [ merged in a single one. (Povey et al., 2011a) showed that the model is also effective with large amount of training data. Therefore, three UBMs were trained respectively on S WEET -H OME data, Voix-détresse and clean data. These tree UBMs contained 1K gaussians and were merged into a single one mixed down to 1K gaussian (closest Gaussians pairs were merged (Zouari and Chollet, 2006)). The aim is to bias specifically the acoustic model towards distant speech home and expressive speech conditions.]
 Paragraph
    sofa: _InitialView
-   begin: 21903
-   end: 22404
+   begin: 21991
+   end: 22492
 [ (Povey et al., 2011a) showed that the model is also effective with large amount of training data.]
 Sentence
    sofa: _InitialView
-   begin: 21927
-   end: 22025
+   begin: 22015
+   end: 22113
 [ Therefore, three UBMs were trained respectively on S WEET -H OME data, Voix-détresse and clean data.]
 Sentence
    sofa: _InitialView
-   begin: 22025
-   end: 22126
+   begin: 22113
+   end: 22214
 [ These tree UBMs contained 1K gaussians and were merged into a single one mixed down to 1K gaussian (closest Gaussians pairs were merged (Zouari and Chollet, 2006)).]
 Sentence
    sofa: _InitialView
-   begin: 22126
-   end: 22291
+   begin: 22214
+   end: 22379
 [ The aim is to bias specifically the acoustic model towards distant speech home and expressive speech conditions.]
 Sentence
    sofa: _InitialView
-   begin: 22291
-   end: 22404
+   begin: 22379
+   end: 22492
 [The recognition of distress calls consists in computing the phonetic distance of an hypothesis to a list of predefined distress calls. Each ASR hypothesis H i is phonetized, every predefined voice command T j is aligned to H i using Levenshtein distance. The deletion, insertion and substitu- tion costs were computed empirically while the cumulative distance γ(i, j) between H j and T i is given by Equation 2.]
 Paragraph
    sofa: _InitialView
-   begin: 22404
-   end: 22815
+   begin: 22492
+   end: 22903
 [The recognition of distress calls consists in computing the phonetic distance of an hypothesis to a list of predefined distress calls.]
 Sentence
    sofa: _InitialView
-   begin: 22404
-   end: 22538
+   begin: 22492
+   end: 22626
 [ Each ASR hypothesis H i is phonetized, every predefined voice command T j is aligned to H i using Levenshtein distance.]
 Sentence
    sofa: _InitialView
-   begin: 22538
-   end: 22658
+   begin: 22626
+   end: 22746
 [ The deletion, insertion and substitu- tion costs were computed empirically while the cumulative distance γ(i, j) between H j and T i is given by Equation 2.]
 Sentence
    sofa: _InitialView
-   begin: 22658
-   end: 22815
+   begin: 22746
+   end: 22903
 [The decision to select or not a detected sentence is then taken according a detection threshold on the aligned sym- bol score (phonems) of each identified call. This approach takes into account some recognition errors like word end- ings or light variations. Moreover, in a lot of cases, a miss- decoded word is phonetically close to the good one (due to the close pronunciation). From this the CER (Call Error Rate i.e., distress call error rate) is defined as: Number of missed calls CER = (3) Number of calls This measure was chosen because of the content of the corpus Cirdo-set used in this study. Indeed, this corpus is made of sentences and interjections. All sentences are calls for help, without any other kind of sentences (e.g., colloquial sentences), and therefore it is not possible to determine a false alarm rate in this framework.]
 Paragraph
    sofa: _InitialView
-   begin: 22815
-   end: 23661
+   begin: 22903
+   end: 23749
 [The decision to select or not a detected sentence is then taken according a detection threshold on the aligned sym- bol score (phonems) of each identified call.]
 Sentence
    sofa: _InitialView
-   begin: 22815
-   end: 22975
+   begin: 22903
+   end: 23063
 [ This approach takes into account some recognition errors like word end- ings or light variations.]
 Sentence
    sofa: _InitialView
-   begin: 22975
-   end: 23073
+   begin: 23063
+   end: 23161
 [ Moreover, in a lot of cases, a miss- decoded word is phonetically close to the good one (due to the close pronunciation).]
 Sentence
    sofa: _InitialView
-   begin: 23073
-   end: 23195
+   begin: 23161
+   end: 23283
 [ From this the CER (Call Error Rate i.e., distress call error rate) is defined as: Number of missed calls CER = (3) Number of calls This measure was chosen because of the content of the corpus Cirdo-set used in this study.]
 Sentence
    sofa: _InitialView
-   begin: 23195
-   end: 23417
+   begin: 23283
+   end: 23505
 [ Indeed, this corpus is made of sentences and interjections.]
 Sentence
    sofa: _InitialView
-   begin: 23417
-   end: 23477
+   begin: 23505
+   end: 23565
 [ All sentences are calls for help, without any other kind of sentences (e.g., colloquial sentences), and therefore it is not possible to determine a false alarm rate in this framework.]
 Sentence
    sofa: _InitialView
-   begin: 23477
-   end: 23661
+   begin: 23565
+   end: 23749
 [The methods presented in previous sections were run on the Cirdo-set audio corpus presented in Section 3.1. The SGMM model presented in Section 5.1. was used as acoutic model. The generic language model (LM) was estimated from French newswire collected in the Gigaword corpus. It was 1- gram with 13,304 words. Moreover, to reduce the linguistic variability, a 3-gram domain language model, the specialized language model was learnt from the sentences used during the corpus collection described in Section 2.2., with 99 1-gram, 225 2-gram and 273 3-gram models. Finally, the language model was a 3-gram-type which resulted from the combination of the generic LM (with a 10% weight) and the specialized LM (with 90% weight). This combination has been shown as leading to the best WER for domain specific application (Lecouteux et al., 2011). The interest of such combination is to bias the recognition towards the domain LM but when the speaker deviates from the domain, the general LM makes it possible to avoid the recognition of sentences leading to “false- positive” detection.]
 Paragraph
    sofa: _InitialView
-   begin: 23661
-   end: 24742
+   begin: 23749
+   end: 24830
 [The methods presented in previous sections were run on the Cirdo-set audio corpus presented in Section 3.1.]
 Sentence
    sofa: _InitialView
-   begin: 23661
-   end: 23768
+   begin: 23749
+   end: 23856
 [ The SGMM model presented in Section 5.1. was used as acoutic model.]
 Sentence
    sofa: _InitialView
-   begin: 23768
-   end: 23836
+   begin: 23856
+   end: 23924
 [ The generic language model (LM) was estimated from French newswire collected in the Gigaword corpus.]
 Sentence
    sofa: _InitialView
-   begin: 23836
-   end: 23937
+   begin: 23924
+   end: 24025
 [ It was 1- gram with 13,304 words.]
 Sentence
    sofa: _InitialView
-   begin: 23937
-   end: 23971
+   begin: 24025
+   end: 24059
 [ Moreover, to reduce the linguistic variability, a 3-gram domain language model, the specialized language model was learnt from the sentences used during the corpus collection described in Section 2.2., with 99 1-gram, 225 2-gram and 273 3-gram models.]
 Sentence
    sofa: _InitialView
-   begin: 23971
-   end: 24223
+   begin: 24059
+   end: 24311
 [ Finally, the language model was a 3-gram-type which resulted from the combination of the generic LM (with a 10% weight) and the specialized LM (with 90% weight).]
 Sentence
    sofa: _InitialView
-   begin: 24223
-   end: 24385
+   begin: 24311
+   end: 24473
 [ This combination has been shown as leading to the best WER for domain specific application (Lecouteux et al., 2011).]
 Sentence
    sofa: _InitialView
-   begin: 24385
-   end: 24502
+   begin: 24473
+   end: 24590
 [ The interest of such combination is to bias the recognition towards the domain LM but when the speaker deviates from the domain, the general LM makes it possible to avoid the recognition of sentences leading to “false- positive” detection.]
 Sentence
    sofa: _InitialView
-   begin: 24502
-   end: 24742
+   begin: 24590
+   end: 24830
 [ Results on manually annotated data are given Table 5. The most important performance measures are the Word Error Rate (WER) of the overall decoded speech and those of the specific distress calls as well as the Call Error Rate (CER: c.f. equation 3). Considering distress calls only, the average WER is 34.0% whereas it a 39.3% when all interjections and sentences are taken into account. On average, CER is equal to 26.8% with an important dis- parity between the speakers. Unfortunately and as mentioned above, the used corpus does not allow to determine a False Alarm Rate. Previous studies based on the AD80 corpus showed recall, precision and F-measure equal to 88.4%, 86.9% and 87.2% (Aman et al., 2013). Nevertheless, this corpus was recorded in very different conditions, text reading in a studio, in contrary of those of Cirdo-set.]
 Paragraph
    sofa: _InitialView
-   begin: 24742
-   end: 25582
+   begin: 24830
+   end: 25670
 [Results on manually annotated data are given Table 5.]
 Sentence
    sofa: _InitialView
-   begin: 24743
-   end: 24796
+   begin: 24831
+   end: 24884
 [ The most important performance measures are the Word Error Rate (WER) of the overall decoded speech and those of the specific distress calls as well as the Call Error Rate (CER: c.f.]
 Sentence
    sofa: _InitialView
-   begin: 24796
-   end: 24979
+   begin: 24884
+   end: 25067
 [ equation 3).]
 Sentence
    sofa: _InitialView
-   begin: 24979
-   end: 24992
+   begin: 25067
+   end: 25080
 [ Considering distress calls only, the average WER is 34.0% whereas it a 39.3% when all interjections and sentences are taken into account.]
 Sentence
    sofa: _InitialView
-   begin: 24992
-   end: 25130
+   begin: 25080
+   end: 25218
 [ On average, CER is equal to 26.8% with an important dis- parity between the speakers.]
 Sentence
    sofa: _InitialView
-   begin: 25130
-   end: 25216
+   begin: 25218
+   end: 25304
 [ Unfortunately and as mentioned above, the used corpus does not allow to determine a False Alarm Rate.]
 Sentence
    sofa: _InitialView
-   begin: 25216
-   end: 25318
+   begin: 25304
+   end: 25406
 [ Previous studies based on the AD80 corpus showed recall, precision and F-measure equal to 88.4%, 86.9% and 87.2% (Aman et al., 2013).]
 Sentence
    sofa: _InitialView
-   begin: 25318
-   end: 25452
+   begin: 25406
+   end: 25540
 [ Nevertheless, this corpus was recorded in very different conditions, text reading in a studio, in contrary of those of Cirdo-set.]
 Sentence
    sofa: _InitialView
-   begin: 25452
-   end: 25582
+   begin: 25540
+   end: 25670
 [The video analysis framework for fall events labeling is based on the silhouette extraction. The silhouette is extracted by removal of background pixels within the video scene using. The background subtraction is performed by Mixture of Gaussian based approach, and eigenbackground (PCA) approach (Deeb et al., 2012), (Priyank Shah, 2014). The extracted shape is then used to obtain discriminative features to detect anomaly in person’s movement in the scene. The overview of proposed framework is shown in Figure 3.]
 Paragraph
    sofa: _InitialView
-   begin: 25582
-   end: 26098
+   begin: 25670
+   end: 26186
 [The video analysis framework for fall events labeling is based on the silhouette extraction.]
 Sentence
    sofa: _InitialView
-   begin: 25582
-   end: 25674
+   begin: 25670
+   end: 25762
 []
 Sentence
    sofa: _InitialView
-   begin: 25582
-   end: 25582
+   begin: 25670
+   end: 25670
 []
 Sentence
    sofa: _InitialView
-   begin: 25582
-   end: 25582
+   begin: 25670
+   end: 25670
 [ The silhouette is extracted by removal of background pixels within the video scene using.]
 Sentence
    sofa: _InitialView
-   begin: 25674
-   end: 25764
+   begin: 25762
+   end: 25852
 [ The background subtraction is performed by Mixture of Gaussian based approach, and eigenbackground (PCA) approach (Deeb et al., 2012), (Priyank Shah, 2014).]
 Sentence
    sofa: _InitialView
-   begin: 25764
-   end: 25921
+   begin: 25852
+   end: 26009
 [ The extracted shape is then used to obtain discriminative features to detect anomaly in person’s movement in the scene.]
 Sentence
    sofa: _InitialView
-   begin: 25921
-   end: 26041
+   begin: 26009
+   end: 26129
 [ The overview of proposed framework is shown in Figure 3.]
 Sentence
    sofa: _InitialView
-   begin: 26041
-   end: 26098
+   begin: 26129
+   end: 26186
 [After silhouette extraction the human body is segmented into colored connected components. Colored connected components regarded as regions are extracted by applying region growing technique. Each component with similar color are fitted into blob (Hsieh et al., 2010). Blob is repre- sented by spatial color Gaussian mixture model, assuming that spatial color components are de-correlated. The probability of an observation X t of that pixel at time t to belong to the background is given by equation 4.]
 Paragraph
    sofa: _InitialView
-   begin: 26098
-   end: 26601
+   begin: 26186
+   end: 26689
 [After silhouette extraction the human body is segmented into colored connected components.]
 Sentence
    sofa: _InitialView
-   begin: 26098
-   end: 26188
+   begin: 26186
+   end: 26276
 [ Colored connected components regarded as regions are extracted by applying region growing technique.]
 Sentence
    sofa: _InitialView
-   begin: 26188
-   end: 26289
+   begin: 26276
+   end: 26377
 [ Each component with similar color are fitted into blob (Hsieh et al., 2010).]
 Sentence
    sofa: _InitialView
-   begin: 26289
-   end: 26366
+   begin: 26377
+   end: 26454
 [ Blob is repre- sented by spatial color Gaussian mixture model, assuming that spatial color components are de-correlated.]
 Sentence
    sofa: _InitialView
-   begin: 26366
-   end: 26487
+   begin: 26454
+   end: 26575
 [ The probability of an observation X t of that pixel at time t to belong to the background is given by equation 4.]
 Sentence
    sofa: _InitialView
-   begin: 26487
-   end: 26601
+   begin: 26575
+   end: 26689
 [where L is the number of gaussian, η is Gaussian probability density function, Σ k,t is an estimates of weight and ω k,t is covariance matrix of the k-th Gaussian in the mixture at time t. In the last, an energy based function is formulated over the unknown labels of every pixel in the form of a first order Markov random field (MRF) energy function:]
 Paragraph
    sofa: _InitialView
-   begin: 26601
-   end: 26952
+   begin: 26689
+   end: 27040
 [where L is the number of gaussian, η is Gaussian probability density function, Σ k,t is an estimates of weight and ω k,t is covariance matrix of the k-th Gaussian in the mixture at time t. In the last, an energy based function is formulated over the unknown labels of every pixel in the form of a first order Markov random field (MRF) energy function:]
 Sentence
    sofa: _InitialView
-   begin: 26601
-   end: 26952
+   begin: 26689
+   end: 27040
 [Here, N e is neighboring pixels and the data energy Σ p∈P D p (f p ) evaluates the likelihood of each pixel to take a label. Finally, energy function is minimized with a graph cut algorithm via a swap approach (Miguel Angel Bautista, 2015). Background model is updated selectively with an online EM algorithm (Moon, 1996).]
 Paragraph
    sofa: _InitialView
-   begin: 26952
-   end: 27274
+   begin: 27040
+   end: 27362
 [Here, N e is neighboring pixels and the data energy Σ p∈P D p (f p ) evaluates the likelihood of each pixel to take a label.]
 Sentence
    sofa: _InitialView
-   begin: 26952
-   end: 27076
+   begin: 27040
+   end: 27164
 [ Finally, energy function is minimized with a graph cut algorithm via a swap approach (Miguel Angel Bautista, 2015).]
 Sentence
    sofa: _InitialView
-   begin: 27076
-   end: 27192
+   begin: 27164
+   end: 27280
 [ Background model is updated selectively with an online EM algorithm (Moon, 1996).]
 Sentence
    sofa: _InitialView
-   begin: 27192
-   end: 27274
+   begin: 27280
+   end: 27362
 [Our method begins with an iterative process and considers that person is in standing position. Body is decomposed in three parts i.e. head, torso and lower part. Then, dynamic processing technique is used to obtain different level of body details (i.e. number of blobs), if required. At first, a blob (k-th blob) is built for each connected component with a feature vector containing: color, center’s coordinates C k , a predicted change of color P k and velocity V k . Set of current colored connected components are extracted from the smoothed foreground by region growing. By considering tracking of blobs as a matching process, we introduce a novel cost function to obtain distance between two blobs. The cost function is given by:]
 Paragraph
    sofa: _InitialView
-   begin: 27274
-   end: 28009
+   begin: 27362
+   end: 28097
 [Our method begins with an iterative process and considers that person is in standing position.]
 Sentence
    sofa: _InitialView
-   begin: 27274
-   end: 27368
+   begin: 27362
+   end: 27456
 [ Body is decomposed in three parts i.e.]
 Sentence
    sofa: _InitialView
-   begin: 27368
-   end: 27407
+   begin: 27456
+   end: 27495
 [ head, torso and lower part.]
 Sentence
    sofa: _InitialView
-   begin: 27407
-   end: 27435
+   begin: 27495
+   end: 27523
 [ Then, dynamic processing technique is used to obtain different level of body details (i.e.]
 Sentence
    sofa: _InitialView
-   begin: 27435
-   end: 27526
+   begin: 27523
+   end: 27614
 [ number of blobs), if required.]
 Sentence
    sofa: _InitialView
-   begin: 27526
-   end: 27557
+   begin: 27614
+   end: 27645
 [ At first, a blob (k-th blob) is built for each connected component with a feature vector containing: color, center’s coordinates C k , a predicted change of color P k and velocity V k .]
 Sentence
    sofa: _InitialView
-   begin: 27557
-   end: 27743
+   begin: 27645
+   end: 27831
 [ Set of current colored connected components are extracted from the smoothed foreground by region growing.]
 Sentence
    sofa: _InitialView
-   begin: 27743
-   end: 27849
+   begin: 27831
+   end: 27937
 [ By considering tracking of blobs as a matching process, we introduce a novel cost function to obtain distance between two blobs.]
 Sentence
    sofa: _InitialView
-   begin: 27849
-   end: 27978
+   begin: 27937
+   end: 28066
 [ The cost function is given by: Cost(j, k) = α 1 ( P k −P j t /V k )+α 2 ( C j −C k M / C k ) (6) where C j t and P j t respectively, the color and the center’s coordinates of the j-th connected component extracted at time t.]
 Sentence
    sofa: _InitialView
-   begin: 27978
-   end: 28203
+   begin: 28066
+   end: 28291
 [ Cost(j, k) = α 1 ( P k −P j t /V k )+α 2 ( C j −C k M / C k ) (6) where C j t and P j t respectively, the color and the center’s coordinates of the j-th connected component extracted at time t.]
 Paragraph
    sofa: _InitialView
-   begin: 28009
-   end: 28203
+   begin: 28097
+   end: 28291
 [The labeling of events is based on the scenario define above. To identify poses, the extracted silhouette from the body parts was used. To recognize and label different poses from the video data, an histogram based approach was used as they runs in real time and improves its accu- racy with the passage of run time The recognition wss based]
 Paragraph
    sofa: _InitialView
-   begin: 28203
-   end: 28544
+   begin: 28291
+   end: 28632
 [The labeling of events is based on the scenario define above.]
 Sentence
    sofa: _InitialView
-   begin: 28203
-   end: 28264
+   begin: 28291
+   end: 28352
 [ To identify poses, the extracted silhouette from the body parts was used.]
 Sentence
    sofa: _InitialView
-   begin: 28264
-   end: 28338
+   begin: 28352
+   end: 28426
 [ To recognize and label different poses from the video data, an histogram based approach was used as they runs in real time and improves its accu- racy with the passage of run time The recognition wss based on comparison of two histograms i.e.]
 Sentence
    sofa: _InitialView
-   begin: 28338
-   end: 28581
+   begin: 28426
+   end: 28669
 [ on comparison of two histograms i.e. key pose frame histogram and histogram of frame in hand (Barnachon et al., 2012). The histograms were then compared with the Bhattacharyya distance and warped by a dynamic time warping process to achieve their optimal alignment (Barnachon et al., 2014). Bhattacharyya distance is calculated using:]
 Paragraph
    sofa: _InitialView
-   begin: 28544
-   end: 28879
+   begin: 28632
+   end: 28967
 [ key pose frame histogram and histogram of frame in hand (Barnachon et al., 2012).]
 Sentence
    sofa: _InitialView
-   begin: 28581
-   end: 28663
+   begin: 28669
+   end: 28751
 [ The histograms were then compared with the Bhattacharyya distance and warped by a dynamic time warping process to achieve their optimal alignment (Barnachon et al., 2014).]
 Sentence
    sofa: _InitialView
-   begin: 28663
-   end: 28835
+   begin: 28751
+   end: 28923
 [ Bhattacharyya distance is calculated using:]
 Sentence
    sofa: _InitialView
-   begin: 28835
-   end: 28879
+   begin: 28923
+   end: 28967
 [Where H 1 and H 2 are integral histograms. In this study we focused on the analysis of posture to detect event of distress. Our framework for fall detection could further be enhanced by considering other factors as well, i.e. facial expression analysis. Analysis of facial expressions to detect pain can be very advantageous in case of prolonged immobility of elderly person (Khan et al., 2013).]
 Paragraph
    sofa: _InitialView
-   begin: 28879
-   end: 29274
+   begin: 28967
+   end: 29362
 [Where H 1 and H 2 are integral histograms.]
 Sentence
    sofa: _InitialView
-   begin: 28879
-   end: 28921
+   begin: 28967
+   end: 29009
 []
 Sentence
    sofa: _InitialView
-   begin: 28879
-   end: 28879
+   begin: 28967
+   end: 28967
 [ In this study we focused on the analysis of posture to detect event of distress.]
 Sentence
    sofa: _InitialView
-   begin: 28921
-   end: 29002
+   begin: 29009
+   end: 29090
 [ Our framework for fall detection could further be enhanced by considering other factors as well, i.e.]
 Sentence
    sofa: _InitialView
-   begin: 29002
-   end: 29104
+   begin: 29090
+   end: 29192
 [ facial expression analysis.]
 Sentence
    sofa: _InitialView
-   begin: 29104
-   end: 29132
+   begin: 29192
+   end: 29220
 [ Analysis of facial expressions to detect pain can be very advantageous in case of prolonged immobility of elderly person (Khan et al., 2013).]
 Sentence
    sofa: _InitialView
-   begin: 29132
-   end: 29274
+   begin: 29220
+   end: 29362
 [This paper investigated smart home technology and recorded comprehensive audio/video corpus of domestic falls. For elderly, the fall is one of the most feared and recurring problems. Surveillance technologies tries to provide solution to this issue by alerting contact person in case of fall. There is lot of work which focuses on this problem but to the best of our knowledge there is no common database for comparing results. To address this issue we have made available a database composed of audio/video records of falls and prolonged immobility. In this paper, studies using this database for the automatic identification of these events were also presented. The C IRDO corpus was recorded in a smart environment reproducing a typical living room containing an e-lio communication device equipped with microphone and camera. The experiment was guided by an ethnographic study which detailed the various events related to distress situations faced by elderly people. Various scenarios were estab- lished from this study that describes pattern of postures in case of fall so that acted falls were as close to real situation as possible. The database can thus be useful to researchers of the community studying video or audio emergency situations as well as to model the relationship between audio/video events and learn fall model using machine learning.]
 Paragraph
    sofa: _InitialView
-   begin: 29274
-   end: 30631
+   begin: 29362
+   end: 30719
 [This paper investigated smart home technology and recorded comprehensive audio/video corpus of domestic falls.]
 Sentence
    sofa: _InitialView
-   begin: 29274
-   end: 29384
+   begin: 29362
+   end: 29472
 [ For elderly, the fall is one of the most feared and recurring problems.]
 Sentence
    sofa: _InitialView
-   begin: 29384
-   end: 29456
+   begin: 29472
+   end: 29544
 [ Surveillance technologies tries to provide solution to this issue by alerting contact person in case of fall.]
 Sentence
    sofa: _InitialView
-   begin: 29456
-   end: 29566
+   begin: 29544
+   end: 29654
 [ There is lot of work which focuses on this problem but to the best of our knowledge there is no common database for comparing results.]
 Sentence
    sofa: _InitialView
-   begin: 29566
-   end: 29701
+   begin: 29654
+   end: 29789
 [ To address this issue we have made available a database composed of audio/video records of falls and prolonged immobility.]
 Sentence
    sofa: _InitialView
-   begin: 29701
-   end: 29824
+   begin: 29789
+   end: 29912
 [ In this paper, studies using this database for the automatic identification of these events were also presented.]
 Sentence
    sofa: _InitialView
-   begin: 29824
-   end: 29937
+   begin: 29912
+   end: 30025
 [ The C IRDO corpus was recorded in a smart environment reproducing a typical living room containing an e-lio communication device equipped with microphone and camera.]
 Sentence
    sofa: _InitialView
-   begin: 29937
-   end: 30103
+   begin: 30025
+   end: 30191
 [ The experiment was guided by an ethnographic study which detailed the various events related to distress situations faced by elderly people.]
 Sentence
    sofa: _InitialView
-   begin: 30103
-   end: 30244
+   begin: 30191
+   end: 30332
 [ Various scenarios were estab- lished from this study that describes pattern of postures in case of fall so that acted falls were as close to real situation as possible.]
 Sentence
    sofa: _InitialView
-   begin: 30244
-   end: 30413
+   begin: 30332
+   end: 30501
 [ The database can thus be useful to researchers of the community studying video or audio emergency situations as well as to model the relationship between audio/video events and learn fall model using machine learning.]
 Sentence
    sofa: _InitialView
-   begin: 30413
-   end: 30631
+   begin: 30501
+   end: 30719
 [This work was supported by the French funding agen- cies ANR and CNSA through C IRDO project (ANR-2010- TECS-012).]
 Sentence
    sofa: _InitialView
-   begin: 30631
-   end: 30745
+   begin: 30719
+   end: 30833
 [This work was supported by the French funding agen- cies ANR and CNSA through C IRDO project (ANR-2010-]
 Paragraph
    sofa: _InitialView
-   begin: 30631
-   end: 30734
+   begin: 30719
+   end: 30822
 [ TECS-012). The authors would like to thanks the persons who agreed to participate in the survey or in the recordings.]
 Paragraph
    sofa: _InitialView
-   begin: 30734
-   end: 30852
+   begin: 30822
+   end: 30940
 [ The authors would like to thanks the persons who agreed to participate in the survey or in the recordings.]
 Sentence
    sofa: _InitialView
-   begin: 30745
-   end: 30852
+   begin: 30833
+   end: 30940
 [Aman, F., Vacher, M., Rossato, S., and Portet, F. (2013). Speech Recognition of Aged Voices in the AAL Context: Detection of Distress Sentences. In The 7th Int. Conf. on Speech Technology and Human-Computer Dialogue, SpeD 2013, pages 177–184. Aman, F. (2014). Reconnaissance automatique de la pa- role de personnes âgées pour les services d’assistance à domicile. Ph.D. thesis, Université de Grenoble, Ecole doctorale MSTII. Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2012). Human actions recognition from streamed mo- tion capture. In Pattern Recognition (ICPR), Int. Conf. on, pages 3807–3810. IEEE. Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2014). Ongoing Human Action Recognition with Motion Capture. Pattern Recognition, 47(1):238–247. Bloch, F., Gautier, V., Noury, N., Lundy, J., Poujaud, J., Claessens, Y., and Rigaud, A. (2011). Evaluation under real-life conditions of a stand-alone fall detector for the elderly subjects. Annals of Physical and Rehabilitation Medicine, 54:391–398. Bobillier-Chaumon, M.-E., Cuvillier, B., Bouakaz, S., and Vacher, M. (2012). Démarche de développement de technologies ambiantes pour le maintien à domicile des personnes dépendantes : vers une triangulation des méth- odes et des approches. In Actes du 1er Congrès Eu- ropéen de Stimulation Cognitive, pages 121–122, Dijon, France. Body-Bekkadja, S., Bobillier-Chaumon, M.-E., Cuvillier, B., and Cros, F. (2015). Understanding the Socio- Domestic Activity: A Challenge for the Ambient Technologies Acceptance in the Case of Homecare Assis- tance. In HCI International, volume Part II of LNCS 9194, pages 399–411. Bouakaz, S., Vacher, M., Bobillier-Chaumon, M.-E., FrédéricAman, Bekkadja, Portet, Guillou, E., Rossato, S., Desserée, E., Traineau, P., Vimon, J.-P., and Cheva- lier, T. (2014). CIRDO: Smart companion for helping elderly to live at home for longer. Innovation and Re- search in BioMedical engineering, 35(2):101–108. Clot, Y. (1999). La fonction psychologique du travail. PUF, Paris, France. Deeb, R., Desseree, E., and Bouakaz, S. (2012). Real-time two-level foreground detection and person-silhouette extraction enhanced by body-parts tracking. In Proc. SPIE, volume 83010R, pages 1–8. Hamill, M., Young, V., Boger, J., and Mihailidis, A. (2009). Development of an automated speech recognition interface for personal emergency response systems. Journal of NeuroEngineering and Rehabilitation, 6(1):26. He, J. and King, W. (2008). The role of user participa- tion in information systems development: Implications from a meta-analysis. Journal of Management Information Systems, 25(1):301–331.]
 Paragraph
    sofa: _InitialView
-   begin: 30852
-   end: 33483
+   begin: 30940
+   end: 33571
 [Aman, F., Vacher, M., Rossato, S., and Portet, F. (2013).]
 Sentence
    sofa: _InitialView
-   begin: 30852
-   end: 30909
+   begin: 30940
+   end: 30997
 [ Speech Recognition of Aged Voices in the AAL Context: Detection of Distress Sentences.]
 Sentence
    sofa: _InitialView
-   begin: 30909
-   end: 30996
+   begin: 30997
+   end: 31084
 [ In The 7th Int.]
 Sentence
    sofa: _InitialView
-   begin: 30996
-   end: 31012
+   begin: 31084
+   end: 31100
 [ Conf.]
 Sentence
    sofa: _InitialView
-   begin: 31012
-   end: 31018
+   begin: 31100
+   end: 31106
 [ on Speech Technology and Human-Computer Dialogue, SpeD 2013, pages 177–184.]
 Sentence
    sofa: _InitialView
-   begin: 31018
-   end: 31094
+   begin: 31106
+   end: 31182
 [ Aman, F. (2014).]
 Sentence
    sofa: _InitialView
-   begin: 31094
-   end: 31111
+   begin: 31182
+   end: 31199
 [ Reconnaissance automatique de la pa- role de personnes âgées pour les services d’assistance à domicile.]
 Sentence
    sofa: _InitialView
-   begin: 31111
-   end: 31215
+   begin: 31199
+   end: 31303
 [ Ph.D. thesis, Université de Grenoble, Ecole doctorale MSTII.]
 Sentence
    sofa: _InitialView
-   begin: 31215
-   end: 31276
+   begin: 31303
+   end: 31364
 [ Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2012).]
 Sentence
    sofa: _InitialView
-   begin: 31276
-   end: 31341
+   begin: 31364
+   end: 31429
 [ Human actions recognition from streamed mo- tion capture.]
 Sentence
    sofa: _InitialView
-   begin: 31341
-   end: 31399
+   begin: 31429
+   end: 31487
 [ In Pattern Recognition (ICPR), Int.]
 Sentence
    sofa: _InitialView
-   begin: 31399
-   end: 31435
+   begin: 31487
+   end: 31523
 [ Conf.]
 Sentence
    sofa: _InitialView
-   begin: 31435
-   end: 31441
+   begin: 31523
+   end: 31529
 [ on, pages 3807–3810.]
 Sentence
    sofa: _InitialView
-   begin: 31441
-   end: 31462
+   begin: 31529
+   end: 31550
 [ IEEE.]
 Sentence
    sofa: _InitialView
-   begin: 31462
-   end: 31468
+   begin: 31550
+   end: 31556
 [ Barnachon, M., Bouakaz, S., Boufama, B., and Guillou, E. (2014).]
 Sentence
    sofa: _InitialView
-   begin: 31468
-   end: 31533
+   begin: 31556
+   end: 31621
 [ Ongoing Human Action Recognition with Motion Capture.]
 Sentence
    sofa: _InitialView
-   begin: 31533
-   end: 31587
+   begin: 31621
+   end: 31675
 [ Pattern Recognition, 47(1):238–247.]
 Sentence
    sofa: _InitialView
-   begin: 31587
-   end: 31623
+   begin: 31675
+   end: 31711
 [ Bloch, F., Gautier, V., Noury, N., Lundy, J., Poujaud, J., Claessens, Y., and Rigaud, A.]
 Sentence
    sofa: _InitialView
-   begin: 31623
-   end: 31712
+   begin: 31711
+   end: 31800
 [ (2011).]
 Sentence
    sofa: _InitialView
-   begin: 31712
-   end: 31720
+   begin: 31800
+   end: 31808
 [ Evaluation under real-life conditions of a stand-alone fall detector for the elderly subjects.]
 Sentence
    sofa: _InitialView
-   begin: 31720
-   end: 31815
+   begin: 31808
+   end: 31903
 [ Annals of Physical and Rehabilitation Medicine, 54:391–398.]
 Sentence
    sofa: _InitialView
-   begin: 31815
-   end: 31875
+   begin: 31903
+   end: 31963
 [ Bobillier-Chaumon, M.-E., Cuvillier, B., Bouakaz, S., and Vacher, M. (2012).]
 Sentence
    sofa: _InitialView
-   begin: 31875
-   end: 31952
+   begin: 31963
+   end: 32040
 [ Démarche de développement de technologies ambiantes pour le maintien à domicile des personnes dépendantes : vers une triangulation des méth- odes et des approches.]
 Sentence
    sofa: _InitialView
-   begin: 31952
-   end: 32116
+   begin: 32040
+   end: 32204
 [ In Actes du 1er Congrès Eu- ropéen de Stimulation Cognitive, pages 121–122, Dijon, France.]
 Sentence
    sofa: _InitialView
-   begin: 32116
-   end: 32207
+   begin: 32204
+   end: 32295
 [ Body-Bekkadja, S., Bobillier-Chaumon, M.-E., Cuvillier, B., and Cros, F. (2015).]
 Sentence
    sofa: _InitialView
-   begin: 32207
-   end: 32288
+   begin: 32295
+   end: 32376
 [ Understanding the Socio- Domestic Activity: A Challenge for the Ambient Technologies Acceptance in the Case of Homecare Assis- tance.]
 Sentence
    sofa: _InitialView
-   begin: 32288
-   end: 32422
+   begin: 32376
+   end: 32510
 [ In HCI International, volume Part II of LNCS 9194, pages 399–411.]
 Sentence
    sofa: _InitialView
-   begin: 32422
-   end: 32488
+   begin: 32510
+   end: 32576
 [ Bouakaz, S., Vacher, M., Bobillier-Chaumon, M.-E., FrédéricAman, Bekkadja, Portet, Guillou, E., Rossato, S., Desserée, E., Traineau, P., Vimon, J.-P., and Cheva- lier, T. (2014).]
 Sentence
    sofa: _InitialView
-   begin: 32488
-   end: 32667
+   begin: 32576
+   end: 32755
 [ CIRDO: Smart companion for helping elderly to live at home for longer.]
 Sentence
    sofa: _InitialView
-   begin: 32667
-   end: 32738
+   begin: 32755
+   end: 32826
 [ Innovation and Re- search in BioMedical engineering, 35(2):101–108.]
 Sentence
    sofa: _InitialView
-   begin: 32738
-   end: 32806
+   begin: 32826
+   end: 32894
 [ Clot, Y.]
 Sentence
    sofa: _InitialView
-   begin: 32806
-   end: 32815
+   begin: 32894
+   end: 32903
 [ (1999).]
 Sentence
    sofa: _InitialView
-   begin: 32815
-   end: 32823
+   begin: 32903
+   end: 32911
 [ La fonction psychologique du travail.]
 Sentence
    sofa: _InitialView
-   begin: 32823
-   end: 32861
+   begin: 32911
+   end: 32949
 [ PUF, Paris, France.]
 Sentence
    sofa: _InitialView
-   begin: 32861
-   end: 32881
+   begin: 32949
+   end: 32969
 [ Deeb, R., Desseree, E., and Bouakaz, S. (2012).]
 Sentence
    sofa: _InitialView
-   begin: 32881
-   end: 32929
+   begin: 32969
+   end: 33017
 [ Real-time two-level foreground detection and person-silhouette extraction enhanced by body-parts tracking.]
 Sentence
    sofa: _InitialView
-   begin: 32929
-   end: 33036
+   begin: 33017
+   end: 33124
 [ In Proc.]
 Sentence
    sofa: _InitialView
-   begin: 33036
-   end: 33045
+   begin: 33124
+   end: 33133
 [ SPIE, volume 83010R, pages 1–8.]
 Sentence
    sofa: _InitialView
-   begin: 33045
-   end: 33077
+   begin: 33133
+   end: 33165
 [ Hamill, M., Young, V., Boger, J., and Mihailidis, A.]
 Sentence
    sofa: _InitialView
-   begin: 33077
-   end: 33130
+   begin: 33165
+   end: 33218
 [ (2009).]
 Sentence
    sofa: _InitialView
-   begin: 33130
-   end: 33138
+   begin: 33218
+   end: 33226
 [ Development of an automated speech recognition interface for personal emergency response systems.]
 Sentence
    sofa: _InitialView
-   begin: 33138
-   end: 33236
+   begin: 33226
+   end: 33324
 [ Journal of NeuroEngineering and Rehabilitation, 6(1):26.]
 Sentence
    sofa: _InitialView
-   begin: 33236
-   end: 33293
+   begin: 33324
+   end: 33381
 [ He, J. and King, W. (2008).]
 Sentence
    sofa: _InitialView
-   begin: 33293
-   end: 33321
+   begin: 33381
+   end: 33409
 [ The role of user participa- tion in information systems development: Implications from a meta-analysis.]
 Sentence
    sofa: _InitialView
-   begin: 33321
-   end: 33425
+   begin: 33409
+   end: 33513
 [ Journal of Management Information Systems, 25(1):301–331.]
 Sentence
    sofa: _InitialView
-   begin: 33425
-   end: 33483
+   begin: 33513
+   end: 33571
 [ Hsieh, C., Chuang, S., Chen, S., Chen, C., and Fan, K. (2010). Segmentation of human body parts using de- formable triangulation. IEEE Transactions on Systems, Man, and Cybernetics Part A: Systems and Humans, 40(3):596–610. Hwang, M. and Thorn, R. (1999). The effect of user en- gagement on system success: A meta-analytical integra- tion of research findings. Information and Management, 35(4):229–236. Igual, R., Medrano, C., and Plaza, I. (2013). Challenges, issues and trends in fall detection systems. BioMedical Engineering OnLine, 12(1):1–24. Kangas, M., Vikman, I., Nyberg, L., Korpelainen, R., Lind- blom, J., and Jämsä, T. (2012). Comparison of real-life accidental falls in older people with experimental falls in middle-aged test subjects. Gait & Posture, 35(3):500 – 505. Khan, R. A., Meyer, A., Konik, H., and Bouakaz, S. (2013). Pain detection through shape and appearance features. In Multimedia and Expo (ICME), 2013 IEEE International Conference on, pages 1–6, July. Klenk, J., Becker, C., Lieken, F., Nicolai, S., Maetzler, W., Alt, W., Zijlstra, W., Hausdorff, J., van Lummel, R., Chiari, L., and Lindemann, U. (2011). Comparison of acceleration signals of simulated and real-world back- ward falls. Medical Engineering & Physics, 33(3):368 – 373. Kujala, S. (2003). User involvement: A review of the ben- efits and challenges. Behaviour and Information Technology, 22(1):1–16. Lecouteux, B., Vacher, M., and Portet, F. (2011). Distant Speech Recognition in a Smart Home: Comparison of Several Multisource ASRs in Realistic Conditions. In In- terspeech 2011, pages 1–4, Florence, Italy. Miguel Angel Bautista, Sergio Escalera, D. S. (2015). Hupba8k: Dataset and ecoc-graph-cut based segmentation of human limbs. Neurocomputing, 150(A):173–188. Moon, T. K. (1996). The expectation-maximization algorithm. IEEE Signal Processing Magazine, 13(6):47–60. Norman, D. A. and Draper, S. W. (1986). User Centered System Design; New Perspectives on Human-Computer Interaction. L. Erlbaum Associates Inc. Pantic, M., Pentland, A., Nijholt, A., and Huang, T. (2006). Human computing and machine understanding of human behavior: survey. In ACM Int. Conf. on Multimodal In- terfaces. Pino, M., Moget, C., Benveniste, S., Picard, R., and Rigaud, A.-S. (2015). Innovative technology-based healthcare and support services for older adults: How and why in- dustrial initiatives convert to the living lab approach. In HCI International, volume Part II of LNCS 9194, pages 158–169. Springer International Publishing. Popescu, M., Li, Y., Skubic, M., and Rantz, M. (2008). An acoustic fall detector system that uses sound height information to reduce the false alarm rate. In Proc. 30th Annual Int. Conference of the IEEE-EMBS 2008, pages 4628–4631, 20–25 Aug. Povey, D., Burget, L., Agarwal, M., Akyazi, P., Kai, F., Ghoshal, A., Glembek, O., Goel, N., Karafiát, M.,]
 Paragraph
    sofa: _InitialView
-   begin: 33483
-   end: 36350
+   begin: 33571
+   end: 36438
 [Hsieh, C., Chuang, S., Chen, S., Chen, C., and Fan, K. (2010).]
 Sentence
    sofa: _InitialView
-   begin: 33484
-   end: 33546
+   begin: 33572
+   end: 33634
 [ Segmentation of human body parts using de- formable triangulation.]
 Sentence
    sofa: _InitialView
-   begin: 33546
-   end: 33613
+   begin: 33634
+   end: 33701
 [ IEEE Transactions on Systems, Man, and Cybernetics Part A: Systems and Humans, 40(3):596–610.]
 Sentence
    sofa: _InitialView
-   begin: 33613
-   end: 33707
+   begin: 33701
+   end: 33795
 [ Hwang, M. and Thorn, R. (1999).]
 Sentence
    sofa: _InitialView
-   begin: 33707
-   end: 33739
+   begin: 33795
+   end: 33827
 [ The effect of user en- gagement on system success: A meta-analytical integra- tion of research findings.]
 Sentence
    sofa: _InitialView
-   begin: 33739
-   end: 33844
+   begin: 33827
+   end: 33932
 [ Information and Management, 35(4):229–236.]
 Sentence
    sofa: _InitialView
-   begin: 33844
-   end: 33887
+   begin: 33932
+   end: 33975
 [ Igual, R., Medrano, C., and Plaza, I.]
 Sentence
    sofa: _InitialView
-   begin: 33887
-   end: 33925
+   begin: 33975
+   end: 34013
 [ (2013).]
 Sentence
    sofa: _InitialView
-   begin: 33925
-   end: 33933
+   begin: 34013
+   end: 34021
 [ Challenges, issues and trends in fall detection systems.]
 Sentence
    sofa: _InitialView
-   begin: 33933
-   end: 33990
+   begin: 34021
+   end: 34078
 [ BioMedical Engineering OnLine, 12(1):1–24.]
 Sentence
    sofa: _InitialView
-   begin: 33990
-   end: 34033
+   begin: 34078
+   end: 34121
 [ Kangas, M., Vikman, I., Nyberg, L., Korpelainen, R., Lind- blom, J., and Jämsä, T. (2012).]
 Sentence
    sofa: _InitialView
-   begin: 34033
-   end: 34124
+   begin: 34121
+   end: 34212
 [ Comparison of real-life accidental falls in older people with experimental falls in middle-aged test subjects.]
 Sentence
    sofa: _InitialView
-   begin: 34124
-   end: 34235
+   begin: 34212
+   end: 34323
 [ Gait & Posture, 35(3):500 – 505.]
 Sentence
    sofa: _InitialView
-   begin: 34235
-   end: 34268
+   begin: 34323
+   end: 34356
 [ Khan, R. A., Meyer, A., Konik, H., and Bouakaz, S. (2013).]
 Sentence
    sofa: _InitialView
-   begin: 34268
-   end: 34327
+   begin: 34356
+   end: 34415
 [ Pain detection through shape and appearance features.]
 Sentence
    sofa: _InitialView
-   begin: 34327
-   end: 34381
+   begin: 34415
+   end: 34469
 [ In Multimedia and Expo (ICME), 2013 IEEE International Conference on, pages 1–6, July.]
 Sentence
    sofa: _InitialView
-   begin: 34381
-   end: 34468
+   begin: 34469
+   end: 34556
 [ Klenk, J., Becker, C., Lieken, F., Nicolai, S., Maetzler, W., Alt, W., Zijlstra, W., Hausdorff, J., van Lummel, R., Chiari, L., and Lindemann, U.]
 Sentence
    sofa: _InitialView
-   begin: 34468
-   end: 34614
+   begin: 34556
+   end: 34702
 [ (2011).]
 Sentence
    sofa: _InitialView
-   begin: 34614
-   end: 34622
+   begin: 34702
+   end: 34710
 [ Comparison of acceleration signals of simulated and real-world back- ward falls.]
 Sentence
    sofa: _InitialView
-   begin: 34622
-   end: 34703
+   begin: 34710
+   end: 34791
 [ Medical Engineering & Physics, 33(3):368 – 373.]
 Sentence
    sofa: _InitialView
-   begin: 34703
-   end: 34751
+   begin: 34791
+   end: 34839
 [ Kujala, S. (2003).]
 Sentence
    sofa: _InitialView
-   begin: 34751
-   end: 34770
+   begin: 34839
+   end: 34858
 [ User involvement: A review of the ben- efits and challenges.]
 Sentence
    sofa: _InitialView
-   begin: 34770
-   end: 34831
+   begin: 34858
+   end: 34919
 [ Behaviour and Information Technology, 22(1):1–16.]
 Sentence
    sofa: _InitialView
-   begin: 34831
-   end: 34881
+   begin: 34919
+   end: 34969
 [ Lecouteux, B., Vacher, M., and Portet, F. (2011).]
 Sentence
    sofa: _InitialView
-   begin: 34881
-   end: 34931
+   begin: 34969
+   end: 35019
 [ Distant Speech Recognition in a Smart Home: Comparison of Several Multisource ASRs in Realistic Conditions.]
 Sentence
    sofa: _InitialView
-   begin: 34931
-   end: 35039
+   begin: 35019
+   end: 35127
 [ In In- terspeech 2011, pages 1–4, Florence, Italy.]
 Sentence
    sofa: _InitialView
-   begin: 35039
-   end: 35090
+   begin: 35127
+   end: 35178
 [ Miguel Angel Bautista, Sergio Escalera, D. S. (2015).]
 Sentence
    sofa: _InitialView
-   begin: 35090
-   end: 35144
+   begin: 35178
+   end: 35232
 [ Hupba8k: Dataset and ecoc-graph-cut based segmentation of human limbs.]
 Sentence
    sofa: _InitialView
-   begin: 35144
-   end: 35215
+   begin: 35232
+   end: 35303
 [ Neurocomputing, 150(A):173–188.]
 Sentence
    sofa: _InitialView
-   begin: 35215
-   end: 35247
+   begin: 35303
+   end: 35335
 [ Moon, T. K. (1996).]
 Sentence
    sofa: _InitialView
-   begin: 35247
-   end: 35267
+   begin: 35335
+   end: 35355
 [ The expectation-maximization algorithm.]
 Sentence
    sofa: _InitialView
-   begin: 35267
-   end: 35307
+   begin: 35355
+   end: 35395
 [ IEEE Signal Processing Magazine, 13(6):47–60.]
 Sentence
    sofa: _InitialView
-   begin: 35307
-   end: 35353
+   begin: 35395
+   end: 35441
 [ Norman, D. A. and Draper, S. W. (1986).]
 Sentence
    sofa: _InitialView
-   begin: 35353
-   end: 35393
+   begin: 35441
+   end: 35481
 [ User Centered System Design; New Perspectives on Human-Computer Interaction.]
 Sentence
    sofa: _InitialView
-   begin: 35393
-   end: 35470
+   begin: 35481
+   end: 35558
 [ L. Erlbaum Associates Inc. Pantic, M., Pentland, A., Nijholt, A., and Huang, T. (2006).]
 Sentence
    sofa: _InitialView
-   begin: 35470
-   end: 35558
+   begin: 35558
+   end: 35646
 [ Human computing and machine understanding of human behavior: survey.]
 Sentence
    sofa: _InitialView
-   begin: 35558
-   end: 35627
+   begin: 35646
+   end: 35715
 [ In ACM Int.]
 Sentence
    sofa: _InitialView
-   begin: 35627
-   end: 35639
+   begin: 35715
+   end: 35727
 [ Conf.]
 Sentence
    sofa: _InitialView
-   begin: 35639
-   end: 35645
+   begin: 35727
+   end: 35733
 [ on Multimodal In- terfaces.]
 Sentence
    sofa: _InitialView
-   begin: 35645
-   end: 35673
+   begin: 35733
+   end: 35761
 [ Pino, M., Moget, C., Benveniste, S., Picard, R., and Rigaud, A.-S. (2015).]
 Sentence
    sofa: _InitialView
-   begin: 35673
-   end: 35748
+   begin: 35761
+   end: 35836
 [ Innovative technology-based healthcare and support services for older adults: How and why in- dustrial initiatives convert to the living lab approach.]
 Sentence
    sofa: _InitialView
-   begin: 35748
-   end: 35899
+   begin: 35836
+   end: 35987
 [ In HCI International, volume Part II of LNCS 9194, pages 158–169.]
 Sentence
    sofa: _InitialView
-   begin: 35899
-   end: 35965
+   begin: 35987
+   end: 36053
 [ Springer International Publishing.]
 Sentence
    sofa: _InitialView
-   begin: 35965
-   end: 36000
+   begin: 36053
+   end: 36088
 [ Popescu, M., Li, Y., Skubic, M., and Rantz, M. (2008).]
 Sentence
    sofa: _InitialView
-   begin: 36000
-   end: 36055
+   begin: 36088
+   end: 36143
 [ An acoustic fall detector system that uses sound height information to reduce the false alarm rate.]
 Sentence
    sofa: _InitialView
-   begin: 36055
-   end: 36155
+   begin: 36143
+   end: 36243
 [ In Proc.]
 Sentence
    sofa: _InitialView
-   begin: 36155
-   end: 36164
+   begin: 36243
+   end: 36252
 [ 30th Annual Int.]
 Sentence
    sofa: _InitialView
-   begin: 36164
-   end: 36181
+   begin: 36252
+   end: 36269
 [ Conference of the IEEE-EMBS 2008, pages 4628–4631, 20–25 Aug. Povey, D., Burget, L., Agarwal, M., Akyazi, P., Kai, F., Ghoshal, A., Glembek, O., Goel, N., Karafiát, M., Rastrow, A., Rose, R. C., Schwarz, P., and Thomas, S. (2011a).]
 Sentence
    sofa: _InitialView
-   begin: 36181
-   end: 36413
+   begin: 36269
+   end: 36501
 [ Rastrow, A., Rose, R. C., Schwarz, P., and Thomas, S. (2011a). The subspace gaussian mixture model—a structured model for speech recognition. Computer Speech & Language, 25(2):404 – 439. Povey, D., Ghoshal, A., Boulianne, G., Burget, L., Glembek, O., Goel, N., Hannemann, M., Motlicek, P., Qian, Y., Schwarz, P., Silovsky, J., Stemmer, G., and Vesely, K. (2011b). The Kaldi Speech Recognition Toolkit. In IEEE 2011 Workshop on Automatic Speech Recognition and Understanding. IEEE Signal Processing Soci- ety, December. IEEE Catalog No.: CFP11SRW-USB. Priyank Shah, H. M. (2014). Comperehensive study and comparative analysis of different types of background subtraction algorithms. International Journal of Im- age,Graphics and Signal Processing, 6(8):47–52. Saim, R. (2014). Accidental falls amongst the elderly: Health impact and effective intervention strategies. Mas- ter’s thesis. Vacher, M., Portet, F., Fleury, A., and Noury, N. (2011). Development of Audio Sensing Technology for Ambient Assisted Living: Applications and Challenges. International journal of E-Health and medical communications, 2(1):35–54, March. Vacher, M., Lecouteux, B., Chahuara, P., Portet, F., Meil- lon, B., and Bonnefond, N. (2014). The Sweet-Home speech and multimodal corpus for home automation interaction. In The 9th edition of the Language Resources and Evaluation Conference (LREC), pages 4499–4506, Reykjavik, Iceland. Vacher, M., Aman, F., Rossato, S., and Portet, F. (2015a). Development of Automatic Speech Recognition Tech- niques for Elderly Home Support: Applications and Challenges. In J. Zou et al., editors, HCI International, volume Part II of LNCS 9194, pages 341–353, Los An- geles, CA, United States, August. Springer International Publishing Switzerland. Vacher, M., Lecouteux, B., Aman, F., Rossato, S., and Portet, F. (2015b). Recognition of Distress Calls in Distant Speech Setting: a Preliminary Experiment in a Smart Home. In 6th Workshop on Speech and Language Processing for Assistive Technologies, pages 1–7, Dresden, Germany, September. SIG-SLPAT. Who. (2013). World population ageing: 1950-2050. Tech- nical report, Executive report, United Nations, Depart- ment of Economic and Social Affairs, Population Divi- sion. Young, V. and Mihailidis, A. (2010). An automated, speech-based emergency response system for the older adult. Gerontechnology, 9(2):261. Young, V. and Mihailidis, A. (2013). The CARES corpus: a database of older adult actor simulated emergency dia- logue for developing a personal emergency response system. I. J. Speech Technology, 16(1):55–73. Zouari, L. and Chollet, G. (2006). Efficient gaussian mixture for speech recognition. In Pattern Recognition, 2006. ICPR 2006. 18th International Conference on, volume 4, pages 294–297.]
 Paragraph
    sofa: _InitialView
-   begin: 36350
-   end: 39116
+   begin: 36438
+   end: 39204
 [ The subspace gaussian mixture model—a structured model for speech recognition.]
 Sentence
    sofa: _InitialView
-   begin: 36413
-   end: 36492
+   begin: 36501
+   end: 36580
 [ Computer Speech & Language, 25(2):404 – 439.]
 Sentence
    sofa: _InitialView
-   begin: 36492
-   end: 36537
+   begin: 36580
+   end: 36625
 [ Povey, D., Ghoshal, A., Boulianne, G., Burget, L., Glembek, O., Goel, N., Hannemann, M., Motlicek, P., Qian, Y., Schwarz, P., Silovsky, J., Stemmer, G., and Vesely, K. (2011b).]
 Sentence
    sofa: _InitialView
-   begin: 36537
-   end: 36714
+   begin: 36625
+   end: 36802
 [ The Kaldi Speech Recognition Toolkit.]
 Sentence
    sofa: _InitialView
-   begin: 36714
-   end: 36752
+   begin: 36802
+   end: 36840
 [ In IEEE 2011 Workshop on Automatic Speech Recognition and Understanding.]
 Sentence
    sofa: _InitialView
-   begin: 36752
-   end: 36825
+   begin: 36840
+   end: 36913
 [ IEEE Signal Processing Soci- ety, December.]
 Sentence
    sofa: _InitialView
-   begin: 36825
-   end: 36869
+   begin: 36913
+   end: 36957
 [ IEEE Catalog No.:]
 Sentence
    sofa: _InitialView
-   begin: 36869
-   end: 36887
+   begin: 36957
+   end: 36975
 [ CFP11SRW-USB.]
 Sentence
    sofa: _InitialView
-   begin: 36887
-   end: 36901
+   begin: 36975
+   end: 36989
 [ Priyank Shah, H. M. (2014).]
 Sentence
    sofa: _InitialView
-   begin: 36901
-   end: 36929
+   begin: 36989
+   end: 37017
 [ Comperehensive study and comparative analysis of different types of background subtraction algorithms.]
 Sentence
    sofa: _InitialView
-   begin: 36929
-   end: 37032
+   begin: 37017
+   end: 37120
 [ International Journal of Im- age,Graphics and Signal Processing, 6(8):47–52.]
 Sentence
    sofa: _InitialView
-   begin: 37032
-   end: 37109
+   begin: 37120
+   end: 37197
 [ Saim, R. (2014).]
 Sentence
    sofa: _InitialView
-   begin: 37109
-   end: 37126
+   begin: 37197
+   end: 37214
 [ Accidental falls amongst the elderly: Health impact and effective intervention strategies.]
 Sentence
    sofa: _InitialView
-   begin: 37126
-   end: 37217
+   begin: 37214
+   end: 37305
 [ Mas- ter’s thesis.]
 Sentence
    sofa: _InitialView
-   begin: 37217
-   end: 37236
+   begin: 37305
+   end: 37324
 [ Vacher, M., Portet, F., Fleury, A., and Noury, N. (2011).]
 Sentence
    sofa: _InitialView
-   begin: 37236
-   end: 37294
+   begin: 37324
+   end: 37382
 [ Development of Audio Sensing Technology for Ambient Assisted Living: Applications and Challenges.]
 Sentence
    sofa: _InitialView
-   begin: 37294
-   end: 37392
+   begin: 37382
+   end: 37480
 [ International journal of E-Health and medical communications, 2(1):35–54, March.]
 Sentence
    sofa: _InitialView
-   begin: 37392
-   end: 37473
+   begin: 37480
+   end: 37561
 [ Vacher, M., Lecouteux, B., Chahuara, P., Portet, F., Meil- lon, B., and Bonnefond, N. (2014).]
 Sentence
    sofa: _InitialView
-   begin: 37473
-   end: 37567
+   begin: 37561
+   end: 37655
 [ The Sweet-Home speech and multimodal corpus for home automation interaction.]
 Sentence
    sofa: _InitialView
-   begin: 37567
-   end: 37644
+   begin: 37655
+   end: 37732
 [ In The 9th edition of the Language Resources and Evaluation Conference (LREC), pages 4499–4506, Reykjavik, Iceland.]
 Sentence
    sofa: _InitialView
-   begin: 37644
-   end: 37760
+   begin: 37732
+   end: 37848
 [ Vacher, M., Aman, F., Rossato, S., and Portet, F. (2015a).]
 Sentence
    sofa: _InitialView
-   begin: 37760
-   end: 37819
+   begin: 37848
+   end: 37907
 [ Development of Automatic Speech Recognition Tech- niques for Elderly Home Support: Applications and Challenges.]
 Sentence
    sofa: _InitialView
-   begin: 37819
-   end: 37931
+   begin: 37907
+   end: 38019
 [ In J. Zou et al., editors, HCI International, volume Part II of LNCS 9194, pages 341–353, Los An- geles, CA, United States, August.]
 Sentence
    sofa: _InitialView
-   begin: 37931
-   end: 38063
+   begin: 38019
+   end: 38151
 [ Springer International Publishing Switzerland.]
 Sentence
    sofa: _InitialView
-   begin: 38063
-   end: 38110
+   begin: 38151
+   end: 38198
 [ Vacher, M., Lecouteux, B., Aman, F., Rossato, S., and Portet, F. (2015b).]
 Sentence
    sofa: _InitialView
-   begin: 38110
-   end: 38184
+   begin: 38198
+   end: 38272
 [ Recognition of Distress Calls in Distant Speech Setting: a Preliminary Experiment in a Smart Home.]
 Sentence
    sofa: _InitialView
-   begin: 38184
-   end: 38283
+   begin: 38272
+   end: 38371
 [ In 6th Workshop on Speech and Language Processing for Assistive Technologies, pages 1–7, Dresden, Germany, September.]
 Sentence
    sofa: _InitialView
-   begin: 38283
-   end: 38401
+   begin: 38371
+   end: 38489
 [ SIG-SLPAT.]
 Sentence
    sofa: _InitialView
-   begin: 38401
-   end: 38412
+   begin: 38489
+   end: 38500
 [ Who.]
 Sentence
    sofa: _InitialView
-   begin: 38412
-   end: 38417
+   begin: 38500
+   end: 38505
 [ (2013).]
 Sentence
    sofa: _InitialView
-   begin: 38417
-   end: 38425
+   begin: 38505
+   end: 38513
 [ World population ageing: 1950-2050.]
 Sentence
    sofa: _InitialView
-   begin: 38425
-   end: 38461
+   begin: 38513
+   end: 38549
 [ Tech- nical report, Executive report, United Nations, Depart- ment of Economic and Social Affairs, Population Divi- sion.]
 Sentence
    sofa: _InitialView
-   begin: 38461
-   end: 38583
+   begin: 38549
+   end: 38671
 [ Young, V. and Mihailidis, A.]
 Sentence
    sofa: _InitialView
-   begin: 38583
-   end: 38612
+   begin: 38671
+   end: 38700
 [ (2010).]
 Sentence
    sofa: _InitialView
-   begin: 38612
-   end: 38620
+   begin: 38700
+   end: 38708
 [ An automated, speech-based emergency response system for the older adult.]
 Sentence
    sofa: _InitialView
-   begin: 38620
-   end: 38694
+   begin: 38708
+   end: 38782
 [ Gerontechnology, 9(2):261.]
 Sentence
    sofa: _InitialView
-   begin: 38694
-   end: 38721
+   begin: 38782
+   end: 38809
 [ Young, V. and Mihailidis, A.]
 Sentence
    sofa: _InitialView
-   begin: 38721
-   end: 38750
+   begin: 38809
+   end: 38838
 [ (2013).]
 Sentence
    sofa: _InitialView
-   begin: 38750
-   end: 38758
+   begin: 38838
+   end: 38846
 [ The CARES corpus: a database of older adult actor simulated emergency dia- logue for developing a personal emergency response system.]
 Sentence
    sofa: _InitialView
-   begin: 38758
-   end: 38892
+   begin: 38846
+   end: 38980
 [ I. J.]
 Sentence
    sofa: _InitialView
-   begin: 38892
-   end: 38898
+   begin: 38980
+   end: 38986
 [ Speech Technology, 16(1):55–73.]
 Sentence
    sofa: _InitialView
-   begin: 38898
-   end: 38930
+   begin: 38986
+   end: 39018
 [ Zouari, L. and Chollet, G. (2006).]
 Sentence
    sofa: _InitialView
-   begin: 38930
-   end: 38965
+   begin: 39018
+   end: 39053
 [ Efficient gaussian mixture for speech recognition.]
 Sentence
    sofa: _InitialView
-   begin: 38965
-   end: 39016
+   begin: 39053
+   end: 39104
 [ In Pattern Recognition, 2006.]
 Sentence
    sofa: _InitialView
-   begin: 39016
-   end: 39046
+   begin: 39104
+   end: 39134
 [ ICPR 2006.]
 Sentence
    sofa: _InitialView
-   begin: 39046
-   end: 39057
+   begin: 39134
+   end: 39145
 [ 18th International Conference on, volume 4, pages 294–297.]
 Sentence
    sofa: _InitialView
-   begin: 39057
-   end: 39116
+   begin: 39145
+   end: 39204
 -------- View _InitialView end ----------------------------------
 
 ======== CAS 0 end ==================================
