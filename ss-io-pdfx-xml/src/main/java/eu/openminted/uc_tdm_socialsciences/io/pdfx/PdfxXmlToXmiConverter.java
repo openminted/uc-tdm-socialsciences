@@ -5,61 +5,78 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
-import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRemover;
+import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
+import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
+import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 
 public class PdfxXmlToXmiConverter {
-    //todo: extract these hardcoded input/output paths
-	public static final String INPUT_RESOURCE_DIR = "ss-io-pdfx-xml/src/test/resources/";
-	public static final String OUTPUT_RESOURCE_DIR = "target/";
+	public static final String WORD_DICTIONARY_PATH = "src/main/resources/german-words-dictionary.txt";
 
-    public static final String[] RESOURCE_NAMES = {"2819", "27940"};
+	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
 
-    public static final String WORD_DICTIONARY_PATH = "ss-io-pdfx-xml/src/main/resources/german-words-dictionary.txt";
+	public static void main(String[] args) throws UIMAException, IOException {
+		String inputPath = null;
+		if (args.length == 1) {
+			inputPath = args[0];
+		}
 
-    public static void main(String[] args) throws UIMAException, IOException {
-        for(String name:RESOURCE_NAMES){
-            String inputResource = INPUT_RESOURCE_DIR + name + "-pdfx.xml";
-            String outputResource = OUTPUT_RESOURCE_DIR + name + "-pdfx.cas.xmi";
-            String outputResourceCasDump = OUTPUT_RESOURCE_DIR + name + "-pdfx.cas.dump";
-            convert(inputResource, outputResource);
-            createCasDump(inputResource, outputResourceCasDump);
-        }
-    }
+		Scanner scanner = new Scanner(System.in);
+		while (null == inputPath || inputPath.length() < 1) {
+			System.out.println("Please provide path to input directory containing pdfx-xml files:");
+			inputPath = scanner.nextLine();
+		}
+		scanner.close();
+		Path inputDir = Paths.get(inputPath);
 
-    public static void convert(String inputResource, String outputResource) throws UIMAException, IOException {
-        runPipeline(
-                createReaderDescription(PdfxXmlReader.class,
-                        PdfxXmlReader.PARAM_LANGUAGE, "en",
-                        PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-                createEngineDescription(HyphenationRemover.class,
-                        HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
-                        HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),
-                createEngineDescription(BreakIteratorSegmenter.class,
-                        BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
-                createEngineDescription(XmiWriter.class,
-                        XmiWriter.PARAM_TARGET_LOCATION, outputResource,
-                        XmiWriter.PARAM_OVERWRITE, true)
-        );
-    }
+		for (Path xml : getXmlListFromDirectory(inputDir)) {
+			String inputResource = xml.toString();
+			String outputResource = inputResource.substring(0, inputResource.lastIndexOf('.')) + ".cas.xmi";
+			String outputResourceCasDump = inputResource.substring(0, inputResource.lastIndexOf('.')) + ".cas.dump";
+			convert(inputResource, outputResource);
+			createCasDump(inputResource, outputResourceCasDump);
+		}
+	}
 
-    public static void createCasDump(String inputResource, String outputResource) throws UIMAException, IOException {
-        runPipeline(
-                createReaderDescription(PdfxXmlReader.class,
-                        PdfxXmlReader.PARAM_LANGUAGE, "en",
-                        PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-                createEngineDescription(HyphenationRemover.class,
-                        HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
-                        HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),
-                createEngineDescription(BreakIteratorSegmenter.class,
-                        BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
-                createEngineDescription(CasDumpWriter.class,
-                        CasDumpWriter.PARAM_TARGET_LOCATION, outputResource)
-        );
-    }
+	private static List<Path> getXmlListFromDirectory(Path inputDir) {
+		List<Path> toProcess = new ArrayList<>();
+		try {
+			Files.walk(inputDir).filter(Files::isRegularFile).filter((p) -> p.toString().endsWith(".xml"))
+					.forEach(toProcess::add);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return toProcess;
+	}
+
+	public static void convert(String inputResource, String outputResource) throws UIMAException, IOException {
+		runPipeline(
+				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
+						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
+				createEngineDescription(HyphenationRemover.class, HyphenationRemover.PARAM_MODEL_LOCATION,
+						WORD_DICTIONARY_PATH, HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),
+				createEngineDescription(BreakIteratorSegmenter.class, BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
+				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
+						XmiWriter.PARAM_OVERWRITE, true));
+	}
+
+	public static void createCasDump(String inputResource, String outputResource) throws UIMAException, IOException {
+		runPipeline(
+				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
+						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
+				createEngineDescription(HyphenationRemover.class, HyphenationRemover.PARAM_MODEL_LOCATION,
+						WORD_DICTIONARY_PATH, HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),
+				createEngineDescription(BreakIteratorSegmenter.class, BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
+				createEngineDescription(CasDumpWriter.class, CasDumpWriter.PARAM_TARGET_LOCATION, outputResource));
+	}
 }
