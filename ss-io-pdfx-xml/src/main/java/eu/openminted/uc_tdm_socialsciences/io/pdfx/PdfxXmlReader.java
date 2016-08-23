@@ -12,6 +12,9 @@ import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.io.xml.XmlTextReader;
+import webanno.custom.Reference;
+
+import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 /**
  * Reader for PDFX XML format
@@ -25,7 +28,9 @@ import de.tudarmstadt.ukp.dkpro.core.io.xml.XmlTextReader;
         outputs = {
                 "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
                 "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
-                "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph"})
+                "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+                "webanno.custom.Reference"
+        })
 public class PdfxXmlReader
         extends XmlTextReader
 {
@@ -56,6 +61,13 @@ public class PdfxXmlReader
     public static final String TAG_S = "s";
 
     /**
+     * a reference citation inside a sentence scope
+     */
+    public static final String TAG_REF = "xref";
+    public static final String ATTR_REF_REF_TYPE = "ref-type";
+    public static final String ATTR_REF_REF_ID = "rid";
+
+    /**
      * a marker is used for indicating breaks (e.g. paragraph end, page break, etc.)
      */
     public static final String TAG_MARKER = "marker";
@@ -66,6 +78,7 @@ public class PdfxXmlReader
 
     public static final String PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH = "false";
     public static final String NEWLINE_SEPARATOR = "\r\n";
+    public static final String UNKNOWN_VALUE = "N/A";
     @ConfigurationParameter(name = PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, mandatory = false)
     protected boolean isParamAppendNewLineAfterParagraph;
 
@@ -98,9 +111,12 @@ public class PdfxXmlReader
         private int paragraphBegin = -1;
         private int sentenceBegin = -1;
 
+        private String referenceType = "";
+        private String referenceRId = "";
+        private int referenceStart = -1;
+
         //todo: retain footer and header in the jcas with proper annotation
         //todo read section titles, too?
-        //todo include reference annotations, too. <xref>
         @Override
         public void startElement(String aUri, String aLocalName, String aName,
                                  Attributes aAttributes)
@@ -127,6 +143,13 @@ public class PdfxXmlReader
                     //paragraph end indicator
                     makeParagraph();
                 }
+            }else if(TAG_REF.equals(aName)){
+                String referenceType = aAttributes.getValue(ATTR_REF_REF_TYPE);
+                String referenceId = aAttributes.getValue(ATTR_REF_REF_ID);
+                //todo also include id <xref rid=referenceId id="...">
+                this.referenceType = (referenceType == null ? UNKNOWN_VALUE : referenceType);
+                this.referenceRId = (referenceId == null? UNKNOWN_VALUE : referenceId);
+                referenceStart = getBuffer().length();
             }
         }
 
@@ -157,6 +180,13 @@ public class PdfxXmlReader
                 //end of sentence
                 new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
                 sentenceBegin = -1;
+            }else if(TAG_REF.equals(aName)){
+                if(isNotBlank(getBuffer().substring(referenceStart, getBuffer().length()))){
+                    Reference reference = new Reference(getJCas(), referenceStart, getBuffer().length());
+                    reference.setRefId(referenceRId);
+                    reference.setRefType(referenceType);
+                    reference.addToIndexes();
+                }
             }
         }
 

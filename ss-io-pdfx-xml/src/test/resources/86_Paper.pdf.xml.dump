@@ -68,6 +68,20 @@ Sentence
    sofa: _InitialView
    begin: 1121
    end: 1318
+[Liu et al., 2012]
+Reference
+   sofa: _InitialView
+   begin: 1244
+   end: 1260
+   refId: "R18"
+   refType: "bibr"
+[Gimpel et al., 2011]
+Reference
+   sofa: _InitialView
+   begin: 1279
+   end: 1298
+   refId: "R11"
+   refType: "bibr"
 [ In this paper, we focus on dependency parsing of noisy text.]
 Sentence
    sofa: _InitialView
@@ -108,11 +122,32 @@ Sentence
    sofa: _InitialView
    begin: 2120
    end: 2184
+[Table 1]
+Reference
+   sofa: _InitialView
+   begin: 2121
+   end: 2128
+   refId: "T1"
+   refType: "table"
 [ The constituency treebanks mentioned here were created using the English Web Treebank annotation guidelines (Bies et al., 2012), which are an addendum to the Penn Treebank guidelines (Bies et al., 1995).]
 Sentence
    sofa: _InitialView
    begin: 2184
    end: 2388
+[Bies et al., 2012]
+Reference
+   sofa: _InitialView
+   begin: 2294
+   end: 2311
+   refId: "R3"
+   refType: "bibr"
+[Bies et al., 1995]
+Reference
+   sofa: _InitialView
+   begin: 2369
+   end: 2386
+   refId: "R2"
+   refType: "bibr"
 [ These guidelines discuss domain-specific phenomena, including adaptations of existing labels as well as the addition of new labels for novel linguistic constructions.]
 Sentence
    sofa: _InitialView
@@ -123,11 +158,25 @@ Sentence
    sofa: _InitialView
    begin: 2555
    end: 2666
+[Foster et al. (2011a)]
+Reference
+   sofa: _InitialView
+   begin: 2556
+   end: 2577
+   refId: "R9"
+   refType: "bibr"
 [ The Twitter part is of compa- rable size to our treebank and is described in more detail in Foster et al. (2011b).]
 Sentence
    sofa: _InitialView
    begin: 2666
    end: 2781
+[Foster et al. (2011b)]
+Reference
+   sofa: _InitialView
+   begin: 2759
+   end: 2780
+   refId: "R10"
+   refType: "bibr"
 [ The dependency treebanks show greater diversity in annotation.]
 Sentence
    sofa: _InitialView
@@ -138,6 +187,13 @@ Sentence
    sofa: _InitialView
    begin: 2844
    end: 3001
+[Silveira et al., 2014]
+Reference
+   sofa: _InitialView
+   begin: 2871
+   end: 2892
+   refId: "R24"
+   refType: "bibr"
 [ A very different approach is taken for the annotation of the Tweebank (Kong et al., 2014).]
 Sentence
    sofa: _InitialView
@@ -148,6 +204,13 @@ Paragraph
    sofa: _InitialView
    begin: 3008
    end: 5031
+[Kong et al., 2014]
+Reference
+   sofa: _InitialView
+   begin: 3073
+   end: 3090
+   refId: "R17"
+   refType: "bibr"
 [ In its format, individual words can be skipped in the annotation.]
 Sentence
    sofa: _InitialView
@@ -173,6 +236,13 @@ Sentence
    sofa: _InitialView
    begin: 3562
    end: 3702
+[Kaljahi et al., 2015]
+Reference
+   sofa: _InitialView
+   begin: 3578
+   end: 3598
+   refId: "R14"
+   refType: "bibr"
 [ It includes manual normalizations of the raw text, and constituency trees of the normalized sentences.]
 Sentence
    sofa: _InitialView
@@ -198,6 +268,27 @@ Sentence
    sofa: _InitialView
    begin: 4206
    end: 4372
+[Petrov and McDonald, 2012]
+Reference
+   sofa: _InitialView
+   begin: 4267
+   end: 4292
+   refId: "R21"
+   refType: "bibr"
+[Foster et al., 2011a]
+Reference
+   sofa: _InitialView
+   begin: 4294
+   end: 4314
+   refId: "R9"
+   refType: "bibr"
+[De Marneffe et al., 2006]
+Reference
+   sofa: _InitialView
+   begin: 4346
+   end: 4370
+   refId: "R6"
+   refType: "bibr"
 [ But for the noisy web domain, the conversions might be of questionable quality.]
 Sentence
    sofa: _InitialView
@@ -208,16 +299,44 @@ Sentence
    sofa: _InitialView
    begin: 4452
    end: 4721
+[Petrov and McDonald, 2012]
+Reference
+   sofa: _InitialView
+   begin: 4672
+   end: 4697
+   refId: "R21"
+   refType: "bibr"
+[Foster et al., 2011b]
+Reference
+   sofa: _InitialView
+   begin: 4699
+   end: 4719
+   refId: "R10"
+   refType: "bibr"
 [ Another source of semi-supervised improvements can be gained from using features gathered from large amounts of unannotated texts (Kong et al., 2014).]
 Sentence
    sofa: _InitialView
    begin: 4721
    end: 4872
+[Kong et al., 2014]
+Reference
+   sofa: _InitialView
+   begin: 4853
+   end: 4870
+   refId: "R17"
+   refType: "bibr"
 [ A completely different approach is taken by Khan et al. (2013), where the most appropri- ate training trees are found in the train treebank for each sentence.]
 Sentence
    sofa: _InitialView
    begin: 4872
    end: 5031
+[Khan et al. (2013)]
+Reference
+   sofa: _InitialView
+   begin: 4917
+   end: 4935
+   refId: "R15"
+   refType: "bibr"
 [The goal of the normalization was to leave the original tokens intact and not to replace them by their normalized forms directly. Hence, we keep both the original tokens and the normalized version of the sentences with word alignments. Figure 1 depicts a gold standard dependency graph including the alignments to the original tokens. Abbreviations Abbreviations and slang expressions are expanded whenever necessary for syntactic reasons. Exam- ples include instances such as “cu”, used as the short form of see and you, which as a single token would include both the verb and the object of the sentence. Punctuation Punctuation is inserted if it is necessary to disambiguate the sentence meaning. Emoticons, such as :), are kept intact. Zero copulas The data contains several cases of zero copula, i.e. a copula verb is not realized in the sentence. These occurrences are annotated by inserting the copula verb in the normalized version of the sentence (see Figure 1).]
 Paragraph
    sofa: _InitialView
@@ -238,6 +357,13 @@ Sentence
    sofa: _InitialView
    begin: 5266
    end: 5365
+[Figure 1]
+Reference
+   sofa: _InitialView
+   begin: 5267
+   end: 5275
+   refId: "F1"
+   refType: "fig"
 [ Abbreviations Abbreviations and slang expressions are expanded whenever necessary for syntactic reasons.]
 Sentence
    sofa: _InitialView
@@ -273,6 +399,13 @@ Sentence
    sofa: _InitialView
    begin: 5882
    end: 6001
+[Figure 1]
+Reference
+   sofa: _InitialView
+   begin: 5991
+   end: 5999
+   refId: "F1"
+   refType: "fig"
 [The normalized tokens were automatically parsed using a generative phrase structure parser 2 and then converted to dependencies. Both part-of-speech tags and dependency annotations were then manually corrected in two passes. The dependency annotations follow the format of the CoNLL-X shared task on multilingual dependency parsing (Buchholz and Marsi, 2006), with the following adaptations: Emoticons Emoticons are kept intact, tagged with the part-of-speech tag UH (interjection) and are attached to the head of the sentence.]
 Paragraph
    sofa: _InitialView
@@ -293,6 +426,13 @@ Sentence
    sofa: _InitialView
    begin: 6225
    end: 6528
+[Buchholz and Marsi, 2006]
+Reference
+   sofa: _InitialView
+   begin: 6334
+   end: 6358
+   refId: "R5"
+   refType: "bibr"
 [ Domain-specific elements Twitter-specific syntax was treated as follows: Usernames at the start of a sentence that do not fulfill a syntactic role, e.g. as the subject, are attached to the main verb using the DEP (unclassified) dependency relation. In all other cases, usernames are treated as proper nouns. RT and similar markers, as well as hashtags indicat- ing the topic of a Tweet (e.g. #worldcup) are attached to the main verb as DEP.]
 Paragraph
    sofa: _InitialView
@@ -368,6 +508,13 @@ Sentence
    sofa: _InitialView
    begin: 7670
    end: 7755
+[Table 1]
+Reference
+   sofa: _InitialView
+   begin: 7671
+   end: 7678
+   refId: "T1"
+   refType: "table"
 [ Out-of-vocabulary rate is calculated against the English dictionary of the GNU Aspell spell checker.]
 Sentence
    sofa: _InitialView
@@ -513,6 +660,13 @@ Sentence
    sofa: _InitialView
    begin: 11451
    end: 11587
+[Foster et al. (2011b)]
+Reference
+   sofa: _InitialView
+   begin: 11476
+   end: 11497
+   refId: "R10"
+   refType: "bibr"
 [ However, it is possible to adapt POS taggers to this type of input.]
 Sentence
    sofa: _InitialView
@@ -528,6 +682,13 @@ Sentence
    sofa: _InitialView
    begin: 11780
    end: 11999
+[Gimpel et al. (2011)]
+Reference
+   sofa: _InitialView
+   begin: 11805
+   end: 11825
+   refId: "R11"
+   refType: "bibr"
 [ The tagset includes tags for social media-specific tokens, such as URLs, email addresses, emoticons, Twitter hashtags and usernames.]
 Sentence
    sofa: _InitialView
@@ -538,6 +699,13 @@ Sentence
    sofa: _InitialView
    begin: 12132
    end: 12282
+[McDonald et al., 2005]
+Reference
+   sofa: _InitialView
+   begin: 12259
+   end: 12280
+   refId: "R19"
+   refType: "bibr"
 [ This dependency parser expects both fine- and coarse-grained tags as features in its well-established standard setting.]
 Sentence
    sofa: _InitialView
@@ -558,6 +726,20 @@ Sentence
    sofa: _InitialView
    begin: 12792
    end: 13251
+[Jurafsky and Martin, 2000]
+Reference
+   sofa: _InitialView
+   begin: 13211
+   end: 13236
+   refId: "R13"
+   refType: "bibr"
+[Prins, 2005]
+Reference
+   sofa: _InitialView
+   begin: 13238
+   end: 13249
+   refId: "R22"
+   refType: "bibr"
 [ The n-best fine-grained tags are then combined with the coarse tags by a simple voting rule.]
 Sentence
    sofa: _InitialView
@@ -568,16 +750,37 @@ Sentence
    sofa: _InitialView
    begin: 13344
    end: 13451
+[Brants, 2000]
+Reference
+   sofa: _InitialView
+   begin: 13398
+   end: 13410
+   refId: "R4"
+   refType: "bibr"
 [ 4 Impact on parse quality Table 2 shows the influence of POS tagging on the performance of the MST parser on the development part of our dataset.]
 Sentence
    sofa: _InitialView
    begin: 13451
    end: 13597
+[Table 2]
+Reference
+   sofa: _InitialView
+   begin: 13478
+   end: 13485
+   refId: "T2"
+   refType: "table"
 [ Statistical significance testing is performed using bootstrap resampling (Efron and Tibshirani, 1993).]
 Sentence
    sofa: _InitialView
    begin: 13597
    end: 13700
+[Efron and Tibshirani, 1993]
+Reference
+   sofa: _InitialView
+   begin: 13672
+   end: 13698
+   refId: "R7"
+   refType: "bibr"
 [ Except for the last row of the table, all tagging is performed without any text normalization.]
 Sentence
    sofa: _InitialView
@@ -633,6 +836,13 @@ Sentence
    sofa: _InitialView
    begin: 14733
    end: 14826
+[Han and Baldwin (2011)]
+Reference
+   sofa: _InitialView
+   begin: 14803
+   end: 14825
+   refId: "R12"
+   refType: "bibr"
 [ This method works in analogy to spell checking, with the biggest difference that in short message data ill-formedness is often intentional, for example due to the message size limit.]
 Sentence
    sofa: _InitialView
@@ -653,6 +863,20 @@ Sentence
    sofa: _InitialView
    begin: 15241
    end: 15418
+[Aw et al. (2006)]
+Reference
+   sofa: _InitialView
+   begin: 15242
+   end: 15258
+   refId: "R1"
+   refType: "bibr"
+[Raghunathan and Krawczyk (2009)]
+Reference
+   sofa: _InitialView
+   begin: 15263
+   end: 15294
+   refId: "R23"
+   refType: "bibr"
 [ As part of this effort, they manually normalize a set of 5.000 and 2.500 messages respectively.]
 Sentence
    sofa: _InitialView
@@ -668,16 +892,37 @@ Sentence
    sofa: _InitialView
    begin: 15715
    end: 15885
+[Koehn et al., 2007]
+Reference
+   sofa: _InitialView
+   begin: 15783
+   end: 15801
+   refId: "R16"
+   refType: "bibr"
 [ An n-gram language model is built on the English side of the news-commentary data set using IRSTLM (Federico and Cettolo, 2007).]
 Sentence
    sofa: _InitialView
    begin: 15885
    end: 16014
+[Cettolo, 2007]
+Reference
+   sofa: _InitialView
+   begin: 15999
+   end: 16012
+   refId: "R8"
+   refType: "bibr"
 [ Model weights are estimated using MERT (Och, 2003).]
 Sentence
    sofa: _InitialView
    begin: 16014
    end: 16066
+[Och, 2003]
+Reference
+   sofa: _InitialView
+   begin: 16055
+   end: 16064
+   refId: "R20"
+   refType: "bibr"
 [ All experiments are performed on the development part of our dataset.]
 Sentence
    sofa: _InitialView
@@ -708,11 +953,25 @@ Sentence
    sofa: _InitialView
    begin: 16633
    end: 16738
+[Table 3]
+Reference
+   sofa: _InitialView
+   begin: 16730
+   end: 16737
+   refId: "T3"
+   refType: "table"
 [ Impact on parse quality Table 3 presents the results of the text normalization schemes on the development part of our dataset.]
 Sentence
    sofa: _InitialView
    begin: 16738
    end: 16865
+[Table 3]
+Reference
+   sofa: _InitialView
+   begin: 16763
+   end: 16770
+   refId: "T3"
+   refType: "table"
 [ The results show that a combination of lexical and MT-based normalization approaches leads to results close to the upper bound set by gold standard normalization.]
 Sentence
    sofa: _InitialView

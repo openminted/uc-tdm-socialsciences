@@ -108,6 +108,13 @@ Sentence
    sofa: _InitialView
    begin: 2730
    end: 2782
+[Figure 1]
+Reference
+   sofa: _InitialView
+   begin: 2731
+   end: 2739
+   refId: "F1"
+   refType: "fig"
 [ The materials were prepared “live”, mostly by participants or observers of the reported events and as such they are valuable sociological source of information on mechanisms of spreading information at that time, its reception, propaganda and readers’ interests.]
 Sentence
    sofa: _InitialView
@@ -148,6 +155,27 @@ Sentence
    sofa: _InitialView
    begin: 3284
    end: 3605
+[Bottou et al., 1998]
+Reference
+   sofa: _InitialView
+   begin: 3435
+   end: 3454
+   refId: "R2"
+   refType: "bibr"
+[EPrints, 2010]
+Reference
+   sofa: _InitialView
+   begin: 3500
+   end: 3513
+   refId: "R3"
+   refType: "bibr"
+[Ogrodniczuk and Gruszczyński, 2011]
+Reference
+   sofa: _InitialView
+   begin: 3521
+   end: 3555
+   refId: "R7"
+   refType: "bibr"
 [ Currently over 70% of the prints are available as DjVu images.]
 Sentence
    sofa: _InitialView
@@ -183,6 +211,13 @@ Sentence
    sofa: _InitialView
    begin: 4092
    end: 4201
+[Figure 2]
+Reference
+   sofa: _InitialView
+   begin: 4191
+   end: 4199
+   refId: "F2"
+   refType: "fig"
 [ It apparently contains letters or words difficult for an inexperienced user.]
 Sentence
    sofa: _InitialView
@@ -298,6 +333,13 @@ Sentence
    sofa: _InitialView
    begin: 5867
    end: 5898
+[Mayenowa et al., 1966]
+Reference
+   sofa: _InitialView
+   begin: 5869
+   end: 5890
+   refId: "R4"
+   refType: "bibr"
 [Poczyna si e historia o pora zce heretyków i zabiciu wodza ich Ksi a  ̨ z ecia de Conde.]
 Paragraph
    sofa: _InitialView
@@ -323,6 +365,13 @@ Sentence
    sofa: _InitialView
    begin: 6153
    end: 6260
+[Figure 3]
+Reference
+   sofa: _InitialView
+   begin: 6250
+   end: 6258
+   refId: "F3"
+   refType: "fig"
 [ Apart from fields considered standard (title transliteration, name of the font used, precise information about the original object and its known copies etc.),]
 Sentence
    sofa: _InitialView
@@ -393,6 +442,13 @@ Sentence
    sofa: _InitialView
    begin: 7993
    end: 8337
+[Bień, 2011]
+Reference
+   sofa: _InitialView
+   begin: 8113
+   end: 8123
+   refId: "R1"
+   refType: "bibr"
 [ Creat- ing synergy between CBDU and IMPACT, which used the library data for testing OCR algorithms, we plan to supple- ment the CBDU repository of prints with OCR-ed IMPACT data.]
 Sentence
    sofa: _InitialView
@@ -408,6 +464,13 @@ Sentence
    sofa: _InitialView
    begin: 8624
    end: 8973
+[Figure 3]
+Reference
+   sofa: _InitialView
+   begin: 8690
+   end: 8698
+   refId: "F3"
+   refType: "fig"
 [ All inflec- tional forms of a term will be automatically detected (cf.]
 Sentence
    sofa: _InitialView
@@ -418,6 +481,13 @@ Sentence
    sofa: _InitialView
    begin: 9044
    end: 9072
+[Mykowiecka et al., 2012]
+Reference
+   sofa: _InitialView
+   begin: 9046
+   end: 9069
+   refId: "R5"
+   refType: "bibr"
 [ A similar paragraph-based mechanism will be used for presenting text translations.]
 Sentence
    sofa: _InitialView
@@ -448,6 +518,13 @@ Sentence
    sofa: _InitialView
    begin: 9480
    end: 9771
+[Przepiórkowski et al., 2012]
+Reference
+   sofa: _InitialView
+   begin: 9636
+   end: 9663
+   refId: "R8"
+   refType: "bibr"
 [ The corpus will feature annotation for text structure and language (all foreign elements, e.g.]
 Sentence
    sofa: _InitialView
@@ -478,6 +555,13 @@ Sentence
    sofa: _InitialView
    begin: 10136
    end: 10331
+[Zawadzki, 1990]
+Reference
+   sofa: _InitialView
+   begin: 10162
+   end: 10176
+   refId: "R9"
+   refType: "bibr"
 [ Thanks to development of digital libraries and common access platforms (represented by Digital Libraries Federation 1 in Poland and EU- ROPEANA 2 in Europe) supplementing the material be- came relatively easy.]
 Sentence
    sofa: _InitialView

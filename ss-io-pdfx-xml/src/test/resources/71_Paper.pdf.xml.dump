@@ -283,6 +283,13 @@ Sentence
    sofa: _InitialView
    begin: 6958
    end: 6992
+[Figure 1]
+Reference
+   sofa: _InitialView
+   begin: 6982
+   end: 6990
+   refId: "F1"
+   refType: "fig"
 [ Old age simulator hampered mobility, reduced vision and hearing.]
 Sentence
    sofa: _InitialView
@@ -323,6 +330,13 @@ Sentence
    sofa: _InitialView
    begin: 7493
    end: 7563
+[Figure 2]
+Reference
+   sofa: _InitialView
+   begin: 7494
+   end: 7502
+   refId: "F2"
+   refType: "fig"
 [ These situations were selected because they were represen- tative falls in domestic environment and could be played safely.]
 Sentence
    sofa: _InitialView
@@ -353,6 +367,13 @@ Sentence
    sofa: _InitialView
    begin: 8361
    end: 8390
+[Table 2]
+Reference
+   sofa: _InitialView
+   begin: 8362
+   end: 8369
+   refId: "T2"
+   refType: "table"
 [Before each recording session, the experimenter explained the scenario to the participant. Scenario has following sub- components: physical location, time of the day, activity (what the person intends to do and what eventually hap- pens), gesture (way of falling), and the spoken sentences. The participant rehearsed the scenario several times before final acquisition of data. On average, the duration of acquisition was 2 hours and 30 minutes per person.]
 Paragraph
    sofa: _InitialView
@@ -398,6 +419,13 @@ Sentence
    sofa: _InitialView
    begin: 8851
    end: 8928
+[Figure 1]
+Reference
+   sofa: _InitialView
+   begin: 8919
+   end: 8927
+   refId: "F1"
+   refType: "fig"
 [ Moreover, the DOMUS smart home was equipped with the social inclusion product e-lio 2 .]
 Sentence
    sofa: _InitialView
@@ -533,6 +561,13 @@ Sentence
    sofa: _InitialView
    begin: 11788
    end: 11806
+[Table 3]
+Reference
+   sofa: _InitialView
+   begin: 11798
+   end: 11805
+   refId: "T3"
+   refType: "table"
 [2 http://www.technosens.fr 3 http://liris.cnrs.fr/advene/]
 Paragraph
    sofa: _InitialView
@@ -578,6 +613,13 @@ Paragraph
    sofa: _InitialView
    begin: 12353
    end: 12903
+[Table 4]
+Reference
+   sofa: _InitialView
+   begin: 12402
+   end: 12409
+   refId: "T4"
+   refType: "table"
 [ Each scenario includes a background sequence (300-600 frames) which usually is required for human body extraction.]
 Sentence
    sofa: _InitialView
@@ -588,6 +630,13 @@ Sentence
    sofa: _InitialView
    begin: 12665
    end: 12795
+[Table 4]
+Reference
+   sofa: _InitialView
+   begin: 12704
+   end: 12711
+   refId: "T4"
+   refType: "table"
 [ The total duration of the recordings is equal to 1 hour and 55 minutes, with a total of 162 video segments.]
 Sentence
    sofa: _InitialView
@@ -1053,6 +1102,13 @@ Sentence
    sofa: _InitialView
    begin: 24831
    end: 24884
+[Table 5]
+Reference
+   sofa: _InitialView
+   begin: 24876
+   end: 24883
+   refId: "T5"
+   refType: "table"
 [ The most important performance measures are the Word Error Rate (WER) of the overall decoded speech and those of the specific distress calls as well as the Call Error Rate (CER: c.f.]
 Sentence
    sofa: _InitialView
@@ -1128,6 +1184,13 @@ Sentence
    sofa: _InitialView
    begin: 26129
    end: 26186
+[Figure 3]
+Reference
+   sofa: _InitialView
+   begin: 26177
+   end: 26185
+   refId: "F3"
+   refType: "fig"
 [After silhouette extraction the human body is segmented into colored connected components. Colored connected components regarded as regions are extracted by applying region growing technique. Each component with similar color are fitted into blob (Hsieh et al., 2010). Blob is repre- sented by spatial color Gaussian mixture model, assuming that spatial color components are de-correlated. The probability of an observation X t of that pixel at time t to belong to the background is given by equation 4.]
 Paragraph
    sofa: _InitialView

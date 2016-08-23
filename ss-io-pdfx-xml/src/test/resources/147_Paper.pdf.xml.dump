@@ -78,21 +78,77 @@ Sentence
    sofa: _InitialView
    begin: 1022
    end: 1398
+[Kroch, 1989]
+Reference
+   sofa: _InitialView
+   begin: 1351
+   end: 1362
+   refId: "R17"
+   refType: "bibr"
+[Sinclair, 2004]
+Reference
+   sofa: _InitialView
+   begin: 1364
+   end: 1378
+   refId: "R27"
+   refType: "bibr"
+[Nesselhauf, 2004]
+Reference
+   sofa: _InitialView
+   begin: 1380
+   end: 1396
+   refId: "R21"
+   refType: "bibr"
 [ One of the most urgent needs for annotated corpora is in the realm of under-resourced and endangered language documentation (Grenoble and Whaley, 1998; Crystal, 2002; Bird and Simons, 2003; Gippert et al., 2006).]
 Sentence
    sofa: _InitialView
    begin: 1398
    end: 1611
+[Crystal, 2002]
+Reference
+   sofa: _InitialView
+   begin: 1551
+   end: 1564
+   refId: "R6"
+   refType: "bibr"
+[Bird and Simons, 2003]
+Reference
+   sofa: _InitialView
+   begin: 1566
+   end: 1587
+   refId: "R1"
+   refType: "bibr"
+[Gippert et al., 2006]
+Reference
+   sofa: _InitialView
+   begin: 1589
+   end: 1609
+   refId: "R14"
+   refType: "bibr"
 [ In domains such as under-resourced language documentation, annotation is unavoidably exploratory and iterative in nature (Hovy and Lavid, 2010).]
 Sentence
    sofa: _InitialView
    begin: 1611
    end: 1756
+[Hovy and Lavid, 2010]
+Reference
+   sofa: _InitialView
+   begin: 1734
+   end: 1754
+   refId: "R16"
+   refType: "bibr"
 [ The annotator proposes an annotation scheme, annotates data, and then revises that annotation scheme in light of insights gener- ated by applying the annotation scheme to real world data (Figure 1.),]
 Sentence
    sofa: _InitialView
    begin: 1756
    end: 1956
+[Figure 1]
+Reference
+   sofa: _InitialView
+   begin: 1945
+   end: 1953
+   refId: "F1"
+   refType: "fig"
 [ a process which for brevity we refer to as ECA (exploratory corpus annotation).]
 Sentence
    sofa: _InitialView
@@ -178,6 +234,13 @@ Sentence
    sofa: _InitialView
    begin: 3543
    end: 3673
+[Marcus et al. (1993)]
+Reference
+   sofa: _InitialView
+   begin: 3584
+   end: 3604
+   refId: "R19"
+   refType: "bibr"
 [ Addi- tionally, Marcus et al.]
 Sentence
    sofa: _InitialView
@@ -188,6 +251,13 @@ Sentence
    sofa: _InitialView
    begin: 3703
    end: 4013
+[Marcus et al., 1995]
+Reference
+   sofa: _InitialView
+   begin: 3992
+   end: 4011
+   refId: "R20"
+   refType: "bibr"
 [ A more extreme case comes from the SUSANNE corpus, another derivative of the Brown Corpus, annotated with very detailed parsing information.]
 Sentence
    sofa: _InitialView
@@ -198,6 +268,13 @@ Sentence
    sofa: _InitialView
    begin: 4154
    end: 4406
+[Sampson, 2008]
+Reference
+   sofa: _InitialView
+   begin: 4391
+   end: 4404
+   refId: "R24"
+   refType: "bibr"
 [ These examples underscore the effort involved in developing a satisfactory annotation scheme, even for mainstream languages and linguistic annotation tasks.]
 Sentence
    sofa: _InitialView
@@ -233,6 +310,13 @@ Sentence
    sofa: _InitialView
    begin: 5270
    end: 5487
+[Pan and Yang (2010)]
+Reference
+   sofa: _InitialView
+   begin: 5349
+   end: 5368
+   refId: "R22"
+   refType: "bibr"
 [Definition 1 (Transfer Learning) Let D denote a domain comprising the feature space X and a distribution p(x) over data x ∈ X . Let T denote a task, or annotation scheme, comprising a feature space X , a label space Y, and a labeling function f : x → y where x ∈ X and y ∈ Y. 2 Finally, let version V t be the set of annotations produced according to the annotation scheme of task T t . Then the goal of transfer learning is to use data from all source versions V 1..t−1 to improve our ability to model the target annotation scheme T t .]
 Paragraph
    sofa: _InitialView
@@ -358,11 +442,25 @@ Sentence
    sofa: _InitialView
    begin: 7547
    end: 7655
+[Caruana, 1997]
+Reference
+   sofa: _InitialView
+   begin: 7640
+   end: 7653
+   refId: "R2"
+   refType: "bibr"
 [ For example, Collobert et al. (2011) construct a system that simultaneously learns part- of-speech tagging, named entity recognition, chunking, and semantic role labeling.]
 Sentence
    sofa: _InitialView
    begin: 7655
    end: 7827
+[Collobert et al. (2011)]
+Reference
+   sofa: _InitialView
+   begin: 7669
+   end: 7692
+   refId: "R5"
+   refType: "bibr"
 [ Each task helps to inform the others, leading to higher performance on all tasks learned jointly than was possible for any individual task when learned in- dividually.]
 Sentence
    sofa: _InitialView
@@ -408,6 +506,41 @@ Sentence
    sofa: _InitialView
    begin: 8212
    end: 8567
+[Marcus et al., 1993]
+Reference
+   sofa: _InitialView
+   begin: 8457
+   end: 8476
+   refId: "R19"
+   refType: "bibr"
+[Chiou et al., 2001]
+Reference
+   sofa: _InitialView
+   begin: 8478
+   end: 8496
+   refId: "R3"
+   refType: "bibr"
+[Culotta and McCallum, 2005]
+Reference
+   sofa: _InitialView
+   begin: 8498
+   end: 8524
+   refId: "R7"
+   refType: "bibr"
+[Ganchev et al., 2007]
+Reference
+   sofa: _InitialView
+   begin: 8526
+   end: 8546
+   refId: "R12"
+   refType: "bibr"
+[Felt et al., 2012]
+Reference
+   sofa: _InitialView
+   begin: 8548
+   end: 8565
+   refId: "R10"
+   refType: "bibr"
 [ This point is critical to our future decision (see Section 4.)]
 Sentence
    sofa: _InitialView
@@ -428,11 +561,46 @@ Sentence
    sofa: _InitialView
    begin: 8873
    end: 9048
+[Settles, 2010]
+Reference
+   sofa: _InitialView
+   begin: 9033
+   end: 9046
+   refId: "R26"
+   refType: "bibr"
 [ Weakly supervised techniques attempt to speed model training by learning from unlabeled instances, or by allowing annotators to communicate their knowledge to the model by specifying labels or constraints that are applicable to large classes of data instances (Roth and Yih, 2004; Druck et al., 2009; Liang et al., 2009; Ganchev et al., 2010).]
 Sentence
    sofa: _InitialView
    begin: 9048
    end: 9392
+[Roth and Yih, 2004]
+Reference
+   sofa: _InitialView
+   begin: 9310
+   end: 9328
+   refId: "R23"
+   refType: "bibr"
+[Druck et al., 2009]
+Reference
+   sofa: _InitialView
+   begin: 9330
+   end: 9348
+   refId: "R9"
+   refType: "bibr"
+[Liang et al., 2009]
+Reference
+   sofa: _InitialView
+   begin: 9350
+   end: 9368
+   refId: "R18"
+   refType: "bibr"
+[Ganchev et al., 2010]
+Reference
+   sofa: _InitialView
+   begin: 9370
+   end: 9390
+   refId: "R13"
+   refType: "bibr"
 [ We know of no previous work that explicitly addresses the problem of providing automatic assistance for ECA; however, corpus developers have naturally gravitated to- wards the solution of adapting knowledge from the data in out-of-date versions.]
 Sentence
    sofa: _InitialView
@@ -443,6 +611,13 @@ Sentence
    sofa: _InitialView
    begin: 9638
    end: 9867
+[Marcus et al., 1993]
+Reference
+   sofa: _InitialView
+   begin: 9846
+   end: 9865
+   refId: "R19"
+   refType: "bibr"
 [ Although the existing Brown Corpus annotations were unsuitable for direct use, the creators of the Penn Treebank used an automatic tagging model trained on heuristically modified Brown Corpus data to automatically pre-annotate Penn Treebank data.]
 Sentence
    sofa: _InitialView
@@ -453,6 +628,20 @@ Sentence
    sofa: _InitialView
    begin: 10114
    end: 10271
+[Francis and Kucera, 1979]
+Reference
+   sofa: _InitialView
+   begin: 10231
+   end: 10255
+   refId: "R11"
+   refType: "bibr"
+[Church, 1988]
+Reference
+   sofa: _InitialView
+   begin: 10257
+   end: 10269
+   refId: "R4"
+   refType: "bibr"
 [(b) Exploratory corpus annotation (ECA) Ann = annotation generation Rev = revising the annotation scheme]
 Paragraph
    sofa: _InitialView
@@ -573,6 +762,13 @@ Sentence
    sofa: _InitialView
    begin: 12236
    end: 12511
+[Wolpert, 1992]
+Reference
+   sofa: _InitialView
+   begin: 12496
+   end: 12509
+   refId: "R29"
+   refType: "bibr"
 [ The higher level model can potentially discover patterns in the errors of the underlying models in order to know which are trustworthy in which contexts, and whether their guesses are wrong in ways that can be predictably mapped to the correct answer.]
 Sentence
    sofa: _InitialView
@@ -588,6 +784,13 @@ Sentence
    sofa: _InitialView
    begin: 12763
    end: 12850
+[Daumé (2007)]
+Reference
+   sofa: _InitialView
+   begin: 12837
+   end: 12849
+   refId: "R8"
+   refType: "bibr"
 [ AUGMENT moves the data into a feature space that allows traditional supervised learning techniques to find commonalities and differences among data from different domains.]
 Sentence
    sofa: _InitialView
@@ -693,6 +896,13 @@ Sentence
    sofa: _InitialView
    begin: 15565
    end: 15819
+[Santorini, 1990]
+Reference
+   sofa: _InitialView
+   begin: 15802
+   end: 15817
+   refId: "R25"
+   refType: "bibr"
 [ Finally, sampleV ersionSize() is implemented by hypothesizing that annotation projects alternate between small annotation batches for development and large batches for production approaching the size of the desired corpus, N , as the tagset converges on the reference set.]
 Sentence
    sofa: _InitialView
@@ -703,6 +913,13 @@ Sentence
    sofa: _InitialView
    begin: 16092
    end: 16208
+[Figure 2]
+Reference
+   sofa: _InitialView
+   begin: 16198
+   end: 16206
+   refId: "F2"
+   refType: "fig"
 [ This simulated data is clearly not ideal, and we and are actively working on developing real-world ECA data based on annotation projects we are involved in (Felt et al., In Press). However, in the meantime, simulated data allows us to make cautious observations about the characteristics of the problem and projections about the potential of transfer learning models to improve pre-annotation for ECA. We used Algorithm 1 to generate 30 diverse datasets, choosing values for the simulation parameters at random.]
 Paragraph
    sofa: _InitialView
@@ -733,11 +950,25 @@ Sentence
    sofa: _InitialView
    begin: 16721
    end: 16889
+[Toutanova et al., 2003]
+Reference
+   sofa: _InitialView
+   begin: 16804
+   end: 16826
+   refId: "R28"
+   refType: "bibr"
 [ Figure 3 shows the learning curve of each algorithm on a single dataset.]
 Sentence
    sofa: _InitialView
    begin: 16889
    end: 16962
+[Figure 3]
+Reference
+   sofa: _InitialView
+   begin: 16890
+   end: 16898
+   refId: "F3"
+   refType: "fig"
 [ TGTTRAIN’s learning curve shows deep valleys at each version transition, because it is equivalent to beginning an entirely new learning curve at the beginning of each version.]
 Sentence
    sofa: _InitialView
@@ -783,6 +1014,13 @@ Sentence
    sofa: _InitialView
    begin: 17914
    end: 18039
+[Table 1]
+Reference
+   sofa: _InitialView
+   begin: 17918
+   end: 17925
+   refId: "T1"
+   refType: "table"
 [ STACK and AUGMENT significantly outperform both TGTTRAIN and ALLTRAIN.]
 Sentence
    sofa: _InitialView
@@ -868,6 +1106,13 @@ Sentence
    sofa: _InitialView
    begin: 19403
    end: 19734
+[Figure 3]
+Reference
+   sofa: _InitialView
+   begin: 19659
+   end: 19667
+   refId: "F3"
+   refType: "fig"
 [notation domains should be encouraged by these results and by the existence of a rich body of transfer learning work to draw on. We plan to develop models that leverage the sequential nature of the versions. We also plan to apply the insights developed in this paper to improve pre-annotations for annotators engaged in real-world annotation projects. Finally, in order to apply these techniques seamlessly in annotation projects, it would be beneficial to discover a way of learning to automatically identify the boundaries between versions so that annotators need not manually identify annotation scheme changes.]
 Paragraph
    sofa: _InitialView
