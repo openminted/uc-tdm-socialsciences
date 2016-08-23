@@ -32,7 +32,7 @@ public class PdfxXmlReader
     /**
      * either of these contains title of the document
      */
-    private static final String TAG_ARTICLE_TITLE = "TITLE";
+    public static final String TAG_ARTICLE_TITLE = "article-title";
 
     public static final String ATTR_CLASS = "class";
     public static final String ATTR_TYPE = "type";
@@ -87,7 +87,7 @@ public class PdfxXmlReader
         private boolean captureText = false;
         private boolean isInsideSentence = false;
 
-        private String documentId = null;
+        private String documentId = "UNKNOWN";
         private int paragraphBegin = -1;
         private int sentenceBegin = -1;
 
