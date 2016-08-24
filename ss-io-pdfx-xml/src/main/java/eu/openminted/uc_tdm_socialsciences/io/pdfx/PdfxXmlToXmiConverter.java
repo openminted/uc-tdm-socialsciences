@@ -69,11 +69,14 @@ public class PdfxXmlToXmiConverter {
 				createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en",
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-                //todo hyphenation remover causes loss of all previous cas annotations,
-                // find another solution to fix this
-				/*createEngineDescription(HyphenationRemover.class,
-                        HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
-                        HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),*/
+				createEngineDescription(HyphenationRemover.class,
+						HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
+						HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
+						HyphenationRemover.PARAM_TYPES_TO_COPY, new String[]
+								{"de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+										"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+										"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+										"webanno.custom.Reference"}),
                 //uncomment the following to get Token annotations
                 /*createEngineDescription(BreakIteratorSegmenter.class,
                         BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
@@ -87,14 +90,20 @@ public class PdfxXmlToXmiConverter {
 				createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en",
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-				/*createEngineDescription(HyphenationRemover.class,
+				createEngineDescription(HyphenationRemover.class,
                         HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
-                        HyphenationRemover.PARAM_MODEL_ENCODING, "utf8"),*/
+                        HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
+						HyphenationRemover.PARAM_TYPES_TO_COPY, new String[]
+								{"de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+								"webanno.custom.Reference"}),
                 //uncomment the following to get Token annotations
 				/*createEngineDescription(BreakIteratorSegmenter.class,
                         BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
                         BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),*/
 				createEngineDescription(CasDumpWriter.class,
-                        CasDumpWriter.PARAM_TARGET_LOCATION, outputResource));
+                        CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
+						CasDumpWriter.PARAM_SORT, true));
 	}
 }
