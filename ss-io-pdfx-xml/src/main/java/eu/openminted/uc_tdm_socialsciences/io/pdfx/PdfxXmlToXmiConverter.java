@@ -22,88 +22,88 @@ import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 
 public class PdfxXmlToXmiConverter {
     //todo fix me
-	public static final String WORD_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader().
+    public static final String WORD_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader().
             getResource("german-words-dictionary.txt").getFile();
 
-	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
+    private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
 
     //todo pipeline is only configured for English
-	public static void main(String[] args) throws UIMAException, IOException {
+    public static void main(String[] args) throws UIMAException, IOException {
         logger.debug("WORD DICTIONARY: " + WORD_DICTIONARY_PATH);
 
-		String inputPath = null;
-		if (args.length == 1) {
-			inputPath = args[0];
-		}
+        String inputPath = null;
+        if (args.length == 1) {
+            inputPath = args[0];
+        }
 
-		Scanner scanner = new Scanner(System.in);
-		while (null == inputPath || inputPath.length() < 1) {
-			System.out.println("Please provide path to input directory containing pdfx-xml files:");
-			inputPath = scanner.nextLine();
-		}
-		scanner.close();
-		Path inputDir = Paths.get(inputPath);
+        Scanner scanner = new Scanner(System.in);
+        while (null == inputPath || inputPath.length() < 1) {
+            System.out.println("Please provide path to input directory containing pdfx-xml files:");
+            inputPath = scanner.nextLine();
+        }
+        scanner.close();
+        Path inputDir = Paths.get(inputPath);
 
-		for (Path xml : getXmlListFromDirectory(inputDir)) {
-			String inputResource = xml.toString();
-			String outputResource = inputResource.substring(0, inputResource.lastIndexOf('.')) + ".cas.xmi";
-			String outputResourceCasDump = inputResource.substring(0, inputResource.lastIndexOf('.')) + ".cas.dump";
-			convert(inputResource, outputResource);
-			createCasDump(inputResource, outputResourceCasDump);
-		}
-	}
+        for (Path xml : getXmlListFromDirectory(inputDir)) {
+            String inputResource = xml.toString();
+            String outputResource = inputResource.substring(0, inputResource.lastIndexOf('.')) + ".cas.xmi";
+            String outputResourceCasDump = inputResource.substring(0, inputResource.lastIndexOf('.')) + ".cas.dump";
+            convert(inputResource, outputResource);
+            createCasDump(inputResource, outputResourceCasDump);
+        }
+    }
 
-	private static List<Path> getXmlListFromDirectory(Path inputDir) {
-		List<Path> toProcess = new ArrayList<>();
-		try {
-			Files.walk(inputDir).filter(Files::isRegularFile).filter((p) -> p.toString().endsWith(".xml"))
-					.forEach(toProcess::add);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return toProcess;
-	}
+    private static List<Path> getXmlListFromDirectory(Path inputDir) {
+        List<Path> toProcess = new ArrayList<>();
+        try {
+            Files.walk(inputDir).filter(Files::isRegularFile).filter((p) -> p.toString().endsWith(".xml"))
+                    .forEach(toProcess::add);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return toProcess;
+    }
 
-	public static void convert(String inputResource, String outputResource) throws UIMAException, IOException {
-		runPipeline(
-				createReaderDescription(PdfxXmlReader.class,
+    public static void convert(String inputResource, String outputResource) throws UIMAException, IOException {
+        runPipeline(
+                createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en",
-						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-				createEngineDescription(HyphenationRemover.class,
-						HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
-						HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
-						HyphenationRemover.PARAM_TYPES_TO_COPY, new String[]
-								{"de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
-										"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
-										"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
-										"webanno.custom.Reference"}),
+                        PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
+                createEngineDescription(HyphenationRemover.class,
+                        HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
+                        HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
+                        HyphenationRemover.PARAM_TYPES_TO_COPY, new String[]
+                                {"de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+                                        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+                                        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+                                        "webanno.custom.Reference"}),
                 //uncomment the following to get Token annotations
                 /*createEngineDescription(BreakIteratorSegmenter.class,
                         BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
                         BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),*/
-				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
-						XmiWriter.PARAM_OVERWRITE, true));
-	}
+                createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
+                        XmiWriter.PARAM_OVERWRITE, true));
+    }
 
-	public static void createCasDump(String inputResource, String outputResource) throws UIMAException, IOException {
-		runPipeline(
-				createReaderDescription(PdfxXmlReader.class,
+    public static void createCasDump(String inputResource, String outputResource) throws UIMAException, IOException {
+        runPipeline(
+                createReaderDescription(PdfxXmlReader.class,
                         PdfxXmlReader.PARAM_LANGUAGE, "en",
-						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-				createEngineDescription(HyphenationRemover.class,
+                        PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
+                createEngineDescription(HyphenationRemover.class,
                         HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
                         HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
-						HyphenationRemover.PARAM_TYPES_TO_COPY, new String[]
-								{"de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
-								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
-								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
-								"webanno.custom.Reference"}),
+                        HyphenationRemover.PARAM_TYPES_TO_COPY, new String[]
+                                {"de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+                                        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+                                        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+                                        "webanno.custom.Reference"}),
                 //uncomment the following to get Token annotations
-				/*createEngineDescription(BreakIteratorSegmenter.class,
+                /*createEngineDescription(BreakIteratorSegmenter.class,
                         BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
                         BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),*/
-				createEngineDescription(CasDumpWriter.class,
+                createEngineDescription(CasDumpWriter.class,
                         CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
-						CasDumpWriter.PARAM_SORT, true));
-	}
+                        CasDumpWriter.PARAM_SORT, true));
+    }
 }
