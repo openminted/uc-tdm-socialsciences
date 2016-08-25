@@ -46,7 +46,7 @@ public class PDFChecker {
 			}
 			return type.getSubtype().equals("pdf");
 		} catch (IOException e) {
-			logger.error("Could not detect MIME type because of IO Error.");
+			logger.error("Could not detect MIME type because of IO Error.", e);
 		}
 		return false;
 	}

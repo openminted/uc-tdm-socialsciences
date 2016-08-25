@@ -67,7 +67,7 @@ public class DBManager {
 				}
 			}
 		} catch (SQLException e) {
-			logger.error("SQLException occured while trying to get DBManager instance.");
+			logger.error("SQLException occured while trying to get DBManager instance.", e);
 		}
 
 		// create new connection and instance for it
@@ -102,8 +102,7 @@ public class DBManager {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException cnfe) {
-			logger.error("Couldn't find driver class:");
-			cnfe.printStackTrace();
+			logger.error(cnfe.getMessage(), cnfe);
 		}
 
 		try {
@@ -117,7 +116,7 @@ public class DBManager {
 			logger.info("--------------------\n");
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return c;
@@ -135,8 +134,7 @@ public class DBManager {
 
 			close(stmt);
 		} catch (SQLException e) {
-			// TODO replace with logger output
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return instance;
 	}
@@ -169,8 +167,7 @@ public class DBManager {
 
 			close(stmt);
 		} catch (SQLException e) {
-			// TODO replace with logger output
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return instance;
@@ -190,7 +187,7 @@ public class DBManager {
 
 			close(ps);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -210,7 +207,7 @@ public class DBManager {
 
 			close(ps);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -270,7 +267,7 @@ public class DBManager {
 
 			close(ps);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -299,8 +296,7 @@ public class DBManager {
 			rs = stmt.executeQuery(sqlQuery);
 
 		} catch (SQLException e) {
-			// TODO replace with logger output
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return rs;
 	}
@@ -313,8 +309,7 @@ public class DBManager {
 		try {
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO replace with logger output
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -332,23 +327,20 @@ public class DBManager {
 			}
 
 		} catch (SQLException e) {
-			// TODO replace with logger output
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		try {
 			rs.close();
 		} catch (SQLException e) {
-			// TODO replace with logger output
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		if (closeConnection) {
 			try {
 				conn.close();
 			} catch (SQLException e) {
-				// TODO replace with logger output
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 		}
 	}
