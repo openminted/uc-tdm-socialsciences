@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 public class GoldData {
 
 	private String datasetID;
 	private Map<String, List<Reference>> references;
+
+	private static final Logger logger = Logger.getLogger(GoldData.class);
 
 	public GoldData() {
 		references = new HashMap<>();
@@ -28,7 +32,7 @@ public class GoldData {
 
 	public void addRef(String varRef, String refText, String paperRef) {
 		if (null == varRef) {
-			System.err.println("VarRef is null!");
+			logger.warn("VarRef is null!");
 		}
 		List<Reference> refs = references.getOrDefault(varRef, new ArrayList<Reference>());
 		refs.add(new Reference(refText, paperRef));

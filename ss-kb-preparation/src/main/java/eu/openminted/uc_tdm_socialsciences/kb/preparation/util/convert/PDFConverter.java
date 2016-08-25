@@ -8,10 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 
+/*
+ * this class was used before we decided for a pdf converter. We can get rid of
+ * it if we replace all uses with the call to the pdf converter class from
+ * ss-io-pdfx-xml module.
+ */
+
 public class PDFConverter {
+
+	private static final Logger logger = Logger.getLogger(PDFConverter.class);
 
 	public static String convert(File docFile, Converter converter) {
 		return convert(docFile.toPath(), converter);

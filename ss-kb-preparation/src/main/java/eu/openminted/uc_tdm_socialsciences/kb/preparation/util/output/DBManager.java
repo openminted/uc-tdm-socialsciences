@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 import eu.openminted.uc_tdm_socialsciences.kb.preparation.datamodel.Dataset;
 import eu.openminted.uc_tdm_socialsciences.kb.preparation.datamodel.Variable;
 import eu.openminted.uc_tdm_socialsciences.kb.preparation.util.Property;
@@ -46,6 +48,8 @@ public class DBManager {
 	 */
 	private static String autoincrement;
 
+	private static final Logger logger = Logger.getLogger(DBManager.class);
+
 	private DBManager(Connection c) {
 		this.conn = c;
 	}
@@ -63,7 +67,7 @@ public class DBManager {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("SQLException occured while trying to get DBManager instance.");
 		}
 
 		// create new connection and instance for it
@@ -98,19 +102,19 @@ public class DBManager {
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException cnfe) {
-			System.err.println("Couldn't find driver class:");
+			logger.error("Couldn't find driver class:");
 			cnfe.printStackTrace();
 		}
 
 		try {
 			c = DriverManager.getConnection(url, username, password);
-			System.out.println("Connected to the database");
+			logger.info("Connected to the database");
 			DatabaseMetaData dm = c.getMetaData();
-			System.out.println("Driver name: " + dm.getDriverName());
-			System.out.println("Driver version: " + dm.getDriverVersion());
-			System.out.println("Product name: " + dm.getDatabaseProductName());
-			System.out.println("Product version: " + dm.getDatabaseProductVersion());
-			System.out.println("--------------------\n");
+			logger.info("Driver name: " + dm.getDriverName());
+			logger.info("Driver version: " + dm.getDriverVersion());
+			logger.info("Product name: " + dm.getDatabaseProductName());
+			logger.info("Product version: " + dm.getDatabaseProductVersion());
+			logger.info("--------------------\n");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,6 +135,7 @@ public class DBManager {
 
 			close(stmt);
 		} catch (SQLException e) {
+			// TODO replace with logger output
 			e.printStackTrace();
 		}
 		return instance;
@@ -164,6 +169,7 @@ public class DBManager {
 
 			close(stmt);
 		} catch (SQLException e) {
+			// TODO replace with logger output
 			e.printStackTrace();
 		}
 
@@ -184,7 +190,7 @@ public class DBManager {
 
 			close(ps);
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -204,7 +210,7 @@ public class DBManager {
 
 			close(ps);
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -264,7 +270,7 @@ public class DBManager {
 
 			close(ps);
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -281,7 +287,7 @@ public class DBManager {
 
 			close(ps);
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -293,6 +299,7 @@ public class DBManager {
 			rs = stmt.executeQuery(sqlQuery);
 
 		} catch (SQLException e) {
+			// TODO replace with logger output
 			e.printStackTrace();
 		}
 		return rs;
@@ -306,6 +313,7 @@ public class DBManager {
 		try {
 			stmt.close();
 		} catch (SQLException e) {
+			// TODO replace with logger output
 			e.printStackTrace();
 		}
 	}
@@ -324,12 +332,14 @@ public class DBManager {
 			}
 
 		} catch (SQLException e) {
+			// TODO replace with logger output
 			e.printStackTrace();
 		}
 
 		try {
 			rs.close();
 		} catch (SQLException e) {
+			// TODO replace with logger output
 			e.printStackTrace();
 		}
 
@@ -337,6 +347,7 @@ public class DBManager {
 			try {
 				conn.close();
 			} catch (SQLException e) {
+				// TODO replace with logger output
 				e.printStackTrace();
 			}
 		}

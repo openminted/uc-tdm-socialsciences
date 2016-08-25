@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,6 +19,8 @@ import eu.openminted.uc_tdm_socialsciences.kb.preparation.util.output.DBManager;
 public class DocReadingTest {
 
 	private static String docLocation;
+
+	private static final Logger logger = Logger.getLogger(DocReadingTest.class);
 
 	@BeforeClass
 	public static void setUp() throws Exception {
@@ -63,7 +66,7 @@ public class DocReadingTest {
 		for (Entry<String, String> entry : docs.entrySet()) {
 			Assert.assertFalse(null == entry.getKey());
 			Assert.assertFalse(null == entry.getValue());
-			System.out.println(entry.getValue().substring(0, 200));
+			logger.info(entry.getValue().substring(0, 200));
 		}
 	}
 }

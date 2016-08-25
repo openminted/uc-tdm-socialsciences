@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
+import org.apache.log4j.Logger;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.io.TikaInputStream;
@@ -11,7 +12,11 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeTypes;
 
+
 public class PDFChecker {
+
+	private static final Logger logger = Logger.getLogger(PDFChecker.class);
+
 
 	public static boolean isPDFFile(Path file) {
 		String fileName = file.getFileName().toString();
@@ -41,7 +46,7 @@ public class PDFChecker {
 			}
 			return type.getSubtype().equals("pdf");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Could not detect MIME type because of IO Error.");
 		}
 		return false;
 	}

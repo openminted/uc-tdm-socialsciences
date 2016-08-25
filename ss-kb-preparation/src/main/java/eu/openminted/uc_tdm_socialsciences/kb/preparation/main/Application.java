@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
@@ -31,6 +32,8 @@ public class Application {
 
 	private static final String STOPWORDS_FILE = "[*]classpath:/stopwords/english.txt";
 	private static String path = "R:\\DATA-SETS\\OpenMinTeD\\Variable Extraction\\Corpus\\Articles ISSP\\Articles ISSP Religion Religiosity\\08RWGE.pdf";
+
+	private static final Logger logger = Logger.getLogger(Application.class);
 
 	public static void main(String[] args) {
 
