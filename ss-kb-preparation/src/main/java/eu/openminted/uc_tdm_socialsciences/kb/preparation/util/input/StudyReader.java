@@ -13,6 +13,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
+import org.apache.log4j.Logger;
 import org.unbescape.html.HtmlEscape;
 
 import eu.openminted.uc_tdm_socialsciences.kb.preparation.datamodel.Dataset;
@@ -29,6 +30,8 @@ public class StudyReader {
 	private String studyURIBase = "http://zacat.gesis.org:80/obj/fStudy/";
 
 	private DBManager writer;
+
+	private static final Logger logger = Logger.getLogger(StudyReader.class);
 
 	public StudyReader(DBManager writer) {
 		model = ModelFactory.createDefaultModel();
@@ -58,7 +61,7 @@ public class StudyReader {
 		model.read(content, null);
 
 		Bag bag = model.getBag(URI);
-		System.out.println("Bag URI: " + bag.getURI());
+		logger.info("Bag URI: " + bag.getURI());
 
 		NodeIterator bagIter = bag.iterator();
 		while (bagIter.hasNext()) {
@@ -99,7 +102,7 @@ public class StudyReader {
 		if (title != null) {
 			ds.setTitle(title.getString());
 		}
-		System.out.println("create new dataset: " + ds.toString());
+		logger.info("Create new dataset: " + ds.toString());
 		writer.write(ds);
 
 		Statement varRefStmt = model.getProperty(dataset, ResourceFactory.createProperty(n39 + "variables"));
@@ -109,7 +112,7 @@ public class StudyReader {
 				followVars((Resource) varRef, ds);
 			}
 		} else {
-			System.err.println("No variables found for var " + dataset);
+			logger.warn("No variables found for dataset " + dataset);
 		}
 
 	}
@@ -133,7 +136,7 @@ public class StudyReader {
 		try {
 			content.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("IOException occurred when trying to close InputStream.", e);
 		}
 
 		String s = model.getNsPrefixMap().get("s");

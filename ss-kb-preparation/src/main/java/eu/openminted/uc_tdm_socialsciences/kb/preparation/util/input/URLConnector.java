@@ -10,8 +10,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 
 public class URLConnector {
+
+	private static final Logger logger = Logger.getLogger(URLConnector.class);
 
 	public static String getStringFromURL(String inputURL) {
 		HttpEntity entity = getEntity(inputURL);
@@ -20,7 +23,7 @@ public class URLConnector {
 			entityContent = EntityUtils.toString(entity);
 			EntityUtils.consume(entity);
 		} catch (ParseException | IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return entityContent;
 	}
@@ -34,7 +37,7 @@ public class URLConnector {
 		try {
 			result = entity.getContent();
 		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return result;
 	}
@@ -56,7 +59,7 @@ public class URLConnector {
 			CloseableHttpResponse response = httpclient.execute(httpGet);
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (statusCode != 200) {
-				System.err.println(
+				logger.error(
 						String.format("Status code not OK, returning null. (URL: %s; Code: %d)", inputURL, statusCode));
 				return null;
 			}
