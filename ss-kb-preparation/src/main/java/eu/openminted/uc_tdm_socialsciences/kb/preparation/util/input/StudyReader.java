@@ -78,15 +78,12 @@ public class StudyReader {
 	}
 
 	private void followDataset(Resource dataset) {
-		try (InputStream content = URLConnector.getStreamFromURL(dataset.getURI())) {
-			if (content == null) {
-				return;
-			}
-			model = ModelFactory.createDefaultModel();
-			model.read(content, null);
-		} catch (IOException e) {
-			e.printStackTrace();
+		InputStream content = URLConnector.getStreamFromURL(dataset.getURI());
+		if (content == null) {
+			return;
 		}
+		model = ModelFactory.createDefaultModel();
+		model.read(content, null);
 
 		String n39 = model.getNsPrefixMap().get("n39");
 		String n36 = model.getNsPrefixMap().get("n36");

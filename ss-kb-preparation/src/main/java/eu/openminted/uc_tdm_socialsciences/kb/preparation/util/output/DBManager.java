@@ -123,7 +123,7 @@ public class DBManager {
 	}
 
 	public DBManager dropAllTables() {
-		Statement stmt;
+		Statement stmt = null;
 		try {
 			stmt = conn.createStatement();
 			stmt.addBatch("DROP TABLE IF EXISTS " + DATASETS);
@@ -132,15 +132,16 @@ public class DBManager {
 			stmt.addBatch("DROP TABLE IF EXISTS " + DOCUMENTS);
 			stmt.executeBatch();
 
-			close(stmt);
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
+		} finally {
+			close(stmt);
 		}
 		return instance;
 	}
 
 	public DBManager createTables() {
-		Statement stmt;
+		Statement stmt = null;
 		try {
 			stmt = conn.createStatement();
 			if (conn.getMetaData().getDatabaseProductName().equals("SQLite")) {
@@ -149,32 +150,31 @@ public class DBManager {
 			stmt.addBatch(
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
 							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " VARCHAR(20) NOT NULL UNIQUE)");
-			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES + " (" + ID
-					+ " INTEGER NOT NULL PRIMARY KEY " + autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL, "
-					+ LABEL + " TEXT NOT NULL, " + QSTNTEXT + " TEXT, " + DATASET_ID
-					+ " INTEGER NOT NULL, FOREIGN KEY (" + DATASET_ID + ") REFERENCES " + DATASETS + "(" + ID + "))");
-			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DOCUMENTS + " (" + ID
-					+ " INTEGER NOT NULL PRIMARY KEY " + autoincrement + ", " + NAME
-					+ " VARCHAR(10) NOT NULL UNIQUE, " + TEXT + " LONGTEXT NOT NULL)");
-			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + REFERENCES + " (" + ID
-					+ " INTEGER NOT NULL PRIMARY KEY " + autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, "
-					+ STUDY_ID + " INTEGER NOT NULL, " + VAR_ID + " INTEGER NOT NULL, " + REFTEXT
-					+ " MEDIUMTEXT NOT NULL, FOREIGN KEY (" + DOC_ID + ") REFERENCES " + DOCUMENTS + "(" + ID
-					+ "), FOREIGN KEY (" + STUDY_ID + ") REFERENCES " + DATASETS + "(" + ID + "), FOREIGN KEY ("
-					+ VAR_ID + ") REFERENCES " + VARIABLES + "(" + ID + "))");
+			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
+					+ autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT
+					+ " TEXT, " + DATASET_ID + " INTEGER NOT NULL, FOREIGN KEY (" + DATASET_ID + ") REFERENCES "
+					+ DATASETS + "(" + ID + "))");
+			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DOCUMENTS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
+					+ autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL UNIQUE, " + TEXT + " LONGTEXT NOT NULL)");
+			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + REFERENCES + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
+					+ autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, " + STUDY_ID + " INTEGER NOT NULL, " + VAR_ID
+					+ " INTEGER NOT NULL, " + REFTEXT + " MEDIUMTEXT NOT NULL, FOREIGN KEY (" + DOC_ID + ") REFERENCES "
+					+ DOCUMENTS + "(" + ID + "), FOREIGN KEY (" + STUDY_ID + ") REFERENCES " + DATASETS + "(" + ID
+					+ "), FOREIGN KEY (" + VAR_ID + ") REFERENCES " + VARIABLES + "(" + ID + "))");
 
 			stmt.executeBatch();
 
-			close(stmt);
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
+		} finally {
+			close(stmt);
 		}
 
 		return instance;
 	}
 
 	public void write(Dataset dataset) {
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		try {
 			ps = conn.prepareStatement("INSERT OR IGNORE INTO " + DATASETS + " (" + ID + ", " + TITLE + ", " + EXT_ID
 					+ ")  VALUES (?, ?, ?);");
@@ -185,14 +185,17 @@ public class DBManager {
 
 			ps.executeBatch();
 
-			close(ps);
+
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
+		}
+		finally {
+			close(ps);
 		}
 	}
 
 	public void write(Variable variable, int datasetID) {
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		try {
 			ps = conn.prepareStatement("INSERT INTO " + VARIABLES + "  (" + NAME + ", " + LABEL + ", " + QSTNTEXT + ", "
 					+ DATASET_ID + ") VALUES (?, ?, ?, ?);");
@@ -205,14 +208,17 @@ public class DBManager {
 
 			ps.executeBatch();
 
-			close(ps);
+
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
+		}
+		finally {
+			close(ps);
 		}
 	}
 
 	public void writeReference(String varRef, String paperRef, String datasetID, String refText) {
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		try {
 
 			ps = conn.prepareStatement("INSERT INTO " + REFERENCES + " (" + DOC_ID + ", " + STUDY_ID + ", " + VAR_ID
@@ -220,12 +226,9 @@ public class DBManager {
 
 			/*
 			 * for dataset: get from datasets where externalID = datasetID
-			 *
 			 * for doc: get from documents where name = paperRef
-			 *
 			 * for var: get from variables where name = varRef && dataset_id =
 			 * foreignStudy
-			 *
 			 */
 
 			String sql = "SELECT " + ID + " FROM " + DATASETS + " WHERE " + EXT_ID + "='" + datasetID + "'";
@@ -269,10 +272,13 @@ public class DBManager {
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
+		finally {
+			close(ps);
+		}
 	}
 
 	public void writeDocument(String docName, String docText) {
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		try {
 			ps = conn.prepareStatement("INSERT INTO " + DOCUMENTS + " (" + NAME + ", " + TEXT + ") VALUES (?, ?);");
 
@@ -282,21 +288,27 @@ public class DBManager {
 
 			ps.executeBatch();
 
-			close(ps);
+
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
+		}
+		finally {
+			close(ps);
 		}
 	}
 
 	public ResultSet query(final String sqlQuery) {
 		ResultSet rs = null;
-
+		Statement stmt = null;
 		try {
-			Statement stmt = conn.createStatement();
+			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sqlQuery);
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
+		}
+		finally {
+			close(stmt);
 		}
 		return rs;
 	}
