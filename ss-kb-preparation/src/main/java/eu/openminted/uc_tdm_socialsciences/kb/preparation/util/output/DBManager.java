@@ -126,10 +126,10 @@ public class DBManager {
 		Statement stmt = null;
 		try {
 			stmt = conn.createStatement();
-			stmt.addBatch("DROP TABLE IF EXISTS " + DATASETS);
-			stmt.addBatch("DROP TABLE IF EXISTS " + VARIABLES);
 			stmt.addBatch("DROP TABLE IF EXISTS " + REFERENCES);
 			stmt.addBatch("DROP TABLE IF EXISTS " + DOCUMENTS);
+			stmt.addBatch("DROP TABLE IF EXISTS " + VARIABLES);
+			stmt.addBatch("DROP TABLE IF EXISTS " + DATASETS);
 			stmt.executeBatch();
 
 		} catch (SQLException e) {
@@ -151,11 +151,11 @@ public class DBManager {
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
 							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " VARCHAR(20) NOT NULL UNIQUE)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
-					+ autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT
+					+ autoincrement + ", " + NAME + " VARCHAR(100) NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT
 					+ " TEXT, " + DATASET_ID + " INTEGER NOT NULL, FOREIGN KEY (" + DATASET_ID + ") REFERENCES "
 					+ DATASETS + "(" + ID + "))");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DOCUMENTS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
-					+ autoincrement + ", " + NAME + " VARCHAR(10) NOT NULL UNIQUE, " + TEXT + " LONGTEXT NOT NULL)");
+					+ autoincrement + ", " + NAME + " VARCHAR(6) NOT NULL UNIQUE, " + TEXT + " LONGTEXT NOT NULL)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + REFERENCES + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
 					+ autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, " + STUDY_ID + " INTEGER NOT NULL, " + VAR_ID
 					+ " INTEGER NOT NULL, " + REFTEXT + " MEDIUMTEXT NOT NULL, FOREIGN KEY (" + DOC_ID + ") REFERENCES "
@@ -176,7 +176,7 @@ public class DBManager {
 	public void write(Dataset dataset) {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement("INSERT OR IGNORE INTO " + DATASETS + " (" + ID + ", " + TITLE + ", " + EXT_ID
+			ps = conn.prepareStatement("INSERT IGNORE INTO " + DATASETS + " (" + ID + ", " + TITLE + ", " + EXT_ID
 					+ ")  VALUES (?, ?, ?);");
 			ps.setInt(1, dataset.getId());
 			ps.setString(2, dataset.getTitle());
@@ -187,6 +187,7 @@ public class DBManager {
 
 
 		} catch (SQLException e) {
+			logger.error("Error executing statement: " + ps);
 			logger.error(e.getMessage(), e);
 		}
 		finally {
@@ -207,9 +208,8 @@ public class DBManager {
 			ps.addBatch();
 
 			ps.executeBatch();
-
-
 		} catch (SQLException e) {
+			logger.error("Error executing statement: " + ps);
 			logger.error(e.getMessage(), e);
 		}
 		finally {
