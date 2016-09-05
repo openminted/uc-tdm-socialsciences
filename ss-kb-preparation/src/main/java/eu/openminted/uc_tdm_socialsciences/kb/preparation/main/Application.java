@@ -38,8 +38,8 @@ public class Application {
 	public static void main(String[] args) {
 
 		/*
-		 * Code für Variable Detection, wenn die DB schon steht
-		 *
+		 * This was meant to be a playground for variable detection. Can be used
+		 * when database is all set up.s
 		 * TODO: get ngrams for variables from associated studies (get them from
 		 * db)
 		 */
@@ -133,7 +133,6 @@ public class Application {
 				 * the bigrams: A bigram always covers exactly two tokens and so
 				 * we can use JCasUtil.selectCovered to check how may tokens an
 				 * n-gram actually subsumes:
-				 *
 				 */
 				if (JCasUtil.selectCovered(Token.class, ngram).size() == max) {
 					String ngramText = ngram.getCoveredText();

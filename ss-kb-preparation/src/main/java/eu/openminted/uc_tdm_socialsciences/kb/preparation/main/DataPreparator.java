@@ -11,9 +11,11 @@ public class DataPreparator {
 
 	public static void main(String[] args) {
 
-		// fillStudyDB();
+		DBManager.getInstance(false).dropAllTables();
 
-		// fillDocumentsDB();
+		fillStudyDB();
+
+		fillDocumentsDB();
 
 		fillLabeledDataDB();
 	}
