@@ -171,7 +171,7 @@ public class StudyReader {
 	private String cleanHTML(String html) {
 		String temp = HtmlEscape.unescapeHtml(html);
 		temp = temp.replaceAll("(<script ?.*?>.+</script>)|(<!--.*?-->)|(<a href=.+?>.*?</a>)|(<.+?>)", " ")
-				.replaceAll("\\s+", " ");
+				.replaceAll("\\s{2,}", " ").trim();
 		return temp;
 		// html = html.replaceAll("<a href=.+?>.*?</a>", "");
 		// return Jsoup.parse(html).text();
