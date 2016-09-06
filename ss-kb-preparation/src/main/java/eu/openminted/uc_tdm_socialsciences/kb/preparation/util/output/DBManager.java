@@ -151,7 +151,7 @@ public class DBManager {
 					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
 							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " VARCHAR(20) NOT NULL UNIQUE)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
-					+ autoincrement + ", " + NAME + " VARCHAR(100) NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT
+					+ autoincrement + ", " + NAME + " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT
 					+ " TEXT, " + DATASET_ID + " INTEGER NOT NULL, FOREIGN KEY (" + DATASET_ID + ") REFERENCES "
 					+ DATASETS + "(" + ID + "))");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DOCUMENTS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
