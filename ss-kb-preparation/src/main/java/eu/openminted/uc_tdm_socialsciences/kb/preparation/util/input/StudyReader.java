@@ -145,6 +145,12 @@ public class StudyReader {
 		if (labelStmt != null) {
 			var.setLabel(labelStmt.getString());
 		}
+		else {
+			logger.warn("Variable has no label.");
+			// don't write to database? or set ""?
+			var.setLabel("");
+			// return;
+		}
 
 		Statement name = model.getProperty(varRef, ResourceFactory.createProperty(n43 + "name"));
 		if (name != null) {
@@ -158,7 +164,7 @@ public class StudyReader {
 		}
 
 		ds.addVariable(var);
-		writer.write(var, ds.getId());
+		writer.write(var, ds.getExternalID());
 	}
 
 	/**

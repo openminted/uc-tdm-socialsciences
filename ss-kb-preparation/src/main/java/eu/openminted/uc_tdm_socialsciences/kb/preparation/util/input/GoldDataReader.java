@@ -87,7 +87,7 @@ public class GoldDataReader {
 				varRef = varCell.getStringCellValue();
 			}
 
-			refText = refCell.getStringCellValue();
+			refText = null == refCell ? null : refCell.getStringCellValue();
 			paperRef = paperCell.getStringCellValue();
 
 			writer.writeReference(varRef, paperRef, datasetID, refText);

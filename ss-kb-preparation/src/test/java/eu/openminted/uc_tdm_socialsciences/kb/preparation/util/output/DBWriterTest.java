@@ -46,7 +46,7 @@ public class DBWriterTest {
 	public void testWriteVariable() throws SQLException {
 		writer = DBManager.getInstance(true).createTables();
 		writer.write(dataset);
-		writer.write(v1, dataset.getId());
-		writer.write(v2, dataset.getId());
+		writer.write(v1, dataset.getExternalID());
+		writer.write(v2, dataset.getExternalID());
 	}
 }
