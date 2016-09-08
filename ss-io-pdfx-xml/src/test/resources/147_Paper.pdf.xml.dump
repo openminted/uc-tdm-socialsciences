@@ -204,8 +204,18 @@ Paragraph
    sofa: _InitialView
    begin: 3012
    end: 3062
+[1 http://cpart.maxwellinstitute.byu.edu/ home/sec/]
+Sentence
+   sofa: _InitialView
+   begin: 3012
+   end: 3062
 [†]
 Paragraph
+   sofa: _InitialView
+   begin: 3062
+   end: 3063
+[†]
+Sentence
    sofa: _InitialView
    begin: 3062
    end: 3063
@@ -1046,6 +1056,11 @@ Paragraph
    sofa: _InitialView
    begin: 18559
    end: 18996
+[(a) Development: Noisy Gaussian Size N Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqqqqqqq qq qq qqqqq 5 10 15 20 25 30 35 40 45 (b) Production: Number Noisy of Tags Sigmoid Size N qq qq qq qq q q Dataset qqq qq q q q qqqqqqqqqqqqqqqqqqqqqqqqqqqq 0 5 10 15 20 25 30 35 40 45 Number (c) Mixed of Tags Size N q q q Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqq q qqqq q qq qq q 5 10 15 20 25 30 35 40 45 Number of Simulated Composite Tags]
+Sentence
+   sofa: _InitialView
+   begin: 18559
+   end: 18996
 [We have described the problem of providing automatic assistance to annotators working in exploratory settings. We have argued that this problem should be regarded as a transfer learning problem, and shown that existing transfer learning techniques can be adapted to significantly improve the quality of pre-annotations in simulated exploratory part- of-speech tagging. Corpus annotators working in novel an-]
 Paragraph
    sofa: _InitialView
@@ -1144,7 +1159,17 @@ Paragraph
    begin: 20348
    end: 20353
 [50000]
+Sentence
+   sofa: _InitialView
+   begin: 20348
+   end: 20353
+[50000]
 Paragraph
+   sofa: _InitialView
+   begin: 20353
+   end: 20358
+[50000]
+Sentence
    sofa: _InitialView
    begin: 20353
    end: 20358
@@ -1154,7 +1179,17 @@ Paragraph
    begin: 20358
    end: 20363
 [50000]
+Sentence
+   sofa: _InitialView
+   begin: 20358
+   end: 20363
+[50000]
 Paragraph
+   sofa: _InitialView
+   begin: 20363
+   end: 20368
+[50000]
+Sentence
    sofa: _InitialView
    begin: 20363
    end: 20368

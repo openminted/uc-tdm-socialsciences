@@ -135,8 +135,18 @@ Paragraph
    sofa: _InitialView
    begin: 3188
    end: 3189
+[1]
+Sentence
+   sofa: _InitialView
+   begin: 3188
+   end: 3189
 [2]
 Paragraph
+   sofa: _InitialView
+   begin: 3189
+   end: 3190
+[2]
+Sentence
    sofa: _InitialView
    begin: 3189
    end: 3190
@@ -258,8 +268,18 @@ Paragraph
    sofa: _InitialView
    begin: 4818
    end: 4915
+[Poc zyna śie Hi torya o pora zc ze Sákrámentar- zow y zábićiu wodzá ich Kśi a  ̨ z ećiá de Conde.]
+Sentence
+   sofa: _InitialView
+   begin: 4818
+   end: 4915
 [The History conceives of pora zc ze Sákrámentar- zow killing their leader s prince de Conde.]
 Paragraph
+   sofa: _InitialView
+   begin: 4915
+   end: 5007
+[The History conceives of pora zc ze Sákrámentar- zow killing their leader s prince de Conde.]
+Sentence
    sofa: _InitialView
    begin: 4915
    end: 5007
@@ -345,8 +365,18 @@ Paragraph
    sofa: _InitialView
    begin: 5898
    end: 5986
+[Poczyna si e historia o pora zce heretyków i zabiciu wodza ich Ksi a  ̨ z ecia de Conde.]
+Sentence
+   sofa: _InitialView
+   begin: 5898
+   end: 5986
 [Begins the story of the failure of heretics and killing their leader the prince de Conde.]
 Paragraph
+   sofa: _InitialView
+   begin: 5986
+   end: 6075
+[Begins the story of the failure of heretics and killing their leader the prince de Conde.]
+Sentence
    sofa: _InitialView
    begin: 5986
    end: 6075

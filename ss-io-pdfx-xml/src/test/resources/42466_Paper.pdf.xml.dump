@@ -28,6 +28,11 @@ Paragraph
    sofa: _InitialView
    begin: 160
    end: 250
+[Rost, Dietmar Veröffentlichungsversion / Published Version Abschlussbericht / final report]
+Sentence
+   sofa: _InitialView
+   begin: 160
+   end: 250
 [Empfohlene Zitierung / Suggested Citation: Rost, Dietmar ; Kulturwissenschaftliches Institut Essen (KWI) (Ed.): Konflikte auf dem Weg zu einer nachhaltigen Energieversorgung - Perspektiven und Erkenntnisse aus dem Streit um die Carbon Capture and Storage-Technologie (CCS). Essen, 2015. URN: http://nbn-resolving.de/urn:nbn:de:0168-ssoar-424669]
 Paragraph
    sofa: _InitialView
@@ -90,6 +95,11 @@ Sentence
    end: 1379
 [Kulturwissenschaftliches Institut Essen (KWI) Goethestraße 31 45128 Essen]
 Paragraph
+   sofa: _InitialView
+   begin: 1379
+   end: 1452
+[Kulturwissenschaftliches Institut Essen (KWI) Goethestraße 31 45128 Essen]
+Sentence
    sofa: _InitialView
    begin: 1379
    end: 1452
@@ -875,6 +885,11 @@ Sentence
    end: 24509
 [6 Abbildung: Übersicht einiger Elemente des CCS-Konflikts]
 Paragraph
+   sofa: _InitialView
+   begin: 24509
+   end: 24566
+[6 Abbildung: Übersicht einiger Elemente des CCS-Konflikts]
+Sentence
    sofa: _InitialView
    begin: 24509
    end: 24566
@@ -2265,6 +2280,11 @@ Sentence
    end: 69942
 [2011 09 CCS-Gesetzentwurf scheitert erneut im Bundesrat; Bundesregierung ruft Vermittlungsausschuss an 2011 12 05 Vattenfall sagt CCS-Demonstrationsvorhaben in Jänschwalde und alle Erkundungstätigkeiten wegen anhaltender Rechtsunsicherheit ab 2012 02 "Energiestrategie 2030" des Landes Brandenburg: CCS bleibt weiterhin eine Option 2012 02 Vattenfall hält grundsätzlich an großtechnischem CCS-Kraftwerk in Jänschwalde fest, will Entscheidung jedoch erst in fünf bis sieben Jahren treffen 2012 06 CCS-Gesetz im Vermittlungsausschuss geklärt und schließlich verabschiedet – Minister Christoffers kündigt sofort an, dass keine Speicherung in Brandenburg erfolgen solle 2012 08 21 Niedersachsen erlässt dreijähriges CCS-Moratorium 2014 01 EU-Parlament verabschiedet als Empfehlung für die EU-Kommission den sog. Davies-Report, der sich für CCS als wichtiges Element europäischer Klimapolitik ausspricht 2014 04 Weltklimarat (IPCC) betont im Bericht seiner Arbeitsgruppe 3 trotz aller noch bestehenden Ungewissheiten die große Potentiale von CCS und Biomasse-CCS für den Klimaschutz]
 Paragraph
+   sofa: _InitialView
+   begin: 69942
+   end: 71019
+[2011 09 CCS-Gesetzentwurf scheitert erneut im Bundesrat; Bundesregierung ruft Vermittlungsausschuss an 2011 12 05 Vattenfall sagt CCS-Demonstrationsvorhaben in Jänschwalde und alle Erkundungstätigkeiten wegen anhaltender Rechtsunsicherheit ab 2012 02 "Energiestrategie 2030" des Landes Brandenburg: CCS bleibt weiterhin eine Option 2012 02 Vattenfall hält grundsätzlich an großtechnischem CCS-Kraftwerk in Jänschwalde fest, will Entscheidung jedoch erst in fünf bis sieben Jahren treffen 2012 06 CCS-Gesetz im Vermittlungsausschuss geklärt und schließlich verabschiedet – Minister Christoffers kündigt sofort an, dass keine Speicherung in Brandenburg erfolgen solle 2012 08 21 Niedersachsen erlässt dreijähriges CCS-Moratorium 2014 01 EU-Parlament verabschiedet als Empfehlung für die EU-Kommission den sog. Davies-Report, der sich für CCS als wichtiges Element europäischer Klimapolitik ausspricht 2014 04 Weltklimarat (IPCC) betont im Bericht seiner Arbeitsgruppe 3 trotz aller noch bestehenden Ungewissheiten die große Potentiale von CCS und Biomasse-CCS für den Klimaschutz]
+Sentence
    sofa: _InitialView
    begin: 69942
    end: 71019

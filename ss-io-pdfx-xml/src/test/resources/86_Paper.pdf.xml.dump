@@ -468,8 +468,18 @@ Paragraph
    sofa: _InitialView
    begin: 6969
    end: 7061
+[1 English Aspell dictionary: http://aspell.net/ 2 https://code.google.com/p/ berkeleyparser/]
+Sentence
+   sofa: _InitialView
+   begin: 6969
+   end: 7061
 [P ROOT COORD P OBJ NMOD SBJ NMOD OBJ You . are . the . little . . guy . , . are . you . ? . U ∅ da lil guy , ru ?]
 Paragraph
+   sofa: _InitialView
+   begin: 7061
+   end: 7174
+[P ROOT COORD P OBJ NMOD SBJ NMOD OBJ You . are . the . little . . guy . , . are . you . ? . U ∅ da lil guy , ru ?]
+Sentence
    sofa: _InitialView
    begin: 7061
    end: 7174
@@ -801,6 +811,11 @@ Paragraph
    sofa: _InitialView
    begin: 14101
    end: 14165
+[3 https://github.com/danieldk/jitar 4 http://opennlp.apache.org/]
+Sentence
+   sofa: _InitialView
+   begin: 14101
+   end: 14165
 [After considering the influence of the underlying POS tagger on parse quality, we now turn to the question of how much the parsing of noisy content is influenced by text normalization. For this, we evaluate two common text normalization methods: unsupervised normalization via lexical replacements and normalization based on machine translation. Unsupervised lexical normalization Various unsupervised methods for text normalization have been suggested in the relevant literature. A popular approach is to perform lexical normalization by correcting individual tokens. We implement the model for lexical normalization of text messages by Han and Baldwin (2011). This method works in analogy to spell checking, with the biggest difference that in short message data ill-formedness is often intentional, for example due to the message size limit. The model performs normalization only on the token level. Normalization as machine translation Research in short message normalization has shown that another effec- tive method is to treat the task as a machine translation problem. Aw et al. (2006) and Raghunathan and Krawczyk (2009) explore phrase-based statistical machine translation as a preprocessing step for various NLP tasks involving text messages. As part of this effort, they manually normalize a set of 5.000 and 2.500 messages respectively. While these corpora are not created for social media services such as Twitter, they nonetheless provide reasonable training corpora for our experiments as the restrictions of both domains are similar. Based on this corpus, we train a standard Moses baseline system 5 (Koehn et al., 2007) using GIZA++ for word alignments and the grow-diag-final symmetrization heuristic. An n-gram language model is built on the English side of the news-commentary data set using IRSTLM (Federico and Cettolo, 2007). Model weights are estimated using MERT (Och, 2003). All experiments are performed on the development part of our dataset. Twitter-specific processing In order to isolate the influence of the text normalization, Twitter-specific syntax is parsed using a set of deterministic rules. Tokens such as retweet indicators and usernames at the start of a Tweet and URLs and hash tags at the end of a Tweet are removed from the text and pushed onto a stack. The remaining text is]
 Paragraph
    sofa: _InitialView
@@ -992,8 +1007,18 @@ Paragraph
    sofa: _InitialView
    begin: 17342
    end: 17386
+[5 http://statmt.org/moses/?n=Moses. Baseline]
+Sentence
+   sofa: _InitialView
+   begin: 17342
+   end: 17386
 [* statistically significant against non-normalized baseline at p-value < 0.05.]
 Paragraph
+   sofa: _InitialView
+   begin: 17386
+   end: 17464
+[* statistically significant against non-normalized baseline at p-value < 0.05.]
+Sentence
    sofa: _InitialView
    begin: 17386
    end: 17464
@@ -1074,6 +1099,11 @@ Sentence
    end: 18700
 [6 Tags predicted by coarse + n-best MaxEnt. 7 http://jodaiber.de/DenoisedWebTreebank]
 Paragraph
+   sofa: _InitialView
+   begin: 18700
+   end: 18784
+[6 Tags predicted by coarse + n-best MaxEnt. 7 http://jodaiber.de/DenoisedWebTreebank]
+Sentence
    sofa: _InitialView
    begin: 18700
    end: 18784

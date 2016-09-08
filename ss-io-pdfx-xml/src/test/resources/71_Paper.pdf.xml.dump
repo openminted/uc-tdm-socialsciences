@@ -43,6 +43,11 @@ Paragraph
    sofa: _InitialView
    begin: 401
    end: 1692
+[Abstract Ambient Assisted Living aims at enhancing the quality of life of older and disabled people at home thanks to Smart Homes. In particular, regarding elderly living alone at home, the detection of distress situation after a fall is very important to reassure this kind of population. However, many studies do not include tests in real settings, because data collection in this domain is very expensive and challenging and because of the few available data sets. The C corpus is a dataset recorded in realistic conditions in D , a fully equipped Smart Home with microphones and home automation sensors, in which participants performed scenarios including real falls on a carpet and calls for help. These scenarios were elaborated thanks to a field study involving elderly persons. Experiments related in a first part to distress detection in real-time using audio and speech analysis and in a second part to fall detection using video analysis are presented. Results show the difficulty of the task. The database can be used as standardized database by researchers to evaluate and compare their systems for elderly person’s assistance. Keywords: audio and video data set, multimodal corpus, natural language and multimodal interaction, Ambient Assisted Living (AAL), distress situation.]
+Sentence
+   sofa: _InitialView
+   begin: 401
+   end: 1692
 [Twenty first century is witnessing a rapid growth in population over 65 years old worldwide (Who, 2013). This change in demography put pressure on governments which are incurring unprecedented expenditure to support ageing population since ageing is correlated with an increase in health and daily living support. For instance, in France, 12 million out of 66 million people are receiving the per- sonalized allocation of autonomy (PAA) 1 , a government financial aid for elderly person to support them in their daily life. This demographic change is very challenging to the society, governments and to technologists to come up with reliable and sustainable solutions to help ageing population to live as independently and safely as possible while reliev- ing their family’s emotional and financial burden. However this trend also provides the opportunity to come up with technologies that can help ageing population to carry on with their lives without compromising their privacy and at the same time provide assistance to caregivers i.e. nurse, partner, children etc. One of the main sources of stress in the ageing population for which technology can be of help is the fall incident. Indeed fall is a major source of injury for elderly people, between 20 and 40 percent of adults over 65 who live at home fall (Saim, 2014). Fall could lead elderly persons to faint or become unconscious. Another emergency situation is the inability to call for a help in distress situation of some aged persons due to their reduced mobility. In the absences of another person in the home (such as a carer), these situations could have disastrous effect. Several studies had worked on an ICT solutions to bring autonomy and security back to the user (Popescu et al., 2008;]
 Paragraph
    sofa: _InitialView
@@ -573,8 +578,18 @@ Paragraph
    sofa: _InitialView
    begin: 11806
    end: 11863
+[2 http://www.technosens.fr 3 http://liris.cnrs.fr/advene/]
+Sentence
+   sofa: _InitialView
+   begin: 11806
+   end: 11863
 [All Call for help]
 Paragraph
+   sofa: _InitialView
+   begin: 11863
+   end: 11880
+[All Call for help]
+Sentence
    sofa: _InitialView
    begin: 11863
    end: 11880
@@ -644,6 +659,11 @@ Sentence
    end: 12903
 [3.2. Video Corpus]
 Paragraph
+   sofa: _InitialView
+   begin: 12903
+   end: 12920
+[3.2. Video Corpus]
+Sentence
    sofa: _InitialView
    begin: 12903
    end: 12920

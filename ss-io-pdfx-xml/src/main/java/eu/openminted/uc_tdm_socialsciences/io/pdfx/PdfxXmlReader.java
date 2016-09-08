@@ -76,6 +76,14 @@ public class PdfxXmlReader
      */
     public static final String ATTR_MARKER_TYPE_VALUE_BLOCK = "block";
 
+    /**
+     * Various levels of headings
+     */
+    public static final String TAG_H1 = "h1";
+    public static final String TAG_H2 = "h2";
+    public static final String TAG_H3 = "h3";
+    public static final String TAG_H4 = "h4";
+
     public static final String PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH = "false";
     public static final String NEWLINE_SEPARATOR = "\r\n";
     public static final String UNKNOWN_VALUE = "N/A";
@@ -105,7 +113,8 @@ public class PdfxXmlReader
             extends TextExtractor
     {
         private boolean captureText = false;
-        private boolean isInsideSentence = false;
+        private boolean isInsideParagraph = false;
+        private boolean paragraphHasSentence = false;
 
         private String documentId = "UNKNOWN";
         private int paragraphBegin = -1;
@@ -115,26 +124,58 @@ public class PdfxXmlReader
         private String referenceRId = "";
         private int referenceStart = -1;
 
-        //todo: retain footer and header in the jcas with proper annotation
-        //todo read section titles, too?
+        //todo: create specific annotations for footer and header?
         @Override
         public void startElement(String aUri, String aLocalName, String aName,
                                  Attributes aAttributes)
                 throws SAXException
         {
+            //todo optimize order of following if statements
             if (TAG_ARTICLE_TITLE.equals(aName)) {
                 startElementArticleTitle();
-            }else if (TAG_ABSTRACT.equals(aName)){
+            }else if (TAG_ABSTRACT.equals(aName)) {
                 startElementAbstract();
-            }else if (TAG_REGION.equals(aName)){
+            }else if (TAG_REGION.equals(aName)) {
                 startElementRegion(aAttributes);
-            }else if(TAG_S.equals(aName)){
+            }else if(TAG_S.equals(aName)) {
                 startElementS();
+            }else if(TAG_H1.equals(aName) || TAG_H2.equals(aName) || TAG_H3.equals(aName) || TAG_H4.equals(aName)) {
+                startElementHeading();
             }else if(TAG_MARKER.equals(aName)){
                 startElementMarker(aAttributes);
             }else if(TAG_REF.equals(aName)){
                 startElementRef(aAttributes);
             }
+        }
+
+        @Override
+        public void endElement(String aUri, String aLocalName, String aName)
+                throws SAXException
+        {
+            if (TAG_ARTICLE_TITLE.equals(aName)) {
+                endElementArticleTitle();
+            }else if (TAG_ABSTRACT.equals(aName)){
+                endElementAbstract();
+            }else if (TAG_REGION.equals(aName)){
+                endElementRegion();
+            }else if(TAG_S.equals(aName)){
+                endElementS();
+            }else if(TAG_H1.equals(aName) || TAG_H2.equals(aName) || TAG_H3.equals(aName) || TAG_H4.equals(aName)) {
+                //todo create a specific annotation for heading?
+                endElementHeading();
+            }else if(TAG_REF.equals(aName)){
+                endElementRef();
+            }
+        }
+
+        protected void startElementHeading() {
+            captureText = true;
+            startElementS();
+        }
+
+        protected void endElementHeading() {
+            endElementS();
+            captureText = false;
         }
 
         protected void startElementRef(Attributes aAttributes) {
@@ -156,10 +197,11 @@ public class PdfxXmlReader
         protected void startElementS() {
             //sentence begin
             sentenceBegin = getBuffer().length();
+            paragraphHasSentence = true;
         }
 
         protected void startElementRegion(Attributes aAttributes) {
-            isInsideSentence = false;
+            isInsideParagraph = false;
             if(ATTR_REGION_CLASS_VALUE_UNKNOWN.equals(aAttributes.getValue(ATTR_CLASS)) ||
                     ATTR_REGION_CLASS_VALUE_TEXTCHUNK.equals(aAttributes.getValue(ATTR_CLASS))) {
                 //paragraph begin
@@ -175,23 +217,6 @@ public class PdfxXmlReader
         protected void startElementArticleTitle() {
             captureText = true;
             beginParagraph();
-        }
-
-        @Override
-        public void endElement(String aUri, String aLocalName, String aName)
-                throws SAXException
-        {
-            if (TAG_ARTICLE_TITLE.equals(aName)) {
-                endElementArticleTitle();
-            }else if (TAG_ABSTRACT.equals(aName)){
-                endElementAbstract();
-            }else if (TAG_REGION.equals(aName)){
-                endElementRegion();
-            }else if(TAG_S.equals(aName)){
-                endElementS();
-            }else if(TAG_REF.equals(aName)){
-                endElementRef();
-            }
         }
 
         protected void endElementRef() {
@@ -210,10 +235,16 @@ public class PdfxXmlReader
         }
 
         protected void endElementRegion() {
-            if(isInsideSentence) {
+            if(isInsideParagraph) {
                 //end of paragraph
+                if (!paragraphHasSentence){
+                    //force create a sentence annotation if no sentence tag was seen inside this <Region>
+                    sentenceBegin = paragraphBegin;
+                    endElementS();
+                }
                 makeParagraph();
                 captureText = false;
+                //todo test this
             }
         }
 
@@ -237,7 +268,8 @@ public class PdfxXmlReader
         private void beginParagraph() {
             paragraphBegin = getBuffer().length();
             captureText = true;
-            isInsideSentence = true;
+            isInsideParagraph = true;
+            paragraphHasSentence = false;
         }
 
         private void makeParagraph() {
