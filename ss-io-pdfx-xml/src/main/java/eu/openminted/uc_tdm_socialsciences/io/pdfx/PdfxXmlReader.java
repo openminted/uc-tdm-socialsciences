@@ -244,7 +244,6 @@ public class PdfxXmlReader
                 }
                 makeParagraph();
                 captureText = false;
-                //todo test this
             }
         }
 
