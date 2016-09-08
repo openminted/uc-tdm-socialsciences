@@ -148,16 +148,18 @@ public class DBManager {
 				stmt.addBatch("PRAGMA foreign_keys = ON");
 			}
 			stmt.addBatch(
-					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, "
-							+ TITLE + " VARCHAR(255) NOT NULL UNIQUE, " + EXT_ID + " VARCHAR(20) NOT NULL UNIQUE)");
+					"CREATE TABLE IF NOT EXISTS " + DATASETS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE "
+							+ autoincrement + ", "
+							+ TITLE + " VARCHAR(255) NOT NULL, " + EXT_ID + " VARCHAR(20) NOT NULL UNIQUE)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + VARIABLES + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
 					+ autoincrement + ", " + NAME + " TEXT NOT NULL, " + LABEL + " TEXT NOT NULL, " + QSTNTEXT
-					+ " TEXT, " + DATASET_ID + " INTEGER NOT NULL, FOREIGN KEY (" + DATASET_ID + ") REFERENCES "
-					+ DATASETS + "(" + ID + "))");
+					+ " TEXT, " + DATASET_ID + " VARCHAR(20) NOT NULL, FOREIGN KEY (" + DATASET_ID + ") REFERENCES "
+					+ DATASETS + "(" + EXT_ID + "))");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + DOCUMENTS + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
 					+ autoincrement + ", " + NAME + " VARCHAR(6) NOT NULL UNIQUE, " + TEXT + " LONGTEXT NOT NULL)");
 			stmt.addBatch("CREATE TABLE IF NOT EXISTS " + REFERENCES + " (" + ID + " INTEGER NOT NULL PRIMARY KEY "
-					+ autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, " + STUDY_ID + " INTEGER NOT NULL, " + VAR_ID
+					+ autoincrement + ", " + DOC_ID + " INTEGER NOT NULL, " + STUDY_ID + " INTEGER NOT NULL, "
+					+ VAR_ID
 					+ " INTEGER NOT NULL, " + REFTEXT + " MEDIUMTEXT NOT NULL, FOREIGN KEY (" + DOC_ID + ") REFERENCES "
 					+ DOCUMENTS + "(" + ID + "), FOREIGN KEY (" + STUDY_ID + ") REFERENCES " + DATASETS + "(" + ID
 					+ "), FOREIGN KEY (" + VAR_ID + ") REFERENCES " + VARIABLES + "(" + ID + "))");
@@ -176,34 +178,33 @@ public class DBManager {
 	public void write(Dataset dataset) {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement("INSERT IGNORE INTO " + DATASETS + " (" + ID + ", " + TITLE + ", " + EXT_ID
-					+ ")  VALUES (?, ?, ?);");
-			ps.setInt(1, dataset.getId());
-			ps.setString(2, dataset.getTitle());
-			ps.setString(3, dataset.getExternalID());
+			ps = conn.prepareStatement("INSERT IGNORE INTO " + DATASETS + " (" + TITLE + ", " + EXT_ID
+					+ ")  VALUES (?, ?);");
+			// ps.setInt(1, dataset.getId());
+			ps.setString(1, dataset.getTitle());
+			ps.setString(2, dataset.getExternalID());
 			ps.addBatch();
 
 			ps.executeBatch();
 
-
 		} catch (SQLException e) {
 			logger.error("Error executing statement: " + ps);
 			logger.error(e.getMessage(), e);
-		}
-		finally {
+		} finally {
 			close(ps);
 		}
 	}
 
-	public void write(Variable variable, int datasetID) {
+	public void write(Variable variable, String datasetID) {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement("INSERT INTO " + VARIABLES + "  (" + NAME + ", " + LABEL + ", " + QSTNTEXT + ", "
+			ps = conn.prepareStatement(
+					"INSERT IGNORE INTO " + VARIABLES + "  (" + NAME + ", " + LABEL + ", " + QSTNTEXT + ", "
 					+ DATASET_ID + ") VALUES (?, ?, ?, ?);");
 			ps.setString(1, variable.getName());
 			ps.setString(2, variable.getLabel());
 			ps.setString(3, variable.getQuestion());
-			ps.setInt(4, datasetID);
+			ps.setString(4, datasetID);
 
 			ps.addBatch();
 
@@ -211,8 +212,7 @@ public class DBManager {
 		} catch (SQLException e) {
 			logger.error("Error executing statement: " + ps);
 			logger.error(e.getMessage(), e);
-		}
-		finally {
+		} finally {
 			close(ps);
 		}
 	}
@@ -221,7 +221,8 @@ public class DBManager {
 		PreparedStatement ps = null;
 		try {
 
-			ps = conn.prepareStatement("INSERT INTO " + REFERENCES + " (" + DOC_ID + ", " + STUDY_ID + ", " + VAR_ID
+			ps = conn.prepareStatement(
+					"INSERT IGNORE INTO " + REFERENCES + " (" + DOC_ID + ", " + STUDY_ID + ", " + VAR_ID
 					+ ", " + REFTEXT + ") VALUES (?, ?, ?, ?);");
 
 			/*
@@ -237,26 +238,33 @@ public class DBManager {
 				close(ps);
 				return;
 			}
-			rs.next();
+			if (!rs.next()) {
+				return;
+			}
 			int foreignStudy = rs.getInt(1);
 
-			sql = "SELECT " + ID + " FROM " + DOCUMENTS + " WHERE " + NAME + "='" + paperRef + ".pdf'";
+			sql = "SELECT " + ID + " FROM " + DOCUMENTS + " WHERE " + NAME + "='" + paperRef + "'";
 			rs = conn.createStatement().executeQuery(sql);
 			if (rs.isClosed()) {
 				close(ps);
 				return;
 			}
-			rs.next();
+			if (!rs.next()) {
+				return;
+			}
 			int foreignPaper = rs.getInt(1);
 
-			sql = "SELECT " + ID + " FROM " + VARIABLES + " WHERE " + NAME + "='" + varRef + "' and " + DATASET_ID + "="
-					+ foreignStudy;
+			sql = "SELECT " + ID + " FROM " + VARIABLES + " WHERE " + NAME + "='" + varRef + "' and " + DATASET_ID
+					+ "='"
+					+ datasetID + "'";
 			rs = conn.createStatement().executeQuery(sql);
 			if (rs.isClosed()) {
 				close(ps);
 				return;
 			}
-			rs.next();
+			if (!rs.next()) {
+				return;
+			}
 			int foreignVar = rs.getInt(1);
 
 			ps.setInt(1, foreignPaper);
@@ -266,13 +274,13 @@ public class DBManager {
 
 			ps.addBatch();
 
+			// logger.info("Executing sql: " + ps);
 			ps.executeBatch();
 
 			close(ps);
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-		}
-		finally {
+		} finally {
 			close(ps);
 		}
 	}
@@ -280,7 +288,8 @@ public class DBManager {
 	public void writeDocument(String docName, String docText) {
 		PreparedStatement ps = null;
 		try {
-			ps = conn.prepareStatement("INSERT INTO " + DOCUMENTS + " (" + NAME + ", " + TEXT + ") VALUES (?, ?);");
+			ps = conn.prepareStatement(
+					"INSERT IGNORE INTO " + DOCUMENTS + " (" + NAME + ", " + TEXT + ") VALUES (?, ?);");
 
 			ps.setString(1, docName);
 			ps.setString(2, docText);
@@ -288,11 +297,9 @@ public class DBManager {
 
 			ps.executeBatch();
 
-
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
-		}
-		finally {
+		} finally {
 			close(ps);
 		}
 	}
@@ -306,8 +313,7 @@ public class DBManager {
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-		}
-		finally {
+		} finally {
 			close(stmt);
 		}
 		return rs;
