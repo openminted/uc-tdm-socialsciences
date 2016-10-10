@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 
@@ -46,8 +47,8 @@ public class PdfxXmlToXmiConverter {
 
         for (Path xml : getXmlListFromDirectory(inputDir)) {
             String inputResource = xml.toString();
-            String outputResource = inputResource.substring(0, inputResource.lastIndexOf('.')) + ".cas.xmi";
-            String outputResourceCasDump = inputResource.substring(0, inputResource.lastIndexOf('.')) + ".cas.dump";
+			String outputResource = FilenameUtils.getBaseName(inputResource) + ".cas.xmi";
+			String outputResourceCasDump = FilenameUtils.getBaseName(inputResource) + ".cas.dump";
             convert(inputResource, outputResource);
             createCasDump(inputResource, outputResourceCasDump);
         }
