@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -99,7 +100,7 @@ public class PdfxXmlCreator {
 		List<Path> outputFiles = new ArrayList<>();
 		logger.info(pdfFiles.size() + " pdf files found.");
 		for (Path pdfFile : pdfFiles) {
-			Path outFile = outputDirectoryPath.resolve(pdfFile.getFileName() + ".xml");
+			Path outFile = outputDirectoryPath.resolve(FilenameUtils.getBaseName(pdfFile.toString()) + ".xml");
 			try {
 				logger.info("processing file: " + outFile.toUri());
 				if (processWithPdfx(pdfFile.toFile(), outFile)) {
@@ -130,7 +131,7 @@ public class PdfxXmlCreator {
 	}
 
 	private boolean processWithPdfx(File pdf, Path outFile) throws IOException {
-		if(!overwriteOutput && (new File(outFile.toUri()).isFile()))
+		if(!overwriteOutput && new File(outFile.toUri()).isFile())
 		{
 			logger.error("Output file [" + outFile.toUri() + "] already exists. Set 'overwriteOutput' attribute to true "
 					+ "to overwrite existing files.");
