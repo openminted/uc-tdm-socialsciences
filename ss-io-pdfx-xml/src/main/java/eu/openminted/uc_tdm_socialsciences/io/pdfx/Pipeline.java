@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UIMAException;
 
 public class Pipeline {
@@ -22,7 +23,7 @@ public class Pipeline {
 			List<Path> pdfxOutFiles = pdfxXmlCreator.process(inputPath, inputPath);
 
 			for (Path p : pdfxOutFiles) {
-				PdfxXmlToXmiConverter.convert(p.toString(), p.toString() + ".xmi");
+				PdfxXmlToXmiConverter.convert(p.toString(), FilenameUtils.getBaseName(p.toString()) + ".xmi");
 			}
 
 		} catch (IOException e) {
