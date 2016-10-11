@@ -25,6 +25,12 @@ import org.apache.uima.UIMAException;
 
 import eu.openminted.uc_tdm_socialsciences.kb.preparation.util.PDFChecker;
 
+/**
+ * This class is responsible for PDF to XML conversion by invoking the web
+ * service of pdfx.
+ *
+ * @author neumanmy
+ */
 public class PdfxXmlCreator {
 	public static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
 
@@ -41,7 +47,20 @@ public class PdfxXmlCreator {
 
 	private boolean overwriteOutput = false;
 
-	public static void main(String[] args) throws UIMAException, IOException {
+	/**
+	 * Main method. Used for invoking the converter from command line.
+	 *
+	 * @param args
+	 *            one or two paths to directories may be given as arguments.
+	 *            First arg (mandatory) is input directory containing pdf files.
+	 *            Second (optional) is output directory where XML files should
+	 *            be stored. If no output directory is specified, output will be
+	 *            stored in subdirectory of input directory called "pdfx-out".
+	 * @throws IOException
+	 *             if something went wrong during conversion
+	 */
+	// TODO we shouldn't throw exceptions from main method
+	public static void main(String[] args) throws IOException {
 		PdfxXmlCreator creator = new PdfxXmlCreator();
 
 		String inputPath = null, outputPath = null;
@@ -70,6 +89,19 @@ public class PdfxXmlCreator {
 		creator.process(inputDir, outputDir);
 	}
 
+	/**
+	 * Processes all pdf files in a given directory with pdfx service which
+	 * converts them into XML files. Stores the XML files in a given output
+	 * directory.
+	 *
+	 * @param inputDirectory
+	 *            The directory that contains PDF files. It is scanned
+	 *            recursively, non-pdf files will be ignored.
+	 * @param outputDirectory
+	 *            The directory where the output XML files will be stored.
+	 * @return a list of all the Paths of the generated output files
+	 * @throws IOException
+	 */
 	public List<Path> process(String inputDirectory, String outputDirectory) throws IOException {
 		Path inputDirectoryPath = Paths.get(inputDirectory);
 		Path outputDirectoryPath = Paths.get(outputDirectory);
@@ -77,6 +109,19 @@ public class PdfxXmlCreator {
 		return process(inputDirectoryPath, outputDirectoryPath);
 	}
 
+	/**
+	 * Processes all pdf files in a given directory with pdfx service which
+	 * converts them into XML files. Stores the XML files in a given output
+	 * directory.
+	 *
+	 * @param inputDirectoryPath
+	 *            The directory that contains PDF files. It is scanned
+	 *            recursively, non-pdf files will be ignored.
+	 * @param outputDirectoryPath
+	 *            The directory where the output XML files will be stored.
+	 * @return a list of all the Paths of the generated output files
+	 * @throws IOException
+	 */
 	public List<Path> process(Path inputDirectoryPath, Path outputDirectoryPath) throws IOException {
 		logger.info("PdfxXmlCreator process stated...");
 		logger.info("Input directory: " + inputDirectoryPath.toUri());
@@ -131,10 +176,10 @@ public class PdfxXmlCreator {
 	}
 
 	private boolean processWithPdfx(File pdf, Path outFile) throws IOException {
-		if(!overwriteOutput && new File(outFile.toUri()).isFile())
-		{
-			logger.error("Output file [" + outFile.toUri() + "] already exists. Set 'overwriteOutput' attribute to true "
-					+ "to overwrite existing files.");
+		if (!overwriteOutput && new File(outFile.toUri()).isFile()) {
+			logger.error(
+					"Output file [" + outFile.toUri() + "] already exists. Set 'overwriteOutput' attribute to true "
+							+ "to overwrite existing files.");
 			logger.info("Skipping process for file: " + pdf.getName());
 			return false;
 		}
@@ -241,14 +286,32 @@ public class PdfxXmlCreator {
 		return httpclient.execute(httpPost).getEntity();
 	}
 
+	/**
+	 * Checks if a HttpResponse has status code 200 (=ok).
+	 *
+	 * @param response
+	 *            a HttpResponse object
+	 * @return true iff status code of response equals 200
+	 */
 	public static boolean isHttpResponseSuccessful(CloseableHttpResponse response) {
 		return response.getStatusLine().getStatusCode() == 200;
 	}
 
+	/**
+	 * @return true iff parameter for overwriting existing output is set to true
+	 */
 	public boolean isOverwriteOutput() {
 		return overwriteOutput;
 	}
 
+	/**
+	 * Set the parameter which controls if already existing output files should
+	 * be overwritten.
+	 *
+	 * @param overwriteOutput
+	 *            set to true if you want to overwrite existing output,
+	 *            otherwise to false.
+	 */
 	public void setOverwriteOutput(boolean overwriteOutput) {
 		this.overwriteOutput = overwriteOutput;
 	}
