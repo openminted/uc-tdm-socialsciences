@@ -77,6 +77,7 @@ public class PdfxXmlToXmiConverter {
 			Files.walk(inputDir).filter(Files::isRegularFile).filter((p) -> p.toString().endsWith(".xml"))
 					.forEach(toProcess::add);
 		} catch (IOException e) {
+			logger.error("Exception occurred in reading the directory: " + inputDir.toUri());
 			e.printStackTrace();
 		}
 		return toProcess;
