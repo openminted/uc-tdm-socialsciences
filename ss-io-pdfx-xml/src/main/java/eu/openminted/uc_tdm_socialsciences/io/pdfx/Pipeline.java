@@ -20,7 +20,7 @@ public class Pipeline {
 		PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
 		pdfxXmlCreator.setOverwriteOutput(true);
 		try {
-			List<Path> pdfxOutFiles = pdfxXmlCreator.process(inputPath, inputPath);
+			List<Path> pdfxOutFiles = pdfxXmlCreator.process(inputPath, null);
 
 			for (Path p : pdfxOutFiles) {
 				PdfxXmlToXmiConverter.convert(p.toString(), FilenameUtils.getBaseName(p.toString()) + ".xmi");
