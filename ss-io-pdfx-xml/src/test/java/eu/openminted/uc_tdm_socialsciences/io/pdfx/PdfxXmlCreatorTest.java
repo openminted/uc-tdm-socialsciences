@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -51,4 +51,11 @@ public class PdfxXmlCreatorTest {
         assert pdfxXmlCreator.process(inputDirectory, outputDirectory).size() == 0;
         FileUtils.deleteDirectory(new File(outputDirectory));
     }
+
+	@Test
+	public void testSingleFile() {
+		String inputFile = "src/test/resources/14_Paper.pdf";
+		List<Path> process = pdfxXmlCreator.process(inputFile, null);
+		Assert.assertTrue(process.size() == 1);
+	}
 }
