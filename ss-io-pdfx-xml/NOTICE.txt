@@ -4,3 +4,9 @@ is retrieved from the following urls
     - http://nbn-resolving.de/urn:nbn:de:0168-ssoar-424669
 And was originally distributed with the following license:
 Creative Commons - Attribution-NonCommercial-ShareAlike : http://creativecommons.org/licenses/by-nc-sa/3.0/
+
+The English words dictionary is retrieved from
+	- https://github.com/dwyl/english-words
+and was originally distributed by
+	www.infochimps.com
+so copyright belongs to them.
