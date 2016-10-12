@@ -53,7 +53,7 @@ public class Pipeline {
 		}
 
 		try {
-			List<Path> pdfxOutFiles = pdfxXmlCreator.process(inputPath, null);
+			List<Path> pdfxOutFiles = pdfxXmlCreator.process(inputPath, outputPath);
 			System.out.println(pdfxOutFiles.size() + " files have been processed by pdfx.");
 
 			for (Path p : pdfxOutFiles) {
