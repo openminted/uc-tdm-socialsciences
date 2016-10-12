@@ -123,10 +123,15 @@ public class PdfxXmlCreator {
 	 * @return a list of all the Paths of the generated output files
 	 */
 	public List<Path> process(Path inputPath, Path outputDirectoryPath) {
+		List<Path> outputFiles = new ArrayList<>();
+		if (!inputPath.toFile().exists()) {
+			logger.error("Given path doesn't exist on the file system.");
+			return outputFiles;
+		}
+
 		logger.info("PdfxXmlCreator process started...");
 		logger.info("Input directory: " + inputPath.toUri());
 
-		List<Path> outputFiles = new ArrayList<>();
 
 		if (!inputPath.toFile().isDirectory()) {
 			logger.debug("Provided path is not a directory: " + inputPath.toUri());
