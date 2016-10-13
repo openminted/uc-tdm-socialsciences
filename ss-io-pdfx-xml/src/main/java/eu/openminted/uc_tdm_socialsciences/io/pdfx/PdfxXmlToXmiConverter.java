@@ -31,6 +31,9 @@ public class PdfxXmlToXmiConverter {
 	// todo fix me
 	public static final String WORD_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
 			.getResource("german-words-dictionary.txt").getFile();
+	// public static final String WORD_DICTIONARY_PATH =
+	// PdfxXmlToXmiConverter.class.getClassLoader()
+	// .getResource("english-words-dictionary.txt").getFile();
 
 	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
 
