@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -21,8 +20,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import org.apache.log4j.Logger;
-import org.apache.uima.UIMAException;
-
 import eu.openminted.uc_tdm_socialsciences.kb.preparation.util.PDFChecker;
 
 /**
