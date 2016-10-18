@@ -64,11 +64,14 @@ public class PdfxXmlToXmiConverter {
 		}
 		scanner.close();
 		Path inputDir = Paths.get(inputPath);
+		String outputDir = inputDir.toString();
 
 		for (Path xml : getXmlListFromDirectory(inputDir)) {
 			String inputResource = xml.toString();
-			String outputResource = FilenameUtils.getBaseName(inputResource) + ".cas.xmi";
-			String outputResourceCasDump = FilenameUtils.getBaseName(inputResource) + ".cas.dump";
+			String outputResource = Paths.get(outputDir, FilenameUtils.getBaseName(inputResource) + ".cas.xmi")
+					.toString();
+			String outputResourceCasDump = Paths.get(outputDir, FilenameUtils.getBaseName(inputResource) + ".cas.dump")
+					.toString();
 			convert(inputResource, outputResource);
 			createCasDump(inputResource, outputResourceCasDump);
 		}
@@ -100,7 +103,7 @@ public class PdfxXmlToXmiConverter {
 	public static void convert(String inputResource, String outputResource) throws UIMAException, IOException {
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class,
-						PdfxXmlReader.PARAM_LANGUAGE, "en",
+						PdfxXmlReader.PARAM_LANGUAGE, "de",
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
 				createEngineDescription(HyphenationRemover.class,
 						HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
@@ -135,7 +138,7 @@ public class PdfxXmlToXmiConverter {
 	public static void createCasDump(String inputResource, String outputResource) throws UIMAException, IOException {
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class,
-						PdfxXmlReader.PARAM_LANGUAGE, "en",
+						PdfxXmlReader.PARAM_LANGUAGE, "de",
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
 				createEngineDescription(HyphenationRemover.class,
 						HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
