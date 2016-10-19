@@ -19,23 +19,26 @@ import org.apache.uima.UIMAException;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
 import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRemover;
-import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 
 /**
  * This class is responsible for converting the output of pdfx, which is XML
  * with an own schema, into UIMA XMI format.
- *
- * @author
  */
 public class PdfxXmlToXmiConverter {
 	// todo fix me
-	public static final String WORD_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
+	// read the dictionary from resources directory
+	public static final String GERMAN_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
 			.getResource("german-words-dictionary.txt").getFile();
-	// public static final String WORD_DICTIONARY_PATH =
-	// PdfxXmlToXmiConverter.class.getClassLoader()
-	// .getResource("english-words-dictionary.txt").getFile();
+	 public static final String ENGLISH_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
+			 .getResource("english-words-dictionary.txt").getFile();
 
 	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
+
+	public static final String LANGUAGE_CODE_EN = "en";
+	public static final String LANGUAGE_CODE_DE = "de";
+
+	private static String inputPath = null;
+	private static String inputLanguage = LANGUAGE_CODE_EN;
 
 	// todo pipeline is only configured for English
 	// TODO do not throw exceptions from main method
@@ -50,19 +53,11 @@ public class PdfxXmlToXmiConverter {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws UIMAException, IOException {
-		logger.debug("WORD DICTIONARY: " + WORD_DICTIONARY_PATH);
+		logger.debug("German Dictionary path: " + GERMAN_DICTIONARY_PATH);
+		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
 
-		String inputPath = null;
-		if (args.length == 1) {
-			inputPath = args[0];
-		}
+		processArguments(args);
 
-		Scanner scanner = new Scanner(System.in);
-		while (null == inputPath || inputPath.length() < 1) {
-			System.out.println("Please provide path to input directory containing pdfx-xml files:");
-			inputPath = scanner.nextLine();
-		}
-		scanner.close();
 		Path inputDir = Paths.get(inputPath);
 		String outputDir = inputDir.toString();
 
@@ -72,9 +67,33 @@ public class PdfxXmlToXmiConverter {
 					.toString();
 			String outputResourceCasDump = Paths.get(outputDir, FilenameUtils.getBaseName(inputResource) + ".cas.dump")
 					.toString();
-			convert(inputResource, outputResource);
-			createCasDump(inputResource, outputResourceCasDump);
+
+			convert(inputResource, outputResource, inputLanguage);
+			createCasDump(inputResource, outputResourceCasDump, inputLanguage);
 		}
+	}
+
+	protected static void processArguments(String[] args) {
+		if (args.length >= 1) {
+			inputPath = args[0];
+		}
+		if (args.length >= 2) {
+			if(args[1].equalsIgnoreCase(LANGUAGE_CODE_DE) || args[1].equalsIgnoreCase(LANGUAGE_CODE_EN))
+				inputLanguage = args[1].toLowerCase();
+			else
+				logger.warn("Undefined input language was provided, default value [" + inputLanguage + "] will be used");
+		}else
+			logger.warn("Input language was not provided, default value [" + inputLanguage + "] will be used");
+
+		Scanner scanner = new Scanner(System.in);
+		while (null == inputPath || inputPath.length() < 1) {
+			System.out.println("Please provide path to input directory containing pdfx-xml files:");
+			inputPath = scanner.nextLine();
+		}
+		scanner.close();
+
+		logger.info("Input path: " + inputPath);
+		logger.info("Input language: " + inputLanguage);
 	}
 
 	private static List<Path> getXmlListFromDirectory(Path inputDir) {
@@ -100,13 +119,25 @@ public class PdfxXmlToXmiConverter {
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
-	public static void convert(String inputResource, String outputResource) throws UIMAException, IOException {
+	public static void convert(String inputResource, String outputResource, String language) throws UIMAException, IOException {
+		String dictionaryPath;
+		switch (language){
+			case LANGUAGE_CODE_EN:
+				dictionaryPath = ENGLISH_DICTIONARY_PATH;
+				break;
+			case LANGUAGE_CODE_DE:
+				dictionaryPath = GERMAN_DICTIONARY_PATH;
+				break;
+			default:
+				throw new IllegalArgumentException("Unknown language selected.");
+		}
+
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class,
-						PdfxXmlReader.PARAM_LANGUAGE, "de",
+						PdfxXmlReader.PARAM_LANGUAGE, language,
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
 				createEngineDescription(HyphenationRemover.class,
-						HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
+						HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
 						HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
 						HyphenationRemover.PARAM_TYPES_TO_COPY,
 						new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
@@ -137,13 +168,25 @@ public class PdfxXmlToXmiConverter {
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
-	public static void createCasDump(String inputResource, String outputResource) throws UIMAException, IOException {
+	public static void createCasDump(String inputResource, String outputResource, String language) throws UIMAException, IOException {
+		String dictionaryPath;
+		switch (language){
+			case LANGUAGE_CODE_EN:
+				dictionaryPath = ENGLISH_DICTIONARY_PATH;
+				break;
+			case LANGUAGE_CODE_DE:
+				dictionaryPath = GERMAN_DICTIONARY_PATH;
+				break;
+			default:
+				throw new IllegalArgumentException("Unknown language selected.");
+		}
+
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class,
-						PdfxXmlReader.PARAM_LANGUAGE, "de",
+						PdfxXmlReader.PARAM_LANGUAGE, language,
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
 				createEngineDescription(HyphenationRemover.class,
-						HyphenationRemover.PARAM_MODEL_LOCATION, WORD_DICTIONARY_PATH,
+						HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
 						HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
 						HyphenationRemover.PARAM_TYPES_TO_COPY,
 						new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
