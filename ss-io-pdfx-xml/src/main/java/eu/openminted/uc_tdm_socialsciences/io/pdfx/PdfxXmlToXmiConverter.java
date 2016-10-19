@@ -25,18 +25,18 @@ import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRe
  * with an own schema, into UIMA XMI format.
  */
 public class PdfxXmlToXmiConverter {
+	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
+
 	public static final String GERMAN_WORDS_DICTIONARY_FILENAME = "german-words-dictionary.txt";
 	public static final String ENGLISH_WORDS_DICTIONARY_FILENAME = "english-words-dictionary.txt";
-	private static String GERMAN_DICTIONARY_PATH;
-	private static String ENGLISH_DICTIONARY_PATH;
-
-	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
+	private String GERMAN_DICTIONARY_PATH;
+	private String ENGLISH_DICTIONARY_PATH;
 
 	public static final String LANGUAGE_CODE_EN = "en";
 	public static final String LANGUAGE_CODE_DE = "de";
 
-	private static String inputPath = null;
-	private static String inputLanguage = LANGUAGE_CODE_EN;
+	private String inputPath = null;
+	private String inputLanguage = LANGUAGE_CODE_EN;
 
 	// todo pipeline is only configured for English
 	// TODO do not throw exceptions from main method
@@ -51,6 +51,10 @@ public class PdfxXmlToXmiConverter {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws UIMAException, IOException {
+		new PdfxXmlToXmiConverter().process(args);
+	}
+
+	protected void process(String[] args) throws UIMAException, IOException {
 		initialize();
 
 		processArguments(args);
@@ -71,7 +75,7 @@ public class PdfxXmlToXmiConverter {
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	protected static void initialize() {
+	protected void initialize() {
 		GERMAN_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
 				.getResource(GERMAN_WORDS_DICTIONARY_FILENAME).getFile();
 		ENGLISH_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
@@ -81,7 +85,7 @@ public class PdfxXmlToXmiConverter {
 		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
 	}
 
-	protected static void processArguments(String[] args) {
+	protected void processArguments(String[] args) {
 		if (args.length >= 1) {
 			inputPath = args[0];
 		}
@@ -104,7 +108,7 @@ public class PdfxXmlToXmiConverter {
 		logger.info("Input language: " + inputLanguage);
 	}
 
-	private static List<Path> getXmlListFromDirectory(Path inputDir) {
+	public static List<Path> getXmlListFromDirectory(Path inputDir) {
 		List<Path> toProcess = new ArrayList<>();
 		try {
 			Files.walk(inputDir).filter(Files::isRegularFile).filter((p) -> p.toString().endsWith(".xml"))
@@ -127,7 +131,7 @@ public class PdfxXmlToXmiConverter {
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
-	public static void convertToXmi(String inputResource, String outputResource, String language) throws UIMAException, IOException {
+	public void convertToXmi(String inputResource, String outputResource, String language) throws UIMAException, IOException {
 		String dictionaryPath;
 		switch (language){
 			case LANGUAGE_CODE_EN:
@@ -176,7 +180,7 @@ public class PdfxXmlToXmiConverter {
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
-	public static void createCasDump(String inputResource, String outputResource, String language) throws UIMAException, IOException {
+	public void createCasDump(String inputResource, String outputResource, String language) throws UIMAException, IOException {
 		String dictionaryPath;
 		switch (language){
 			case LANGUAGE_CODE_EN:
