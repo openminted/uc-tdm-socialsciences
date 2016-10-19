@@ -25,12 +25,10 @@ import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRe
  * with an own schema, into UIMA XMI format.
  */
 public class PdfxXmlToXmiConverter {
-	// todo fix me
-	// read the dictionary from resources directory
-	public static final String GERMAN_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
-			.getResource("german-words-dictionary.txt").getFile();
-	 public static final String ENGLISH_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
-			 .getResource("english-words-dictionary.txt").getFile();
+	public static final String GERMAN_WORDS_DICTIONARY_FILENAME = "german-words-dictionary.txt";
+	public static final String ENGLISH_WORDS_DICTIONARY_FILENAME = "english-words-dictionary.txt";
+	private static String GERMAN_DICTIONARY_PATH;
+	private static String ENGLISH_DICTIONARY_PATH;
 
 	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
 
@@ -53,8 +51,7 @@ public class PdfxXmlToXmiConverter {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws UIMAException, IOException {
-		logger.debug("German Dictionary path: " + GERMAN_DICTIONARY_PATH);
-		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
+		initialize();
 
 		processArguments(args);
 
@@ -68,9 +65,20 @@ public class PdfxXmlToXmiConverter {
 			String outputResourceCasDump = Paths.get(outputDir, FilenameUtils.getBaseName(inputResource) + ".cas.dump")
 					.toString();
 
-			convert(inputResource, outputResource, inputLanguage);
+			convertToXmi(inputResource, outputResource, inputLanguage);
 			createCasDump(inputResource, outputResourceCasDump, inputLanguage);
 		}
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	protected static void initialize() {
+		GERMAN_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
+				.getResource(GERMAN_WORDS_DICTIONARY_FILENAME).getFile();
+		ENGLISH_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
+				.getResource(ENGLISH_WORDS_DICTIONARY_FILENAME).getFile();
+
+		logger.debug("German Dictionary path: " + GERMAN_DICTIONARY_PATH);
+		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
 	}
 
 	protected static void processArguments(String[] args) {
@@ -119,7 +127,7 @@ public class PdfxXmlToXmiConverter {
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
-	public static void convert(String inputResource, String outputResource, String language) throws UIMAException, IOException {
+	public static void convertToXmi(String inputResource, String outputResource, String language) throws UIMAException, IOException {
 		String dictionaryPath;
 		switch (language){
 			case LANGUAGE_CODE_EN:

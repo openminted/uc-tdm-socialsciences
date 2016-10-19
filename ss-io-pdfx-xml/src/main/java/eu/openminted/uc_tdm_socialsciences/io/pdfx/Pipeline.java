@@ -70,7 +70,7 @@ public class Pipeline {
 			System.out.println(pdfxOutFiles.size() + " files have been processed by pdfx.");
 
 			for (Path p : pdfxOutFiles) {
-				PdfxXmlToXmiConverter.convert(p.toString(), FilenameUtils.getBaseName(p.toString()) + ".xmi", inputLanguage);
+				PdfxXmlToXmiConverter.convertToXmi(p.toString(), FilenameUtils.getBaseName(p.toString()) + ".xmi", inputLanguage);
 			}
 
 		} catch (IOException e) {
