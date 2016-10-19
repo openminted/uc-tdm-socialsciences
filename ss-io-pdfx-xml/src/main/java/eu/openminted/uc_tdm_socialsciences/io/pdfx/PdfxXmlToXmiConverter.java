@@ -120,7 +120,9 @@ public class PdfxXmlToXmiConverter {
 				 * BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
 				 */
 				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
-						XmiWriter.PARAM_OVERWRITE, true));
+						XmiWriter.PARAM_OVERWRITE, true,
+						XmiWriter.PARAM_STRIP_EXTENSION, true,
+						XmiWriter.PARAM_SINGULAR_TARGET, true));
 	}
 
 	/**
