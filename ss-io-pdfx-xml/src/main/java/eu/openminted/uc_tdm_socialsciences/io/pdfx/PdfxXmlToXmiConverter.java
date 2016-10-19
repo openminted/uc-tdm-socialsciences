@@ -38,7 +38,6 @@ public class PdfxXmlToXmiConverter {
 	private String inputPath = null;
 	private String inputLanguage = LANGUAGE_CODE_EN;
 
-	// todo pipeline is only configured for English
 	// TODO do not throw exceptions from main method
 	/**
 	 * Main method to run the converter from command line. Input directory
@@ -85,6 +84,7 @@ public class PdfxXmlToXmiConverter {
 		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
 	}
 
+	//todo rewrite this using Apache CLI https://commons.apache.org/proper/commons-cli/usage.html
 	protected void processArguments(String[] args) {
 		if (args.length >= 1) {
 			inputPath = args[0];

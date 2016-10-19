@@ -10,6 +10,7 @@ import org.apache.uima.UIMAException;
 
 public class Pipeline {
 
+	//todo rewrite this using Apache CLI https://commons.apache.org/proper/commons-cli/usage.html
 	public static void main(String[] args) {
 		String inputPath = null, outputPath = null, inputLanguage = PdfxXmlToXmiConverter.LANGUAGE_CODE_EN;
 
@@ -67,7 +68,7 @@ public class Pipeline {
 
 		try {
 			List<Path> pdfxOutFiles = pdfxXmlCreator.process(inputPath, outputPath);
-			System.out.println(pdfxOutFiles.size() + " files have been processed by pdfx.");
+			System.out.println(pdfxOutFiles.size() + " files have been processed by Pdfx.");
 
 			for (Path p : pdfxOutFiles) {
 				new PdfxXmlToXmiConverter().
