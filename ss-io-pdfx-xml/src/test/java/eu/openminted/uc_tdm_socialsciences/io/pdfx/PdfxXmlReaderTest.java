@@ -21,7 +21,7 @@ import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
 public class PdfxXmlReaderTest {
 	public static final String TEST_RESOURCES_PATH = "src/test/resources/";
 
-	public static final String TEST_RESOURCE_ARTICLE1 = "14_Paper.pdf.xml";
+	public static final String TEST_RESOURCE_ARTICLE1 = "14_Paper.xml";
 
 	public static final String TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP = "14_Paper-pdfx-appended.xml.dump";
 
