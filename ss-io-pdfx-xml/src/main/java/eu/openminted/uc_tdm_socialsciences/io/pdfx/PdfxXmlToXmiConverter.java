@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
@@ -147,6 +148,7 @@ public class PdfxXmlToXmiConverter {
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class,
 						PdfxXmlReader.PARAM_LANGUAGE, language,
+//						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource,
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
 				createEngineDescription(HyphenationRemover.class,
 						HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
@@ -157,15 +159,13 @@ public class PdfxXmlToXmiConverter {
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
 								"webanno.custom.Reference" }),
 				// uncomment the following to get Token annotations
-				/*
-				 * createEngineDescription(BreakIteratorSegmenter.class,
-				 * BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
-				 * BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
-				 */
+				createEngineDescription(BreakIteratorSegmenter.class,
+						BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
+						BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
 				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
 						XmiWriter.PARAM_OVERWRITE, true,
 						XmiWriter.PARAM_STRIP_EXTENSION, true,
-						XmiWriter.PARAM_SINGULAR_TARGET, true));
+						XmiWriter.PARAM_SINGULAR_TARGET, false));
 	}
 
 	/**
@@ -196,6 +196,7 @@ public class PdfxXmlToXmiConverter {
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class,
 						PdfxXmlReader.PARAM_LANGUAGE, language,
+//						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource,
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
 				createEngineDescription(HyphenationRemover.class,
 						HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
@@ -206,11 +207,9 @@ public class PdfxXmlToXmiConverter {
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
 								"webanno.custom.Reference" }),
 				// uncomment the following to get Token annotations
-				/*
-				 * createEngineDescription(BreakIteratorSegmenter.class,
-				 * BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
-				 * BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
-				 */
+				createEngineDescription(BreakIteratorSegmenter.class,
+						BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
+						BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
 				createEngineDescription(CasDumpWriter.class,
 						CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
 						CasDumpWriter.PARAM_SORT, true));
