@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
@@ -159,9 +160,13 @@ public class PdfxXmlToXmiConverter {
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
 								"webanno.custom.Reference" }),
 				// uncomment the following to get Token annotations
-				createEngineDescription(BreakIteratorSegmenter.class,
-						BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
-						BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
+				createEngineDescription(OpenNlpSegmenter.class,
+						OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
+						OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
+						OpenNlpSegmenter.PARAM_ZONE_TYPES,
+						new String[] {
+								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
+						}),
 				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
 						XmiWriter.PARAM_OVERWRITE, true,
 						XmiWriter.PARAM_STRIP_EXTENSION, true,
@@ -207,9 +212,13 @@ public class PdfxXmlToXmiConverter {
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
 								"webanno.custom.Reference" }),
 				// uncomment the following to get Token annotations
-				createEngineDescription(BreakIteratorSegmenter.class,
-						BreakIteratorSegmenter.PARAM_WRITE_SENTENCE, false,
-						BreakIteratorSegmenter.PARAM_STRICT_ZONING, true),
+				createEngineDescription(OpenNlpSegmenter.class,
+						OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
+						OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
+						OpenNlpSegmenter.PARAM_ZONE_TYPES,
+						new String[] {
+								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
+						}),
 				createEngineDescription(CasDumpWriter.class,
 						CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
 						CasDumpWriter.PARAM_SORT, true));
