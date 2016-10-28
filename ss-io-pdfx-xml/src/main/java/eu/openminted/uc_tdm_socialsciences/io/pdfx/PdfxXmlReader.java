@@ -87,7 +87,8 @@ public class PdfxXmlReader
     public static final String PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH = "false";
     public static final String NEWLINE_SEPARATOR = "\r\n";
     public static final String UNKNOWN_VALUE = "N/A";
-    @ConfigurationParameter(name = PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, mandatory = false)
+
+    @ConfigurationParameter(name = PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, mandatory = false, defaultValue = "false")
     protected boolean isParamAppendNewLineAfterParagraph;
 
     @Override
@@ -230,8 +231,11 @@ public class PdfxXmlReader
 
         protected void endElementS() {
             //end of sentence
-            new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
-            sentenceBegin = -1;
+            //fixme should only check isInsideParagraph
+            if(sentenceBegin >= 0 && getBuffer().length() > sentenceBegin) {
+                new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
+                sentenceBegin = -1;
+            }
         }
 
         protected void endElementRegion() {
@@ -244,6 +248,7 @@ public class PdfxXmlReader
                 }
                 makeParagraph();
                 captureText = false;
+                isInsideParagraph = false;
             }
         }
 
