@@ -167,6 +167,7 @@ public class PdfxXmlToXmiConverter {
 						new String[] {
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
 						}),
+				createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
 				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
 						XmiWriter.PARAM_OVERWRITE, true,
 						XmiWriter.PARAM_STRIP_EXTENSION, true,
@@ -219,6 +220,7 @@ public class PdfxXmlToXmiConverter {
 						new String[] {
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
 						}),
+				createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
 				createEngineDescription(CasDumpWriter.class,
 						CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
 						CasDumpWriter.PARAM_SORT, true));
