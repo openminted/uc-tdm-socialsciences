@@ -84,7 +84,6 @@ public class PdfxXmlReader
     public static final String TAG_H3 = "h3";
     public static final String TAG_H4 = "h4";
 
-    public static final String PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH = "false";
     public static final String NEWLINE_SEPARATOR = "\r\n";
     public static final String UNKNOWN_VALUE = "N/A";
 
@@ -92,6 +91,8 @@ public class PdfxXmlReader
      * @deprecated Setting this parameter to true might cause problems in components/programs that do not expect
      * zero-length sentences
      */
+    public static final String PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH = "false";
+    @Deprecated
     @ConfigurationParameter(name = PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, mandatory = false, defaultValue = "false")
     protected boolean isParamAppendNewLineAfterParagraph;
 
@@ -138,23 +139,22 @@ public class PdfxXmlReader
                                  Attributes aAttributes)
                 throws SAXException
         {
-            //todo optimize order of following if statements
             lastElementSeen = aName;
-            if (TAG_ARTICLE_TITLE.equals(aName)) {
-                startElementArticleTitle();
-            }else if (TAG_ABSTRACT.equals(aName)) {
-                startElementAbstract();
-            }else if (TAG_REGION.equals(aName)) {
+            if (TAG_REGION.equals(aName)) {
                 startElementRegion(aAttributes);
-            }else if(TAG_S.equals(aName)) {
+            } else if (TAG_S.equals(aName)) {
                 startElementS();
-            }else if(TAG_H1.equals(aName) || TAG_H2.equals(aName) || TAG_H3.equals(aName) || TAG_H4.equals(aName)) {
-                startElementHeading();
-            }else if(TAG_MARKER.equals(aName)){
+            } else if (TAG_MARKER.equals(aName)){
                 //this is an empty xml element i.e. <marker/>
                 startElementMarker(aAttributes);
-            }else if(TAG_REF.equals(aName)){
+            } else if (TAG_REF.equals(aName)){
                 startElementRef(aAttributes);
+            } else if (TAG_H1.equals(aName) || TAG_H2.equals(aName) || TAG_H3.equals(aName) || TAG_H4.equals(aName)) {
+                startElementHeading();
+            } else if (TAG_ARTICLE_TITLE.equals(aName)) {
+                startElementArticleTitle();
+            } else if (TAG_ABSTRACT.equals(aName)) {
+                startElementAbstract();
             }
         }
 
@@ -163,18 +163,18 @@ public class PdfxXmlReader
                 throws SAXException
         {
             lastElementSeen = aName;
-            if (TAG_ARTICLE_TITLE.equals(aName)) {
+            if (TAG_REGION.equals(aName)){
+                endElementRegion();
+            } else if (TAG_S.equals(aName)){
+                endElementS();
+            } else if (TAG_REF.equals(aName)){
+                endElementRef();
+            } else if (TAG_H1.equals(aName) || TAG_H2.equals(aName) || TAG_H3.equals(aName) || TAG_H4.equals(aName)) {
+                endElementHeading();
+            } else if (TAG_ARTICLE_TITLE.equals(aName)) {
                 endElementArticleTitle();
             }else if (TAG_ABSTRACT.equals(aName)){
                 endElementAbstract();
-            }else if (TAG_REGION.equals(aName)){
-                endElementRegion();
-            }else if(TAG_S.equals(aName)){
-                endElementS();
-            }else if(TAG_H1.equals(aName) || TAG_H2.equals(aName) || TAG_H3.equals(aName) || TAG_H4.equals(aName)) {
-                endElementHeading();
-            }else if(TAG_REF.equals(aName)){
-                endElementRef();
             }
         }
 
