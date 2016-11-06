@@ -1,5 +1,6 @@
 package eu.openminted.uc_tdm_socialsciences.io.pdfx;
 
+import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -13,8 +14,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.io.xml.XmlTextReader;
 import webanno.custom.Reference;
-
-import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 /**
  * Reader for PDFX XML format
@@ -34,6 +33,7 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
 public class PdfxXmlReader
         extends XmlTextReader
 {
+    private static final Logger logger = Logger.getLogger(PdfxXmlReader.class);
     /**
      * either of these contains title of the document
      */
@@ -88,6 +88,10 @@ public class PdfxXmlReader
     public static final String NEWLINE_SEPARATOR = "\r\n";
     public static final String UNKNOWN_VALUE = "N/A";
 
+    /***
+     * @deprecated Setting this parameter to true might cause problems in components/programs that do not expect
+     * zero-length sentences
+     */
     @ConfigurationParameter(name = PARAM_APPEND_NEW_LINE_AFTER_PARAGRAPH, mandatory = false, defaultValue = "false")
     protected boolean isParamAppendNewLineAfterParagraph;
 
@@ -113,13 +117,16 @@ public class PdfxXmlReader
     public class PdfxXmlHandler
             extends TextExtractor
     {
+        public static final String DEFAULT_DOCUMENT_ID = "UNKNOWN";
         private boolean captureText = false;
         private boolean isInsideParagraph = false;
         private boolean paragraphHasSentence = false;
 
-        private String documentId = "UNKNOWN";
+        private String documentId = DEFAULT_DOCUMENT_ID;
+        private String lastElementSeen = "";
         private int paragraphBegin = -1;
         private int sentenceBegin = -1;
+        private int sentenceEnd = -1;
 
         private String referenceType = "";
         private String referenceRId = "";
@@ -132,6 +139,7 @@ public class PdfxXmlReader
                 throws SAXException
         {
             //todo optimize order of following if statements
+            lastElementSeen = aName;
             if (TAG_ARTICLE_TITLE.equals(aName)) {
                 startElementArticleTitle();
             }else if (TAG_ABSTRACT.equals(aName)) {
@@ -143,6 +151,7 @@ public class PdfxXmlReader
             }else if(TAG_H1.equals(aName) || TAG_H2.equals(aName) || TAG_H3.equals(aName) || TAG_H4.equals(aName)) {
                 startElementHeading();
             }else if(TAG_MARKER.equals(aName)){
+                //this is an empty xml element i.e. <marker/>
                 startElementMarker(aAttributes);
             }else if(TAG_REF.equals(aName)){
                 startElementRef(aAttributes);
@@ -153,6 +162,7 @@ public class PdfxXmlReader
         public void endElement(String aUri, String aLocalName, String aName)
                 throws SAXException
         {
+            lastElementSeen = aName;
             if (TAG_ARTICLE_TITLE.equals(aName)) {
                 endElementArticleTitle();
             }else if (TAG_ABSTRACT.equals(aName)){
@@ -162,7 +172,6 @@ public class PdfxXmlReader
             }else if(TAG_S.equals(aName)){
                 endElementS();
             }else if(TAG_H1.equals(aName) || TAG_H2.equals(aName) || TAG_H3.equals(aName) || TAG_H4.equals(aName)) {
-                //todo create a specific annotation for heading?
                 endElementHeading();
             }else if(TAG_REF.equals(aName)){
                 endElementRef();
@@ -170,13 +179,13 @@ public class PdfxXmlReader
         }
 
         protected void startElementHeading() {
-            captureText = true;
+            beginParagraph();
             startElementS();
         }
 
         protected void endElementHeading() {
             endElementS();
-            captureText = false;
+            endParagraph();
         }
 
         protected void startElementRef(Attributes aAttributes) {
@@ -184,14 +193,28 @@ public class PdfxXmlReader
             String referenceId = aAttributes.getValue(ATTR_REF_REF_ID);
             //todo also include id <xref rid=referenceId id="...">
             this.referenceType = (referenceType == null ? UNKNOWN_VALUE : referenceType);
-            this.referenceRId = (referenceId == null? UNKNOWN_VALUE : referenceId);
+            this.referenceRId = (referenceId == null ? UNKNOWN_VALUE : referenceId);
             referenceStart = getBuffer().length();
         }
 
+        protected void endElementRef() {
+            if(isNotZeroLengthSpan(referenceStart, getBuffer().length())){
+                Reference reference = new Reference(getJCas(), referenceStart, getBuffer().length());
+                reference.setRefId(referenceRId);
+                reference.setRefType(referenceType);
+                reference.addToIndexes();
+                referenceStart = -1;
+            }
+        }
+
         protected void startElementMarker(Attributes aAttributes) {
-            if(ATTR_MARKER_TYPE_VALUE_BLOCK.equals(aAttributes.getValue(ATTR_TYPE))){
-                //paragraph end indicator
-                makeParagraph();
+            //a </s><marker type="block">... indicates a section end
+            if(ATTR_MARKER_TYPE_VALUE_BLOCK.equals(aAttributes.getValue(ATTR_TYPE)) &&
+                    lastElementSeen.equals(TAG_S) &&
+                    !isNotZeroLengthSpan(sentenceEnd, getBuffer().length()) &&
+                    isInsideParagraph){
+                endParagraph();
+                beginParagraph();
             }
         }
 
@@ -199,6 +222,14 @@ public class PdfxXmlReader
             //sentence begin
             sentenceBegin = getBuffer().length();
             paragraphHasSentence = true;
+        }
+
+        protected void endElementS() {
+            //end of sentence
+            if (isInsideParagraph && isNotZeroLengthSpan(sentenceBegin, getBuffer().length())) {
+                sentenceEnd = getBuffer().length();
+                new Sentence(getJCas(), sentenceBegin, sentenceEnd).addToIndexes();
+            }
         }
 
         protected void startElementRegion(Attributes aAttributes) {
@@ -210,34 +241,6 @@ public class PdfxXmlReader
             }
         }
 
-        protected void startElementAbstract() {
-            //paragraph begin
-            beginParagraph();
-        }
-
-        protected void startElementArticleTitle() {
-            captureText = true;
-            beginParagraph();
-        }
-
-        protected void endElementRef() {
-            if(isNotBlank(getBuffer().substring(referenceStart, getBuffer().length()))){
-                Reference reference = new Reference(getJCas(), referenceStart, getBuffer().length());
-                reference.setRefId(referenceRId);
-                reference.setRefType(referenceType);
-                reference.addToIndexes();
-            }
-        }
-
-        protected void endElementS() {
-            //end of sentence
-            //fixme should only check isInsideParagraph
-            if(sentenceBegin >= 0 && getBuffer().length() > sentenceBegin) {
-                new Sentence(getJCas(), sentenceBegin, getBuffer().length()).addToIndexes();
-                sentenceBegin = -1;
-            }
-        }
-
         protected void endElementRegion() {
             if(isInsideParagraph) {
                 //end of paragraph
@@ -246,27 +249,39 @@ public class PdfxXmlReader
                     sentenceBegin = paragraphBegin;
                     endElementS();
                 }
-                makeParagraph();
-                captureText = false;
-                isInsideParagraph = false;
+                endParagraph();
             }
+        }
+
+        protected void startElementAbstract() {
+            //paragraph begin
+            beginParagraph();
         }
 
         protected void endElementAbstract() {
             //end of paragraph
-            makeParagraph();
-            captureText = false;
+            endParagraph();
+        }
+
+        protected void startElementArticleTitle() {
+            beginParagraph();
         }
 
         protected void endElementArticleTitle() {
-            String documentTitle = getBuffer().toString().trim();
+            if (!documentId.equals(DEFAULT_DOCUMENT_ID))
+                logger.warn("More than one article title was seen in the article. Previous value seen [" + documentId + "]");
+
+            String documentTitle = getBuffer().substring(paragraphBegin).trim();
             documentId = documentTitle;
 
             DocumentMetaData.get(getJCas()).setDocumentTitle(documentTitle);
             DocumentMetaData.get(getJCas()).setDocumentId(documentId);
 
-            makeParagraph();
-            captureText = false;
+            endParagraph();
+        }
+
+        protected boolean isNotZeroLengthSpan(int startIndex, int endIndex) {
+            return (startIndex >= 0 && endIndex > startIndex);
         }
 
         private void beginParagraph() {
@@ -276,14 +291,17 @@ public class PdfxXmlReader
             paragraphHasSentence = false;
         }
 
-        private void makeParagraph() {
-            if(isParamAppendNewLineAfterParagraph){
-                int emptySentenceStart = getBuffer().length();
-				getBuffer().append(NEWLINE_SEPARATOR);
-                new Sentence(getJCas(), emptySentenceStart, getBuffer().length()).addToIndexes();
+        private void endParagraph() {
+            if (isNotZeroLengthSpan(paragraphBegin, getBuffer().length())) {
+                if(isParamAppendNewLineAfterParagraph){
+                    int emptySentenceStart = getBuffer().length();
+                    getBuffer().append(NEWLINE_SEPARATOR);
+                    new Sentence(getJCas(), emptySentenceStart, getBuffer().length()).addToIndexes();
+                }
+                new Paragraph(getJCas(), paragraphBegin, getBuffer().length()).addToIndexes();
             }
-            new Paragraph(getJCas(), paragraphBegin, getBuffer().length()).addToIndexes();
-            paragraphBegin = getBuffer().length();
+            captureText = false;
+            isInsideParagraph = false;
         }
 
         @Override
