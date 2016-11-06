@@ -4,6 +4,7 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDesc
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +14,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
-import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
@@ -60,17 +60,15 @@ public class PdfxXmlToXmiConverter {
 
 		processArguments(args);
 
+		convertToXmi(inputPath, inputPath + File.separator + "uima-xmi" + File.separator, inputLanguage);
+
+		//Create Cas Dump files
 		Path inputDir = Paths.get(inputPath);
 		String outputDir = inputDir.toString();
-
 		for (Path xml : getXmlListFromDirectory(inputDir)) {
 			String inputResource = xml.toString();
-			String outputResource = Paths.get(outputDir, FilenameUtils.getBaseName(inputResource) + ".cas.xmi")
-					.toString();
 			String outputResourceCasDump = Paths.get(outputDir, FilenameUtils.getBaseName(inputResource) + ".cas.dump")
 					.toString();
-
-			convertToXmi(inputResource, outputResource, inputLanguage);
 			createCasDump(inputResource, outputResourceCasDump, inputLanguage);
 		}
 	}
@@ -149,8 +147,8 @@ public class PdfxXmlToXmiConverter {
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class,
 						PdfxXmlReader.PARAM_LANGUAGE, language,
-//						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource,
-						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
+						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource,
+						PdfxXmlReader.PARAM_PATTERNS, "[+]*.xml"),
 				createEngineDescription(HyphenationRemover.class,
 						HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
 						HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
@@ -159,7 +157,6 @@ public class PdfxXmlToXmiConverter {
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
 								"webanno.custom.Reference" }),
-				// uncomment the following to get Token annotations
 				createEngineDescription(OpenNlpSegmenter.class,
 						OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
 						OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
@@ -170,8 +167,7 @@ public class PdfxXmlToXmiConverter {
 				createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
 				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
 						XmiWriter.PARAM_OVERWRITE, true,
-						XmiWriter.PARAM_STRIP_EXTENSION, true,
-						XmiWriter.PARAM_SINGULAR_TARGET, false));
+						XmiWriter.PARAM_STRIP_EXTENSION, true));
 	}
 
 	/**
@@ -202,7 +198,6 @@ public class PdfxXmlToXmiConverter {
 		runPipeline(
 				createReaderDescription(PdfxXmlReader.class,
 						PdfxXmlReader.PARAM_LANGUAGE, language,
-//						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource,
 						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
 				createEngineDescription(HyphenationRemover.class,
 						HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
@@ -212,7 +207,6 @@ public class PdfxXmlToXmiConverter {
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
 								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
 								"webanno.custom.Reference" }),
-				// uncomment the following to get Token annotations
 				createEngineDescription(OpenNlpSegmenter.class,
 						OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
 						OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
