@@ -1,0 +1,1209 @@
+======== CAS 0 begin ==================================
+
+-------- View _InitialView begin ----------------------------------
+
+DocumentMetaData
+   sofa: _InitialView
+   begin: 0
+   end: 19055
+   language: "en"
+   documentTitle: "The Denoised Web Treebank: Evaluating Dependency Parsing under Noisy Input Conditions"
+   documentId: "The Denoised Web Treebank: Evaluating Dependency Parsing under Noisy Input Conditions"
+   isLastSegment: false
+
+CAS-Text:
+The Denoised Web Treebank: Evaluating Dependency Parsing under Noisy Input ConditionsJoachim Daiber, Rob van der GootILLC University of Amsterdam, CLCG University of Groningen J.Daiber@uva.nl, R.van.der.Goot@rug.nl Abstract We introduce the Denoised Web Treebank: a treebank including a normalization layer and a corresponding evaluation metric for dependency parsing of noisy text, such as Tweets. This benchmark enables the evaluation of parser robustness as well as text normalization methods, including normalization as machine translation and unsupervised lexical normalization, directly on syntactic trees. Experiments show that text normalization together with a combination of domain-specific and generic part-of-speech taggers can lead to a significant improvement in parsing accuracy on this test set. Keywords: Parsing, Part-of-Speech Tagging, Social Media Processing, Web Treebank1. IntroductionThe quality of automatic syntactic analysis of clean, in- domain text has improved steadily in recent decades. Out- of-domain text and grammatically noisy text, on the other hand, remain an obstacle and often lead to significant de- creases in parsing accuracy. Recently, a lot of effort has been put into adapting natural language processing tools, such as named entity recognition (Liu et al., 2012) and POS tagging (Gimpel et al., 2011), to noisy content. In this paper, we focus on dependency parsing of noisy text. Specif- ically, we are interested in how much parse quality can be gained by text normalization. For this, we introduce a new dependency treebank with a normalization layer. This new dataset can be used to quantify the influence of text normalization on the parsing of user-generated content. The contributions of this paper are as follows: (1) We introduce the Denoised Web Treebank, a new Twitter dependency treebank with a normalization layer; (2) we propose a corresponding noise-aware evaluation metric; and (3) we use this dataset and the metric as a benchmark to evaluate the impact of text normalization on dependency parsing of user-generated content.2. Related WorkFor the domain of web data, various datasets and treebanks have been introduced. Table 1 provides an overview of all relevant English treebanks. The constituency treebanks mentioned here were created using the English Web Treebank annotation guidelines (Bies et al., 2012), which are an addendum to the Penn Treebank guidelines (Bies et al., 1995). These guidelines discuss domain-specific phenomena, including adaptations of existing labels as well as the addition of new labels for novel linguistic constructions. Foster et al. (2011a) de- scribe a constituency treebank consisting of two domains; Twitter and sports forums. The Twitter part is of compa- rable size to our treebank and is described in more detail in Foster et al. (2011b). The dependency treebanks show greater diversity in annotation. The English Web Treebank (Silveira et al., 2014) is annotated using the Universal Dependencies guidelines with additional relation types for the web domain. A very different approach is taken for the annotation of the Tweebank (Kong et al., 2014). In its format, individual words can be skipped in the annotation. This is motivated by the idea that not all words in a Tweet contribute significantly to the syntactic structure and their inclusion would lead to arbitrary decisions unhelpful for most downstream applications. Additionally, because Tweets are used as units instead of sentences, having multiple roots is allowed. This adjusted dependency format makes it harder to use existing parsers with this dataset. The Foreebank (Kaljahi et al., 2015), a treebank focusing on forum text, is the only other treebank that includes normalization annotation. It includes manual normalizations of the raw text, and constituency trees of the normalized sentences. The normalization is kept as minimal as possible and is represented in the tree by appending an error suffix to the POS tags. The Foreebank allows analysis of the effect of different errors on the parsing performance of a constituency parser. Our contribution, the Denoised Web Treebank, fills the gap of a native (i.e., non-converted) dependency treebank including normalizations for the web domain. In the past, automatic conversions were used for this task (Petrov and McDonald, 2012; Foster et al., 2011a) using the Stanford Converter (De Marneffe et al., 2006). But for the noisy web domain, the conversions might be of questionable quality. Previous work on the parsing of web data has mostly focused on complementing existing parsers with semi- supervised data The amount of training data can be artifi- cially enlarged by using self-training or up-training (Petrov and McDonald, 2012; Foster et al., 2011b). Another source of semi-supervised improvements can be gained from using features gathered from large amounts of unannotated texts (Kong et al., 2014). A completely different approach is taken by Khan et al. (2013), where the most appropri- ate training trees are found in the train treebank for each sentence.3. Dataset3.1. Data Preparation3.2. NormalizationThe goal of the normalization was to leave the original tokens intact and not to replace them by their normalized forms directly. Hence, we keep both the original tokens and the normalized version of the sentences with word alignments. Figure 1 depicts a gold standard dependency graph including the alignments to the original tokens. Abbreviations Abbreviations and slang expressions are expanded whenever necessary for syntactic reasons. Exam- ples include instances such as “cu”, used as the short form of see and you, which as a single token would include both the verb and the object of the sentence. Punctuation Punctuation is inserted if it is necessary to disambiguate the sentence meaning. Emoticons, such as :), are kept intact. Zero copulas The data contains several cases of zero copula, i.e. a copula verb is not realized in the sentence. These occurrences are annotated by inserting the copula verb in the normalized version of the sentence (see Figure 1).3.3. Syntactic AnnotationThe normalized tokens were automatically parsed using a generative phrase structure parser 2 and then converted to dependencies. Both part-of-speech tags and dependency annotations were then manually corrected in two passes. The dependency annotations follow the format of the CoNLL-X shared task on multilingual dependency parsing (Buchholz and Marsi, 2006), with the following adaptations: Emoticons Emoticons are kept intact, tagged with the part-of-speech tag UH (interjection) and are attached to the head of the sentence. Domain-specific elements Twitter-specific syntax was treated as follows: Usernames at the start of a sentence that do not fulfill a syntactic role, e.g. as the subject, are attached to the main verb using the DEP (unclassified) dependency relation. In all other cases, usernames are treated as proper nouns. RT and similar markers, as well as hashtags indicat- ing the topic of a Tweet (e.g. #worldcup) are attached to the main verb as DEP.1 English Aspell dictionary: http://aspell.net/ 2 https://code.google.com/p/ berkeleyparser/P ROOT COORD P OBJ NMOD SBJ NMOD OBJ You . are . the . little . . guy . , . are . you . ? . U ∅ da lil guy , ru ?We collected all Tweets within a period of 24 hours from January 07, 2012 00:00 until 23:59 GMT. To avoid possible biases of automatic language identification tools towards well-formed language, we manually classified the Tweets in random order into English and non-English Tweets until we reached a reasonably-sized corpus of Tweets classified as English. We then manually split this corpus into sentences and randomly selected 250 sentences as a development set and 250 sentences as a test set. Table 1 compares some basic statistics of this treebank against other Web treebanks. Out-of-vocabulary rate is calculated against the English dictionary of the GNU Aspell spell checker. 14. Evaluating Noise-Aware ParsingOur dataset provides alignments between the gold standard and the original tokens, allowing for insertions, deletions and modifications. Hence, the standard dependency parsing metrics, unlabeled and labeled attachment scores, are no longer sufficient. In our dataset, there may not be a di- rect one-to-one correspondence between the predicted tree and the gold tree. Hence, we allow the parser to make any insertions, deletions and modifications to the tokens under the assumption that it provides an alignment between the modified tokens and the original tokens. The evaluation is then performed using a metric based on precision and recall values calculated using these alignments. Aligned precision and recall Based on the normalized side of the gold standard and the parser’s aligned predictions, we calculate precision, recall and F 1 score for dependencies (Eq. 1–3). We base the evaluation metric on the standard definitions of precision and recall, which are widely used in natural language processing. In Eq. 1 and 2, TP , FP and FN are the numbers of true positive, false positive, and false negative results. The F 1 measure is the harmonic mean of precision and recall.TP precision = (1) TP + FP TP recall = (2) TP + FN precision · recall F 1 = 2 · (3) precision + recallDefinition Formally, when comparing the parser output against the dataset, the following information is provided for each instance: − the original sentence S O − a predicted dependency tree D P = ⟨V P , E P ⟩ − a gold dependency tree D G = ⟨V G , E G ⟩ − alignment function a P for predicted tokens − alignment function a G for gold tokens For each parsed dependency tree, S O is the sequence of original, non-normalized tokens. The two alignment functions a G and a P map the gold tokens and the predicted tokens to the original tokens in S O . In the case of an insertion, the new token cannot be aligned to any of the original tokens in S O and, therefore, such insertions are mapped to an artificial NULL token. Unlabeled dependencies Based on all test instances, we calculate the total number of true positive, false positive and false negative dependency relations as follows: For each gold dependency tree D G = ⟨V G , E G ⟩ and each predicted dependency tree D P = ⟨V P , E P ⟩, let M G and M P be the set of dependency relations mapped to the original tokens in S O : M G = {⟨a G (w i ), a G (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E G } M P = {⟨a P (w i ), a P (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E P } The true positive, false positive and false negative dependency relations can then be calculated as: ∑ TP = |M G ∩ M P | ⟨S O ,D P ,D G ,a P ,a G ⟩ ∑ FP = |M P \ M G | ⟨S O ,D P ,D G ,a P ,a G ⟩ ∑ FN = |M G \ M P | ⟨S O ,D P ,D G ,a P ,a G ⟩ Labeled dependencies To measure labeled dependencies, the dependency type is added to the head-modifier pair in M P and M G : M G ′ = {⟨a G (w i ), r, a G (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E G } M P ′ = {⟨a P (w i ), r, a P (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E P } Relation to other metrics This metric can be seen as a generalization of the commonly used attachment score measure. If there is a one-to-one alignment between every predicted token and every gold token, the unlabeled and labeled aligned F 1 scores are equivalent to the unlabeled (UAS) and labeled attachment score (LAS).5. ExperimentsHaving introduced our dataset and the corresponding evaluation metric, we can evaluate the impact of two methods commonly used to aid in the parsing of noisy content: noise-robust part-of-speech tagging and text normalization.5.1. Part-of-Speech TaggingPOS tagging is a necessary preprocessing step for many parsing algorithms. Previous studies (e.g., Foster et al. (2011b)) have shown that the accuracy of POS tagging can suffer significantly from noisy content. However, it is possible to adapt POS taggers to this type of input. In this ex- periment, we will briefly introduce approaches to adapting POS taggers and perform an evaluation on our dataset. Domain-specific tagging Gimpel et al. (2011) present a domain-specific conditional random field POS tagger using a coarse part-of-speech tagset of 25 tags that was specifically designed for and trained on Twitter data. The tagset includes tags for social media-specific tokens, such as URLs, email addresses, emoticons, Twitter hashtags and usernames. Role of POS tags in the parser For our experiments, we use the discriminative graph-based maximum spanning tree (MST) parser (McDonald et al., 2005). This dependency parser expects both fine- and coarse-grained tags as features in its well-established standard setting. Since we are interested in the influence of POS tagging on parse quality instead of the impact of individual features in the parser, we use this standard setting but combine the coarse- grained tags from the domain-specific tagger with the POS tags produced by a POS tagger with a less coarse-grained tagset. Both are combined by first determining n-best fine- grained tags for each token. For hidden Markov models, the probability of the tags occurring at a given position can be calculated using the forward-backward algorithm as P (t i = t) = α i (t)β i (t), where α i (t) is the total probability of all possible tag sequences ending in the tag t at the ith token and β i (t) is the total probability of all tag sequences starting from tag t at the ith token and contin- uing to the end of the sentence (Jurafsky and Martin, 2000; Prins, 2005). The n-best fine-grained tags are then combined with the coarse tags by a simple voting rule. Our experiments use a standard trigram HMM tagger 3 (Brants, 2000) and the OpenNLP maximum entropy tagger. 4 Impact on parse quality Table 2 shows the influence of POS tagging on the performance of the MST parser on the development part of our dataset. Statistical significance testing is performed using bootstrap resampling (Efron and Tibshirani, 1993). Except for the last row of the table, all tagging is performed without any text normalization. The last row demonstrates the upper bound performance on this task, by using both gold text normalization and gold part-of-speech tags. These results show that combining a generic part-of-speech tagger with a more coarse-grained domain-specific tagger can lead to measurable improvements in parse quality.3 https://github.com/danieldk/jitar 4 http://opennlp.apache.org/5.2. Text NormalizationAfter considering the influence of the underlying POS tagger on parse quality, we now turn to the question of how much the parsing of noisy content is influenced by text normalization. For this, we evaluate two common text normalization methods: unsupervised normalization via lexical replacements and normalization based on machine translation. Unsupervised lexical normalization Various unsupervised methods for text normalization have been suggested in the relevant literature. A popular approach is to perform lexical normalization by correcting individual tokens. We implement the model for lexical normalization of text messages by Han and Baldwin (2011). This method works in analogy to spell checking, with the biggest difference that in short message data ill-formedness is often intentional, for example due to the message size limit. The model performs normalization only on the token level. Normalization as machine translation Research in short message normalization has shown that another effec- tive method is to treat the task as a machine translation problem. Aw et al. (2006) and Raghunathan and Krawczyk (2009) explore phrase-based statistical machine translation as a preprocessing step for various NLP tasks involving text messages. As part of this effort, they manually normalize a set of 5.000 and 2.500 messages respectively. While these corpora are not created for social media services such as Twitter, they nonetheless provide reasonable training corpora for our experiments as the restrictions of both domains are similar. Based on this corpus, we train a standard Moses baseline system 5 (Koehn et al., 2007) using GIZA++ for word alignments and the grow-diag-final symmetrization heuristic. An n-gram language model is built on the English side of the news-commentary data set using IRSTLM (Federico and Cettolo, 2007). Model weights are estimated using MERT (Och, 2003). All experiments are performed on the development part of our dataset. Twitter-specific processing In order to isolate the influence of the text normalization, Twitter-specific syntax is parsed using a set of deterministic rules. Tokens such as retweet indicators and usernames at the start of a Tweet and URLs and hash tags at the end of a Tweet are removed from the text and pushed onto a stack. The remaining text is then parsed using the underlying dependency parser and the Twitter-specific tokens are re-attached to the tree accord- ing to a fixed set of rules. This deterministic handling of Twitter-specific syntax is applied to all further experiments in Table 3. Impact on parse quality Table 3 presents the results of the text normalization schemes on the development part of our dataset. The results show that a combination of lexical and MT-based normalization approaches leads to results close to the upper bound set by gold standard normalization. Although the machine translation system was trained on a different domain, its application leads to better parsing results. This improved performance is most likely due to the fact that the method is able to normalize sequences of words on the phrase level instead of being restricted to single-word replacements.5 http://statmt.org/moses/?n=Moses. Baseline* statistically significant against non-normalized baseline at p-value < 0.05.6. ConclusionUser-generated content on the web constitutes a rich and important source of information for many use cases. However, parsing of such noisy data still poses challenges for many parsing algorithms. In this paper, we have compared various strategies for adapting dependency parsing to noisy input conditions. In order to do so, we introduced a noise- aware benchmark for dependency parsing consisting of a treebank and a corresponding evaluation metric. Our experiments on this new dataset show that text normalization improves parse quality significantly, especially if the normalization method can go beyond the word level (e.g. using machine translation). To encourage future progress in this area, we make available both the Denoised Web Treebank and the newly introduced noise-aware evaluation metric. 7AcknowledgmentsWe thank Gertjan van Noord for his valuable feedback. Parts of this work were supported through the Erasmus Mundus European Masters Program in Language and Com- munication Technologies (EM-LCT). The first author is supported by the EXPERT (EXPloiting Empirical ap- pRoaches to Translation) Initial Training Network (ITN) of the European Union’s Seventh Framework Programme. The second author is supported by the Nuance Foundation.6 Tags predicted by coarse + n-best MaxEnt. 7 http://jodaiber.de/DenoisedWebTreebankReferences
+[The Denoised Web Treebank: Evaluating Dependency Parsing under Noisy Input Conditions]
+Paragraph
+   sofa: _InitialView
+   begin: 0
+   end: 85
+[The Denoised Web Treebank: Evaluating Dependency Parsing under Noisy Input Conditions]
+Sentence
+   sofa: _InitialView
+   begin: 0
+   end: 85
+[Joachim Daiber, Rob van der Goot]
+Paragraph
+   sofa: _InitialView
+   begin: 85
+   end: 117
+[Joachim Daiber, Rob van der Goot]
+Sentence
+   sofa: _InitialView
+   begin: 85
+   end: 117
+[ILLC University of Amsterdam, CLCG University of Groningen J.Daiber@uva.nl, R.van.der.Goot@rug.nl Abstract We introduce the Denoised Web Treebank: a treebank including a normalization layer and a corresponding evaluation metric for dependency parsing of noisy text, such as Tweets. This benchmark enables the evaluation of parser robustness as well as text normalization methods, including normalization as machine translation and unsupervised lexical normalization, directly on syntactic trees. Experiments show that text normalization together with a combination of domain-specific and generic part-of-speech taggers can lead to a significant improvement in parsing accuracy on this test set. Keywords: Parsing, Part-of-Speech Tagging, Social Media Processing, Web Treebank]
+Paragraph
+   sofa: _InitialView
+   begin: 117
+   end: 892
+[ILLC University of Amsterdam, CLCG University of Groningen J.Daiber@uva.nl, R.van.der.Goot@rug.nl Abstract We introduce the Denoised Web Treebank: a treebank including a normalization layer and a corresponding evaluation metric for dependency parsing of noisy text, such as Tweets.]
+Sentence
+   sofa: _InitialView
+   begin: 117
+   end: 398
+[ This benchmark enables the evaluation of parser robustness as well as text normalization methods, including normalization as machine translation and unsupervised lexical normalization, directly on syntactic trees.]
+Sentence
+   sofa: _InitialView
+   begin: 398
+   end: 612
+[ Experiments show that text normalization together with a combination of domain-specific and generic part-of-speech taggers can lead to a significant improvement in parsing accuracy on this test set.]
+Sentence
+   sofa: _InitialView
+   begin: 612
+   end: 811
+[ Keywords: Parsing, Part-of-Speech Tagging, Social Media Processing, Web Treebank]
+Sentence
+   sofa: _InitialView
+   begin: 811
+   end: 892
+[1. Introduction]
+Paragraph
+   sofa: _InitialView
+   begin: 892
+   end: 907
+[1. Introduction]
+Sentence
+   sofa: _InitialView
+   begin: 892
+   end: 907
+[The quality of automatic syntactic analysis of clean, in- domain text has improved steadily in recent decades. Out- of-domain text and grammatically noisy text, on the other hand, remain an obstacle and often lead to significant de- creases in parsing accuracy. Recently, a lot of effort has been put into adapting natural language processing tools, such as named entity recognition (Liu et al., 2012) and POS tagging (Gimpel et al., 2011), to noisy content. In this paper, we focus on dependency parsing of noisy text. Specif- ically, we are interested in how much parse quality can be gained by text normalization. For this, we introduce a new dependency treebank with a normalization layer. This new dataset can be used to quantify the influence of text normalization on the parsing of user-generated content. The contributions of this paper are as follows: (1) We introduce the Denoised Web Treebank, a new Twitter dependency treebank with a normalization layer; (2) we propose a corresponding noise-aware evaluation metric; and (3) we use this dataset and the metric as a benchmark to evaluate the impact of text normalization on dependency parsing of user-generated content.]
+Paragraph
+   sofa: _InitialView
+   begin: 907
+   end: 2087
+[The quality of automatic syntactic analysis of clean, in- domain text has improved steadily in recent decades.]
+Sentence
+   sofa: _InitialView
+   begin: 907
+   end: 1017
+[ Out- of-domain text and grammatically noisy text, on the other hand, remain an obstacle and often lead to significant de- creases in parsing accuracy.]
+Sentence
+   sofa: _InitialView
+   begin: 1017
+   end: 1168
+[ Recently, a lot of effort has been put into adapting natural language processing tools, such as named entity recognition (Liu et al., 2012) and POS tagging (Gimpel et al., 2011), to noisy content.]
+Sentence
+   sofa: _InitialView
+   begin: 1168
+   end: 1365
+[Liu et al., 2012]
+Reference
+   sofa: _InitialView
+   begin: 1291
+   end: 1307
+   refId: "R18"
+   refType: "bibr"
+[Gimpel et al., 2011]
+Reference
+   sofa: _InitialView
+   begin: 1326
+   end: 1345
+   refId: "R11"
+   refType: "bibr"
+[ In this paper, we focus on dependency parsing of noisy text.]
+Sentence
+   sofa: _InitialView
+   begin: 1365
+   end: 1426
+[ Specif- ically, we are interested in how much parse quality can be gained by text normalization.]
+Sentence
+   sofa: _InitialView
+   begin: 1426
+   end: 1523
+[ For this, we introduce a new dependency treebank with a normalization layer.]
+Sentence
+   sofa: _InitialView
+   begin: 1523
+   end: 1600
+[ This new dataset can be used to quantify the influence of text normalization on the parsing of user-generated content.]
+Sentence
+   sofa: _InitialView
+   begin: 1600
+   end: 1719
+[ The contributions of this paper are as follows: (1) We introduce the Denoised Web Treebank, a new Twitter dependency treebank with a normalization layer; (2) we propose a corresponding noise-aware evaluation metric; and (3) we use this dataset and the metric as a benchmark to evaluate the impact of text normalization on dependency parsing of user-generated content.]
+Sentence
+   sofa: _InitialView
+   begin: 1719
+   end: 2087
+[2. Related Work]
+Paragraph
+   sofa: _InitialView
+   begin: 2087
+   end: 2102
+[2. Related Work]
+Sentence
+   sofa: _InitialView
+   begin: 2087
+   end: 2102
+[For the domain of web data, various datasets and treebanks have been introduced. Table 1 provides an overview of all relevant English treebanks. The constituency treebanks mentioned here were created using the English Web Treebank annotation guidelines (Bies et al., 2012), which are an addendum to the Penn Treebank guidelines (Bies et al., 1995). These guidelines discuss domain-specific phenomena, including adaptations of existing labels as well as the addition of new labels for novel linguistic constructions. Foster et al. (2011a) de- scribe a constituency treebank consisting of two domains; Twitter and sports forums. The Twitter part is of compa- rable size to our treebank and is described in more detail in Foster et al. (2011b). The dependency treebanks show greater diversity in annotation. The English Web Treebank (Silveira et al., 2014) is annotated using the Universal Dependencies guidelines with additional relation types for the web domain. A very different approach is taken for the annotation of the Tweebank (Kong et al., 2014). In its format, individual words can be skipped in the annotation. This is motivated by the idea that not all words in a Tweet contribute significantly to the syntactic structure and their inclusion would lead to arbitrary decisions unhelpful for most downstream applications. Additionally, because Tweets are used as units instead of sentences, having multiple roots is allowed. This adjusted dependency format makes it harder to use existing parsers with this dataset. The Foreebank (Kaljahi et al., 2015), a treebank focusing on forum text, is the only other treebank that includes normalization annotation. It includes manual normalizations of the raw text, and constituency trees of the normalized sentences. The normalization is kept as minimal as possible and is represented in the tree by appending an error suffix to the POS tags. The Foreebank allows analysis of the effect of different errors on the parsing performance of a constituency parser. Our contribution, the Denoised Web Treebank, fills the gap of a native (i.e., non-converted) dependency treebank including normalizations for the web domain. In the past, automatic conversions were used for this task (Petrov and McDonald, 2012; Foster et al., 2011a) using the Stanford Converter (De Marneffe et al., 2006). But for the noisy web domain, the conversions might be of questionable quality. Previous work on the parsing of web data has mostly focused on complementing existing parsers with semi- supervised data The amount of training data can be artifi- cially enlarged by using self-training or up-training (Petrov and McDonald, 2012; Foster et al., 2011b). Another source of semi-supervised improvements can be gained from using features gathered from large amounts of unannotated texts (Kong et al., 2014). A completely different approach is taken by Khan et al. (2013), where the most appropri- ate training trees are found in the train treebank for each sentence.]
+Paragraph
+   sofa: _InitialView
+   begin: 2102
+   end: 5093
+[For the domain of web data, various datasets and treebanks have been introduced.]
+Sentence
+   sofa: _InitialView
+   begin: 2102
+   end: 2182
+[ Table 1 provides an overview of all relevant English treebanks.]
+Sentence
+   sofa: _InitialView
+   begin: 2182
+   end: 2246
+[Table 1]
+Reference
+   sofa: _InitialView
+   begin: 2183
+   end: 2190
+   refId: "T1"
+   refType: "table"
+[ The constituency treebanks mentioned here were created using the English Web Treebank annotation guidelines (Bies et al., 2012), which are an addendum to the Penn Treebank guidelines (Bies et al., 1995).]
+Sentence
+   sofa: _InitialView
+   begin: 2246
+   end: 2450
+[Bies et al., 2012]
+Reference
+   sofa: _InitialView
+   begin: 2356
+   end: 2373
+   refId: "R3"
+   refType: "bibr"
+[Bies et al., 1995]
+Reference
+   sofa: _InitialView
+   begin: 2431
+   end: 2448
+   refId: "R2"
+   refType: "bibr"
+[ These guidelines discuss domain-specific phenomena, including adaptations of existing labels as well as the addition of new labels for novel linguistic constructions.]
+Sentence
+   sofa: _InitialView
+   begin: 2450
+   end: 2617
+[ Foster et al. (2011a) de- scribe a constituency treebank consisting of two domains; Twitter and sports forums.]
+Sentence
+   sofa: _InitialView
+   begin: 2617
+   end: 2728
+[Foster et al. (2011a)]
+Reference
+   sofa: _InitialView
+   begin: 2618
+   end: 2639
+   refId: "R9"
+   refType: "bibr"
+[ The Twitter part is of compa- rable size to our treebank and is described in more detail in Foster et al. (2011b).]
+Sentence
+   sofa: _InitialView
+   begin: 2728
+   end: 2843
+[Foster et al. (2011b)]
+Reference
+   sofa: _InitialView
+   begin: 2821
+   end: 2842
+   refId: "R10"
+   refType: "bibr"
+[ The dependency treebanks show greater diversity in annotation.]
+Sentence
+   sofa: _InitialView
+   begin: 2843
+   end: 2906
+[ The English Web Treebank (Silveira et al., 2014) is annotated using the Universal Dependencies guidelines with additional relation types for the web domain.]
+Sentence
+   sofa: _InitialView
+   begin: 2906
+   end: 3063
+[Silveira et al., 2014]
+Reference
+   sofa: _InitialView
+   begin: 2933
+   end: 2954
+   refId: "R24"
+   refType: "bibr"
+[ A very different approach is taken for the annotation of the Tweebank (Kong et al., 2014).]
+Sentence
+   sofa: _InitialView
+   begin: 3063
+   end: 3154
+[Kong et al., 2014]
+Reference
+   sofa: _InitialView
+   begin: 3135
+   end: 3152
+   refId: "R17"
+   refType: "bibr"
+[ In its format, individual words can be skipped in the annotation.]
+Sentence
+   sofa: _InitialView
+   begin: 3154
+   end: 3220
+[ This is motivated by the idea that not all words in a Tweet contribute significantly to the syntactic structure and their inclusion would lead to arbitrary decisions unhelpful for most downstream applications.]
+Sentence
+   sofa: _InitialView
+   begin: 3220
+   end: 3430
+[ Additionally, because Tweets are used as units instead of sentences, having multiple roots is allowed.]
+Sentence
+   sofa: _InitialView
+   begin: 3430
+   end: 3533
+[ This adjusted dependency format makes it harder to use existing parsers with this dataset.]
+Sentence
+   sofa: _InitialView
+   begin: 3533
+   end: 3624
+[ The Foreebank (Kaljahi et al., 2015), a treebank focusing on forum text, is the only other treebank that includes normalization annotation.]
+Sentence
+   sofa: _InitialView
+   begin: 3624
+   end: 3764
+[Kaljahi et al., 2015]
+Reference
+   sofa: _InitialView
+   begin: 3640
+   end: 3660
+   refId: "R14"
+   refType: "bibr"
+[ It includes manual normalizations of the raw text, and constituency trees of the normalized sentences.]
+Sentence
+   sofa: _InitialView
+   begin: 3764
+   end: 3867
+[ The normalization is kept as minimal as possible and is represented in the tree by appending an error suffix to the POS tags.]
+Sentence
+   sofa: _InitialView
+   begin: 3867
+   end: 3993
+[ The Foreebank allows analysis of the effect of different errors on the parsing performance of a constituency parser.]
+Sentence
+   sofa: _InitialView
+   begin: 3993
+   end: 4110
+[ Our contribution, the Denoised Web Treebank, fills the gap of a native (i.e., non-converted) dependency treebank including normalizations for the web domain.]
+Sentence
+   sofa: _InitialView
+   begin: 4110
+   end: 4268
+[ In the past, automatic conversions were used for this task (Petrov and McDonald, 2012; Foster et al., 2011a) using the Stanford Converter (De Marneffe et al., 2006).]
+Sentence
+   sofa: _InitialView
+   begin: 4268
+   end: 4434
+[Petrov and McDonald, 2012]
+Reference
+   sofa: _InitialView
+   begin: 4329
+   end: 4354
+   refId: "R21"
+   refType: "bibr"
+[Foster et al., 2011a]
+Reference
+   sofa: _InitialView
+   begin: 4356
+   end: 4376
+   refId: "R9"
+   refType: "bibr"
+[De Marneffe et al., 2006]
+Reference
+   sofa: _InitialView
+   begin: 4408
+   end: 4432
+   refId: "R6"
+   refType: "bibr"
+[ But for the noisy web domain, the conversions might be of questionable quality.]
+Sentence
+   sofa: _InitialView
+   begin: 4434
+   end: 4514
+[ Previous work on the parsing of web data has mostly focused on complementing existing parsers with semi- supervised data The amount of training data can be artifi- cially enlarged by using self-training or up-training (Petrov and McDonald, 2012; Foster et al., 2011b).]
+Sentence
+   sofa: _InitialView
+   begin: 4514
+   end: 4783
+[Petrov and McDonald, 2012]
+Reference
+   sofa: _InitialView
+   begin: 4734
+   end: 4759
+   refId: "R21"
+   refType: "bibr"
+[Foster et al., 2011b]
+Reference
+   sofa: _InitialView
+   begin: 4761
+   end: 4781
+   refId: "R10"
+   refType: "bibr"
+[ Another source of semi-supervised improvements can be gained from using features gathered from large amounts of unannotated texts (Kong et al., 2014).]
+Sentence
+   sofa: _InitialView
+   begin: 4783
+   end: 4934
+[Kong et al., 2014]
+Reference
+   sofa: _InitialView
+   begin: 4915
+   end: 4932
+   refId: "R17"
+   refType: "bibr"
+[ A completely different approach is taken by Khan et al. (2013), where the most appropri- ate training trees are found in the train treebank for each sentence.]
+Sentence
+   sofa: _InitialView
+   begin: 4934
+   end: 5093
+[Khan et al. (2013)]
+Reference
+   sofa: _InitialView
+   begin: 4979
+   end: 4997
+   refId: "R15"
+   refType: "bibr"
+[3. Dataset]
+Paragraph
+   sofa: _InitialView
+   begin: 5093
+   end: 5103
+[3. Dataset]
+Sentence
+   sofa: _InitialView
+   begin: 5093
+   end: 5103
+[3.1. Data Preparation]
+Paragraph
+   sofa: _InitialView
+   begin: 5103
+   end: 5124
+[3.1. Data Preparation]
+Sentence
+   sofa: _InitialView
+   begin: 5103
+   end: 5124
+[3.2. Normalization]
+Paragraph
+   sofa: _InitialView
+   begin: 5124
+   end: 5142
+[3.2. Normalization]
+Sentence
+   sofa: _InitialView
+   begin: 5124
+   end: 5142
+[The goal of the normalization was to leave the original tokens intact and not to replace them by their normalized forms directly. Hence, we keep both the original tokens and the normalized version of the sentences with word alignments. Figure 1 depicts a gold standard dependency graph including the alignments to the original tokens. Abbreviations Abbreviations and slang expressions are expanded whenever necessary for syntactic reasons. Exam- ples include instances such as “cu”, used as the short form of see and you, which as a single token would include both the verb and the object of the sentence. Punctuation Punctuation is inserted if it is necessary to disambiguate the sentence meaning. Emoticons, such as :), are kept intact. Zero copulas The data contains several cases of zero copula, i.e. a copula verb is not realized in the sentence. These occurrences are annotated by inserting the copula verb in the normalized version of the sentence (see Figure 1).]
+Paragraph
+   sofa: _InitialView
+   begin: 5142
+   end: 6112
+[The goal of the normalization was to leave the original tokens intact and not to replace them by their normalized forms directly.]
+Sentence
+   sofa: _InitialView
+   begin: 5142
+   end: 5271
+[ Hence, we keep both the original tokens and the normalized version of the sentences with word alignments.]
+Sentence
+   sofa: _InitialView
+   begin: 5271
+   end: 5377
+[ Figure 1 depicts a gold standard dependency graph including the alignments to the original tokens.]
+Sentence
+   sofa: _InitialView
+   begin: 5377
+   end: 5476
+[Figure 1]
+Reference
+   sofa: _InitialView
+   begin: 5378
+   end: 5386
+   refId: "F1"
+   refType: "fig"
+[ Abbreviations Abbreviations and slang expressions are expanded whenever necessary for syntactic reasons.]
+Sentence
+   sofa: _InitialView
+   begin: 5476
+   end: 5581
+[ Exam- ples include instances such as “cu”, used as the short form of see and you, which as a single token would include both the verb and the object of the sentence.]
+Sentence
+   sofa: _InitialView
+   begin: 5581
+   end: 5747
+[ Punctuation Punctuation is inserted if it is necessary to disambiguate the sentence meaning.]
+Sentence
+   sofa: _InitialView
+   begin: 5747
+   end: 5840
+[ Emoticons, such as :), are kept intact.]
+Sentence
+   sofa: _InitialView
+   begin: 5840
+   end: 5880
+[ Zero copulas The data contains several cases of zero copula, i.e.]
+Sentence
+   sofa: _InitialView
+   begin: 5880
+   end: 5946
+[ a copula verb is not realized in the sentence.]
+Sentence
+   sofa: _InitialView
+   begin: 5946
+   end: 5993
+[ These occurrences are annotated by inserting the copula verb in the normalized version of the sentence (see Figure 1).]
+Sentence
+   sofa: _InitialView
+   begin: 5993
+   end: 6112
+[Figure 1]
+Reference
+   sofa: _InitialView
+   begin: 6102
+   end: 6110
+   refId: "F1"
+   refType: "fig"
+[3.3. Syntactic Annotation]
+Paragraph
+   sofa: _InitialView
+   begin: 6112
+   end: 6137
+[3.3. Syntactic Annotation]
+Sentence
+   sofa: _InitialView
+   begin: 6112
+   end: 6137
+[The normalized tokens were automatically parsed using a generative phrase structure parser 2 and then converted to dependencies. Both part-of-speech tags and dependency annotations were then manually corrected in two passes. The dependency annotations follow the format of the CoNLL-X shared task on multilingual dependency parsing (Buchholz and Marsi, 2006), with the following adaptations: Emoticons Emoticons are kept intact, tagged with the part-of-speech tag UH (interjection) and are attached to the head of the sentence. Domain-specific elements Twitter-specific syntax was treated as follows: Usernames at the start of a sentence that do not fulfill a syntactic role, e.g. as the subject, are attached to the main verb using the DEP (unclassified) dependency relation. In all other cases, usernames are treated as proper nouns. RT and similar markers, as well as hashtags indicat- ing the topic of a Tweet (e.g. #worldcup) are attached to the main verb as DEP.]
+Paragraph
+   sofa: _InitialView
+   begin: 6137
+   end: 7105
+[The normalized tokens were automatically parsed using a generative phrase structure parser 2 and then converted to dependencies.]
+Sentence
+   sofa: _InitialView
+   begin: 6137
+   end: 6265
+[ Both part-of-speech tags and dependency annotations were then manually corrected in two passes.]
+Sentence
+   sofa: _InitialView
+   begin: 6265
+   end: 6361
+[ The dependency annotations follow the format of the CoNLL-X shared task on multilingual dependency parsing (Buchholz and Marsi, 2006), with the following adaptations: Emoticons Emoticons are kept intact, tagged with the part-of-speech tag UH (interjection) and are attached to the head of the sentence.]
+Sentence
+   sofa: _InitialView
+   begin: 6361
+   end: 6664
+[Buchholz and Marsi, 2006]
+Reference
+   sofa: _InitialView
+   begin: 6470
+   end: 6494
+   refId: "R5"
+   refType: "bibr"
+[Domain-specific elements Twitter-specific syntax was treated as follows: Usernames at the start of a sentence that do not fulfill a syntactic role, e.g.]
+Sentence
+   sofa: _InitialView
+   begin: 6665
+   end: 6817
+[ as the subject, are attached to the main verb using the DEP (unclassified) dependency relation.]
+Sentence
+   sofa: _InitialView
+   begin: 6817
+   end: 6913
+[ In all other cases, usernames are treated as proper nouns.]
+Sentence
+   sofa: _InitialView
+   begin: 6913
+   end: 6972
+[ RT and similar markers, as well as hashtags indicat- ing the topic of a Tweet (e.g.]
+Sentence
+   sofa: _InitialView
+   begin: 6972
+   end: 7056
+[ #worldcup) are attached to the main verb as DEP.]
+Sentence
+   sofa: _InitialView
+   begin: 7056
+   end: 7105
+[1 English Aspell dictionary: http://aspell.net/ 2 https://code.google.com/p/ berkeleyparser/]
+Paragraph
+   sofa: _InitialView
+   begin: 7105
+   end: 7197
+[1 English Aspell dictionary: http://aspell.net/ 2 https://code.google.com/p/ berkeleyparser/]
+Sentence
+   sofa: _InitialView
+   begin: 7105
+   end: 7197
+[P ROOT COORD P OBJ NMOD SBJ NMOD OBJ You . are . the . little . . guy . , . are . you . ? . U ∅ da lil guy , ru ?]
+Paragraph
+   sofa: _InitialView
+   begin: 7197
+   end: 7310
+[P ROOT COORD P OBJ NMOD SBJ NMOD OBJ You . are . the . little . . guy . , . are . you . ? . U ∅ da lil guy , ru ?]
+Sentence
+   sofa: _InitialView
+   begin: 7197
+   end: 7310
+[We collected all Tweets within a period of 24 hours from January 07, 2012 00:00 until 23:59 GMT. To avoid possible biases of automatic language identification tools towards well-formed language, we manually classified the Tweets in random order into English and non-English Tweets until we reached a reasonably-sized corpus of Tweets classified as English. We then manually split this corpus into sentences and randomly selected 250 sentences as a development set and 250 sentences as a test set. Table 1 compares some basic statistics of this treebank against other Web treebanks. Out-of-vocabulary rate is calculated against the English dictionary of the GNU Aspell spell checker. 1]
+Paragraph
+   sofa: _InitialView
+   begin: 7310
+   end: 7994
+[We collected all Tweets within a period of 24 hours from January 07, 2012 00:00 until 23:59 GMT.]
+Sentence
+   sofa: _InitialView
+   begin: 7310
+   end: 7406
+[ To avoid possible biases of automatic language identification tools towards well-formed language, we manually classified the Tweets in random order into English and non-English Tweets until we reached a reasonably-sized corpus of Tweets classified as English.]
+Sentence
+   sofa: _InitialView
+   begin: 7406
+   end: 7666
+[ We then manually split this corpus into sentences and randomly selected 250 sentences as a development set and 250 sentences as a test set.]
+Sentence
+   sofa: _InitialView
+   begin: 7666
+   end: 7806
+[ Table 1 compares some basic statistics of this treebank against other Web treebanks.]
+Sentence
+   sofa: _InitialView
+   begin: 7806
+   end: 7891
+[Table 1]
+Reference
+   sofa: _InitialView
+   begin: 7807
+   end: 7814
+   refId: "T1"
+   refType: "table"
+[ Out-of-vocabulary rate is calculated against the English dictionary of the GNU Aspell spell checker.]
+Sentence
+   sofa: _InitialView
+   begin: 7891
+   end: 7992
+[ 1]
+Sentence
+   sofa: _InitialView
+   begin: 7992
+   end: 7994
+[4. Evaluating Noise-Aware Parsing]
+Paragraph
+   sofa: _InitialView
+   begin: 7994
+   end: 8027
+[4. Evaluating Noise-Aware Parsing]
+Sentence
+   sofa: _InitialView
+   begin: 7994
+   end: 8027
+[Our dataset provides alignments between the gold standard and the original tokens, allowing for insertions, deletions and modifications. Hence, the standard dependency parsing metrics, unlabeled and labeled attachment scores, are no longer sufficient. In our dataset, there may not be a di- rect one-to-one correspondence between the predicted tree and the gold tree. Hence, we allow the parser to make any insertions, deletions and modifications to the tokens under the assumption that it provides an alignment between the modified tokens and the original tokens. The evaluation is then performed using a metric based on precision and recall values calculated using these alignments. Aligned precision and recall Based on the normalized side of the gold standard and the parser’s aligned predictions, we calculate precision, recall and F 1 score for dependencies (Eq. 1–3). We base the evaluation metric on the standard definitions of precision and recall, which are widely used in natural language processing. In Eq. 1 and 2, TP , FP and FN are the numbers of true positive, false positive, and false negative results. The F 1 measure is the harmonic mean of precision and recall.]
+Paragraph
+   sofa: _InitialView
+   begin: 8027
+   end: 9209
+[Our dataset provides alignments between the gold standard and the original tokens, allowing for insertions, deletions and modifications.]
+Sentence
+   sofa: _InitialView
+   begin: 8027
+   end: 8163
+[ Hence, the standard dependency parsing metrics, unlabeled and labeled attachment scores, are no longer sufficient.]
+Sentence
+   sofa: _InitialView
+   begin: 8163
+   end: 8278
+[ In our dataset, there may not be a di- rect one-to-one correspondence between the predicted tree and the gold tree.]
+Sentence
+   sofa: _InitialView
+   begin: 8278
+   end: 8394
+[ Hence, we allow the parser to make any insertions, deletions and modifications to the tokens under the assumption that it provides an alignment between the modified tokens and the original tokens.]
+Sentence
+   sofa: _InitialView
+   begin: 8394
+   end: 8591
+[ The evaluation is then performed using a metric based on precision and recall values calculated using these alignments.]
+Sentence
+   sofa: _InitialView
+   begin: 8591
+   end: 8711
+[Aligned precision and recall Based on the normalized side of the gold standard and the parser’s aligned predictions, we calculate precision, recall and F 1 score for dependencies (Eq.]
+Sentence
+   sofa: _InitialView
+   begin: 8712
+   end: 8895
+[ 1–3).]
+Sentence
+   sofa: _InitialView
+   begin: 8895
+   end: 8901
+[ We base the evaluation metric on the standard definitions of precision and recall, which are widely used in natural language processing.]
+Sentence
+   sofa: _InitialView
+   begin: 8901
+   end: 9038
+[ In Eq.]
+Sentence
+   sofa: _InitialView
+   begin: 9038
+   end: 9045
+[ 1 and 2, TP , FP and FN are the numbers of true positive, false positive, and false negative results.]
+Sentence
+   sofa: _InitialView
+   begin: 9045
+   end: 9147
+[ The F 1 measure is the harmonic mean of precision and recall.]
+Sentence
+   sofa: _InitialView
+   begin: 9147
+   end: 9209
+[TP precision = (1) TP + FP TP recall = (2) TP + FN precision · recall F 1 = 2 · (3) precision + recall]
+Paragraph
+   sofa: _InitialView
+   begin: 9209
+   end: 9311
+[TP precision = (1) TP + FP TP recall = (2) TP + FN precision · recall F 1 = 2 · (3) precision + recall]
+Sentence
+   sofa: _InitialView
+   begin: 9209
+   end: 9311
+[Definition Formally, when comparing the parser output against the dataset, the following information is provided for each instance: − the original sentence S O − a predicted dependency tree D P = ⟨V P , E P ⟩ − a gold dependency tree D G = ⟨V G , E G ⟩ − alignment function a P for predicted tokens − alignment function a G for gold tokens For each parsed dependency tree, S O is the sequence of original, non-normalized tokens. The two alignment functions a G and a P map the gold tokens and the predicted tokens to the original tokens in S O . In the case of an insertion, the new token cannot be aligned to any of the original tokens in S O and, therefore, such insertions are mapped to an artificial NULL token. Unlabeled dependencies Based on all test instances, we calculate the total number of true positive, false positive and false negative dependency relations as follows: For each gold dependency tree D G = ⟨V G , E G ⟩ and each predicted dependency tree D P = ⟨V P , E P ⟩, let M G and M P be the set of dependency relations mapped to the original tokens in S O : M G = {⟨a G (w i ), a G (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E G } M P = {⟨a P (w i ), a P (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E P } The true positive, false positive and false negative dependency relations can then be calculated as: ∑ TP = |M G ∩ M P | ⟨S O ,D P ,D G ,a P ,a G ⟩ ∑ FP = |M P \ M G | ⟨S O ,D P ,D G ,a P ,a G ⟩ ∑ FN = |M G \ M P | ⟨S O ,D P ,D G ,a P ,a G ⟩ Labeled dependencies To measure labeled dependencies, the dependency type is added to the head-modifier pair in M P and M G : M G ′ = {⟨a G (w i ), r, a G (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E G } M P ′ = {⟨a P (w i ), r, a P (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E P } Relation to other metrics This metric can be seen as a generalization of the commonly used attachment score measure. If there is a one-to-one alignment between every predicted token and every gold token, the unlabeled and labeled aligned F 1 scores are equivalent to the unlabeled (UAS) and labeled attachment score (LAS).]
+Paragraph
+   sofa: _InitialView
+   begin: 9311
+   end: 11320
+[Definition Formally, when comparing the parser output against the dataset, the following information is provided for each instance: − the original sentence S O − a predicted dependency tree D P = ⟨V P , E P ⟩ − a gold dependency tree D G = ⟨V G , E G ⟩ − alignment function a P for predicted tokens − alignment function a G for gold tokens For each parsed dependency tree, S O is the sequence of original, non-normalized tokens.]
+Sentence
+   sofa: _InitialView
+   begin: 9311
+   end: 9739
+[ The two alignment functions a G and a P map the gold tokens and the predicted tokens to the original tokens in S O .]
+Sentence
+   sofa: _InitialView
+   begin: 9739
+   end: 9856
+[ In the case of an insertion, the new token cannot be aligned to any of the original tokens in S O and, therefore, such insertions are mapped to an artificial NULL token.]
+Sentence
+   sofa: _InitialView
+   begin: 9856
+   end: 10026
+[ Unlabeled dependencies Based on all test instances, we calculate the total number of true positive, false positive and false negative dependency relations as follows: For each gold dependency tree D G = ⟨V G , E G ⟩ and each predicted dependency tree D P = ⟨V P , E P ⟩, let M G and M P be the set of dependency relations mapped to the original tokens in S O : M G = {⟨a G (w i ), a G (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E G } M P = {⟨a P (w i ), a P (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E P } The true positive, false positive and false negative dependency relations can then be calculated as: ∑ TP = |M G ∩ M P | ⟨S O ,D P ,D G ,a P ,a G ⟩ ∑ FP = |M P \ M G | ⟨S O ,D P ,D G ,a P ,a G ⟩ ∑ FN = |M G \ M P | ⟨S O ,D P ,D G ,a P ,a G ⟩ Labeled dependencies To measure labeled dependencies, the dependency type is added to the head-modifier pair in M P and M G : M G ′ = {⟨a G (w i ), r, a G (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E G } M P ′ = {⟨a P (w i ), r, a P (w j )⟩ | ⟨w i , r, w j ⟩ ∈ E P } Relation to other metrics This metric can be seen as a generalization of the commonly used attachment score measure.]
+Sentence
+   sofa: _InitialView
+   begin: 10026
+   end: 11114
+[ If there is a one-to-one alignment between every predicted token and every gold token, the unlabeled and labeled aligned F 1 scores are equivalent to the unlabeled (UAS) and labeled attachment score (LAS).]
+Sentence
+   sofa: _InitialView
+   begin: 11114
+   end: 11320
+[5. Experiments]
+Paragraph
+   sofa: _InitialView
+   begin: 11320
+   end: 11334
+[5. Experiments]
+Sentence
+   sofa: _InitialView
+   begin: 11320
+   end: 11334
+[Having introduced our dataset and the corresponding evaluation metric, we can evaluate the impact of two methods commonly used to aid in the parsing of noisy content: noise-robust part-of-speech tagging and text normalization.]
+Paragraph
+   sofa: _InitialView
+   begin: 11334
+   end: 11560
+[Having introduced our dataset and the corresponding evaluation metric, we can evaluate the impact of two methods commonly used to aid in the parsing of noisy content: noise-robust part-of-speech tagging and text normalization.]
+Sentence
+   sofa: _InitialView
+   begin: 11334
+   end: 11560
+[5.1. Part-of-Speech Tagging]
+Paragraph
+   sofa: _InitialView
+   begin: 11560
+   end: 11587
+[5.1. Part-of-Speech Tagging]
+Sentence
+   sofa: _InitialView
+   begin: 11560
+   end: 11587
+[POS tagging is a necessary preprocessing step for many parsing algorithms. Previous studies (e.g., Foster et al. (2011b)) have shown that the accuracy of POS tagging can suffer significantly from noisy content. However, it is possible to adapt POS taggers to this type of input. In this ex- periment, we will briefly introduce approaches to adapting POS taggers and perform an evaluation on our dataset. Domain-specific tagging Gimpel et al. (2011) present a domain-specific conditional random field POS tagger using a coarse part-of-speech tagset of 25 tags that was specifically designed for and trained on Twitter data. The tagset includes tags for social media-specific tokens, such as URLs, email addresses, emoticons, Twitter hashtags and usernames. Role of POS tags in the parser For our experiments, we use the discriminative graph-based maximum spanning tree (MST) parser (McDonald et al., 2005). This dependency parser expects both fine- and coarse-grained tags as features in its well-established standard setting. Since we are interested in the influence of POS tagging on parse quality instead of the impact of individual features in the parser, we use this standard setting but combine the coarse- grained tags from the domain-specific tagger with the POS tags produced by a POS tagger with a less coarse-grained tagset. Both are combined by first determining n-best fine- grained tags for each token. For hidden Markov models, the probability of the tags occurring at a given position can be calculated using the forward-backward algorithm as P (t i = t) = α i (t)β i (t), where α i (t) is the total probability of all possible tag sequences ending in the tag t at the ith token and β i (t) is the total probability of all tag sequences starting from tag t at the ith token and contin- uing to the end of the sentence (Jurafsky and Martin, 2000; Prins, 2005). The n-best fine-grained tags are then combined with the coarse tags by a simple voting rule. Our experiments use a standard trigram HMM tagger 3 (Brants, 2000) and the OpenNLP maximum entropy tagger. 4 Impact on parse quality Table 2 shows the influence of POS tagging on the performance of the MST parser on the development part of our dataset. Statistical significance testing is performed using bootstrap resampling (Efron and Tibshirani, 1993). Except for the last row of the table, all tagging is performed without any text normalization. The last row demonstrates the upper bound performance on this task, by using both gold text normalization and gold part-of-speech tags. These results show that combining a generic part-of-speech tagger with a more coarse-grained domain-specific tagger can lead to measurable improvements in parse quality.]
+Paragraph
+   sofa: _InitialView
+   begin: 11587
+   end: 14311
+[POS tagging is a necessary preprocessing step for many parsing algorithms.]
+Sentence
+   sofa: _InitialView
+   begin: 11587
+   end: 11661
+[ Previous studies (e.g., Foster et al. (2011b)) have shown that the accuracy of POS tagging can suffer significantly from noisy content.]
+Sentence
+   sofa: _InitialView
+   begin: 11661
+   end: 11797
+[Foster et al. (2011b)]
+Reference
+   sofa: _InitialView
+   begin: 11686
+   end: 11707
+   refId: "R10"
+   refType: "bibr"
+[ However, it is possible to adapt POS taggers to this type of input.]
+Sentence
+   sofa: _InitialView
+   begin: 11797
+   end: 11865
+[ In this ex- periment, we will briefly introduce approaches to adapting POS taggers and perform an evaluation on our dataset.]
+Sentence
+   sofa: _InitialView
+   begin: 11865
+   end: 11990
+[ Domain-specific tagging Gimpel et al. (2011) present a domain-specific conditional random field POS tagger using a coarse part-of-speech tagset of 25 tags that was specifically designed for and trained on Twitter data.]
+Sentence
+   sofa: _InitialView
+   begin: 11990
+   end: 12209
+[Gimpel et al. (2011)]
+Reference
+   sofa: _InitialView
+   begin: 12015
+   end: 12035
+   refId: "R11"
+   refType: "bibr"
+[ The tagset includes tags for social media-specific tokens, such as URLs, email addresses, emoticons, Twitter hashtags and usernames.]
+Sentence
+   sofa: _InitialView
+   begin: 12209
+   end: 12342
+[ Role of POS tags in the parser For our experiments, we use the discriminative graph-based maximum spanning tree (MST) parser (McDonald et al., 2005).]
+Sentence
+   sofa: _InitialView
+   begin: 12342
+   end: 12492
+[McDonald et al., 2005]
+Reference
+   sofa: _InitialView
+   begin: 12469
+   end: 12490
+   refId: "R19"
+   refType: "bibr"
+[ This dependency parser expects both fine- and coarse-grained tags as features in its well-established standard setting.]
+Sentence
+   sofa: _InitialView
+   begin: 12492
+   end: 12612
+[ Since we are interested in the influence of POS tagging on parse quality instead of the impact of individual features in the parser, we use this standard setting but combine the coarse- grained tags from the domain-specific tagger with the POS tags produced by a POS tagger with a less coarse-grained tagset.]
+Sentence
+   sofa: _InitialView
+   begin: 12612
+   end: 12921
+[ Both are combined by first determining n-best fine- grained tags for each token.]
+Sentence
+   sofa: _InitialView
+   begin: 12921
+   end: 13002
+[ For hidden Markov models, the probability of the tags occurring at a given position can be calculated using the forward-backward algorithm as P (t i = t) = α i (t)β i (t), where α i (t) is the total probability of all possible tag sequences ending in the tag t at the ith token and β i (t) is the total probability of all tag sequences starting from tag t at the ith token and contin- uing to the end of the sentence (Jurafsky and Martin, 2000; Prins, 2005).]
+Sentence
+   sofa: _InitialView
+   begin: 13002
+   end: 13461
+[Jurafsky and Martin, 2000]
+Reference
+   sofa: _InitialView
+   begin: 13421
+   end: 13446
+   refId: "R13"
+   refType: "bibr"
+[Prins, 2005]
+Reference
+   sofa: _InitialView
+   begin: 13448
+   end: 13459
+   refId: "R22"
+   refType: "bibr"
+[ The n-best fine-grained tags are then combined with the coarse tags by a simple voting rule.]
+Sentence
+   sofa: _InitialView
+   begin: 13461
+   end: 13554
+[ Our experiments use a standard trigram HMM tagger 3 (Brants, 2000) and the OpenNLP maximum entropy tagger.]
+Sentence
+   sofa: _InitialView
+   begin: 13554
+   end: 13661
+[Brants, 2000]
+Reference
+   sofa: _InitialView
+   begin: 13608
+   end: 13620
+   refId: "R4"
+   refType: "bibr"
+[ 4 Impact on parse quality Table 2 shows the influence of POS tagging on the performance of the MST parser on the development part of our dataset.]
+Sentence
+   sofa: _InitialView
+   begin: 13661
+   end: 13807
+[Table 2]
+Reference
+   sofa: _InitialView
+   begin: 13688
+   end: 13695
+   refId: "T2"
+   refType: "table"
+[ Statistical significance testing is performed using bootstrap resampling (Efron and Tibshirani, 1993).]
+Sentence
+   sofa: _InitialView
+   begin: 13807
+   end: 13910
+[Efron and Tibshirani, 1993]
+Reference
+   sofa: _InitialView
+   begin: 13882
+   end: 13908
+   refId: "R7"
+   refType: "bibr"
+[ Except for the last row of the table, all tagging is performed without any text normalization.]
+Sentence
+   sofa: _InitialView
+   begin: 13910
+   end: 14005
+[ The last row demonstrates the upper bound performance on this task, by using both gold text normalization and gold part-of-speech tags.]
+Sentence
+   sofa: _InitialView
+   begin: 14005
+   end: 14141
+[ These results show that combining a generic part-of-speech tagger with a more coarse-grained domain-specific tagger can lead to measurable improvements in parse quality.]
+Sentence
+   sofa: _InitialView
+   begin: 14141
+   end: 14311
+[3 https://github.com/danieldk/jitar 4 http://opennlp.apache.org/]
+Paragraph
+   sofa: _InitialView
+   begin: 14311
+   end: 14375
+[3 https://github.com/danieldk/jitar 4 http://opennlp.apache.org/]
+Sentence
+   sofa: _InitialView
+   begin: 14311
+   end: 14375
+[5.2. Text Normalization]
+Paragraph
+   sofa: _InitialView
+   begin: 14375
+   end: 14398
+[5.2. Text Normalization]
+Sentence
+   sofa: _InitialView
+   begin: 14375
+   end: 14398
+[After considering the influence of the underlying POS tagger on parse quality, we now turn to the question of how much the parsing of noisy content is influenced by text normalization. For this, we evaluate two common text normalization methods: unsupervised normalization via lexical replacements and normalization based on machine translation. Unsupervised lexical normalization Various unsupervised methods for text normalization have been suggested in the relevant literature. A popular approach is to perform lexical normalization by correcting individual tokens. We implement the model for lexical normalization of text messages by Han and Baldwin (2011). This method works in analogy to spell checking, with the biggest difference that in short message data ill-formedness is often intentional, for example due to the message size limit. The model performs normalization only on the token level. Normalization as machine translation Research in short message normalization has shown that another effec- tive method is to treat the task as a machine translation problem. Aw et al. (2006) and Raghunathan and Krawczyk (2009) explore phrase-based statistical machine translation as a preprocessing step for various NLP tasks involving text messages. As part of this effort, they manually normalize a set of 5.000 and 2.500 messages respectively. While these corpora are not created for social media services such as Twitter, they nonetheless provide reasonable training corpora for our experiments as the restrictions of both domains are similar. Based on this corpus, we train a standard Moses baseline system 5 (Koehn et al., 2007) using GIZA++ for word alignments and the grow-diag-final symmetrization heuristic. An n-gram language model is built on the English side of the news-commentary data set using IRSTLM (Federico and Cettolo, 2007). Model weights are estimated using MERT (Och, 2003). All experiments are performed on the development part of our dataset. Twitter-specific processing In order to isolate the influence of the text normalization, Twitter-specific syntax is parsed using a set of deterministic rules. Tokens such as retweet indicators and usernames at the start of a Tweet and URLs and hash tags at the end of a Tweet are removed from the text and pushed onto a stack. The remaining text is then parsed using the underlying dependency parser and the Twitter-specific tokens are re-attached to the tree accord- ing to a fixed set of rules. This deterministic handling of Twitter-specific syntax is applied to all further experiments in Table 3. Impact on parse quality Table 3 presents the results of the text normalization schemes on the development part of our dataset. The results show that a combination of lexical and MT-based normalization approaches leads to results close to the upper bound set by gold standard normalization. Although the machine translation system was trained on a different domain, its application leads to better parsing results. This improved performance is most likely due to the fact that the method is able to normalize sequences of words on the phrase level instead of being restricted to single-word replacements.]
+Paragraph
+   sofa: _InitialView
+   begin: 14398
+   end: 17575
+[After considering the influence of the underlying POS tagger on parse quality, we now turn to the question of how much the parsing of noisy content is influenced by text normalization.]
+Sentence
+   sofa: _InitialView
+   begin: 14398
+   end: 14582
+[ For this, we evaluate two common text normalization methods: unsupervised normalization via lexical replacements and normalization based on machine translation.]
+Sentence
+   sofa: _InitialView
+   begin: 14582
+   end: 14743
+[ Unsupervised lexical normalization Various unsupervised methods for text normalization have been suggested in the relevant literature.]
+Sentence
+   sofa: _InitialView
+   begin: 14743
+   end: 14878
+[ A popular approach is to perform lexical normalization by correcting individual tokens.]
+Sentence
+   sofa: _InitialView
+   begin: 14878
+   end: 14966
+[ We implement the model for lexical normalization of text messages by Han and Baldwin (2011).]
+Sentence
+   sofa: _InitialView
+   begin: 14966
+   end: 15059
+[Han and Baldwin (2011)]
+Reference
+   sofa: _InitialView
+   begin: 15036
+   end: 15058
+   refId: "R12"
+   refType: "bibr"
+[ This method works in analogy to spell checking, with the biggest difference that in short message data ill-formedness is often intentional, for example due to the message size limit.]
+Sentence
+   sofa: _InitialView
+   begin: 15059
+   end: 15242
+[ The model performs normalization only on the token level.]
+Sentence
+   sofa: _InitialView
+   begin: 15242
+   end: 15300
+[ Normalization as machine translation Research in short message normalization has shown that another effec- tive method is to treat the task as a machine translation problem.]
+Sentence
+   sofa: _InitialView
+   begin: 15300
+   end: 15474
+[ Aw et al. (2006) and Raghunathan and Krawczyk (2009) explore phrase-based statistical machine translation as a preprocessing step for various NLP tasks involving text messages.]
+Sentence
+   sofa: _InitialView
+   begin: 15474
+   end: 15651
+[Aw et al. (2006)]
+Reference
+   sofa: _InitialView
+   begin: 15475
+   end: 15491
+   refId: "R1"
+   refType: "bibr"
+[Raghunathan and Krawczyk (2009)]
+Reference
+   sofa: _InitialView
+   begin: 15496
+   end: 15527
+   refId: "R23"
+   refType: "bibr"
+[ As part of this effort, they manually normalize a set of 5.000 and 2.500 messages respectively.]
+Sentence
+   sofa: _InitialView
+   begin: 15651
+   end: 15747
+[ While these corpora are not created for social media services such as Twitter, they nonetheless provide reasonable training corpora for our experiments as the restrictions of both domains are similar.]
+Sentence
+   sofa: _InitialView
+   begin: 15747
+   end: 15948
+[ Based on this corpus, we train a standard Moses baseline system 5 (Koehn et al., 2007) using GIZA++ for word alignments and the grow-diag-final symmetrization heuristic.]
+Sentence
+   sofa: _InitialView
+   begin: 15948
+   end: 16118
+[Koehn et al., 2007]
+Reference
+   sofa: _InitialView
+   begin: 16016
+   end: 16034
+   refId: "R16"
+   refType: "bibr"
+[ An n-gram language model is built on the English side of the news-commentary data set using IRSTLM (Federico and Cettolo, 2007).]
+Sentence
+   sofa: _InitialView
+   begin: 16118
+   end: 16247
+[Cettolo, 2007]
+Reference
+   sofa: _InitialView
+   begin: 16232
+   end: 16245
+   refId: "R8"
+   refType: "bibr"
+[ Model weights are estimated using MERT (Och, 2003).]
+Sentence
+   sofa: _InitialView
+   begin: 16247
+   end: 16299
+[Och, 2003]
+Reference
+   sofa: _InitialView
+   begin: 16288
+   end: 16297
+   refId: "R20"
+   refType: "bibr"
+[ All experiments are performed on the development part of our dataset.]
+Sentence
+   sofa: _InitialView
+   begin: 16299
+   end: 16369
+[ Twitter-specific processing In order to isolate the influence of the text normalization, Twitter-specific syntax is parsed using a set of deterministic rules.]
+Sentence
+   sofa: _InitialView
+   begin: 16369
+   end: 16528
+[ Tokens such as retweet indicators and usernames at the start of a Tweet and URLs and hash tags at the end of a Tweet are removed from the text and pushed onto a stack.]
+Sentence
+   sofa: _InitialView
+   begin: 16528
+   end: 16696
+[ The remaining text is then parsed using the underlying dependency parser and the Twitter-specific tokens are re-attached to the tree accord- ing to a fixed set of rules.]
+Sentence
+   sofa: _InitialView
+   begin: 16696
+   end: 16866
+[ This deterministic handling of Twitter-specific syntax is applied to all further experiments in Table 3.]
+Sentence
+   sofa: _InitialView
+   begin: 16866
+   end: 16971
+[Table 3]
+Reference
+   sofa: _InitialView
+   begin: 16963
+   end: 16970
+   refId: "T3"
+   refType: "table"
+[ Impact on parse quality Table 3 presents the results of the text normalization schemes on the development part of our dataset.]
+Sentence
+   sofa: _InitialView
+   begin: 16971
+   end: 17098
+[Table 3]
+Reference
+   sofa: _InitialView
+   begin: 16996
+   end: 17003
+   refId: "T3"
+   refType: "table"
+[ The results show that a combination of lexical and MT-based normalization approaches leads to results close to the upper bound set by gold standard normalization.]
+Sentence
+   sofa: _InitialView
+   begin: 17098
+   end: 17261
+[ Although the machine translation system was trained on a different domain, its application leads to better parsing results.]
+Sentence
+   sofa: _InitialView
+   begin: 17261
+   end: 17385
+[ This improved performance is most likely due to the fact that the method is able to normalize sequences of words on the phrase level instead of being restricted to single-word replacements.]
+Sentence
+   sofa: _InitialView
+   begin: 17385
+   end: 17575
+[5 http://statmt.org/moses/?n=Moses. Baseline]
+Paragraph
+   sofa: _InitialView
+   begin: 17575
+   end: 17619
+[5 http://statmt.org/moses/?n=Moses. Baseline]
+Sentence
+   sofa: _InitialView
+   begin: 17575
+   end: 17619
+[* statistically significant against non-normalized baseline at p-value < 0.05.]
+Paragraph
+   sofa: _InitialView
+   begin: 17619
+   end: 17697
+[* statistically significant against non-normalized baseline at p-value < 0.05.]
+Sentence
+   sofa: _InitialView
+   begin: 17619
+   end: 17697
+[6. Conclusion]
+Paragraph
+   sofa: _InitialView
+   begin: 17697
+   end: 17710
+[6. Conclusion]
+Sentence
+   sofa: _InitialView
+   begin: 17697
+   end: 17710
+[User-generated content on the web constitutes a rich and important source of information for many use cases. However, parsing of such noisy data still poses challenges for many parsing algorithms. In this paper, we have compared various strategies for adapting dependency parsing to noisy input conditions. In order to do so, we introduced a noise- aware benchmark for dependency parsing consisting of a treebank and a corresponding evaluation metric. Our experiments on this new dataset show that text normalization improves parse quality significantly, especially if the normalization method can go beyond the word level (e.g. using machine translation). To encourage future progress in this area, we make available both the Denoised Web Treebank and the newly introduced noise-aware evaluation metric. 7]
+Paragraph
+   sofa: _InitialView
+   begin: 17710
+   end: 18516
+[User-generated content on the web constitutes a rich and important source of information for many use cases.]
+Sentence
+   sofa: _InitialView
+   begin: 17710
+   end: 17818
+[ However, parsing of such noisy data still poses challenges for many parsing algorithms.]
+Sentence
+   sofa: _InitialView
+   begin: 17818
+   end: 17906
+[ In this paper, we have compared various strategies for adapting dependency parsing to noisy input conditions.]
+Sentence
+   sofa: _InitialView
+   begin: 17906
+   end: 18016
+[ In order to do so, we introduced a noise- aware benchmark for dependency parsing consisting of a treebank and a corresponding evaluation metric.]
+Sentence
+   sofa: _InitialView
+   begin: 18016
+   end: 18161
+[ Our experiments on this new dataset show that text normalization improves parse quality significantly, especially if the normalization method can go beyond the word level (e.g.]
+Sentence
+   sofa: _InitialView
+   begin: 18161
+   end: 18338
+[ using machine translation).]
+Sentence
+   sofa: _InitialView
+   begin: 18338
+   end: 18366
+[ To encourage future progress in this area, we make available both the Denoised Web Treebank and the newly introduced noise-aware evaluation metric.]
+Sentence
+   sofa: _InitialView
+   begin: 18366
+   end: 18514
+[ 7]
+Sentence
+   sofa: _InitialView
+   begin: 18514
+   end: 18516
+[Acknowledgments]
+Paragraph
+   sofa: _InitialView
+   begin: 18516
+   end: 18531
+[Acknowledgments]
+Sentence
+   sofa: _InitialView
+   begin: 18516
+   end: 18531
+[We thank Gertjan van Noord for his valuable feedback. Parts of this work were supported through the Erasmus Mundus European Masters Program in Language and Com- munication Technologies (EM-LCT). The first author is supported by the EXPERT (EXPloiting Empirical ap- pRoaches to Translation) Initial Training Network (ITN) of the European Union’s Seventh Framework Programme. The second author is supported by the Nuance Foundation.]
+Paragraph
+   sofa: _InitialView
+   begin: 18531
+   end: 18961
+[We thank Gertjan van Noord for his valuable feedback.]
+Sentence
+   sofa: _InitialView
+   begin: 18531
+   end: 18584
+[ Parts of this work were supported through the Erasmus Mundus European Masters Program in Language and Com- munication Technologies (EM-LCT).]
+Sentence
+   sofa: _InitialView
+   begin: 18584
+   end: 18725
+[ The first author is supported by the EXPERT (EXPloiting Empirical ap- pRoaches to Translation) Initial Training Network (ITN) of the European Union’s Seventh Framework Programme.]
+Sentence
+   sofa: _InitialView
+   begin: 18725
+   end: 18904
+[ The second author is supported by the Nuance Foundation.]
+Sentence
+   sofa: _InitialView
+   begin: 18904
+   end: 18961
+[6 Tags predicted by coarse + n-best MaxEnt. 7 http://jodaiber.de/DenoisedWebTreebank]
+Paragraph
+   sofa: _InitialView
+   begin: 18961
+   end: 19045
+[6 Tags predicted by coarse + n-best MaxEnt. 7 http://jodaiber.de/DenoisedWebTreebank]
+Sentence
+   sofa: _InitialView
+   begin: 18961
+   end: 19045
+[References]
+Paragraph
+   sofa: _InitialView
+   begin: 19045
+   end: 19055
+[References]
+Sentence
+   sofa: _InitialView
+   begin: 19045
+   end: 19055
+-------- View _InitialView end ----------------------------------
+
+======== CAS 0 end ==================================
+
+
