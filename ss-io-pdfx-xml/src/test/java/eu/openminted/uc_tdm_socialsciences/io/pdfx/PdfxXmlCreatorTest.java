@@ -40,8 +40,29 @@ public class PdfxXmlCreatorTest {
     }
 
     @Test
-    public void testInvalidInputDirectory() {
-        assert pdfxXmlCreator.process("a-really-invalid-input-directory", inputPath).size() == 0;
+	public void testInvalidInputAndOutput() {
+
+		String validInputFile = "src/test/resources/14_Paper.pdf";
+		String validInputFolder = "src/test/resources/";
+		String invalidInputPath = "a-really-invalid-input-directory";
+
+		String validOutputNull = null;
+		String validOutputFile = "src/test/resources/14_Paper.xml";
+		String validOutputFolder = "src/test/resources/output/";
+		String invalidOutputPath = "a-really-invalid-output-directory";
+
+		assert pdfxXmlCreator.process(invalidInputPath, null).size() == 0;
+
+		assert pdfxXmlCreator.process(validInputFile, validOutputNull).size() == 1;
+
+		assert pdfxXmlCreator.process(validInputFile, validOutputFile).size() == 1;
+
+		assert pdfxXmlCreator.process(validInputFolder, validOutputFolder).size() > 0;
+
+		assert pdfxXmlCreator.process(validInputFolder, validOutputNull).size() > 0;
+
+		assert pdfxXmlCreator.process(validInputFolder, invalidOutputPath).size() == 0;
+
     }
 
     @Test
@@ -49,7 +70,7 @@ public class PdfxXmlCreatorTest {
         String outputDirectory = "src/test/java/testCreateOutputDirectory";
         String inputDirectory = "src/test/java";
         assert pdfxXmlCreator.process(inputDirectory, outputDirectory).size() == 0;
-        assert (new File(outputDirectory)).isDirectory();
+        assert new File(outputDirectory).isDirectory();
         try {
             FileUtils.deleteDirectory(new File(outputDirectory));
         } catch (IOException e) {

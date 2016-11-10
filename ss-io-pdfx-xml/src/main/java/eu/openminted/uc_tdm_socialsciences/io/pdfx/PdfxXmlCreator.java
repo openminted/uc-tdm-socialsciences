@@ -84,15 +84,17 @@ public class PdfxXmlCreator {
 	}
 
 	/**
-	 * Processes all pdf files in a given directory with pdfx service which
-	 * converts them into XML files. Stores the XML files in a given output
+	 * Processes a single pdf file or all pdf files in a given directory with
+	 * pdfx service which
+	 * converts them into XML files. Stores the XML file(s) in a given output
 	 * directory. If outputPathString is null, the input directory will be used.
 	 *
 	 * @param inputPathString
-	 *            The directory that contains PDF files. It is scanned
+	 *            Path to pdf file to be processed. Or: The directory that
+	 *            contains PDF files. It is scanned
 	 *            recursively, non-pdf files will be ignored.
 	 * @param outputPathString
-	 *            The directory where the output XML files will be stored.
+	 *            The directory where the output XML file(s) will be stored.
 	 * @return a list of all the Paths of the generated output files
 	 */
 	public List<Path> process(String inputPathString, String outputPathString) {
@@ -107,67 +109,68 @@ public class PdfxXmlCreator {
 		}
 	}
 
-	/**
+	/*
 	 * Processes all pdf files in a given directory with pdfx service which
 	 * converts them into XML files. Stores the XML files in a given output
 	 * directory.
-	 *
 	 * @param inputDirectoryPath
-	 *            The directory that contains PDF files. It is scanned
-	 *            recursively, non-pdf files will be ignored.
+	 * The directory that contains PDF files. It is scanned
+	 * recursively, non-pdf files will be ignored.
 	 * @param outputDirectoryPath
-	 *            The directory where the output XML files will be stored.
+	 * The directory where the output XML files will be stored.
 	 * @return a list of all the Paths of the generated output files
 	 */
-	public List<Path> process(Path inputDirectoryPath, Path outputDirectoryPath) {
+	private List<Path> process(Path inputPath, Path outputDirectoryPath) {
 		List<Path> outputFiles = new ArrayList<>();
-		if (!inputDirectoryPath.toFile().exists()) {
+		if (!inputPath.toFile().exists()) {
 			logger.error("Given path doesn't exist on the file system.");
 			return outputFiles;
 		}
 
 		logger.info("PdfxXmlCreator process started...");
-		logger.info("Input directory: " + inputDirectoryPath.toUri());
+		logger.info("Input path: " + inputPath.toUri());
 
+		List<Path> pdfFiles = new ArrayList<>();
 
-		if (!inputDirectoryPath.toFile().isDirectory()) {
-			logger.debug("Provided path is not a directory: " + inputDirectoryPath.toUri());
-			//todo fix outputDirectoryPath check against null! produce proper warning messages
-			outputDirectoryPath = outputDirectoryPath == null ? inputDirectoryPath : outputDirectoryPath;
-			Path processed = singleFileProcess(inputDirectoryPath, outputDirectoryPath);
+		if (!inputPath.toFile().isDirectory()) {
+			logger.debug("Provided path is not a directory: " + inputPath.toUri());
+			pdfFiles.add(inputPath);
+
+			outputDirectoryPath = outputDirectoryPath == null ? inputPath.getParent()
+					: outputDirectoryPath;
+			logger.info("Output path: " + outputDirectoryPath.toUri());
+		} else {
+			logger.debug("Provided path is a directory: " + inputPath.toUri());
+			// get each PDF in the input directory
+			pdfFiles = getPdfListFromDirectory(inputPath);
+			logger.info(pdfFiles.size() + " pdf files found.");
+
+			outputDirectoryPath = outputDirectoryPath == null ? inputPath.resolve("pdfx-out")
+					: outputDirectoryPath;
+			logger.info("Output path: " + outputDirectoryPath.toUri());
+		}
+
+		// create output directory
+		if (!Files.exists(outputDirectoryPath)) {
+			try {
+				Files.createDirectory(outputDirectoryPath);
+				logger.info("Successfully created output directory: " + outputDirectoryPath.toUri());
+			} catch (IOException e) {
+				logger.error("IO Exception occurred when trying to create output directory.", e);
+			}
+		}
+
+		for (Path pdfFile : pdfFiles) {
+			Path outFile = outputDirectoryPath.resolve(FilenameUtils.getBaseName(pdfFile.toString()) + ".xml");
+			Path processed = singleFileProcess(pdfFile, outFile);
 			if (null != processed) {
 				outputFiles.add(processed);
 			}
-			return outputFiles; // done
-		} else {
-			logger.debug("Provided path is a directory: " + inputDirectoryPath.toUri());
-			outputDirectoryPath = outputDirectoryPath == null ? inputDirectoryPath.resolve("pdfx-out") : outputDirectoryPath;
-			logger.info("Output directory: " + outputDirectoryPath.toUri());
-
-			// create output directory
-			if (!Files.exists(outputDirectoryPath)) {
-				try {
-					Files.createDirectory(outputDirectoryPath);
-					logger.info("Successfully created output directory: " + outputDirectoryPath.toUri());
-				} catch (IOException e) {
-					logger.error("IO Exception occurred when trying to create output directory.", e);
-				}
-			}
-
-			// process each PDF in the input directory
-			List<Path> pdfFiles = getPdfListFromDirectory(inputDirectoryPath);
-			logger.info(pdfFiles.size() + " pdf files found.");
-			for (Path pdfFile : pdfFiles) {
-				Path outFile = outputDirectoryPath.resolve(FilenameUtils.getBaseName(pdfFile.toString()) + ".xml");
-				Path processed = singleFileProcess(pdfFile, outFile);
-				if (null != processed) {
-					outputFiles.add(processed);
-				}
-			}
-
-			logger.info("PdfxXmlCreator process finished.");
-			return outputFiles;
 		}
+
+		logger.info("PdfxXmlCreator process finished.");
+		return outputFiles;
+
 	}
 
 	private Path singleFileProcess(Path pdfFile, Path outFile) {

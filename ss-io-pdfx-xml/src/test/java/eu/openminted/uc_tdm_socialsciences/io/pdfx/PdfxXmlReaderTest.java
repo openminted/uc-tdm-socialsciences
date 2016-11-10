@@ -41,7 +41,7 @@ public class PdfxXmlReaderTest {
 			String filePath = xml.toString();
 			String expectedFilePath = filePath + ".dump";
 
-/*
+
 			runPipeline(
 					createReaderDescription(PdfxXmlReader.class,
 							PdfxXmlReader.PARAM_LANGUAGE, "en",
@@ -49,7 +49,7 @@ public class PdfxXmlReaderTest {
 					createEngineDescription(CasDumpWriter.class,
 							CasDumpWriter.PARAM_TARGET_LOCATION, expectedFilePath,
 							CasDumpWriter.PARAM_SORT, true));
-*/
+
 
 			String fileName = xml.getFileName().toString();
 			String expectedFileName = fileName + ".dump";
@@ -79,7 +79,7 @@ public class PdfxXmlReaderTest {
 		// one-way test
 
 
-/*
+
 		runPipeline(createReaderDescription(PdfxXmlReader.class,
 				PdfxXmlReader.PARAM_LANGUAGE, "en",
 				PdfxXmlReader.PARAM_SOURCE_LOCATION, TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE1,
@@ -88,7 +88,7 @@ public class PdfxXmlReaderTest {
 						CasDumpWriter.PARAM_TARGET_LOCATION,
 						TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH,
 						CasDumpWriter.PARAM_SORT, true));
-*/
+
 
 		testOneWay(
 				createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en",
