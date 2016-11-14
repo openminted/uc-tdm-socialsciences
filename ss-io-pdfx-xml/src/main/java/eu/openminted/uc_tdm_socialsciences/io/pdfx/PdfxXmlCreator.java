@@ -41,6 +41,9 @@ public class PdfxXmlCreator {
 
 	public static final String REQUEST_RESPONSE_VALUE_ERROR = "error";
 	private static final Logger logger = Logger.getLogger(PdfxXmlCreator.class);
+	public static final String DEFAULT_OUTPUT_PATH = "pdfx-out";
+
+	private List<String> skippedFileList;
 
 	private boolean overwriteOutput = false;
 
@@ -83,6 +86,12 @@ public class PdfxXmlCreator {
 		creator.process(inputPath, outputPath);
 	}
 
+	public List<String> getSkippedFileList() {
+		List<String> result = new ArrayList<>();
+		result.addAll(skippedFileList);
+		return result;
+	}
+
 	/**
 	 * Processes a single pdf file or all pdf files in a given directory with
 	 * pdfx service which
@@ -95,10 +104,13 @@ public class PdfxXmlCreator {
 	 *            recursively, non-pdf files will be ignored.
 	 * @param outputPathString
 	 *            The directory where the output XML file(s) will be stored.
+	 *            if set to <i>null</i> generated files will be written to the
+	 *            input directory.
 	 * @return a list of all the Paths of the generated output files
 	 */
 	public List<Path> process(String inputPathString, String outputPathString) {
 		Path inputPath;
+		skippedFileList = new ArrayList<>();
 		try {
 			inputPath = Paths.get(inputPathString);
 			Path outputPath = outputPathString == null ? null : Paths.get(outputPathString);
@@ -133,19 +145,19 @@ public class PdfxXmlCreator {
 		List<Path> pdfFiles = new ArrayList<>();
 
 		if (!inputPath.toFile().isDirectory()) {
-			logger.debug("Provided path is not a directory: " + inputPath.toUri());
+			logger.info("Provided path is not a directory: " + inputPath.toUri());
 			pdfFiles.add(inputPath);
 
 			outputDirectoryPath = outputDirectoryPath == null ? inputPath.getParent()
 					: outputDirectoryPath;
 			logger.info("Output path: " + outputDirectoryPath.toUri());
 		} else {
-			logger.debug("Provided path is a directory: " + inputPath.toUri());
+			logger.info("Provided path is a directory: " + inputPath.toUri());
 			// get each PDF in the input directory
 			pdfFiles = getPdfListFromDirectory(inputPath);
 			logger.info(pdfFiles.size() + " pdf files found.");
 
-			outputDirectoryPath = outputDirectoryPath == null ? inputPath.resolve("pdfx-out")
+			outputDirectoryPath = outputDirectoryPath == null ? inputPath.resolve(DEFAULT_OUTPUT_PATH)
 					: outputDirectoryPath;
 			logger.info("Output path: " + outputDirectoryPath.toUri());
 		}
@@ -157,6 +169,7 @@ public class PdfxXmlCreator {
 				logger.info("Successfully created output directory: " + outputDirectoryPath.toUri());
 			} catch (IOException e) {
 				logger.error("IO Exception occurred when trying to create output directory.", e);
+				throw new IllegalArgumentException("[" + outputDirectoryPath + "] directory can not be created.");
 			}
 		}
 
@@ -174,18 +187,19 @@ public class PdfxXmlCreator {
 	}
 
 	private Path singleFileProcess(Path pdfFile, Path outFile) {
+		Path result = null;
 		try {
-			logger.info("processing file: " + outFile.toUri());
+			logger.info("processing file: " + pdfFile.toUri());
 			if (processWithPdfx(pdfFile.toFile(), outFile)) {
 				// output file was created
-				return outFile;
+				result = outFile;
 			}
 			logger.info("processing file [" + pdfFile.toUri() + "] finished.");
 		} catch (IOException x) {
 			logger.error(x.getMessage());
 			logger.error("Failure!", x);
 		}
-		return null;
+		return result;
 	}
 
 	private static List<Path> getPdfListFromDirectory(Path inputDir) {
@@ -194,8 +208,8 @@ public class PdfxXmlCreator {
 			Files.walk(inputDir).filter(Files::isRegularFile).filter(PDFChecker::isPDFFile).forEach(toProcess::add);
 		} catch (IOException e) {
 			logger.error("Exception occurred in reading the directory: " + inputDir.toUri());
-			// todo change to throw exception
-			e.printStackTrace();
+			logger.error("Exception in getPdfListFromDirectory", e);
+			throw new IllegalArgumentException(e);
 		}
 		return toProcess;
 	}
@@ -206,6 +220,7 @@ public class PdfxXmlCreator {
 					"Output file [" + outFile.toUri() + "] already exists. Set 'overwriteOutput' attribute to true "
 							+ "to overwrite existing files.");
 			logger.info("Skipping process for file: " + pdf.getName());
+			skippedFileList.add(pdf.getName());
 			return false;
 		}
 

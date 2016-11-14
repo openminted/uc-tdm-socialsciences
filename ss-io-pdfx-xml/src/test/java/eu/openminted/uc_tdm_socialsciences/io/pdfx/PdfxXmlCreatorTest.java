@@ -23,46 +23,55 @@ public class PdfxXmlCreatorTest {
         pdfxXmlCreator = new PdfxXmlCreator();
     }
 
-    //this is covered by testOverwriteOutputFalse
-    @Ignore
-    public void test() {
-        pdfxXmlCreator.setOverwriteOutput(true);
+    /***
+     * Generate xml documents for all of the test pdf documents
+     */
+    @Test
+    public void testExhaustive() {
+        pdfxXmlCreator.setOverwriteOutput(false);
         pdfxXmlCreator.process(inputPath, inputPath);
     }
 
     @Test
     public void testOverwriteOutputFalse() {
-        test();
+        String testDocument = "src/test/resources/14_Paper.xml";
+        if (!(new File(testDocument)).isFile())
+            assert pdfxXmlCreator.process(testDocument, null).size() != 0;
 
         pdfxXmlCreator.setOverwriteOutput(false);
-        List<Path> outputFiles = pdfxXmlCreator.process(inputPath, inputPath);
-        assert !pdfxXmlCreator.isOverwriteOutput() && (outputFiles == null || outputFiles.size() == 0);
+        List<Path> outputFiles = pdfxXmlCreator.process(testDocument, null);
+        assert !pdfxXmlCreator.isOverwriteOutput();
+        assert outputFiles.size() == 0;
     }
 
     @Test
-	public void testInvalidInputAndOutput() {
-
-		String validInputFile = "src/test/resources/14_Paper.pdf";
-		String validInputFolder = "src/test/resources/";
+	public void testInvalidInputDirectoryAndValidOutputNull() {
 		String invalidInputPath = "a-really-invalid-input-directory";
-
 		String validOutputNull = null;
-		String validOutputFile = "src/test/resources/14_Paper.xml";
-		String validOutputFolder = "src/test/resources/output/";
-		String invalidOutputPath = "a-really-invalid-output-directory";
+        pdfxXmlCreator.setOverwriteOutput(false);
 
-		assert pdfxXmlCreator.process(invalidInputPath, null).size() == 0;
+		assert (pdfxXmlCreator.process(invalidInputPath, validOutputNull).size() +
+                pdfxXmlCreator.getSkippedFileList().size()) == 0;
+    }
 
-		assert pdfxXmlCreator.process(validInputFile, validOutputNull).size() == 1;
+    @Test
+    public void testValidSingleFileAndValidOutput() {
+        String validInputFile = "src/test/resources/14_Paper.pdf";
+        String validOutputFile = "src/test/resources/";
+        pdfxXmlCreator.setOverwriteOutput(false);
 
-		assert pdfxXmlCreator.process(validInputFile, validOutputFile).size() == 1;
+        assert (pdfxXmlCreator.process(validInputFile, validOutputFile).size() +
+                pdfxXmlCreator.getSkippedFileList().size()) == 1;
+    }
 
-		assert pdfxXmlCreator.process(validInputFolder, validOutputFolder).size() > 0;
+    @Test
+    public void testValidInputDirectoryAndValidOutput() {
+        String validInputFolder = "src/test/resources/";
+        String validOutputFolder = "src/test/resources/";
+        pdfxXmlCreator.setOverwriteOutput(false);
 
-		assert pdfxXmlCreator.process(validInputFolder, validOutputNull).size() > 0;
-
-		assert pdfxXmlCreator.process(validInputFolder, invalidOutputPath).size() == 0;
-
+        assert (pdfxXmlCreator.process(validInputFolder, validOutputFolder).size() +
+                pdfxXmlCreator.getSkippedFileList().size()) > 0;
     }
 
     @Test
