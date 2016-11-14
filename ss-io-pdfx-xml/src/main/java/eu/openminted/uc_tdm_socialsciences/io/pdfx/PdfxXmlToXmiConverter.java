@@ -38,9 +38,11 @@ public class PdfxXmlToXmiConverter {
 	public static final String LANGUAGE_CODE_DE = "de";
 
 	private String inputPath = null;
+	private String outputPathXmi = null;
 	private String inputLanguage = LANGUAGE_CODE_EN;
 
 	// TODO do not throw exceptions from main method
+	// TODO move main method + main argument handling to a new class
 	/**
 	 * Main method to run the converter from command line. Input directory
 	 * containing XML files may be provided as parameter, otherwise it will be
@@ -60,7 +62,7 @@ public class PdfxXmlToXmiConverter {
 
 		processArguments(args);
 
-		convertToXmi(inputPath, inputPath + File.separator + "uima-xmi" + File.separator, inputLanguage);
+		convertToXmi(inputPath, outputPathXmi, inputLanguage);
 
 		//Create Cas Dump files
 		Path inputDir = Paths.get(inputPath);
@@ -103,8 +105,10 @@ public class PdfxXmlToXmiConverter {
 			inputPath = scanner.nextLine();
 		}
 		scanner.close();
+		outputPathXmi = inputPath + File.separator + "uima-xmi" + File.separator;
 
 		logger.info("Input path: " + inputPath);
+		logger.info("Output xmi path: " + outputPathXmi);
 		logger.info("Input language: " + inputLanguage);
 	}
 
