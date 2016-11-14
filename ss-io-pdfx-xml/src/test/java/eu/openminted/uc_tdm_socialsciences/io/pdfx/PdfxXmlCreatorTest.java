@@ -9,13 +9,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class PdfxXmlCreatorTest {
 
     private final static Logger logger = Logger.getLogger(PdfxXmlCreatorTest.class);
-    private final String inputPath = "src/test/resources";
+    private final String inputPath = "src" + File.separator + "test" + File.separator + "resources" + File.separator;
     private PdfxXmlCreator pdfxXmlCreator;
 
     @Before
@@ -34,24 +33,25 @@ public class PdfxXmlCreatorTest {
 
     @Test
     public void testOverwriteOutputFalse() {
-        String testDocument = "src/test/resources/14_Paper.xml";
-        if (!(new File(testDocument)).isFile())
-            assert pdfxXmlCreator.process(testDocument, null).size() != 0;
+        String testDocument = inputPath + "14_Paper.xml";
+        if (!(new File(testDocument)).isFile()) {
+            Assert.assertNotEquals(0, pdfxXmlCreator.process(testDocument, null).size());
+        }
 
         pdfxXmlCreator.setOverwriteOutput(false);
         List<Path> outputFiles = pdfxXmlCreator.process(testDocument, null);
-        assert !pdfxXmlCreator.isOverwriteOutput();
-        assert outputFiles.size() == 0;
+
+        Assert.assertEquals(false, pdfxXmlCreator.isOverwriteOutput());
+        Assert.assertEquals(0, outputFiles.size());
     }
 
     @Test
 	public void testInvalidInputDirectoryAndValidOutputNull() {
 		String invalidInputPath = "a-really-invalid-input-directory";
-		String validOutputNull = null;
         pdfxXmlCreator.setOverwriteOutput(false);
 
-		assert (pdfxXmlCreator.process(invalidInputPath, validOutputNull).size() +
-                pdfxXmlCreator.getSkippedFileList().size()) == 0;
+		Assert.assertEquals(0, pdfxXmlCreator.process(invalidInputPath, null).size() +
+                pdfxXmlCreator.getSkippedFileList().size());
     }
 
     @Test
@@ -60,8 +60,8 @@ public class PdfxXmlCreatorTest {
         String validOutputFile = "src/test/resources/";
         pdfxXmlCreator.setOverwriteOutput(false);
 
-        assert (pdfxXmlCreator.process(validInputFile, validOutputFile).size() +
-                pdfxXmlCreator.getSkippedFileList().size()) == 1;
+        Assert.assertEquals(1, pdfxXmlCreator.process(validInputFile, validOutputFile).size() +
+                pdfxXmlCreator.getSkippedFileList().size());
     }
 
     @Test
@@ -70,16 +70,16 @@ public class PdfxXmlCreatorTest {
         String validOutputFolder = "src/test/resources/";
         pdfxXmlCreator.setOverwriteOutput(false);
 
-        assert (pdfxXmlCreator.process(validInputFolder, validOutputFolder).size() +
-                pdfxXmlCreator.getSkippedFileList().size()) > 0;
+        Assert.assertTrue(pdfxXmlCreator.process(validInputFolder, validOutputFolder).size() +
+                pdfxXmlCreator.getSkippedFileList().size() > 0);
     }
 
     @Test
     public void testCreateOutputDirectory() {
         String outputDirectory = "src/test/java/testCreateOutputDirectory";
         String inputDirectory = "src/test/java";
-        assert pdfxXmlCreator.process(inputDirectory, outputDirectory).size() == 0;
-        assert new File(outputDirectory).isDirectory();
+        Assert.assertEquals(0, pdfxXmlCreator.process(inputDirectory, outputDirectory).size());
+        Assert.assertTrue(new File(outputDirectory).isDirectory());
         try {
             FileUtils.deleteDirectory(new File(outputDirectory));
         } catch (IOException e) {
