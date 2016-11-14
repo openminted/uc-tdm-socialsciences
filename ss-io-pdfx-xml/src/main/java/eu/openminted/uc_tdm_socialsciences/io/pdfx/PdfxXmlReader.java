@@ -16,7 +16,9 @@ import de.tudarmstadt.ukp.dkpro.core.io.xml.XmlTextReader;
 import webanno.custom.Reference;
 
 /**
- * Reader for PDFX XML format
+ * Reader for PDFX XML format.
+ * </br>
+ * <b>note:</b> This reader is expected to ignore figures and tables (also their captions) inside the document.
  * <br>
  * schema available at : http://pdfx.cs.man.ac.uk/static/article-schema.xsd
  * schema mapping to JATS/NLM DTD available at : http://pdfx.cs.man.ac.uk/serve/pdfx-to-nlm3_v1.2.xsl
@@ -139,7 +141,6 @@ public class PdfxXmlReader
                                  Attributes aAttributes)
                 throws SAXException
         {
-            lastElementSeen = aName;
             if (TAG_REGION.equals(aName)) {
                 startElementRegion(aAttributes);
             } else if (TAG_S.equals(aName)) {
@@ -156,13 +157,13 @@ public class PdfxXmlReader
             } else if (TAG_ABSTRACT.equals(aName)) {
                 startElementAbstract();
             }
+            lastElementSeen = aName;
         }
 
         @Override
         public void endElement(String aUri, String aLocalName, String aName)
                 throws SAXException
         {
-            lastElementSeen = aName;
             if (TAG_REGION.equals(aName)){
                 endElementRegion();
             } else if (TAG_S.equals(aName)){
@@ -176,6 +177,7 @@ public class PdfxXmlReader
             }else if (TAG_ABSTRACT.equals(aName)){
                 endElementAbstract();
             }
+            lastElementSeen = aName;
         }
 
         protected void startElementHeading() {
@@ -221,6 +223,15 @@ public class PdfxXmlReader
         protected void startElementS() {
             //sentence begin
             sentenceBegin = getBuffer().length();
+            if (!paragraphHasSentence &&
+                    sentenceBegin > paragraphBegin &&
+                    getBuffer().substring(paragraphBegin, sentenceBegin).trim().equals("")) {
+                //force removing extra whitespace before a paragraph begin
+                getBuffer().delete(paragraphBegin, sentenceBegin);
+                paragraphBegin = getBuffer().length();
+                sentenceBegin = getBuffer().length();
+            }
+
             paragraphHasSentence = true;
         }
 
@@ -229,6 +240,7 @@ public class PdfxXmlReader
             if (isInsideParagraph && isNotZeroLengthSpan(sentenceBegin, getBuffer().length())) {
                 sentenceEnd = getBuffer().length();
                 new Sentence(getJCas(), sentenceBegin, sentenceEnd).addToIndexes();
+                paragraphHasSentence = true;
             }
         }
 
@@ -244,11 +256,6 @@ public class PdfxXmlReader
         protected void endElementRegion() {
             if(isInsideParagraph) {
                 //end of paragraph
-                if (!paragraphHasSentence){
-                    //force create a sentence annotation if no sentence tag was seen inside this <Region>
-                    sentenceBegin = paragraphBegin;
-                    endElementS();
-                }
                 endParagraph();
             }
         }
@@ -292,13 +299,24 @@ public class PdfxXmlReader
         }
 
         private void endParagraph() {
-            if (isNotZeroLengthSpan(paragraphBegin, getBuffer().length())) {
+            int paragraphEnd = getBuffer().length();
+            if (isNotZeroLengthSpan(paragraphBegin, paragraphEnd)) {
                 if(isParamAppendNewLineAfterParagraph){
-                    int emptySentenceStart = getBuffer().length();
+                    int emptySentenceStart = paragraphEnd;
                     getBuffer().append(NEWLINE_SEPARATOR);
-                    new Sentence(getJCas(), emptySentenceStart, getBuffer().length()).addToIndexes();
+                    new Sentence(getJCas(), emptySentenceStart, paragraphEnd).addToIndexes();
                 }
-                new Paragraph(getJCas(), paragraphBegin, getBuffer().length()).addToIndexes();
+                if (!paragraphHasSentence) {
+                    //force create a sentence annotation if no sentence tag was seen inside this <Region>
+                    sentenceBegin = paragraphBegin;
+                    endElementS();
+                }
+                if (sentenceEnd < paragraphEnd) {
+                    //force create a sentence if last piece of text was not inside a sentence <s> tag
+                    sentenceBegin = sentenceEnd;
+                    endElementS();
+                }
+                new Paragraph(getJCas(), paragraphBegin, paragraphEnd).addToIndexes();
             }
             captureText = false;
             isInsideParagraph = false;

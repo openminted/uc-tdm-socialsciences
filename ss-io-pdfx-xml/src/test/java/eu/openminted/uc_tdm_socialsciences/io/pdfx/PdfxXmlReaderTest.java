@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -19,6 +21,7 @@ import de.tudarmstadt.ukp.dkpro.core.testing.DkproTestContext;
 import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
 
 public class PdfxXmlReaderTest {
+	private static final Logger logger = Logger.getLogger(PdfxXmlReaderTest.class);
 	public static final String TEST_RESOURCES_PATH = "src/test/resources/";
 
 	public static final String TEST_RESOURCE_ARTICLE1 = "14_Paper.xml";
@@ -36,12 +39,13 @@ public class PdfxXmlReaderTest {
 	public void testReadArticles() throws Exception {
 
 		List<Path> xmlFiles = getXmlFilesFromDir(Paths.get(TEST_RESOURCES_PATH));
+		logger.info("found [" + xmlFiles.size() + "] files to test.");
 
 		for (Path xml : xmlFiles) {
 			String filePath = xml.toString();
 			String expectedFilePath = filePath + ".dump";
 
-
+/*
 			runPipeline(
 					createReaderDescription(PdfxXmlReader.class,
 							PdfxXmlReader.PARAM_LANGUAGE, "en",
@@ -49,10 +53,12 @@ public class PdfxXmlReaderTest {
 					createEngineDescription(CasDumpWriter.class,
 							CasDumpWriter.PARAM_TARGET_LOCATION, expectedFilePath,
 							CasDumpWriter.PARAM_SORT, true));
+*/
 
 
 			String fileName = xml.getFileName().toString();
 			String expectedFileName = fileName + ".dump";
+			logger.info("Checking reader on file [" + fileName + "] against the dump file [" + expectedFileName + "]");
 
 			testOneWay(createReaderDescription(PdfxXmlReader.class, PdfxXmlReader.PARAM_LANGUAGE, "en"),
 					expectedFileName, fileName);
@@ -70,8 +76,7 @@ public class PdfxXmlReaderTest {
 		return toProcess;
 	}
 
-	// @Ignore
-	@Test
+	@Ignore
 	public void testReadArticle1WithAppendNewLine() throws Exception {
 		// After applying a change to the reader that changes its underlying
 		// jcas, this part should be uncommented
@@ -80,6 +85,7 @@ public class PdfxXmlReaderTest {
 
 
 
+/*
 		runPipeline(createReaderDescription(PdfxXmlReader.class,
 				PdfxXmlReader.PARAM_LANGUAGE, "en",
 				PdfxXmlReader.PARAM_SOURCE_LOCATION, TEST_RESOURCES_PATH + TEST_RESOURCE_ARTICLE1,
@@ -88,6 +94,7 @@ public class PdfxXmlReaderTest {
 						CasDumpWriter.PARAM_TARGET_LOCATION,
 						TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP_PATH,
 						CasDumpWriter.PARAM_SORT, true));
+*/
 
 
 		testOneWay(

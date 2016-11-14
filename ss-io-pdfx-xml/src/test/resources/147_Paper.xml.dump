@@ -5,14 +5,14 @@
 DocumentMetaData
    sofa: _InitialView
    begin: 0
-   end: 20648
+   end: 20646
    language: "en"
    documentTitle: "Using Transfer Learning to Assist Exploratory Corpus Annotation"
    documentId: "Using Transfer Learning to Assist Exploratory Corpus Annotation"
    isLastSegment: false
 
 CAS-Text:
-Using Transfer Learning to Assist Exploratory Corpus AnnotationWe describe an under-studied problem in language resource management: that of providing automatic assistance to annotators working in exploratory settings. When no satisfactory tagset already exists, such as in under-resourced or undocumented languages, it must be developed iteratively while annotating data. This process naturally gives rise to a sequence of datasets, each annotated differently. We argue that this problem is best regarded as a transfer learning problem with multiple source tasks. Using part-of-speech tagging data with simulated exploratory tagsets, we demonstrate that even simple transfer learning techniques can significantly improve the quality of pre-annotations in an exploratory annotation. Keywords: corpus annotation, transfer learning, machine learningPaul Felt, Eric K. Ringger, Kevin D. Seppi, Kristian HealBrigham Young University Department of Computer Science, † Neal A. Maxwell Institute Provo, UT 84602 USA paul felt@byu.edu, {ringger, kseppi}@cs.byu.edu, kristian heal@byu.edu1. Exploratory Corpus Annotation (ECA)Because corpora are useful for investigating the struc- ture of language, studying the way that languages change over time, testing linguistic hypotheses, charting the move- ment of ideas and historical trends, and even improving the effectiveness of language teaching and acquisition, they are an essential linguistic resource (Kroch, 1989; Sinclair, 2004; Nesselhauf, 2004). One of the most urgent needs for annotated corpora is in the realm of under-resourced and endangered language documentation (Grenoble and Whaley, 1998; Crystal, 2002; Bird and Simons, 2003; Gippert et al., 2006). In domains such as under-resourced language documentation, annotation is unavoidably exploratory and iterative in nature (Hovy and Lavid, 2010). The annotator proposes an annotation scheme, annotates data, and then revises that annotation scheme in light of insights gener- ated by applying the annotation scheme to real world data (Figure 1.), a process which for brevity we refer to as ECA (exploratory corpus annotation). ECA results in a sequence of possibly disjoint annotation sets, or “versions”, V 1 ⊕ . . . ⊕ V K = V , where each V v consists of data and annotations, {(x i , y i )} N i=1 v , produced according to V v ’s annotation scheme. Each time the annotation scheme changes, some cost is incurred as existing annotations are invalidated and must be updated before the corpus is complete. The cost associated with evolving annotation schemes is largely a hidden cost, since few annotation projects record or report internal changes. For example, the Natural Language Processing (NLP) Lab at BYU is collaborating with scholars of ancient languages at the Neal A. Maxwell Institute for Religious Scholarship to create a large corpus of annotated Classical Syriac. 1 Although significant time was spent at the outset defining the annotation scheme that would be used, as pre- liminary data has been annotated at least a dozen updates have already been made to the annotation scheme. Since1 http://cpart.maxwellinstitute.byu.edu/ home/sec/†Healwe are starting with a sizable body of already annotated text, some of these changes have required considerable time and effort to implement (via re-annotation). Annotation scheme revisions are especially likely in exploratory annotation scenarios dealing with languages or linguistic theories that have not previously been codified into annotation schemes. However, revisions can occur even in well established annotation tasks such as English part of speech tagging and parsing. When creating the Penn Treebank corpus, Marcus et al. (1993) re-annotated the Brown corpus data with revised part-of-speech tags. Addi- tionally, Marcus et al. report that after publishing the Penn Treebank, they identified a variety of limitations and incon- sistencies in their annotation scheme for English syntactic parsing and subsequently spent a good deal of effort repair- ing the parsing scheme and re-annotating data for future releases (Marcus et al., 1995). A more extreme case comes from the SUSANNE corpus, another derivative of the Brown Corpus, annotated with very detailed parsing information. The 512-page book describing the SUSANNE annotation scheme required twelve years of work to finish, and the author describes the accompanying 130,000-word corpus as a “by- product of the work of creating the SUSANNE annotation scheme” (Sampson, 2008). These examples underscore the effort involved in developing a satisfactory annotation scheme, even for mainstream languages and linguistic annotation tasks. The costs involved in iteratively improving an annotation scheme mean that budget-constrained corpus developers often must choose between developing a linguistically optimal annotation scheme and generating useful amounts of annotated data. To make matters worse, statistical pre- annotation—the traditional method of reducing annotation overhead—is hampered by the lack of a self-consistent training set.2. Previous Work2.1. Transfer LearningUsing knowledge from one or more source tasks to improve performance on a target task, as the Penn Treebank developers did, is known as transfer learning, and is an area of active research within machine learning. Providing pre- annotations for ECA fits naturally into the transfer learning framework. The following definition of transfer learning borrows notation and ideas from Pan and Yang (2010), but with minor changes to highlight connections between transfer learning and the motivation presented in Section 1..Definition 1 (Transfer Learning) Let D denote a domain comprising the feature space X and a distribution p(x) over data x ∈ X . Let T denote a task, or annotation scheme, comprising a feature space X , a label space Y, and a labeling function f : x → y where x ∈ X and y ∈ Y. 2 Finally, let version V t be the set of annotations produced according to the annotation scheme of task T t . Then the goal of transfer learning is to use data from all source versions V 1..t−1 to improve our ability to model the target annotation scheme T t .Definition 1 encompasses a large number of scenarios. There may be one or many source versions. Differ- ent quantities of data and annotations may be available in any given version. Furthermore, each version is associated with an annotator, domain, and task, and therefore may differ from other versions in terms of X , p(x), Y, or f . Each of these differences can be understood via simple examples. Text and images come from domains D 1 , D 2 where X 1 = X 2 . Poetry and newswire text come from domains where p 1 (x) = p 2 (x). When two part-of-speech tagging tasks use different tagsets, then Y 1 = Y 2 ; when they assign different meanings to the same tag, f 1 = f 2 . Each setting2 Although f may be approximately described in annotation manuals, the true f is generally unseen. In probabilistic ap- proaches, f is often modeled as p(y|x)of these variables in a versioned dataset V 1...t corresponds to a different transfer learning scenario. Much work on transfer learning for NLP is currently in domain adaptation, the transfer setting in which T s = T t , D s = D t , and the domains differ only in the marginal distribution of the data, p s (X) and p t (X). An example of domain adaptation would be using Wikipedia text in which named entities (people, places, events, etc.) have been labeled in order to improve named entity recognition in movie reviews. Other notable related work includes multi-task learning, a transfer setting in which D s = D t and there are multiple tasks that all differ from one another. Multi-task learning is unusual in that no source/destination distinctions made among tasks (Caruana, 1997). For example, Collobert et al. (2011) construct a system that simultaneously learns part- of-speech tagging, named entity recognition, chunking, and semantic role labeling. Each task helps to inform the others, leading to higher performance on all tasks learned jointly than was possible for any individual task when learned in- dividually.Numerous annotation projects have shown that assist- ing annotators with good pre-annotations is essential to an-(a) Corpus annotation with a pre-defined, un- changing annotation schemenotator efficiency and accuracy. Studies in English part- of-speech tagging, Chinese parsing, information extraction, named entity recognition, and Semitic morphological analysis all demonstrate that high accuracy pre-annotations cor- relate strongly with low annotation cost (Marcus et al., 1993; Chiou et al., 2001; Culotta and McCallum, 2005; Ganchev et al., 2007; Felt et al., 2012). This point is critical to our future decision (see Section 4.) to focus on increasing model accuracy as a stand-in for reduced cost. Because accurate pre-annotation models are so effective in reducing annotation effort, much work has been done to train high quality models with as little data as possible. The active learning literature aims to reduce the cost required to train a model by selecting instances for annotation that are likely to be most informative (Settles, 2010). Weakly supervised techniques attempt to speed model training by learning from unlabeled instances, or by allowing annotators to communicate their knowledge to the model by specifying labels or constraints that are applicable to large classes of data instances (Roth and Yih, 2004; Druck et al., 2009; Liang et al., 2009; Ganchev et al., 2010). We know of no previous work that explicitly addresses the problem of providing automatic assistance for ECA; however, corpus developers have naturally gravitated to- wards the solution of adapting knowledge from the data in out-of-date versions. For example, the creators of the Penn Treebank corpus used an altered version of the Brown Corpus’s annotation scheme, which can be seen as an example of a single large step in the iterative process of ECA (Marcus et al., 1993). Although the existing Brown Corpus annotations were unsuitable for direct use, the creators of the Penn Treebank used an automatic tagging model trained on heuristically modified Brown Corpus data to automatically pre-annotate Penn Treebank data. Although im- perfect, these pre-annotations effectively doubled annotation speed, greatly reducing annotation cost (Francis and Kucera, 1979; Church, 1988).(b) Exploratory corpus annotation (ECA) Ann = annotation generation Rev = revising the annotation scheme3. ECA as Transfer LearningWe formally define the problem of providing machine assistance in the setting of exploratory corpus annotation as a transfer learning problem and introduce some simple solutions adapted from previous work. The solutions described below are appealing since they are conceptually simple and easy to implement using existing models as building blocks.Definition 2 (Exploratory Corpus Annotation) The transfer learning setting in which the following are true. There are multiple source tasks T 1..t−1 . For each pair i, j of source tasks, D i = D j and T i = T j . Finally, each source version has at least some labeled data. Little or no labeled data is available for the target version V t .Only a few of the possible transfer learning settings are commonly studied, and none of those match Definition 2. ECA is unusual and interesting from a transfer learning point of view because it has multiple source tasks and there is often a sequential relationship among the tasks.3.1. Baselines: TGTTRAIN and ALLTRAINLet TGTTRAIN be the approach that ignores all data from source tasks and trains a traditional supervised classification model only on the current target data V t . We can expect TGTTRAIN to do well when V t is large and badly when V t is small, such as at the beginning of a project or just after a change is made to the annotation scheme. TGTTRAIN corresponds to annotation projects that discard out- dated annotations when a new version is introduced. In practice, this tends to happen during the initial stages of a project, when the perceived value of the information being lost is low. Let ALLTRAIN be the algorithm that trains a traditional supervised classification model on all available data V 1...t , ignoring version boundaries. We would expect ALLTRAIN to do well when there are few differences between the source and target datasets, and badly when there are large differences.3.2. STACKSTACK refers to an adaptation of stacked generalization, in which traditional supervised models are trained on each of the datasets, and a higher level model is trained to accomplish the target task using the predictions of the lower level models as features (Wolpert, 1992). The higher level model can potentially discover patterns in the errors of the underlying models in order to know which are trustworthy in which contexts, and whether their guesses are wrong in ways that can be predictably mapped to the correct answer.3.3. AUGMENTAUGMENT is a simple and effective domain adaptation technique proposed by Daumé (2007). AUGMENT moves the data into a feature space that allows traditional supervised learning techniques to find commonalities and differences among data from different domains. It is assumed that there are two datasets: the source X s and the target X t . Each source feature vector is mapped into the new feature space by the kernel function Φ s (x) = x, x, 0 , and each target feature vector is mapped by the function Φ t (x) = x, 0, x . Thus each feature has a source-specific version, a target-specific version, and a general version in the new feature space. This can be generalized to the context of multiple source domains by defining Φ s1 (x) = x, 0, 0, ..., x , Φ s2 (x) = 0, x, 0, ..., x ,...,Φ t (x) = 0, 0, ..., x, x .4. ExperimentsWe would like to test the hypothesis that transfer learning can improve pre-annotations for ECA. However, evaluating a model in this setting requires access to corpora that recorded every version of the data V since the beginning of the project. We are aware of no such datasets. However, we can simulate such corpora by starting with an existing annotated corpus and probabilistically generating sequences of intermediate versions that explain how that corpus’s annotation scheme might have come to be. For example, to start in familiar territory, we use the following process to create versioned datasets explaining the derivation of the Penn Treebank’s part-of-speech tagged data.Algorithm 1 Simulate Versioned POS Datasets Given: GoldData is the reference dataset Given: GoldT ags is the reference tagset 1: T ags ← CompositeT ag(GoldT ags) 2: dataset ← {} 3: while T ags = GoldTags do 4: op ← sample({SPLIT,MOVE,MERGE}) 5: T ags ← apply(op, T ags) 6: κ ← sampleV ersionSize() 7: dataset ← annotate(κ, T ags, GoldData) 8: return datasetAlgorithm 1 starts by grouping all the reference tags into a single composite tagset, then iterates between alter- ing the tagset and annotating data until the original tagset is reached. A SPLIT represents an annotator deciding that the largest composite tag in the tagset is too broad and di- viding it. A MERGE represents an annotator deciding that the distinctions between two tags are too fine and lumping them together. A MOVE represents an annotator moving one of the reference tags out of one composite tag and into another; in other words, deciding that a set of words that was previously labeled as something would be better labeled something else. In order to be linguistically reasonable, splits are de- termined by finding a min-cut in the graph of reference tags, where reference tags are connected with strong ad- hoc weights if they are in the same family of tags (e.g., nouns, verbs, punctuation, etc), and weak weights other- wise. Merges and moves are chosen by sampling from a distribution over reference tag pairs where pairs that are identified by the Penn Treebank tagging guidelines as confusable (25 of these) or very confusable (9 of these) are more probable (Santorini, 1990). Finally, sampleV ersionSize() is implemented by hypothesizing that annotation projects alternate between small annotation batches for development and large batches for production approaching the size of the desired corpus, N , as the tagset converges on the reference set. The final mix favors development mode, since production mode in- volves heavy costs in the later stages (Figure 2). This simulated data is clearly not ideal, and we and are actively working on developing real-world ECA data based on annotation projects we are involved in (Felt et al., In Press). However, in the meantime, simulated data allows us to make cautious observations about the characteristics of the problem and projections about the potential of transfer learning models to improve pre-annotation for ECA. We used Algorithm 1 to generate 30 diverse datasets, choosing values for the simulation parameters at random. We used maximum-entropy Markov models (“maxent tag- gers”) with standard features (Toutanova et al., 2003) to implement the transfer algorithms described in Section 3.. Figure 3 shows the learning curve of each algorithm on a single dataset. TGTTRAIN’s learning curve shows deep valleys at each version transition, because it is equivalent to beginning an entirely new learning curve at the beginning of each version. ALLTRAIN, on the other hand, shows a much smoother pattern. Using old data allows it to avoid the valleys seen in TGTTRAIN, but hurts its ability to reach high peaks quickly. STACK and AUGMENT both have peaks similar to TGTTRAIN, but manage to recover more quickly from version changes and avoid the low valleys. Because we are interested in a model that performs well at all stages of the ECA process, we need to compare entire learning curves rather than just final accuracy. A natural summary statistic for the quality of a learning curve is average area under the curve (AAUC). An accurate estimate of AAUC requires good resolution on the learning curve, so we evaluate between 500 and 1000 points on each learning curve, sampling more densely around version transitions. In Table 1 we report the average AAUC of each algorithm over all the simulated datasets, along with model timing statistics. STACK and AUGMENT significantly outperform both TGTTRAIN and ALLTRAIN. Notice that AUGMENT is particularly slow to train, since its feature space has been expanded linearly in K, the number of versions. STACK is unusually slow at inference time, since it must solicit predictions from K subordinate models as features. The fact that TGTTRAIN was relatively easy to beat is encour- aging, suggesting that there is room for more sophisticated transfer learning to make significant improvements over the baseline approach.(a) Development: Noisy Gaussian Size N Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqqqqqqq qq qq qqqqq 5 10 15 20 25 30 35 40 45 (b) Production: Number Noisy of Tags Sigmoid Size N qq qq qq qq q q Dataset qqq qq q q q qqqqqqqqqqqqqqqqqqqqqqqqqqqq 0 5 10 15 20 25 30 35 40 45 Number (c) Mixed of Tags Size N q q q Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqq q qqqq q qq qq q 5 10 15 20 25 30 35 40 45 Number of Simulated Composite Tags5. Conclusions and Future WorkWe have described the problem of providing automatic assistance to annotators working in exploratory settings. We have argued that this problem should be regarded as a transfer learning problem, and shown that existing transfer learning techniques can be adapted to significantly improve the quality of pre-annotations in simulated exploratory part- of-speech tagging. Corpus annotators working in novel an-(a) TGTTRAIN 1 Accuracy 0 50 200 500 2000 10000 (b) Words ALLTRAIN (logscale) 1 Accuracy 0 50 200 500 2000 10000 Words (c) STACK (logscale) 1 Accuracy 0 50 200 500 2000 10000 (d) Words AUGMENT (logscale) 1 Accuracy 0 50 200 500 2000 10000 Words (logscale) Figure 3: An example learning curve for each algorithm on the same dataset.notation domains should be encouraged by these results and by the existence of a rich body of transfer learning work to draw on. We plan to develop models that leverage the sequential nature of the versions. We also plan to apply the insights developed in this paper to improve pre-annotations for annotators engaged in real-world annotation projects. Finally, in order to apply these techniques seamlessly in annotation projects, it would be beneficial to discover a way of learning to automatically identify the boundaries between versions so that annotators need not manually identify annotation scheme changes.6. References50000500005000050000
+Using Transfer Learning to Assist Exploratory Corpus AnnotationWe describe an under-studied problem in language resource management: that of providing automatic assistance to annotators working in exploratory settings. When no satisfactory tagset already exists, such as in under-resourced or undocumented languages, it must be developed iteratively while annotating data. This process naturally gives rise to a sequence of datasets, each annotated differently. We argue that this problem is best regarded as a transfer learning problem with multiple source tasks. Using part-of-speech tagging data with simulated exploratory tagsets, we demonstrate that even simple transfer learning techniques can significantly improve the quality of pre-annotations in an exploratory annotation. Keywords: corpus annotation, transfer learning, machine learningPaul Felt, Eric K. Ringger, Kevin D. Seppi, Kristian HealBrigham Young University Department of Computer Science, † Neal A. Maxwell Institute Provo, UT 84602 USA paul felt@byu.edu, {ringger, kseppi}@cs.byu.edu, kristian heal@byu.edu1. Exploratory Corpus Annotation (ECA)Because corpora are useful for investigating the struc- ture of language, studying the way that languages change over time, testing linguistic hypotheses, charting the move- ment of ideas and historical trends, and even improving the effectiveness of language teaching and acquisition, they are an essential linguistic resource (Kroch, 1989; Sinclair, 2004; Nesselhauf, 2004). One of the most urgent needs for annotated corpora is in the realm of under-resourced and endangered language documentation (Grenoble and Whaley, 1998; Crystal, 2002; Bird and Simons, 2003; Gippert et al., 2006). In domains such as under-resourced language documentation, annotation is unavoidably exploratory and iterative in nature (Hovy and Lavid, 2010). The annotator proposes an annotation scheme, annotates data, and then revises that annotation scheme in light of insights gener- ated by applying the annotation scheme to real world data (Figure 1.), a process which for brevity we refer to as ECA (exploratory corpus annotation). ECA results in a sequence of possibly disjoint annotation sets, or “versions”, V 1 ⊕ . . . ⊕ V K = V , where each V v consists of data and annotations, {(x i , y i )} N i=1 v , produced according to V v ’s annotation scheme. Each time the annotation scheme changes, some cost is incurred as existing annotations are invalidated and must be updated before the corpus is complete. The cost associated with evolving annotation schemes is largely a hidden cost, since few annotation projects record or report internal changes. For example, the Natural Language Processing (NLP) Lab at BYU is collaborating with scholars of ancient languages at the Neal A. Maxwell Institute for Religious Scholarship to create a large corpus of annotated Classical Syriac. 1 Although significant time was spent at the outset defining the annotation scheme that would be used, as pre- liminary data has been annotated at least a dozen updates have already been made to the annotation scheme. Since1 http://cpart.maxwellinstitute.byu.edu/ home/sec/†Healwe are starting with a sizable body of already annotated text, some of these changes have required considerable time and effort to implement (via re-annotation). Annotation scheme revisions are especially likely in exploratory annotation scenarios dealing with languages or linguistic theories that have not previously been codified into annotation schemes. However, revisions can occur even in well established annotation tasks such as English part of speech tagging and parsing. When creating the Penn Treebank corpus, Marcus et al. (1993) re-annotated the Brown corpus data with revised part-of-speech tags. Addi- tionally, Marcus et al. report that after publishing the Penn Treebank, they identified a variety of limitations and incon- sistencies in their annotation scheme for English syntactic parsing and subsequently spent a good deal of effort repair- ing the parsing scheme and re-annotating data for future releases (Marcus et al., 1995). A more extreme case comes from the SUSANNE corpus, another derivative of the Brown Corpus, annotated with very detailed parsing information. The 512-page book describing the SUSANNE annotation scheme required twelve years of work to finish, and the author describes the accompanying 130,000-word corpus as a “by- product of the work of creating the SUSANNE annotation scheme” (Sampson, 2008). These examples underscore the effort involved in developing a satisfactory annotation scheme, even for mainstream languages and linguistic annotation tasks. The costs involved in iteratively improving an annotation scheme mean that budget-constrained corpus developers often must choose between developing a linguistically optimal annotation scheme and generating useful amounts of annotated data. To make matters worse, statistical pre- annotation—the traditional method of reducing annotation overhead—is hampered by the lack of a self-consistent training set.2. Previous Work2.1. Transfer LearningUsing knowledge from one or more source tasks to improve performance on a target task, as the Penn Treebank developers did, is known as transfer learning, and is an area of active research within machine learning. Providing pre- annotations for ECA fits naturally into the transfer learning framework. The following definition of transfer learning borrows notation and ideas from Pan and Yang (2010), but with minor changes to highlight connections between transfer learning and the motivation presented in Section 1..Definition 1 (Transfer Learning) Let D denote a domain comprising the feature space X and a distribution p(x) over data x ∈ X . Let T denote a task, or annotation scheme, comprising a feature space X , a label space Y, and a labeling function f : x → y where x ∈ X and y ∈ Y. 2 Finally, let version V t be the set of annotations produced according to the annotation scheme of task T t . Then the goal of transfer learning is to use data from all source versions V 1..t−1 to improve our ability to model the target annotation scheme T t .Definition 1 encompasses a large number of scenarios. There may be one or many source versions. Differ- ent quantities of data and annotations may be available in any given version. Furthermore, each version is associated with an annotator, domain, and task, and therefore may differ from other versions in terms of X , p(x), Y, or f . Each of these differences can be understood via simple examples. Text and images come from domains D 1 , D 2 where X 1 = X 2 . Poetry and newswire text come from domains where p 1 (x) = p 2 (x). When two part-of-speech tagging tasks use different tagsets, then Y 1 = Y 2 ; when they assign different meanings to the same tag, f 1 = f 2 . Each setting2 Although f may be approximately described in annotation manuals, the true f is generally unseen. In probabilistic ap- proaches, f is often modeled as p(y|x)of these variables in a versioned dataset V 1...t corresponds to a different transfer learning scenario. Much work on transfer learning for NLP is currently in domain adaptation, the transfer setting in which T s = T t , D s = D t , and the domains differ only in the marginal distribution of the data, p s (X) and p t (X). An example of domain adaptation would be using Wikipedia text in which named entities (people, places, events, etc.) have been labeled in order to improve named entity recognition in movie reviews. Other notable related work includes multi-task learning, a transfer setting in which D s = D t and there are multiple tasks that all differ from one another. Multi-task learning is unusual in that no source/destination distinctions made among tasks (Caruana, 1997). For example, Collobert et al. (2011) construct a system that simultaneously learns part- of-speech tagging, named entity recognition, chunking, and semantic role labeling. Each task helps to inform the others, leading to higher performance on all tasks learned jointly than was possible for any individual task when learned in- dividually.Numerous annotation projects have shown that assist- ing annotators with good pre-annotations is essential to an-(a) Corpus annotation with a pre-defined, un- changing annotation schemenotator efficiency and accuracy. Studies in English part- of-speech tagging, Chinese parsing, information extraction, named entity recognition, and Semitic morphological analysis all demonstrate that high accuracy pre-annotations cor- relate strongly with low annotation cost (Marcus et al., 1993; Chiou et al., 2001; Culotta and McCallum, 2005; Ganchev et al., 2007; Felt et al., 2012). This point is critical to our future decision (see Section 4.) to focus on increasing model accuracy as a stand-in for reduced cost. Because accurate pre-annotation models are so effective in reducing annotation effort, much work has been done to train high quality models with as little data as possible. The active learning literature aims to reduce the cost required to train a model by selecting instances for annotation that are likely to be most informative (Settles, 2010). Weakly supervised techniques attempt to speed model training by learning from unlabeled instances, or by allowing annotators to communicate their knowledge to the model by specifying labels or constraints that are applicable to large classes of data instances (Roth and Yih, 2004; Druck et al., 2009; Liang et al., 2009; Ganchev et al., 2010). We know of no previous work that explicitly addresses the problem of providing automatic assistance for ECA; however, corpus developers have naturally gravitated to- wards the solution of adapting knowledge from the data in out-of-date versions. For example, the creators of the Penn Treebank corpus used an altered version of the Brown Corpus’s annotation scheme, which can be seen as an example of a single large step in the iterative process of ECA (Marcus et al., 1993). Although the existing Brown Corpus annotations were unsuitable for direct use, the creators of the Penn Treebank used an automatic tagging model trained on heuristically modified Brown Corpus data to automatically pre-annotate Penn Treebank data. Although im- perfect, these pre-annotations effectively doubled annotation speed, greatly reducing annotation cost (Francis and Kucera, 1979; Church, 1988).(b) Exploratory corpus annotation (ECA) Ann = annotation generation Rev = revising the annotation scheme3. ECA as Transfer LearningWe formally define the problem of providing machine assistance in the setting of exploratory corpus annotation as a transfer learning problem and introduce some simple solutions adapted from previous work. The solutions described below are appealing since they are conceptually simple and easy to implement using existing models as building blocks.Definition 2 (Exploratory Corpus Annotation) The transfer learning setting in which the following are true. There are multiple source tasks T 1..t−1 . For each pair i, j of source tasks, D i = D j and T i = T j . Finally, each source version has at least some labeled data. Little or no labeled data is available for the target version V t .Only a few of the possible transfer learning settings are commonly studied, and none of those match Definition 2. ECA is unusual and interesting from a transfer learning point of view because it has multiple source tasks and there is often a sequential relationship among the tasks.3.1. Baselines: TGTTRAIN and ALLTRAINLet TGTTRAIN be the approach that ignores all data from source tasks and trains a traditional supervised classification model only on the current target data V t . We can expect TGTTRAIN to do well when V t is large and badly when V t is small, such as at the beginning of a project or just after a change is made to the annotation scheme. TGTTRAIN corresponds to annotation projects that discard out- dated annotations when a new version is introduced. In practice, this tends to happen during the initial stages of a project, when the perceived value of the information being lost is low. Let ALLTRAIN be the algorithm that trains a traditional supervised classification model on all available data V 1...t , ignoring version boundaries. We would expect ALLTRAIN to do well when there are few differences between the source and target datasets, and badly when there are large differences.3.2. STACKSTACK refers to an adaptation of stacked generalization, in which traditional supervised models are trained on each of the datasets, and a higher level model is trained to accomplish the target task using the predictions of the lower level models as features (Wolpert, 1992). The higher level model can potentially discover patterns in the errors of the underlying models in order to know which are trustworthy in which contexts, and whether their guesses are wrong in ways that can be predictably mapped to the correct answer.3.3. AUGMENTAUGMENT is a simple and effective domain adaptation technique proposed by Daumé (2007). AUGMENT moves the data into a feature space that allows traditional supervised learning techniques to find commonalities and differences among data from different domains. It is assumed that there are two datasets: the source X s and the target X t . Each source feature vector is mapped into the new feature space by the kernel function Φ s (x) = x, x, 0 , and each target feature vector is mapped by the function Φ t (x) = x, 0, x . Thus each feature has a source-specific version, a target-specific version, and a general version in the new feature space. This can be generalized to the context of multiple source domains by defining Φ s1 (x) = x, 0, 0, ..., x , Φ s2 (x) = 0, x, 0, ..., x ,...,Φ t (x) = 0, 0, ..., x, x .4. ExperimentsWe would like to test the hypothesis that transfer learning can improve pre-annotations for ECA. However, evaluating a model in this setting requires access to corpora that recorded every version of the data V since the beginning of the project. We are aware of no such datasets. However, we can simulate such corpora by starting with an existing annotated corpus and probabilistically generating sequences of intermediate versions that explain how that corpus’s annotation scheme might have come to be. For example, to start in familiar territory, we use the following process to create versioned datasets explaining the derivation of the Penn Treebank’s part-of-speech tagged data.Algorithm 1 Simulate Versioned POS Datasets Given: GoldData is the reference dataset Given: GoldT ags is the reference tagset 1: T ags ← CompositeT ag(GoldT ags) 2: dataset ← {} 3: while T ags = GoldTags do 4: op ← sample({SPLIT,MOVE,MERGE}) 5: T ags ← apply(op, T ags) 6: κ ← sampleV ersionSize() 7: dataset ← annotate(κ, T ags, GoldData) 8: return datasetAlgorithm 1 starts by grouping all the reference tags into a single composite tagset, then iterates between alter- ing the tagset and annotating data until the original tagset is reached. A SPLIT represents an annotator deciding that the largest composite tag in the tagset is too broad and di- viding it. A MERGE represents an annotator deciding that the distinctions between two tags are too fine and lumping them together. A MOVE represents an annotator moving one of the reference tags out of one composite tag and into another; in other words, deciding that a set of words that was previously labeled as something would be better labeled something else. In order to be linguistically reasonable, splits are de- termined by finding a min-cut in the graph of reference tags, where reference tags are connected with strong ad- hoc weights if they are in the same family of tags (e.g., nouns, verbs, punctuation, etc), and weak weights other- wise. Merges and moves are chosen by sampling from a distribution over reference tag pairs where pairs that are identified by the Penn Treebank tagging guidelines as confusable (25 of these) or very confusable (9 of these) are more probable (Santorini, 1990). Finally, sampleV ersionSize() is implemented by hypothesizing that annotation projects alternate between small annotation batches for development and large batches for production approaching the size of the desired corpus, N , as the tagset converges on the reference set. The final mix favors development mode, since production mode in- volves heavy costs in the later stages (Figure 2).This simulated data is clearly not ideal, and we and are actively working on developing real-world ECA data based on annotation projects we are involved in (Felt et al., In Press). However, in the meantime, simulated data allows us to make cautious observations about the characteristics of the problem and projections about the potential of transfer learning models to improve pre-annotation for ECA. We used Algorithm 1 to generate 30 diverse datasets, choosing values for the simulation parameters at random. We used maximum-entropy Markov models (“maxent tag- gers”) with standard features (Toutanova et al., 2003) to implement the transfer algorithms described in Section 3.. Figure 3 shows the learning curve of each algorithm on a single dataset. TGTTRAIN’s learning curve shows deep valleys at each version transition, because it is equivalent to beginning an entirely new learning curve at the beginning of each version. ALLTRAIN, on the other hand, shows a much smoother pattern. Using old data allows it to avoid the valleys seen in TGTTRAIN, but hurts its ability to reach high peaks quickly. STACK and AUGMENT both have peaks similar to TGTTRAIN, but manage to recover more quickly from version changes and avoid the low valleys.Because we are interested in a model that performs well at all stages of the ECA process, we need to compare entire learning curves rather than just final accuracy. A natural summary statistic for the quality of a learning curve is average area under the curve (AAUC). An accurate estimate of AAUC requires good resolution on the learning curve, so we evaluate between 500 and 1000 points on each learning curve, sampling more densely around version transitions. In Table 1 we report the average AAUC of each algorithm over all the simulated datasets, along with model timing statistics. STACK and AUGMENT significantly outperform both TGTTRAIN and ALLTRAIN. Notice that AUGMENT is particularly slow to train, since its feature space has been expanded linearly in K, the number of versions. STACK is unusually slow at inference time, since it must solicit predictions from K subordinate models as features. The fact that TGTTRAIN was relatively easy to beat is encour- aging, suggesting that there is room for more sophisticated transfer learning to make significant improvements over the baseline approach.(a) Development: Noisy Gaussian Size N Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqqqqqqq qq qq qqqqq 5 10 15 20 25 30 35 40 45 (b) Production: Number Noisy of Tags Sigmoid Size N qq qq qq qq q q Dataset qqq qq q q q qqqqqqqqqqqqqqqqqqqqqqqqqqqq 0 5 10 15 20 25 30 35 40 45 Number (c) Mixed of Tags Size N q q q Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqq q qqqq q qq qq q 5 10 15 20 25 30 35 40 45 Number of Simulated Composite Tags5. Conclusions and Future WorkWe have described the problem of providing automatic assistance to annotators working in exploratory settings. We have argued that this problem should be regarded as a transfer learning problem, and shown that existing transfer learning techniques can be adapted to significantly improve the quality of pre-annotations in simulated exploratory part- of-speech tagging. Corpus annotators working in novel an-(a) TGTTRAIN 1 Accuracy 0 50 200 500 2000 10000 (b) Words ALLTRAIN (logscale) 1 Accuracy 0 50 200 500 2000 10000 Words (c) STACK (logscale) 1 Accuracy 0 50 200 500 2000 10000 (d) Words AUGMENT (logscale) 1 Accuracy 0 50 200 500 2000 10000 Words (logscale) Figure 3: An example learning curve for each algorithm on the same dataset.notation domains should be encouraged by these results and by the existence of a rich body of transfer learning work to draw on. We plan to develop models that leverage the sequential nature of the versions. We also plan to apply the insights developed in this paper to improve pre-annotations for annotators engaged in real-world annotation projects. Finally, in order to apply these techniques seamlessly in annotation projects, it would be beneficial to discover a way of learning to automatically identify the boundaries between versions so that annotators need not manually identify annotation scheme changes.6. References50000500005000050000
 [Using Transfer Learning to Assist Exploratory Corpus Annotation]
 Paragraph
    sofa: _InitialView
@@ -956,11 +956,11 @@ Sentence
    sofa: _InitialView
    begin: 14496
    end: 14853
-[Algorithm 1 starts by grouping all the reference tags into a single composite tagset, then iterates between alter- ing the tagset and annotating data until the original tagset is reached. A SPLIT represents an annotator deciding that the largest composite tag in the tagset is too broad and di- viding it. A MERGE represents an annotator deciding that the distinctions between two tags are too fine and lumping them together. A MOVE represents an annotator moving one of the reference tags out of one composite tag and into another; in other words, deciding that a set of words that was previously labeled as something would be better labeled something else. In order to be linguistically reasonable, splits are de- termined by finding a min-cut in the graph of reference tags, where reference tags are connected with strong ad- hoc weights if they are in the same family of tags (e.g., nouns, verbs, punctuation, etc), and weak weights other- wise. Merges and moves are chosen by sampling from a distribution over reference tag pairs where pairs that are identified by the Penn Treebank tagging guidelines as confusable (25 of these) or very confusable (9 of these) are more probable (Santorini, 1990). Finally, sampleV ersionSize() is implemented by hypothesizing that annotation projects alternate between small annotation batches for development and large batches for production approaching the size of the desired corpus, N , as the tagset converges on the reference set. The final mix favors development mode, since production mode in- volves heavy costs in the later stages (Figure 2). This simulated data is clearly not ideal, and we and are actively working on developing real-world ECA data based on annotation projects we are involved in (Felt et al., In Press). However, in the meantime, simulated data allows us to make cautious observations about the characteristics of the problem and projections about the potential of transfer learning models to improve pre-annotation for ECA. We used Algorithm 1 to generate 30 diverse datasets, choosing values for the simulation parameters at random. We used maximum-entropy Markov models (“maxent tag- gers”) with standard features (Toutanova et al., 2003) to implement the transfer algorithms described in Section 3.. Figure 3 shows the learning curve of each algorithm on a single dataset. TGTTRAIN’s learning curve shows deep valleys at each version transition, because it is equivalent to beginning an entirely new learning curve at the beginning of each version. ALLTRAIN, on the other hand, shows a much smoother pattern. Using old data allows it to avoid the valleys seen in TGTTRAIN, but hurts its ability to reach high peaks quickly. STACK and AUGMENT both have peaks similar to TGTTRAIN, but manage to recover more quickly from version changes and avoid the low valleys. Because we are interested in a model that performs well at all stages of the ECA process, we need to compare entire learning curves rather than just final accuracy. A natural summary statistic for the quality of a learning curve is average area under the curve (AAUC). An accurate estimate of AAUC requires good resolution on the learning curve, so we evaluate between 500 and 1000 points on each learning curve, sampling more densely around version transitions. In Table 1 we report the average AAUC of each algorithm over all the simulated datasets, along with model timing statistics. STACK and AUGMENT significantly outperform both TGTTRAIN and ALLTRAIN. Notice that AUGMENT is particularly slow to train, since its feature space has been expanded linearly in K, the number of versions. STACK is unusually slow at inference time, since it must solicit predictions from K subordinate models as features. The fact that TGTTRAIN was relatively easy to beat is encour- aging, suggesting that there is room for more sophisticated transfer learning to make significant improvements over the baseline approach.]
+[Algorithm 1 starts by grouping all the reference tags into a single composite tagset, then iterates between alter- ing the tagset and annotating data until the original tagset is reached. A SPLIT represents an annotator deciding that the largest composite tag in the tagset is too broad and di- viding it. A MERGE represents an annotator deciding that the distinctions between two tags are too fine and lumping them together. A MOVE represents an annotator moving one of the reference tags out of one composite tag and into another; in other words, deciding that a set of words that was previously labeled as something would be better labeled something else. In order to be linguistically reasonable, splits are de- termined by finding a min-cut in the graph of reference tags, where reference tags are connected with strong ad- hoc weights if they are in the same family of tags (e.g., nouns, verbs, punctuation, etc), and weak weights other- wise. Merges and moves are chosen by sampling from a distribution over reference tag pairs where pairs that are identified by the Penn Treebank tagging guidelines as confusable (25 of these) or very confusable (9 of these) are more probable (Santorini, 1990). Finally, sampleV ersionSize() is implemented by hypothesizing that annotation projects alternate between small annotation batches for development and large batches for production approaching the size of the desired corpus, N , as the tagset converges on the reference set. The final mix favors development mode, since production mode in- volves heavy costs in the later stages (Figure 2).]
 Paragraph
    sofa: _InitialView
    begin: 14853
-   end: 18796
+   end: 16445
 [Algorithm 1 starts by grouping all the reference tags into a single composite tagset, then iterates between alter- ing the tagset and annotating data until the original tagset is reached.]
 Sentence
    sofa: _InitialView
@@ -1015,244 +1015,254 @@ Reference
    end: 16443
    refId: "F2"
    refType: "fig"
+[This simulated data is clearly not ideal, and we and are actively working on developing real-world ECA data based on annotation projects we are involved in (Felt et al., In Press). However, in the meantime, simulated data allows us to make cautious observations about the characteristics of the problem and projections about the potential of transfer learning models to improve pre-annotation for ECA. We used Algorithm 1 to generate 30 diverse datasets, choosing values for the simulation parameters at random. We used maximum-entropy Markov models (“maxent tag- gers”) with standard features (Toutanova et al., 2003) to implement the transfer algorithms described in Section 3.. Figure 3 shows the learning curve of each algorithm on a single dataset. TGTTRAIN’s learning curve shows deep valleys at each version transition, because it is equivalent to beginning an entirely new learning curve at the beginning of each version. ALLTRAIN, on the other hand, shows a much smoother pattern. Using old data allows it to avoid the valleys seen in TGTTRAIN, but hurts its ability to reach high peaks quickly. STACK and AUGMENT both have peaks similar to TGTTRAIN, but manage to recover more quickly from version changes and avoid the low valleys.]
+Paragraph
+   sofa: _InitialView
+   begin: 16445
+   end: 17687
 [This simulated data is clearly not ideal, and we and are actively working on developing real-world ECA data based on annotation projects we are involved in (Felt et al., In Press).]
 Sentence
    sofa: _InitialView
-   begin: 16446
-   end: 16626
+   begin: 16445
+   end: 16625
 [ However, in the meantime, simulated data allows us to make cautious observations about the characteristics of the problem and projections about the potential of transfer learning models to improve pre-annotation for ECA.]
 Sentence
    sofa: _InitialView
-   begin: 16626
-   end: 16847
+   begin: 16625
+   end: 16846
 [ We used Algorithm 1 to generate 30 diverse datasets, choosing values for the simulation parameters at random.]
 Sentence
    sofa: _InitialView
-   begin: 16847
-   end: 16957
+   begin: 16846
+   end: 16956
 [We used maximum-entropy Markov models (“maxent tag- gers”) with standard features (Toutanova et al., 2003) to implement the transfer algorithms described in Section 3..]
 Sentence
    sofa: _InitialView
-   begin: 16958
-   end: 17126
+   begin: 16957
+   end: 17125
 [Toutanova et al., 2003]
 Reference
    sofa: _InitialView
-   begin: 17041
-   end: 17063
+   begin: 17040
+   end: 17062
    refId: "R28"
    refType: "bibr"
 [ Figure 3 shows the learning curve of each algorithm on a single dataset.]
 Sentence
    sofa: _InitialView
-   begin: 17126
-   end: 17199
+   begin: 17125
+   end: 17198
 [Figure 3]
 Reference
    sofa: _InitialView
-   begin: 17127
-   end: 17135
+   begin: 17126
+   end: 17134
    refId: "F3"
    refType: "fig"
 [ TGTTRAIN’s learning curve shows deep valleys at each version transition, because it is equivalent to beginning an entirely new learning curve at the beginning of each version.]
 Sentence
    sofa: _InitialView
-   begin: 17199
-   end: 17375
+   begin: 17198
+   end: 17374
 [ ALLTRAIN, on the other hand, shows a much smoother pattern.]
 Sentence
    sofa: _InitialView
-   begin: 17375
-   end: 17435
+   begin: 17374
+   end: 17434
 [ Using old data allows it to avoid the valleys seen in TGTTRAIN, but hurts its ability to reach high peaks quickly.]
 Sentence
    sofa: _InitialView
-   begin: 17435
-   end: 17550
+   begin: 17434
+   end: 17549
 [ STACK and AUGMENT both have peaks similar to TGTTRAIN, but manage to recover more quickly from version changes and avoid the low valleys.]
 Sentence
    sofa: _InitialView
-   begin: 17550
-   end: 17688
+   begin: 17549
+   end: 17687
+[Because we are interested in a model that performs well at all stages of the ECA process, we need to compare entire learning curves rather than just final accuracy. A natural summary statistic for the quality of a learning curve is average area under the curve (AAUC). An accurate estimate of AAUC requires good resolution on the learning curve, so we evaluate between 500 and 1000 points on each learning curve, sampling more densely around version transitions. In Table 1 we report the average AAUC of each algorithm over all the simulated datasets, along with model timing statistics. STACK and AUGMENT significantly outperform both TGTTRAIN and ALLTRAIN. Notice that AUGMENT is particularly slow to train, since its feature space has been expanded linearly in K, the number of versions. STACK is unusually slow at inference time, since it must solicit predictions from K subordinate models as features. The fact that TGTTRAIN was relatively easy to beat is encour- aging, suggesting that there is room for more sophisticated transfer learning to make significant improvements over the baseline approach.]
+Paragraph
+   sofa: _InitialView
+   begin: 17687
+   end: 18794
 [Because we are interested in a model that performs well at all stages of the ECA process, we need to compare entire learning curves rather than just final accuracy.]
 Sentence
    sofa: _InitialView
-   begin: 17689
-   end: 17853
+   begin: 17687
+   end: 17851
 [ A natural summary statistic for the quality of a learning curve is average area under the curve (AAUC).]
 Sentence
    sofa: _InitialView
-   begin: 17853
-   end: 17957
+   begin: 17851
+   end: 17955
 [ An accurate estimate of AAUC requires good resolution on the learning curve, so we evaluate between 500 and 1000 points on each learning curve, sampling more densely around version transitions.]
 Sentence
    sofa: _InitialView
-   begin: 17957
-   end: 18151
+   begin: 17955
+   end: 18149
 [ In Table 1 we report the average AAUC of each algorithm over all the simulated datasets, along with model timing statistics.]
 Sentence
    sofa: _InitialView
-   begin: 18151
-   end: 18276
+   begin: 18149
+   end: 18274
 [Table 1]
 Reference
    sofa: _InitialView
-   begin: 18155
-   end: 18162
+   begin: 18153
+   end: 18160
    refId: "T1"
    refType: "table"
 [ STACK and AUGMENT significantly outperform both TGTTRAIN and ALLTRAIN.]
 Sentence
    sofa: _InitialView
-   begin: 18276
-   end: 18347
+   begin: 18274
+   end: 18345
 [ Notice that AUGMENT is particularly slow to train, since its feature space has been expanded linearly in K, the number of versions.]
 Sentence
    sofa: _InitialView
-   begin: 18347
-   end: 18479
+   begin: 18345
+   end: 18477
 [ STACK is unusually slow at inference time, since it must solicit predictions from K subordinate models as features.]
 Sentence
    sofa: _InitialView
-   begin: 18479
-   end: 18595
+   begin: 18477
+   end: 18593
 [ The fact that TGTTRAIN was relatively easy to beat is encour- aging, suggesting that there is room for more sophisticated transfer learning to make significant improvements over the baseline approach.]
 Sentence
    sofa: _InitialView
-   begin: 18595
-   end: 18796
+   begin: 18593
+   end: 18794
 [(a) Development: Noisy Gaussian Size N Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqqqqqqq qq qq qqqqq 5 10 15 20 25 30 35 40 45 (b) Production: Number Noisy of Tags Sigmoid Size N qq qq qq qq q q Dataset qqq qq q q q qqqqqqqqqqqqqqqqqqqqqqqqqqqq 0 5 10 15 20 25 30 35 40 45 Number (c) Mixed of Tags Size N q q q Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqq q qqqq q qq qq q 5 10 15 20 25 30 35 40 45 Number of Simulated Composite Tags]
 Paragraph
    sofa: _InitialView
-   begin: 18796
-   end: 19233
+   begin: 18794
+   end: 19231
 [(a) Development: Noisy Gaussian Size N Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqqqqqqq qq qq qqqqq 5 10 15 20 25 30 35 40 45 (b) Production: Number Noisy of Tags Sigmoid Size N qq qq qq qq q q Dataset qqq qq q q q qqqqqqqqqqqqqqqqqqqqqqqqqqqq 0 5 10 15 20 25 30 35 40 45 Number (c) Mixed of Tags Size N q q q Dataset qqqqq 0 qqq qqqqqqqqqqqqqqqq q qqqqqqq q qqqq q qq qq q 5 10 15 20 25 30 35 40 45 Number of Simulated Composite Tags]
 Sentence
    sofa: _InitialView
-   begin: 18796
-   end: 19233
+   begin: 18794
+   end: 19231
 [5. Conclusions and Future Work]
 Paragraph
    sofa: _InitialView
-   begin: 19233
-   end: 19263
+   begin: 19231
+   end: 19261
 [5. Conclusions and Future Work]
 Sentence
    sofa: _InitialView
-   begin: 19233
-   end: 19263
+   begin: 19231
+   end: 19261
 [We have described the problem of providing automatic assistance to annotators working in exploratory settings. We have argued that this problem should be regarded as a transfer learning problem, and shown that existing transfer learning techniques can be adapted to significantly improve the quality of pre-annotations in simulated exploratory part- of-speech tagging. Corpus annotators working in novel an-]
 Paragraph
    sofa: _InitialView
-   begin: 19263
-   end: 19670
+   begin: 19261
+   end: 19668
 [We have described the problem of providing automatic assistance to annotators working in exploratory settings.]
 Sentence
    sofa: _InitialView
-   begin: 19263
-   end: 19373
+   begin: 19261
+   end: 19371
 [ We have argued that this problem should be regarded as a transfer learning problem, and shown that existing transfer learning techniques can be adapted to significantly improve the quality of pre-annotations in simulated exploratory part- of-speech tagging.]
 Sentence
    sofa: _InitialView
-   begin: 19373
-   end: 19631
+   begin: 19371
+   end: 19629
 [ Corpus annotators working in novel an-]
 Sentence
    sofa: _InitialView
-   begin: 19631
-   end: 19670
+   begin: 19629
+   end: 19668
 [(a) TGTTRAIN 1 Accuracy 0 50 200 500 2000 10000 (b) Words ALLTRAIN (logscale) 1 Accuracy 0 50 200 500 2000 10000 Words (c) STACK (logscale) 1 Accuracy 0 50 200 500 2000 10000 (d) Words AUGMENT (logscale) 1 Accuracy 0 50 200 500 2000 10000 Words (logscale) Figure 3: An example learning curve for each algorithm on the same dataset.]
 Paragraph
    sofa: _InitialView
-   begin: 19670
-   end: 20001
+   begin: 19668
+   end: 19999
 [(a) TGTTRAIN 1 Accuracy 0 50 200 500 2000 10000 (b) Words ALLTRAIN (logscale) 1 Accuracy 0 50 200 500 2000 10000 Words (c) STACK (logscale) 1 Accuracy 0 50 200 500 2000 10000 (d) Words AUGMENT (logscale) 1 Accuracy 0 50 200 500 2000 10000 Words (logscale) Figure 3: An example learning curve for each algorithm on the same dataset.]
 Sentence
    sofa: _InitialView
-   begin: 19670
-   end: 20001
+   begin: 19668
+   end: 19999
 [Figure 3]
 Reference
    sofa: _InitialView
-   begin: 19926
-   end: 19934
+   begin: 19924
+   end: 19932
    refId: "F3"
    refType: "fig"
 [notation domains should be encouraged by these results and by the existence of a rich body of transfer learning work to draw on. We plan to develop models that leverage the sequential nature of the versions. We also plan to apply the insights developed in this paper to improve pre-annotations for annotators engaged in real-world annotation projects. Finally, in order to apply these techniques seamlessly in annotation projects, it would be beneficial to discover a way of learning to automatically identify the boundaries between versions so that annotators need not manually identify annotation scheme changes.]
 Paragraph
    sofa: _InitialView
-   begin: 20001
-   end: 20615
+   begin: 19999
+   end: 20613
 [notation domains should be encouraged by these results and by the existence of a rich body of transfer learning work to draw on.]
 Sentence
    sofa: _InitialView
-   begin: 20001
-   end: 20129
+   begin: 19999
+   end: 20127
 [ We plan to develop models that leverage the sequential nature of the versions.]
 Sentence
    sofa: _InitialView
-   begin: 20129
-   end: 20208
+   begin: 20127
+   end: 20206
 [ We also plan to apply the insights developed in this paper to improve pre-annotations for annotators engaged in real-world annotation projects.]
 Sentence
    sofa: _InitialView
-   begin: 20208
-   end: 20352
+   begin: 20206
+   end: 20350
 [ Finally, in order to apply these techniques seamlessly in annotation projects, it would be beneficial to discover a way of learning to automatically identify the boundaries between versions so that annotators need not manually identify annotation scheme changes.]
 Sentence
    sofa: _InitialView
-   begin: 20352
-   end: 20615
+   begin: 20350
+   end: 20613
 [6. References]
 Paragraph
    sofa: _InitialView
-   begin: 20615
-   end: 20628
+   begin: 20613
+   end: 20626
 [6. References]
 Sentence
    sofa: _InitialView
-   begin: 20615
-   end: 20628
+   begin: 20613
+   end: 20626
 [50000]
 Paragraph
    sofa: _InitialView
-   begin: 20628
-   end: 20633
+   begin: 20626
+   end: 20631
 [50000]
 Sentence
    sofa: _InitialView
-   begin: 20628
-   end: 20633
+   begin: 20626
+   end: 20631
 [50000]
 Paragraph
    sofa: _InitialView
-   begin: 20633
-   end: 20638
+   begin: 20631
+   end: 20636
 [50000]
 Sentence
    sofa: _InitialView
-   begin: 20633
-   end: 20638
+   begin: 20631
+   end: 20636
 [50000]
 Paragraph
    sofa: _InitialView
-   begin: 20638
-   end: 20643
+   begin: 20636
+   end: 20641
 [50000]
 Sentence
    sofa: _InitialView
-   begin: 20638
-   end: 20643
+   begin: 20636
+   end: 20641
 [50000]
 Paragraph
    sofa: _InitialView
-   begin: 20643
-   end: 20648
+   begin: 20641
+   end: 20646
 [50000]
 Sentence
    sofa: _InitialView
-   begin: 20643
-   end: 20648
+   begin: 20641
+   end: 20646
 -------- View _InitialView end ----------------------------------
 
 ======== CAS 0 end ==================================
