@@ -31,6 +31,7 @@ public class PdfxXmlToXmiConverter {
 
 	public static final String GERMAN_WORDS_DICTIONARY_FILENAME = "german-words-dictionary.txt";
 	public static final String ENGLISH_WORDS_DICTIONARY_FILENAME = "english-words-dictionary.txt";
+	public static final boolean DEFAULT_SENTENCE_TRIMMER_ENABLED_VALUE = true;
 	private String GERMAN_DICTIONARY_PATH;
 	private String ENGLISH_DICTIONARY_PATH;
 
@@ -40,6 +41,19 @@ public class PdfxXmlToXmiConverter {
 	private String inputPath = null;
 	private String outputPathXmi = null;
 	private String inputLanguage = LANGUAGE_CODE_EN;
+
+	private boolean SentenceTrimmerEnabled = DEFAULT_SENTENCE_TRIMMER_ENABLED_VALUE;
+
+	@SuppressWarnings("ConstantConditions")
+	public PdfxXmlToXmiConverter() {
+		GERMAN_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
+				.getResource(GERMAN_WORDS_DICTIONARY_FILENAME).getFile();
+		ENGLISH_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
+				.getResource(ENGLISH_WORDS_DICTIONARY_FILENAME).getFile();
+
+		logger.debug("German Dictionary path: " + GERMAN_DICTIONARY_PATH);
+		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
+	}
 
 	// TODO do not throw exceptions from main method
 	// TODO move main method + main argument handling to a new class
@@ -58,8 +72,6 @@ public class PdfxXmlToXmiConverter {
 	}
 
 	protected void process(String[] args) throws UIMAException, IOException {
-		initialize();
-
 		processArguments(args);
 
 		convertToXmi(inputPath, outputPathXmi, inputLanguage);
@@ -73,17 +85,6 @@ public class PdfxXmlToXmiConverter {
 					.toString();
 			createCasDump(inputResource, outputResourceCasDump, inputLanguage);
 		}
-	}
-
-	@SuppressWarnings("ConstantConditions")
-	protected void initialize() {
-		GERMAN_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
-				.getResource(GERMAN_WORDS_DICTIONARY_FILENAME).getFile();
-		ENGLISH_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
-				.getResource(ENGLISH_WORDS_DICTIONARY_FILENAME).getFile();
-
-		logger.debug("German Dictionary path: " + GERMAN_DICTIONARY_PATH);
-		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
 	}
 
 	//todo rewrite this using Apache CLI https://commons.apache.org/proper/commons-cli/usage.html
@@ -148,30 +149,65 @@ public class PdfxXmlToXmiConverter {
 				throw new IllegalArgumentException("Unknown language selected.");
 		}
 
-		runPipeline(
-				createReaderDescription(PdfxXmlReader.class,
-						PdfxXmlReader.PARAM_LANGUAGE, language,
-						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource,
-						PdfxXmlReader.PARAM_PATTERNS, "[+]*.xml"),
-				createEngineDescription(HyphenationRemover.class,
-						HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
-						HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
-						HyphenationRemover.PARAM_TYPES_TO_COPY,
-						new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
-								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
-								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
-								"webanno.custom.Reference" }),
-				createEngineDescription(OpenNlpSegmenter.class,
-						OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
-						OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
-						OpenNlpSegmenter.PARAM_ZONE_TYPES,
-						new String[] {
-								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
-						}),
-				createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
-				createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
-						XmiWriter.PARAM_OVERWRITE, true,
-						XmiWriter.PARAM_STRIP_EXTENSION, true));
+		if (isSentenceTrimmerEnabled())
+		{
+			runPipeline(
+					createReaderDescription(PdfxXmlReader.class,
+							PdfxXmlReader.PARAM_LANGUAGE, language,
+							PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource,
+							PdfxXmlReader.PARAM_PATTERNS, "[+]*.xml"),
+					createEngineDescription(HyphenationRemover.class,
+							HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
+							HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
+							HyphenationRemover.PARAM_TYPES_TO_COPY,
+							new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+									"webanno.custom.Reference" }),
+					createEngineDescription(SentenceTrimmer.class,
+							SentenceTrimmer.PARAM_TYPES_TO_COPY,
+							new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+									"webanno.custom.Reference" }),
+					createEngineDescription(OpenNlpSegmenter.class,
+							OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
+							OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
+							OpenNlpSegmenter.PARAM_ZONE_TYPES,
+							new String[] {
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
+							}),
+					createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
+					createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
+							XmiWriter.PARAM_OVERWRITE, true,
+							XmiWriter.PARAM_STRIP_EXTENSION, true));
+		}else
+		{
+			runPipeline(
+					createReaderDescription(PdfxXmlReader.class,
+							PdfxXmlReader.PARAM_LANGUAGE, language,
+							PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource,
+							PdfxXmlReader.PARAM_PATTERNS, "[+]*.xml"),
+					createEngineDescription(HyphenationRemover.class,
+							HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
+							HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
+							HyphenationRemover.PARAM_TYPES_TO_COPY,
+							new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+									"webanno.custom.Reference" }),
+					createEngineDescription(OpenNlpSegmenter.class,
+							OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
+							OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
+							OpenNlpSegmenter.PARAM_ZONE_TYPES,
+							new String[] {
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
+							}),
+					createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
+					createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
+							XmiWriter.PARAM_OVERWRITE, true,
+							XmiWriter.PARAM_STRIP_EXTENSION, true));
+		}
 	}
 
 	/**
@@ -199,28 +235,70 @@ public class PdfxXmlToXmiConverter {
 				throw new IllegalArgumentException("Unknown language selected.");
 		}
 
-		runPipeline(
-				createReaderDescription(PdfxXmlReader.class,
-						PdfxXmlReader.PARAM_LANGUAGE, language,
-						PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
-				createEngineDescription(HyphenationRemover.class,
-						HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
-						HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
-						HyphenationRemover.PARAM_TYPES_TO_COPY,
-						new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
-								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
-								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
-								"webanno.custom.Reference" }),
-				createEngineDescription(OpenNlpSegmenter.class,
-						OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
-						OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
-						OpenNlpSegmenter.PARAM_ZONE_TYPES,
-						new String[] {
-								"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
-						}),
-				createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
-				createEngineDescription(CasDumpWriter.class,
-						CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
-						CasDumpWriter.PARAM_SORT, true));
+		if (isSentenceTrimmerEnabled())
+		{
+			runPipeline(
+					createReaderDescription(PdfxXmlReader.class,
+							PdfxXmlReader.PARAM_LANGUAGE, language,
+							PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
+					createEngineDescription(HyphenationRemover.class,
+							HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
+							HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
+							HyphenationRemover.PARAM_TYPES_TO_COPY,
+							new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+									"webanno.custom.Reference" }),
+					createEngineDescription(SentenceTrimmer.class,
+							SentenceTrimmer.PARAM_TYPES_TO_COPY,
+							new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+									"webanno.custom.Reference" }),
+					createEngineDescription(OpenNlpSegmenter.class,
+							OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
+							OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
+							OpenNlpSegmenter.PARAM_ZONE_TYPES,
+							new String[] {
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
+							}),
+					createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
+					createEngineDescription(CasDumpWriter.class,
+							CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
+							CasDumpWriter.PARAM_SORT, true));
+		} else
+		{
+			runPipeline(
+					createReaderDescription(PdfxXmlReader.class,
+							PdfxXmlReader.PARAM_LANGUAGE, language,
+							PdfxXmlReader.PARAM_SOURCE_LOCATION, inputResource),
+					createEngineDescription(HyphenationRemover.class,
+							HyphenationRemover.PARAM_MODEL_LOCATION, dictionaryPath,
+							HyphenationRemover.PARAM_MODEL_ENCODING, "utf8",
+							HyphenationRemover.PARAM_TYPES_TO_COPY,
+							new String[] { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph",
+									"webanno.custom.Reference" }),
+					createEngineDescription(OpenNlpSegmenter.class,
+							OpenNlpSegmenter.PARAM_WRITE_SENTENCE, false,
+							OpenNlpSegmenter.PARAM_STRICT_ZONING, true,
+							OpenNlpSegmenter.PARAM_ZONE_TYPES,
+							new String[] {
+									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
+							}),
+					createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
+					createEngineDescription(CasDumpWriter.class,
+							CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
+							CasDumpWriter.PARAM_SORT, true));
+		}
+	}
+
+	public boolean isSentenceTrimmerEnabled() {
+		return SentenceTrimmerEnabled;
+	}
+
+	public void setSentenceTrimmerEnabled(boolean sentenceTrimmerEnabled) {
+		SentenceTrimmerEnabled = sentenceTrimmerEnabled;
 	}
 }
