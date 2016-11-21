@@ -5,8 +5,14 @@ is retrieved from the following urls
 And was originally distributed with the following license:
 Creative Commons - Attribution-NonCommercial-ShareAlike : http://creativecommons.org/licenses/by-nc-sa/3.0/
 
-The English words dictionary is retrieved from
+The English words dictionary (english-words-dictionary.txt) is retrieved from
 	- https://github.com/dwyl/english-words
 and was originally distributed by
 	www.infochimps.com
-so copyright belongs to them.
+so copyright belongs to them. However, since the file simply contains English words it should be classified as a
+"Public Domain" material and therefore free for use and distribution by public.
+
+The German words dictionary (german-words.dic) is retrieved from
+    - https://sourceforge.net/projects/germandict/
+and belongs to "Free German Dictionary" project. The files is originally distributed under "Public Domain" license and
+hence is free for use and distribution by public. More info: https://en.wikipedia.org/wiki/Public_domain
