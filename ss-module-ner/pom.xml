@@ -1,0 +1,196 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>ss-module-ner</artifactId>
+	<name>NERModule</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimaj-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.uima</groupId>
+			<artifactId>uimafit-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+		</dependency>
+		<!-- TEST scope -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
+			<!--<scope>test</scope> -->
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.xmi-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
+			<version>${dkpro.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.xmi-asl</artifactId>
+
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.bincas-asl</artifactId>
+			<version>${dkpro.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.conll-asl</artifactId>
+			<version>${dkpro.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.eval-asl</artifactId>
+			<version>${dkpro.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.datasets-asl</artifactId>
+			<version>${dkpro.core.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/edu.stanford.nlp/stanford-corenlp -->
+		<dependency>
+			<groupId>edu.stanford.nlp</groupId>
+			<artifactId>stanford-corenlp</artifactId>
+			<version>3.6.0</version>
+		</dependency>
+	</dependencies>
+
+	<!-- -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.uima</groupId>
+				<artifactId>uimafit-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.uima</groupId>
+					<artifactId>uimafit-maven-plugin</artifactId>
+					<version>${uimafit.plugin.version}</version>
+					<configuration>
+						<componentVendor>eu.openminted.uc-tdm-socialsciences</componentVendor>
+						<componentCopyright>
+							<!-- todo put copyright notice here -->
+							Copyright 2015-2016
+						</componentCopyright>
+						<failOnMissingMetaData>false</failOnMissingMetaData>
+						<encoding>UTF-8</encoding>
+					</configuration>
+					<executions>
+						<execution>
+							<id>default</id>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>enhance</goal>
+								<goal>generate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>desc/type/**/*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>desc/type/**/*</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	<profiles>
+		<profile>
+			<id>run-jcasgen</id>
+			<activation>
+				<file>
+					<exists>.activate-run-jcasgen</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<!--generate types dynamically -->
+						<groupId>org.apache.uima</groupId>
+						<artifactId>jcasgen-maven-plugin</artifactId>
+						<version>${uima.version}</version>
+						<configuration>
+							<limitToProject>true</limitToProject>
+							<typeSystemIncludes>
+								<include>src/main/resources/desc/type/**/*.xml</include>
+							</typeSystemIncludes>
+							<typeSystemExcludes>
+								<exclude>src/main/resources/desc/type/**/*_customized.xml</exclude>
+							</typeSystemExcludes>
+						</configuration>
+						<executions>
+							<execution>
+								<!--call it in the generate-source phase -->
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>1.10</version>
+						<executions>
+							<execution>
+								<id>addToSourceFolder</id>
+								<goals>
+									<!--add the generated sources -->
+									<goal>add-source</goal>
+								</goals>
+								<phase>process-sources</phase>
+								<configuration>
+									<sources>
+										<!--default path to generated sources -->
+										<source>${project.build.directory}/generated-sources/jcasgen</source>
+									</sources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

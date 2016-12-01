@@ -12,6 +12,7 @@
 		<module>ss-tools-experiments</module>
 		<module>ss-kb-preparation</module>
 		<module>ss-io-pdfx-xml</module>
+		<module>ss-module-ner</module>
 	</modules>
 
 	<properties>
