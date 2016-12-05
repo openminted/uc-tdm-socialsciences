@@ -1,5 +1,9 @@
 package helper;
 
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
+import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
+import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -8,16 +12,12 @@ import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.resource.ResourceInitializationException;
 
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
+import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
+import de.tudarmstadt.ukp.dkpro.core.io.conll.Conll2003Writer;
 
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
-import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
-import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
+public class BinaryCasToStanfordTsvConverter {
 
-public class XmiToStanfordTsvConverter {
-
-	private static final Logger logger = Logger.getLogger(XmiToStanfordTsvConverter.class);
+	private static final Logger logger = Logger.getLogger(BinaryCasToStanfordTsvConverter.class);
 
 	public static final String LANGUAGE_CODE_EN = "en";
 	public static final String LANGUAGE_CODE_DE = "de";
@@ -28,7 +28,7 @@ public class XmiToStanfordTsvConverter {
 
 	public static void main(String[] args) {
 		try {
-			new XmiToStanfordTsvConverter().process(args);
+			new BinaryCasToStanfordTsvConverter().process(args);
 		} catch (UIMAException | IOException e) {
 			e.printStackTrace();
 		}
@@ -43,10 +43,19 @@ public class XmiToStanfordTsvConverter {
 	private void convertToTsv(String inputResource, String outputResource, String language)
 			throws ResourceInitializationException, UIMAException, IOException {
 
-		runPipeline(createReaderDescription(XmiReader.class, XmiReader.PARAM_SOURCE_LOCATION, inputResource,
-				XmiReader.PARAM_LANGUAGE, language),
-				createEngineDescription(MyConllWriter.class, MyConllWriter.PARAM_TARGET_LOCATION, outputResource,
-						XmiWriter.PARAM_OVERWRITE, true));
+		/*
+		 * runPipeline(createReaderDescription(BinaryCasReader.class,
+		 * BinaryCasReader.PARAM_SOURCE_LOCATION, inputResource,
+		 * BinaryCasReader.PARAM_LANGUAGE, language),
+		 * createEngineDescription(MyConllWriter.class,
+		 * MyConllWriter.PARAM_TARGET_LOCATION, outputResource));
+		 */
+
+		runPipeline(createReaderDescription(BinaryCasReader.class, BinaryCasReader.PARAM_SOURCE_LOCATION, inputResource,
+				BinaryCasReader.PARAM_PATTERNS, "/**/*.bin",
+				BinaryCasReader.PARAM_LANGUAGE, language),
+				createEngineDescription(Conll2003Writer.class, Conll2003Writer.PARAM_TARGET_LOCATION, outputResource,
+						Conll2003Writer.PARAM_SINGULAR_TARGET, true));
 	}
 
 	// TODO rewrite this using Apache CLI
@@ -68,14 +77,14 @@ public class XmiToStanfordTsvConverter {
 
 		Scanner scanner = new Scanner(System.in);
 		while (null == inputPath || inputPath.length() < 1) {
-			System.out.println("Please provide path to input directory containing xmi files:");
+			System.out.println("Please provide path to input directory containing binary CAS files:");
 			inputPath = scanner.nextLine();
 		}
 		scanner.close();
 		outputPath = inputPath + File.separator + "stanford-tsv" + File.separator;
 
 		logger.info("Input path: " + inputPath);
-		logger.info("Output xmi path: " + outputPath);
+		logger.info("Output path: " + outputPath);
 		logger.info("Input language: " + inputLanguage);
 	}
 }
