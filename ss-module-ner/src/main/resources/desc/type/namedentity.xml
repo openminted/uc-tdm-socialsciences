@@ -6,7 +6,7 @@
     <vendor>OpenMinTeD</vendor>
     <types>
         <typeDescription>
-            <name>webanno.custom.NamedEntity</name>
+            <name>eu.openminted.uc.socialsciences.namedentity</name>
             <description/>
             <supertypeName>uima.tcas.Annotation</supertypeName>
             <features>
