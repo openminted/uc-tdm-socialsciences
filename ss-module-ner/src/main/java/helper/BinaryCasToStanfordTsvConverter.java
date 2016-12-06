@@ -74,7 +74,7 @@ public class BinaryCasToStanfordTsvConverter {
 			inputPath = scanner.nextLine();
 		}
 		scanner.close();
-		outputPath = inputPath + File.separator + "stanford-tsv" + File.separator;
+		outputPath = inputPath + File.separator + "stanfordTrain.tsv";
 
 		logger.info("Input path: " + inputPath);
 		logger.info("Output path: " + outputPath);
