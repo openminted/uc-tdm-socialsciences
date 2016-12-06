@@ -13,7 +13,6 @@ import org.apache.uima.UIMAException;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
-import de.tudarmstadt.ukp.dkpro.core.io.conll.Conll2003Writer;
 
 public class BinaryCasToStanfordTsvConverter {
 
@@ -43,19 +42,13 @@ public class BinaryCasToStanfordTsvConverter {
 	private void convertToTsv(String inputResource, String outputResource, String language)
 			throws ResourceInitializationException, UIMAException, IOException {
 
-		/*
-		 * runPipeline(createReaderDescription(BinaryCasReader.class,
-		 * BinaryCasReader.PARAM_SOURCE_LOCATION, inputResource,
-		 * BinaryCasReader.PARAM_LANGUAGE, language),
-		 * createEngineDescription(MyConllWriter.class,
-		 * MyConllWriter.PARAM_TARGET_LOCATION, outputResource));
-		 */
-
-		runPipeline(createReaderDescription(BinaryCasReader.class, BinaryCasReader.PARAM_SOURCE_LOCATION, inputResource,
+		runPipeline(createReaderDescription(BinaryCasReader.class,
+				BinaryCasReader.PARAM_SOURCE_LOCATION, inputResource,
 				BinaryCasReader.PARAM_PATTERNS, "/**/*.bin",
 				BinaryCasReader.PARAM_LANGUAGE, language),
-				createEngineDescription(Conll2003Writer.class, Conll2003Writer.PARAM_TARGET_LOCATION, outputResource,
-						Conll2003Writer.PARAM_SINGULAR_TARGET, true));
+				createEngineDescription(MyStanfordTsvWriter.class,
+						MyStanfordTsvWriter.PARAM_TARGET_LOCATION, outputResource,
+						MyStanfordTsvWriter.PARAM_SINGULAR_TARGET, true, MyStanfordTsvWriter.PARAM_OVERWRITE, true));
 	}
 
 	// TODO rewrite this using Apache CLI
