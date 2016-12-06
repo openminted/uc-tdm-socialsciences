@@ -23,13 +23,13 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.text.AnnotationFS;
 import org.apache.uima.fit.util.CasUtil;
+
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import helper.MyStanfordTsvWriter;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 /**
- * Converts a chunk annotations into IOB-style
+ * Converts a chunk annotations into IOB2-style
  */
 public class MyIobEncoder {
 
@@ -38,23 +38,17 @@ public class MyIobEncoder {
 	private Int2ObjectMap<String> iobBeginMap;
 	private Int2ObjectMap<String> iobInsideMap;
 
-	private boolean iob1 = false;
-
 	public MyIobEncoder(CAS aCas, Type aType, Feature aValueFeature, Feature aModifierFeature) {
 		this(aCas, aType, aValueFeature, aModifierFeature, false);
 	}
 
-	public MyIobEncoder(CAS aCas, Type aType, Feature aValueFeature, Feature aModifierFeature, boolean aIob1) {
-		iob1 = aIob1;
-
+	public MyIobEncoder(CAS aCas, Type aType, Feature aValueFeature, Feature aModifierFeature, boolean useSubTypes) {
 		// fill map for whole JCas in order to efficiently encode IOB
 		iobBeginMap = new Int2ObjectOpenHashMap<>();
 		iobInsideMap = new Int2ObjectOpenHashMap<>();
 
 		Map<AnnotationFS, Collection<AnnotationFS>> idx = CasUtil.indexCovered(aCas, aType,
 				CasUtil.getType(aCas, Token.class));
-
-		logger.info("Filled map");
 
 		String lastValue = null;
 		for (AnnotationFS chunk : CasUtil.select(aCas, aType)) {
@@ -65,9 +59,9 @@ public class MyIobEncoder {
 			logger.info("Current modifier: " + modifier);
 
 			for (AnnotationFS token : idx.get(chunk)) {
-				logger.info("Annotation: " + token);
+				logger.info("Annotation: " + token.getCoveredText());
 				if (token.getBegin() == chunk.getBegin() &&
-						(!iob1 || lastValue != null && lastValue.equals(value))) {
+						lastValue != null && lastValue.equals(value)) {
 					iobBeginMap.put(token.getBegin(), value);
 				} else {
 					iobInsideMap.put(token.getBegin(), value);
@@ -75,6 +69,7 @@ public class MyIobEncoder {
 			}
 
 			lastValue = value;
+			System.out.println();
 		}
 	}
 
