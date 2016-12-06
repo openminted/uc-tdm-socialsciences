@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
 	<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
@@ -27,7 +27,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- submodules-->
+			<!-- submodules -->
 			<dependency>
 				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
 				<artifactId>ss-kb-preparation</artifactId>
@@ -43,7 +43,12 @@
 				<artifactId>ss-io-pdfx-xml</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<!-- end submodules-->
+			<dependency>
+				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+				<artifactId>ss-module-ner</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<!-- end submodules -->
 			<dependency>
 				<groupId>org.apache.logging.log4j</groupId>
 				<artifactId>log4j-core</artifactId>
