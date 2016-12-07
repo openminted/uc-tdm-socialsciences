@@ -47,29 +47,35 @@ public class MyIobEncoder {
 		iobBeginMap = new Int2ObjectOpenHashMap<>();
 		iobInsideMap = new Int2ObjectOpenHashMap<>();
 
-		Map<AnnotationFS, Collection<AnnotationFS>> idx = CasUtil.indexCovered(aCas, aType,
+		Map<AnnotationFS, Collection<AnnotationFS>> nestedAnnoIdx = CasUtil.indexCovering(aCas, aType, aType);
+		Map<AnnotationFS, Collection<AnnotationFS>> tokenIdx = CasUtil.indexCovered(aCas, aType,
 				CasUtil.getType(aCas, Token.class));
 
-		String lastValue = null;
 		for (AnnotationFS chunk : CasUtil.select(aCas, aType)) {
 			String value = chunk.getStringValue(aValueFeature);
 			String modifier = chunk.getStringValue(aModifierFeature);
+			logger.info(String.format("Annotation: '%s' (%d:%d)", chunk.getCoveredText(), chunk.getBegin(),
+					chunk.getEnd()));
+			logger.info("Value: " + chunk.getStringValue(aValueFeature));
+			logger.info("Modifier: " + chunk.getStringValue(aModifierFeature));
 
-			logger.info("Current value: " + value);
-			logger.info("Current modifier: " + modifier);
-
-			for (AnnotationFS token : idx.get(chunk)) {
-				logger.info("Annotation: " + token.getCoveredText());
-				if (token.getBegin() == chunk.getBegin() &&
-						lastValue != null && lastValue.equals(value)) {
-					iobBeginMap.put(token.getBegin(), value);
-				} else {
-					iobInsideMap.put(token.getBegin(), value);
-				}
+			if (null == value) {
+				continue;
 			}
 
-			lastValue = value;
-			System.out.println();
+			String label = useSubTypes && modifier != null ? value + modifier : value;
+
+			if (!nestedAnnoIdx.get(chunk).isEmpty()) {
+				continue;
+			}
+
+			for (AnnotationFS token : tokenIdx.get(chunk)) {
+				if (token.getBegin() == chunk.getBegin()) {
+					iobBeginMap.put(token.getBegin(), label);
+				} else {
+					iobInsideMap.put(token.getBegin(), label);
+				}
+			}
 		}
 	}
 
