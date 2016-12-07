@@ -70,7 +70,7 @@ public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 
 	@Override
 	public void process(JCas aJCas) throws AnalysisEngineProcessException {
-		logger.info("Starting processing JCas. " + aJCas.getViewName());
+		logger.info("Starting processing JCas.");
 		PrintWriter out = null;
 		try {
 			out = new PrintWriter(new OutputStreamWriter(getOutputStream(aJCas, filenameSuffix),
@@ -93,13 +93,12 @@ public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 		Feature neValue = neType.getFeatureByBaseName("value");
 		Feature neModifier = neType.getFeatureByBaseName("modifier");
 
+		MyIobEncoder encoder = new MyIobEncoder(aJCas.getCas(), neType, neValue, neModifier, useSubTypes);
 		for (Sentence sentence : select(aJCas, Sentence.class)) {
 			HashMap<Token, Row> ctokens = new LinkedHashMap<>();
 
 			// Tokens
 			List<Token> tokens = selectCovered(Token.class, sentence);
-
-			MyIobEncoder encoder = new MyIobEncoder(aJCas.getCas(), neType, neValue, neModifier, useSubTypes);
 
 			for (Token token : tokens) {
 				Row row = new Row();
