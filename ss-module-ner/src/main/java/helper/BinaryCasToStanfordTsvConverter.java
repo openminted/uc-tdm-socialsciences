@@ -48,6 +48,7 @@ public class BinaryCasToStanfordTsvConverter {
 				BinaryCasReader.PARAM_LANGUAGE, language),
 				createEngineDescription(MyStanfordTsvWriter.class,
 						MyStanfordTsvWriter.PARAM_TARGET_LOCATION, outputResource,
+						MyStanfordTsvWriter.PARAM_USE_SUBTYPES, true,
 						MyStanfordTsvWriter.PARAM_SINGULAR_TARGET, true, MyStanfordTsvWriter.PARAM_OVERWRITE, true));
 	}
 
