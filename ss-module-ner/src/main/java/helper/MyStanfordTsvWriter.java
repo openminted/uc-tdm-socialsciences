@@ -51,7 +51,7 @@ public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 	@ConfigurationParameter(name = PARAM_FILENAME_EXTENSION, mandatory = true, defaultValue = ".tsv")
 	private String filenameSuffix;
 
-	public static final String PARAM_USE_SUBTYPES = "false";
+	public static final String PARAM_USE_SUBTYPES = "useSubTypes";
 	@ConfigurationParameter(name = PARAM_USE_SUBTYPES, mandatory = true, defaultValue = "false")
 	private boolean useSubTypes;
 
