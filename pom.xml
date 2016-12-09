@@ -13,6 +13,7 @@
 		<module>ss-kb-preparation</module>
 		<module>ss-io-pdfx-xml</module>
 		<module>ss-module-ner</module>
+		<module>ss-doc</module>
 	</modules>
 
 	<properties>
