@@ -2,3 +2,25 @@
 //Is this title appropriate?
 
 put description of components and their interface here.
+
+=== PDF processing
+
+//Components inside eu.openminted.uc_tdm_socialsciences.io.pdfx
+==== PDF to XMI conversion
+
+Describe usage of Pipeline class
+
+==== PDF to XML conversion
+
+Describe usage of PdfxXmlCreator class
+
+
+==== PDFX-XML to XMI conversion
+
+Describe usage of PdfxXmlToXmiConverter class
+
+
+
+=== Named Entity Recognition
+
+//Describe usage of Pipeline class in ss-module-ner
