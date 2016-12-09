@@ -1,0 +1,9 @@
+[[sect_introduction]]
+
+== Introduction
+
+A short description of the project goes here.
+
+It would be helpful if answers for the following questions are provided:
+- What can I do with this project?
+- Where can I find examples for using these components?

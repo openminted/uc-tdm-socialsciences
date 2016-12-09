@@ -1,0 +1,11 @@
+= Social Sciences TDM Component Collection User Guide
+:Author: OpenMinTeD Social Sciences Use-Case team
+:toc-title: User Guide
+
+This document targets users employing the SS Use-Case Component Collection to build analysis pipelines.
+
+include::{include-dir}introduction.adoc[]
+
+<<<
+
+include::{include-dir}components.adoc[]
