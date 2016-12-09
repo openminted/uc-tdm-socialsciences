@@ -8,6 +8,10 @@
 	</parent>
 	<artifactId>ss-module-ner</artifactId>
 
+	<properties>
+		<dkpro.statistics.version>2.1.0</dkpro.statistics.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
@@ -67,6 +71,11 @@
 			<version>${dkpro.core.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.dkpro.statistics</groupId>
+			<artifactId>dkpro-statistics-agreement</artifactId>
+			<version>${dkpro.statistics.version}</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/edu.stanford.nlp/stanford-corenlp -->
 		<dependency>
 			<groupId>edu.stanford.nlp</groupId>
