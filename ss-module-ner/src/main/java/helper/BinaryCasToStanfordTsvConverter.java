@@ -42,6 +42,10 @@ public class BinaryCasToStanfordTsvConverter {
 	private void convertToTsv(String inputResource, String outputResource, String language)
 			throws ResourceInitializationException, UIMAException, IOException {
 
+		/*
+		 * TODO: filter by language, i.e. read language from metadata and create
+		 * output separately for each language!
+		 */
 		runPipeline(createReaderDescription(BinaryCasReader.class,
 				BinaryCasReader.PARAM_SOURCE_LOCATION, inputResource,
 				BinaryCasReader.PARAM_PATTERNS, "/**/*.bin",
