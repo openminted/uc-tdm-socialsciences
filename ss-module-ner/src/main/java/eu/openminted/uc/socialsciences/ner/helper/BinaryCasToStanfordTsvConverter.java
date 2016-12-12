@@ -1,4 +1,4 @@
-package helper;
+package eu.openminted.uc.socialsciences.ner.helper;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;

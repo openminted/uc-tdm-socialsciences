@@ -1,4 +1,4 @@
-package train;
+package eu.openminted.uc.socialsciences.ner.train;
 
 import java.util.Properties;
 

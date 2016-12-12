@@ -1,4 +1,4 @@
-package helper;
+package eu.openminted.uc.socialsciences.ner.helper;
 
 import static org.apache.commons.io.IOUtils.closeQuietly;
 import static org.apache.uima.fit.util.JCasUtil.select;
@@ -27,7 +27,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.MimeTypes;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import helper.util.MyIobEncoder;
+import eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder;
 import webanno.custom.NamedEntity;
 
 /**
@@ -47,10 +47,18 @@ public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 
 	private static final Logger logger = Logger.getLogger(MyStanfordTsvWriter.class);
 
+	/**
+	 * Name of configuration parameter that defines the file name extension of
+	 * the output file.
+	 */
 	public static final String PARAM_FILENAME_EXTENSION = ComponentParameters.PARAM_FILENAME_EXTENSION;
 	@ConfigurationParameter(name = PARAM_FILENAME_EXTENSION, mandatory = true, defaultValue = ".tsv")
 	private String filenameSuffix;
 
+	/**
+	 * Name of configuration parameter that specifies if subtypes of annotations
+	 * should be used (i.e. more fine-grained).
+	 */
 	public static final String PARAM_USE_SUBTYPES = "useSubTypes";
 	@ConfigurationParameter(name = PARAM_USE_SUBTYPES, mandatory = true, defaultValue = "false")
 	private boolean useSubTypes;

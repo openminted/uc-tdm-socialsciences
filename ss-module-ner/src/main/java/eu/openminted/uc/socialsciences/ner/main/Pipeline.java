@@ -1,4 +1,4 @@
-package main;
+package eu.openminted.uc.socialsciences.ner.main;
 
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
