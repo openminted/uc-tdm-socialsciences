@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
-    <name>NamedEntity</name>
+    <name>CustomNamedEntity</name>
     <description/>
     <version>${version}</version>
     <vendor>OpenMinTeD</vendor>
