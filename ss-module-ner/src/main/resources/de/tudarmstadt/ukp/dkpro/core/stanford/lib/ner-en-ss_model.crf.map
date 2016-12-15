@@ -1,0 +1,6 @@
+LOC=webanno.custom.NamedEntity.LOC
+ORG=webanno.custom.NamedEntity.ORG
+OTH=webanno.custom.NamedEntity.OTH
+PER=webanno.custom.NamedEntity.PER
+SUB=webanno.custom.NamedEntity.SUB
+*==webanno.custom.NamedEntity

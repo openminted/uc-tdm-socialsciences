@@ -29,7 +29,9 @@ public class Pipeline {
 
 		AnalysisEngineDescription ner = createEngineDescription(StanfordNamedEntityRecognizer.class,
 				StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
-				StanfordNamedEntityRecognizer.PARAM_MODEL_LOCATION, modelLocation);
+//				StanfordNamedEntityRecognizer.PARAM_MODEL_LOCATION, modelLocation,
+				StanfordNamedEntityRecognizer.PARAM_VARIANT, "classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-variants.map",
+				StanfordNamedEntityRecognizer.PARAM_NAMED_ENTITY_MAPPING_LOCATION, "classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-${language}-${variant}.map");
 
 		AnalysisEngineDescription xmiWriter = createEngineDescription(
 				XmiWriter.class,
