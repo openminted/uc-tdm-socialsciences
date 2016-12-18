@@ -2,8 +2,15 @@
 
 == Introduction
 
-A short description of the project goes here.
+This software package contains components for text mining in scientific publicatons.
+Current package contains the following components:
 
-It would be helpful if answers for the following questions are provided:
-- What can I do with this project?
-- Where can I find examples for using these components?
+- PDF-to-XMI converter: for transforming PDF documents (publication full-texts) to XMI format.
+- Named entity recognizer: for identifying named entities in XMI document (supports English and German)
+
+To learn more about each component and to find example code, you can refer to the corresponding test classes for each
+component.
+
+//It would be helpful if answers for the following questions are provided:
+//- What can I do with this project?
+//- Where can I find examples for using these components?

@@ -1,23 +1,20 @@
 == Components
-//Is this title appropriate?
-
-put description of components and their interface here.
 
 === PDF processing
 
 //Components inside eu.openminted.uc_tdm_socialsciences.io.pdfx
 ==== PDF to XMI conversion
 
-Describe usage of Pipeline class
+The PDF-to-XMI conversion pipeline (Pipeline) can be used to convert a collection of PDF files to XMI format.
 
-==== PDF to XML conversion
-
-Describe usage of PdfxXmlCreator class
-
-
-==== PDFX-XML to XMI conversion
-
-Describe usage of PdfxXmlToXmiConverter class
+//==== PDF to XML conversion
+//
+//Describe usage of PdfxXmlCreator class
+//
+//
+//==== PDFX-XML to XMI conversion
+//
+//Describe usage of PdfxXmlToXmiConverter class
 
 
 
