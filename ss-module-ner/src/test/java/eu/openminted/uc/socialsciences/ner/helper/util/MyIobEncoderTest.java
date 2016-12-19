@@ -40,6 +40,28 @@ public class MyIobEncoderTest {
         }
     }
 
+    @Test
+    public void testMyIobEncoderWithoutSubtypes()
+            throws Exception
+    {
+        String[] expected = new String[] {
+                "O","O","O","B-ORG","I-ORG","I-ORG","I-ORG","O","O","O","O","O","B-PER","O","B-LOC","O","O","O"
+        };
+
+        JCas jcas = getJCas();
+        Type neType = JCasUtil.getType(jcas, NamedEntity.class);
+        Feature neValue = neType.getFeatureByBaseName("value");
+        Feature neModifier = neType.getFeatureByBaseName("modifier");
+
+        MyIobEncoder encoder = new MyIobEncoder(jcas.getCas(), neType, neValue, neModifier, false);
+
+        int i=0;
+        for (Token token : JCasUtil.select(jcas, Token.class)) {
+            assertEquals(expected[i], encoder.encode(token));
+            i++;
+        }
+    }
+
     private JCas getJCas()
             throws Exception
     {

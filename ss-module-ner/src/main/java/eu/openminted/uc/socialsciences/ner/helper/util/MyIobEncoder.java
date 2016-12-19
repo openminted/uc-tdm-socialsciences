@@ -54,10 +54,10 @@ public class MyIobEncoder {
 		for (AnnotationFS chunk : CasUtil.select(aCas, aType)) {
 			String value = chunk.getStringValue(aValueFeature);
 			String modifier = chunk.getStringValue(aModifierFeature);
-			logger.info(String.format("Annotation: '%s' (%d:%d)", chunk.getCoveredText(), chunk.getBegin(),
+			logger.debug(String.format("Annotation: '%s' (%d:%d)", chunk.getCoveredText(), chunk.getBegin(),
 					chunk.getEnd()));
-			logger.info("Value: " + chunk.getStringValue(aValueFeature));
-			logger.info("Modifier: " + chunk.getStringValue(aModifierFeature));
+			logger.debug("Value: " + chunk.getStringValue(aValueFeature));
+			logger.debug("Modifier: " + chunk.getStringValue(aModifierFeature));
 
 			if (null == value) {
 				continue;
