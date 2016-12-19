@@ -12,7 +12,7 @@ public class StanfordNERTrainer {
 	public static void main(String[] args) {
 		String serializeFile = "src/main/resources/omtd-ner-model.ser.gz";
 		String prop = "src/main/resources/trainingProperties.txt";
-		String trainFile = "src/test/resources/test.tsv";
+		String trainFile = "src/test/resources/stanfordTrain.tsv";
 
 		/*
 		 * options: IOB1, IOB2, IOE1, IOE2, SBIEO, IO
