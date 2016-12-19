@@ -28,6 +28,9 @@ public class MyIobEncoder {
 		this(aCas, aType, aValueFeature, aModifierFeature, false);
 	}
 
+	// TODO: does not correctly handle overlapping annotations, where
+	// begin[anno1]<begin[anno2] and end[anno1]<end[anno2] and
+	// end[anno1]>begin[anno2]
 	public MyIobEncoder(CAS aCas, Type aType, Feature aValueFeature, Feature aModifierFeature, boolean useSubTypes) {
 		// fill map for whole JCas in order to efficiently encode IOB
 		iobBeginMap = new Int2ObjectOpenHashMap<>();
