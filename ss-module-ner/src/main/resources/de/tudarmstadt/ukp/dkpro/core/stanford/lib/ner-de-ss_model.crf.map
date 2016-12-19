@@ -1,21 +1,21 @@
 PER=webanno.custom.NamedEntity.PER
-PER=webanno.custom.NamedEntity.PERind
-PER=webanno.custom.NamedEntity.PERgrp
+PERind=webanno.custom.NamedEntity.PERind
+PERgrp=webanno.custom.NamedEntity.PERgrp
 
 ORG=webanno.custom.NamedEntity.ORG
-ORG=webanno.custom.NamedEntity.ORGsci
-ORG=webanno.custom.NamedEntity.ORGgov
-ORG=webanno.custom.NamedEntity.ORGpar
-ORG=webanno.custom.NamedEntity.ORGoth
+ORGsci=webanno.custom.NamedEntity.ORGsci
+ORGgov=webanno.custom.NamedEntity.ORGgov
+ORGpar=webanno.custom.NamedEntity.ORGpar
+ORGoth=webanno.custom.NamedEntity.ORGoth
 
 LOC=webanno.custom.NamedEntity.LOC
 
 SUB=webanno.custom.NamedEntity.SUB
-SUB=webanno.custom.NamedEntity.SUBthe
-SUB=webanno.custom.NamedEntity.SUBres
+SUBthe=webanno.custom.NamedEntity.SUBthe
+SUBres=webanno.custom.NamedEntity.SUBres
 
 OTH=webanno.custom.NamedEntity.OTH
-OTH=webanno.custom.NamedEntity.OTHmed
-OTH=webanno.custom.NamedEntity.OTHoff
-OTH=webanno.custom.NamedEntity.OTHevt
+OTHmed=webanno.custom.NamedEntity.OTHmed
+OTHoff=webanno.custom.NamedEntity.OTHoff
+OTHevt=webanno.custom.NamedEntity.OTHevt
 *==webanno.custom.NamedEntity
