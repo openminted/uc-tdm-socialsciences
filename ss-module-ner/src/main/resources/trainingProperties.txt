@@ -34,3 +34,6 @@ useTypeSeqs=true
 useTypeSeqs2=true
 useTypeySequences=true
 wordShape=chris2useLC
+
+# for multi-threaded training
+multiThreadGrad=16
