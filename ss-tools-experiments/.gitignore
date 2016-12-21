@@ -1,6 +1,5 @@
-/target/
+target/
 /.classpath
 /.project
 /.settings/
-/*.iml
-/ss-tools-experiments.iml
+*.iml
