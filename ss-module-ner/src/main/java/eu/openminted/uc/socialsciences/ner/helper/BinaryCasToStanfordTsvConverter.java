@@ -46,10 +46,11 @@ public class BinaryCasToStanfordTsvConverter {
 		 * TODO: filter by language, i.e. read language from metadata and create
 		 * output separately for each language!
 		 */
-		runPipeline(createReaderDescription(BinaryCasReader.class,
-				BinaryCasReader.PARAM_SOURCE_LOCATION, inputResource,
-				BinaryCasReader.PARAM_PATTERNS, "/**/*.bin",
-				BinaryCasReader.PARAM_LANGUAGE, language),
+		runPipeline(
+				createReaderDescription(BinaryCasReader.class,
+						BinaryCasReader.PARAM_SOURCE_LOCATION, inputResource,
+						BinaryCasReader.PARAM_PATTERNS, "/**/*.bin",
+						BinaryCasReader.PARAM_LANGUAGE, language),
 				createEngineDescription(MyStanfordTsvWriter.class,
 						MyStanfordTsvWriter.PARAM_TARGET_LOCATION, outputResource,
 						MyStanfordTsvWriter.PARAM_USE_SUBTYPES, true,

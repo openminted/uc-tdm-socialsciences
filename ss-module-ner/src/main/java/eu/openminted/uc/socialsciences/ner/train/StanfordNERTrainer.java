@@ -17,11 +17,11 @@ public class StanfordNERTrainer {
 			serializeFile = args[0];
 		else {
 			logger.info("No path for saving the trained model was specified.");
-			serializeFile = "ss-module-ner/target/omtd-ner-model.ser.gz";
+			serializeFile = "omtd-ner-model.ser.gz";
 		}
 		logger.info("Will write the trained model to [" + serializeFile + "]");
-		String prop = StanfordNERTrainer.class.getClassLoader().getResource("trainingProperties.txt").getFile();
-		String trainFile = "ss-module-ner/src/test/resources/stanfordTrain.tsv";
+		String prop = "trainingProperties.txt";
+		String trainFile = "stanfordTrain.tsv";
 
 		/*
 		 * options: IOB1, IOB2, IOE1, IOE2, SBIEO, IO
