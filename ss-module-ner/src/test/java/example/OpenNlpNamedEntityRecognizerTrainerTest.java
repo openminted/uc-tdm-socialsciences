@@ -28,6 +28,7 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.ConfigurationParameterFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -46,6 +47,7 @@ import de.tudarmstadt.ukp.dkpro.core.testing.DkproTestContext;
 public class OpenNlpNamedEntityRecognizerTrainerTest {
 	private Dataset ds;
 
+	@Ignore
 	@Test
 	public void test()
 			throws Exception {
