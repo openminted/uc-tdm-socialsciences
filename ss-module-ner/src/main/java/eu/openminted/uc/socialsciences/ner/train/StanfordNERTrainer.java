@@ -12,6 +12,14 @@ public class StanfordNERTrainer {
 	private static final Logger logger = Logger.getLogger(StanfordNERTrainer.class);
 
 	public static void main(String[] args) {
+		if (args.length == 0)
+			printHelp();
+
+		String prop = args[0];
+		logger.info("Reading properties file from [" + prop + "]");
+		String trainFile = args[1];
+		logger.info("Reading training file from [" + trainFile + "]");
+
 		String serializeFile;
 		if (args.length >= 1)
 			serializeFile = args[0];
@@ -20,8 +28,6 @@ public class StanfordNERTrainer {
 			serializeFile = "omtd-ner-model.ser.gz";
 		}
 		logger.info("Will write the trained model to [" + serializeFile + "]");
-		String prop = "trainingProperties.txt";
-		String trainFile = "stanfordTrain.tsv";
 
 		/*
 		 * options: IOB1, IOB2, IOE1, IOE2, SBIEO, IO
@@ -34,6 +40,14 @@ public class StanfordNERTrainer {
 
 		StanfordNERTrainer trainModel = new StanfordNERTrainer();
 		trainModel.trainCrf(serializeFile, prop, trainFile, classification, retainClassification);
+	}
+
+	private static void printHelp() {
+		System.out.printf("Please run the program using the following arguments:%n" +
+				"[arg1] path to training properties file%n" +
+				"[arg2] path to input file%n" +
+				"[arg3] [optional] path to output model%n");
+		System.exit(1);
 	}
 
 	private void trainCrf(String serializeFile, String prop, String trainFile, String classification,
