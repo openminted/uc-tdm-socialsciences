@@ -21,8 +21,8 @@ public class StanfordNERTrainer {
 		logger.info("Reading training file from [" + trainFile + "]");
 
 		String serializeFile;
-		if (args.length >= 1)
-			serializeFile = args[0];
+		if (args.length >= 3)
+			serializeFile = args[2];
 		else {
 			logger.info("No path for saving the trained model was specified.");
 			serializeFile = "omtd-ner-model.ser.gz";
