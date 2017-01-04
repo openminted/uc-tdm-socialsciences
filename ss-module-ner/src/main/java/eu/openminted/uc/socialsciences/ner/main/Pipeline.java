@@ -24,6 +24,8 @@ public class Pipeline {
 	private static final Logger logger = Logger.getLogger(Pipeline.class);
 
 	public static void main(String[] args) {
+		// TODO should not reference test resources in main
+		// --> create separate tests and in main, let user specify input source
 		String inputPattern = "src/test/resources/**/*.xmi";
 
 		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
