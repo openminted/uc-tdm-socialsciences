@@ -35,15 +35,14 @@ public class Pipeline {
 	private static final Logger logger = Logger.getLogger(Pipeline.class);
 
 	public static void main(String[] args) {
-		String inputPattern = "ss-module-ner/src/test/resources/**/*.xmi";
-		String modelLocation = "ss-module-ner/target/omtd-ner-model-de.ser.gz"; // TODO make maven
+		String inputPattern = "src/test/resources/**/*.xmi";
+		String modelLocation = "ss-module-ner/target/omtd-ner-model-de.ser.gz"; // TODO
+																				 // make
+																	 // maven
 														 // resolve path
 
-		String typesystemFile = "ss-module-ner/src/main/resources/typesystem.xml"; // TODO
-																	 // make
-																	 // maven
-																	 // resolve
-																	 // path
+		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
+				.getFile();
 
 		boolean usePredefinedModel = true;
 
