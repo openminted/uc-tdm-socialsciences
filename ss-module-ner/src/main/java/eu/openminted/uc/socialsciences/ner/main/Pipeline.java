@@ -41,16 +41,12 @@ public class Pipeline {
 		String inputPattern = "./**/*.xmi";
 		String modelLocation = "omtd-ner-model.ser.gz"; // TODO make maven
 														 // resolve path
-		String predefinedModel = "all.3class.distsim.crf"; // TODO make maven
-															 // resolve path
+
 		String typesystemFile = "src/main/resources/typesystem.xml"; // TODO
 																	 // make
 																	 // maven
 																	 // resolve
 																	 // path
-
-		final String LANGUAGECODE_DE = "de";
-		final String LANGUAGECODE_EN = "en";
 
 		boolean usePredefinedModel = true;
 
