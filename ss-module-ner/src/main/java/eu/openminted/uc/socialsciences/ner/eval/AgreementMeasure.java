@@ -28,6 +28,10 @@ public class AgreementMeasure {
         //fixme
         String typesystemFile = "ss-module-ner/src/main/resources/typesystem.xml";
 
+        runTest(typesystemFile);
+    }
+
+    protected static void runTest(String typesystemFile) throws ResourceInitializationException {
         List<JCas> goldJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/gold/de/**/*.xmi");
         List<JCas> predictionJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/prediction/de/**/*.xmi");
 
@@ -56,6 +60,7 @@ public class AgreementMeasure {
                     category = namedEntity.getValue() + namedEntity.getModifier();
                 else
                     category = namedEntity.getValue();
+
 
                 finegrainedCategories.add(category);
                 study.addUnit(namedEntity.getBegin(), namedEntity.getEnd() - namedEntity.getBegin(), raterOne, category);
