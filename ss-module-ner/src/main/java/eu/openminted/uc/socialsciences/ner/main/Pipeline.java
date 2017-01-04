@@ -25,15 +25,11 @@ public class Pipeline {
 
 	public static void main(String[] args) {
 		String inputPattern = "src/test/resources/**/*.xmi";
-		String modelLocation = "ss-module-ner/target/omtd-ner-model-de.ser.gz"; // TODO
-																				 // make
-																	 // maven
-														 // resolve path
 
 		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
 				.getFile();
 
-		boolean usePredefinedModel = true;
+		boolean usePredefinedModel = false;
 
 		//fixme currently model files should be located at
 		// 	ss-module-ner/target/
@@ -59,13 +55,12 @@ public class Pipeline {
 							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language)
 					: createEngineDescription(StanfordNamedEntityRecognizer.class,
 							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
-							StanfordNamedEntityRecognizer.PARAM_MODEL_LOCATION, modelLocation,
 							StanfordNamedEntityRecognizer.PARAM_NAMED_ENTITY_MAPPING_LOCATION,
 							"classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-${language}-ss_model.crf.map");
 
 			AnalysisEngineDescription xmiWriter = createEngineDescription(
 					XmiWriter.class,
-					XmiWriter.PARAM_TARGET_LOCATION, "ss-module-ner/target/",
+					XmiWriter.PARAM_TARGET_LOCATION, "target",
 					XmiWriter.PARAM_TYPE_SYSTEM_FILE, "typesystem.xml",
 					XmiWriter.PARAM_OVERWRITE, true);
 
