@@ -26,18 +26,20 @@ public class Pipeline {
 	public static void main(String[] args) {
 		// TODO should not reference test resources in main
 		// --> create separate tests and in main, let user specify input source
-		String inputPattern = "src/test/resources/**/*.xmi";
+		String inputPattern = "src/test/resources/originalDocs/**/*.xmi";
 
 		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
 				.getFile();
 
 		//fixme currently model files should be located at
-		// 	ss-module-ner/target/
-		// so that the pipeline works.
+		//fixme 	ss-module-ner/target/
+		//fixme so that the pipeline works.
 		/*
 		 * language should be read from document metadata
 		 */
-		String language = "de";
+
+		//fixme language should be (1) input or (2) read from xmi header
+		String language = "en";
 
 		try {
 			TypeSystemDescription allTypes = mergeBuiltInAndCustomTypes(typesystemFile);

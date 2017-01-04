@@ -32,6 +32,7 @@ public class AgreementMeasure {
     }
 
     protected static void runTest(String typesystemFile) throws ResourceInitializationException {
+        //todo test with multiple documents
         List<JCas> goldJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/gold/de/**/*.xmi");
         List<JCas> predictionJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/prediction/de/**/*.xmi");
 
