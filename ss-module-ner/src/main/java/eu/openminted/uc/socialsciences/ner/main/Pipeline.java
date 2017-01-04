@@ -17,7 +17,6 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
-import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import org.apache.uima.util.CasCreationUtils;
 
 public class Pipeline {
@@ -51,9 +50,9 @@ public class Pipeline {
 					XmiReader.PARAM_SOURCE_LOCATION, inputPattern,
 					XmiReader.PARAM_LANGUAGE, language);
 
-			AnalysisEngineDescription ner = createEngineDescription(StanfordNamedEntityRecognizer.class,
-							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
-							StanfordNamedEntityRecognizer.PARAM_VARIANT,
+			AnalysisEngineDescription ner = createEngineDescription(MyStanfordNamedEntityRecognizer.class,
+					MyStanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
+					MyStanfordNamedEntityRecognizer.PARAM_VARIANT,
 							"ss_model.crf");
 
 			AnalysisEngineDescription xmiWriter = createEngineDescription(
