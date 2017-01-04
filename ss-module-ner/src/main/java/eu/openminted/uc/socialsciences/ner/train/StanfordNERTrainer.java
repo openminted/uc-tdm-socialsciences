@@ -40,6 +40,7 @@ public class StanfordNERTrainer {
 
 		StanfordNERTrainer trainModel = new StanfordNERTrainer();
 		trainModel.trainCrf(serializeFile, prop, trainFile, classification, retainClassification);
+		logger.info("Model training finished.");
 	}
 
 	private static void printHelp() {

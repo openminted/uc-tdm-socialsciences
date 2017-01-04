@@ -38,8 +38,8 @@ public class Pipeline {
 	private static final Logger logger = Logger.getLogger(Pipeline.class);
 
 	public static void main(String[] args) {
-		String inputPattern = "./**/*.xmi";
-		String modelLocation = "omtd-ner-model.ser.gz"; // TODO make maven
+		String inputPattern = "ss-module-ner/src/test/resources/**/*.xmi";
+		String modelLocation = "ss-module-ner/target/omtd-ner-model-de.ser.gz"; // TODO make maven
 														 // resolve path
 
 		String typesystemFile = "src/main/resources/typesystem.xml"; // TODO
@@ -53,7 +53,7 @@ public class Pipeline {
 		/*
 		 * language should be read from document metadata
 		 */
-		String language = "";
+		String language = "de";
 
 		try {
 			TypeSystemDescription allTypes = mergeBuiltInAndCustomTypes(typesystemFile);
@@ -70,17 +70,20 @@ public class Pipeline {
 					? createEngineDescription(StanfordNamedEntityRecognizer.class,
 							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
 							StanfordNamedEntityRecognizer.PARAM_VARIANT,
-							"classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-variants.map",
+							"ss_model.crf",
 							StanfordNamedEntityRecognizer.PARAM_NAMED_ENTITY_MAPPING_LOCATION,
 							"classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-${language}-${variant}.map")
 					: createEngineDescription(StanfordNamedEntityRecognizer.class,
 							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
-							StanfordNamedEntityRecognizer.PARAM_MODEL_LOCATION, modelLocation);
+							StanfordNamedEntityRecognizer.PARAM_MODEL_LOCATION, modelLocation,
+							StanfordNamedEntityRecognizer.PARAM_NAMED_ENTITY_MAPPING_LOCATION,
+							"classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-${language}-ss_model.crf.map");
 
 			AnalysisEngineDescription xmiWriter = createEngineDescription(
 					XmiWriter.class,
-					XmiWriter.PARAM_TARGET_LOCATION, ".",
-					XmiWriter.PARAM_TYPE_SYSTEM_FILE, "typesystem.xml");
+					XmiWriter.PARAM_TARGET_LOCATION, "ss-module-ner/target/",
+					XmiWriter.PARAM_TYPE_SYSTEM_FILE, "typesystem.xml",
+					XmiWriter.PARAM_OVERWRITE, true);
 
 			/*
 			 * test pipeline - XMI input, NER, XMI output (can be viewed with
@@ -94,6 +97,8 @@ public class Pipeline {
 			 * flow
 			 * controller?
 			 */
+			/*
+			fixme
 			ConfigurationParameter[] configurationParameters = null;
 			Object[] configurationValues = null;
 			Map<String, ExternalResourceDescription> externalResources = null;
@@ -108,7 +113,7 @@ public class Pipeline {
 			AnalysisEngineDescription aggregateEngine = createEngineDescription(list, names, priorities, sofaMappings,
 					flowControllerDescription);
 
-			AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregateEngine);
+			AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregateEngine);*/
 
 		} catch (ResourceInitializationException e) {
 			e.printStackTrace();
@@ -126,7 +131,7 @@ public class Pipeline {
 				.createTypeSystemDescription();
 		TypeSystemDescription customTypes = TypeSystemDescriptionFactory
 				.createTypeSystemDescriptionFromPath(typesystemFile);
-		return CasCreationUtils.mergeTypeSystems(Arrays.asList(builtInTypes, customTypes));
+		return customTypes;//CasCreationUtils.mergeTypeSystems(Arrays.asList(builtInTypes, customTypes));
 	}
 
 }
