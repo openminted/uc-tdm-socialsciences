@@ -5,7 +5,6 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +25,10 @@ import org.apache.uima.resource.metadata.ConfigurationParameter;
 import org.apache.uima.resource.metadata.TypeDescription;
 import org.apache.uima.resource.metadata.TypePriorities;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.apache.uima.util.CasCreationUtils;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
-import eu.openminted.uc.socialsciences.ner.helper.BinaryCasToStanfordTsvConverter;
 
 public class Pipeline {
 
@@ -42,7 +39,7 @@ public class Pipeline {
 		String modelLocation = "ss-module-ner/target/omtd-ner-model-de.ser.gz"; // TODO make maven
 														 // resolve path
 
-		String typesystemFile = "src/main/resources/typesystem.xml"; // TODO
+		String typesystemFile = "ss-module-ner/src/main/resources/typesystem.xml"; // TODO
 																	 // make
 																	 // maven
 																	 // resolve
@@ -50,6 +47,9 @@ public class Pipeline {
 
 		boolean usePredefinedModel = true;
 
+		//fixme currently model files should be located at
+		// 	ss-module-ner/target/
+		// so that the pipeline works.
 		/*
 		 * language should be read from document metadata
 		 */
@@ -70,9 +70,7 @@ public class Pipeline {
 					? createEngineDescription(StanfordNamedEntityRecognizer.class,
 							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
 							StanfordNamedEntityRecognizer.PARAM_VARIANT,
-							"ss_model.crf",
-							StanfordNamedEntityRecognizer.PARAM_NAMED_ENTITY_MAPPING_LOCATION,
-							"classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-${language}-${variant}.map")
+							"ss_model.crf")
 					: createEngineDescription(StanfordNamedEntityRecognizer.class,
 							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
 							StanfordNamedEntityRecognizer.PARAM_MODEL_LOCATION, modelLocation,
@@ -97,8 +95,7 @@ public class Pipeline {
 			 * flow
 			 * controller?
 			 */
-			/*
-			fixme
+			/*fixme
 			ConfigurationParameter[] configurationParameters = null;
 			Object[] configurationValues = null;
 			Map<String, ExternalResourceDescription> externalResources = null;
