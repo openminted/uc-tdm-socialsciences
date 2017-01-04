@@ -112,11 +112,7 @@ public class Pipeline {
 
 			AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregateEngine);*/
 
-		} catch (ResourceInitializationException e) {
-			e.printStackTrace();
-		} catch (UIMAException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (UIMAException | IOException e) {
 			e.printStackTrace();
 		}
 
@@ -128,6 +124,7 @@ public class Pipeline {
 				.createTypeSystemDescription();
 		TypeSystemDescription customTypes = TypeSystemDescriptionFactory
 				.createTypeSystemDescriptionFromPath(typesystemFile);
+		//fixme is it necessary to merge the types at all?
 		return customTypes;//CasCreationUtils.mergeTypeSystems(Arrays.asList(builtInTypes, customTypes));
 	}
 
