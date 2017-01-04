@@ -5,6 +5,7 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
@@ -18,6 +19,7 @@ import org.apache.uima.resource.metadata.TypeSystemDescription;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
+import org.apache.uima.util.CasCreationUtils;
 
 public class Pipeline {
 
@@ -31,8 +33,6 @@ public class Pipeline {
 		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
 				.getFile();
 
-		boolean usePredefinedModel = false;
-
 		//fixme currently model files should be located at
 		// 	ss-module-ner/target/
 		// so that the pipeline works.
@@ -43,28 +43,26 @@ public class Pipeline {
 
 		try {
 			TypeSystemDescription allTypes = mergeBuiltInAndCustomTypes(typesystemFile);
-			for (TypeDescription type : allTypes.getTypes()) {
+			/*for (TypeDescription type : allTypes.getTypes()) {
 				logger.info("Type recognized: " + type.getName());
-			}
+			}*/
 
 			CollectionReaderDescription reader;
 			reader = createReaderDescription(XmiReader.class, allTypes,
 					XmiReader.PARAM_SOURCE_LOCATION, inputPattern,
 					XmiReader.PARAM_LANGUAGE, language);
 
-			AnalysisEngineDescription ner = usePredefinedModel
-					? createEngineDescription(StanfordNamedEntityRecognizer.class,
-							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language)
-					: createEngineDescription(StanfordNamedEntityRecognizer.class,
+			AnalysisEngineDescription ner = createEngineDescription(StanfordNamedEntityRecognizer.class,
 							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
-							StanfordNamedEntityRecognizer.PARAM_NAMED_ENTITY_MAPPING_LOCATION,
-							"classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-${language}-ss_model.crf.map");
+							StanfordNamedEntityRecognizer.PARAM_VARIANT,
+							"ss_model.crf");
 
 			AnalysisEngineDescription xmiWriter = createEngineDescription(
 					XmiWriter.class,
 					XmiWriter.PARAM_TARGET_LOCATION, "target",
 					XmiWriter.PARAM_TYPE_SYSTEM_FILE, "typesystem.xml",
-					XmiWriter.PARAM_OVERWRITE, true);
+					XmiWriter.PARAM_OVERWRITE, true,
+					XmiWriter.PARAM_STRIP_EXTENSION, true);
 
 			/*
 			 * test pipeline - XMI input, NER, XMI output (can be viewed with
@@ -101,14 +99,14 @@ public class Pipeline {
 
 	}
 
-	private static TypeSystemDescription mergeBuiltInAndCustomTypes(String typesystemFile)
+	public static TypeSystemDescription mergeBuiltInAndCustomTypes(String typesystemFile)
 			throws ResourceInitializationException {
 		TypeSystemDescription builtInTypes = TypeSystemDescriptionFactory
 				.createTypeSystemDescription();
 		TypeSystemDescription customTypes = TypeSystemDescriptionFactory
 				.createTypeSystemDescriptionFromPath(typesystemFile);
 		//fixme is it necessary to merge the types at all?
-		return customTypes;//CasCreationUtils.mergeTypeSystems(Arrays.asList(builtInTypes, customTypes));
+		return CasCreationUtils.mergeTypeSystems(Arrays.asList(builtInTypes, customTypes));
 	}
 
 }
