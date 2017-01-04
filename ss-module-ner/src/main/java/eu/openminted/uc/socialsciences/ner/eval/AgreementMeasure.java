@@ -1,19 +1,18 @@
 package eu.openminted.uc.socialsciences.ner.eval;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
+import eu.openminted.uc.socialsciences.ner.main.Pipeline;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.dkpro.statistics.agreement.unitizing.KrippendorffAlphaUnitizingAgreement;
 import org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy;
 import webanno.custom.NamedEntity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 
@@ -26,57 +25,84 @@ public class AgreementMeasure {
     public static void main(String[] args)
             throws ResourceInitializationException
     {
-        List<JCas> goldJcases = AgreementMeasure.getJcases("");
-        List<JCas> predictionJcases = AgreementMeasure.getJcases("");
+        //fixme
+        String typesystemFile = "ss-module-ner/src/main/resources/typesystem.xml";
+
+        List<JCas> goldJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/gold/de/**/*.xmi");
+        List<JCas> predictionJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/prediction/de/**/*.xmi");
 
         calculate(goldJcases, predictionJcases);
     }
 
     public static void calculate(List<JCas> goldJcases, List<JCas> predictionJcases)
     {
-        int totalDocumentLength = 0;
-        for (JCas jcas:goldJcases)
-        {
-            totalDocumentLength += jcas.getDocumentText().length();
-        }
-
-        UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(RATER_COUNT, totalDocumentLength);
+        List<UnitizingAnnotationStudy> studyList = new ArrayList<>();
         final int raterOne = 0;
         final int raterTwo = 1;
         Set<String> coarseCategories = new HashSet<>();
         Set<String> finegrainedCategories = new HashSet<>();
+        Set<String> predictionCategories = new HashSet<>();
 
         for (JCas jcas:goldJcases)
         {
+            //todo check if reader preserves reading order for both gold and prediction set?
+            UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(RATER_COUNT, jcas.getDocumentText().length());
+            studyList.add(study);
+
             for (NamedEntity namedEntity : JCasUtil.select(jcas, NamedEntity.class))
             {
-                String category = namedEntity.getValue() + namedEntity.getModifier();
+                String category;
+                if (namedEntity.getModifier() != null && !namedEntity.getModifier().isEmpty())
+                    category = namedEntity.getValue() + namedEntity.getModifier();
+                else
+                    category = namedEntity.getValue();
+
                 finegrainedCategories.add(category);
                 study.addUnit(namedEntity.getBegin(), namedEntity.getEnd() - namedEntity.getBegin(), raterOne, category);
             }
         }
 
+        Iterator<UnitizingAnnotationStudy> iterator = studyList.iterator();
         for (JCas jcas:predictionJcases)
         {
-            for (NamedEntity namedEntity : JCasUtil.select(jcas, NamedEntity.class))
+            UnitizingAnnotationStudy study = iterator.next();
+            for (de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity namedEntity : JCasUtil.select(jcas, de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity.class))
             {
-                String category = namedEntity.getValue() + namedEntity.getModifier();
+                String category = namedEntity.getValue();
+                predictionCategories.add(category);
+
                 study.addUnit(namedEntity.getBegin(), namedEntity.getEnd() - namedEntity.getBegin(), raterTwo, category);
             }
         }
 
-        KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
+        System.out.println("************************");
+        for (String set:finegrainedCategories)
+            System.out.printf("finegrained category %s %n", set);
+        System.out.println("************");
+        for (String set:predictionCategories)
+            System.out.printf("prediction category %s %n", set);
+        System.out.println("************************");
 
-        for(String category : finegrainedCategories)
-                System.out.printf("Alpha for category %s: %f", category, alpha.calculateCategoryAgreement(category));
+        int docId = 0;
+        for (UnitizingAnnotationStudy study : studyList)
+        {
+            ++docId;
+            System.out.printf("%nAgreement scores on file %d %n", docId);
+            KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
 
-        System.out.printf("Overall Alpha: %f", alpha.calculateAgreement());
+            for(String category : finegrainedCategories)
+                System.out.printf("Alpha for category %s: %f %n", category, alpha.calculateCategoryAgreement(category));
+
+            System.out.printf("Overall Alpha: %f %n", alpha.calculateAgreement());
+        }
     }
 
-    public static List<JCas> getJcases(String documentPathPattern)
+    public static List<JCas> getJcases(String typeSystemFile, String documentPathPattern)
             throws ResourceInitializationException
     {
+        TypeSystemDescription typeSystemDescription = Pipeline.mergeBuiltInAndCustomTypes(typeSystemFile);
         CollectionReaderDescription reader = createReaderDescription(XmiReader.class,
+                typeSystemDescription,
                 XmiReader.PARAM_SOURCE_LOCATION, documentPathPattern);
 
         List<JCas> result = new ArrayList<>();
