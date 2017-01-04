@@ -67,9 +67,7 @@ public class Pipeline {
 
 			AnalysisEngineDescription ner = usePredefinedModel
 					? createEngineDescription(StanfordNamedEntityRecognizer.class,
-							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
-							StanfordNamedEntityRecognizer.PARAM_VARIANT,
-							"ss_model.crf")
+							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language)
 					: createEngineDescription(StanfordNamedEntityRecognizer.class,
 							StanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
 							StanfordNamedEntityRecognizer.PARAM_MODEL_LOCATION, modelLocation,
