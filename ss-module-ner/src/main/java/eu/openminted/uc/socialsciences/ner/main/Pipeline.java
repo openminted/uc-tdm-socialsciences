@@ -71,28 +71,6 @@ public class Pipeline {
 			 */
 			runPipeline(reader, ner, xmiWriter);
 
-			/*
-			 * have to create aggregate analysis engine from several aes with
-			 * flow
-			 * controller?
-			 */
-			/*fixme
-			ConfigurationParameter[] configurationParameters = null;
-			Object[] configurationValues = null;
-			Map<String, ExternalResourceDescription> externalResources = null;
-			FlowControllerDescription flowControllerDescription = FlowControllerFactory.createFlowControllerDescription(
-					FlowController.class, configurationParameters, configurationValues, externalResources);
-
-			List<AnalysisEngineDescription> list = null;
-			List<String> names = null;
-			SofaMapping[] sofaMappings = null;
-			TypePriorities priorities = null;
-
-			AnalysisEngineDescription aggregateEngine = createEngineDescription(list, names, priorities, sofaMappings,
-					flowControllerDescription);
-
-			AnalysisEngine engine = AnalysisEngineFactory.createEngine(aggregateEngine);*/
-
 		} catch (UIMAException | IOException e) {
 			e.printStackTrace();
 		}
