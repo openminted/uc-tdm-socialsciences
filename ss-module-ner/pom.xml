@@ -109,6 +109,24 @@
 										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>eu.openminted.uc.socialsciences.ner.train.StanfordNERTrainer</mainClass>
 								</transformer>
+							</transformers>
+							<!-- Prevent huge shaded artifacts from being deployed to Artifactory -->
+							<outputFile>${project.build.directory}/${project.artifactId}-${project.version}-stanford-ner-trainer-standalone.jar</outputFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stanford-ner-pipeline</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<!-- Set the main class of the executable JAR -->
+								<transformer
+										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>eu.openminted.uc.socialsciences.ner.main.Pipeline</mainClass>
+								</transformer>
 								<!-- Merge the uimaFIT configuration files -->
 								<transformer
 										implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
@@ -124,7 +142,7 @@
 								</transformer>
 							</transformers>
 							<!-- Prevent huge shaded artifacts from being deployed to Artifactory -->
-							<outputFile>${project.build.directory}/${project.artifactId}-${project.version}-stanford-ner-trainer-standalone.jar</outputFile>
+							<outputFile>${project.build.directory}/${project.artifactId}-${project.version}-stanford-ner-pipeline-standalone.jar</outputFile>
 						</configuration>
 					</execution>
 				</executions>

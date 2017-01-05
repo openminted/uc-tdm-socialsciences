@@ -27,8 +27,7 @@ public class Pipeline {
 		System.out.printf("Please run the program with the following arguments: %n" +
 				"\t[arg1] input pattern for input data to be labeled %n");
 		System.out.printf("\t[arg2] [optional] if set to true, standard Stanford models will be used instead of the " +
-                "custom models trained on social sciences data. Default: false. If you want to specify this parameter, " +
-                "previous optional parameters should also be given.%n");
+                "custom models trained on social sciences data. Default: false.%n");
 	}
 
 	public static void main(String[] args) {
