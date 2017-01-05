@@ -32,12 +32,16 @@ public class Pipeline {
 		System.out.printf("Please run the program with the following arguments: %n" +
 				"\t[arg1] input pattern for input data to be labeled %n" +
                 "\t[arg2] [optional] document language. Default: %s %n" +
-                "\t\tPossible values: %s or %s", DEFAULT_LANGUAGE, LANGUAGE_CODE_EN, LANGUAGE_CODE_DE);
+                "\t\tPossible values: %s or %s %n", DEFAULT_LANGUAGE, LANGUAGE_CODE_EN, LANGUAGE_CODE_DE);
+		System.out.printf("\t[arg3] [optional] if set to true, standard Stanford models will be used instead of the " +
+                "custom models trained on social sciences data. Default: false. If you want to specify this parameter, " +
+                "previous optional parameters should also be given.%n");
 	}
 
 	public static void main(String[] args) {
         //fixme language should be (1) input or (2) read from xmi header
         String language = DEFAULT_LANGUAGE;
+        boolean useStanfordModels = false;
 		if (args.length < 1)
 		{
 			printUsage();
@@ -46,6 +50,10 @@ public class Pipeline {
 		if (args.length == 2)
         {
             language = args[1];
+        }
+        if (args.length == 3)
+        {
+            useStanfordModels = Boolean.parseBoolean(args[2]);
         }
 
 		String inputPattern = args[0];
@@ -71,10 +79,15 @@ public class Pipeline {
 					XmiReader.PARAM_SOURCE_LOCATION, inputPattern,
 					XmiReader.PARAM_LANGUAGE, language);
 
-			AnalysisEngineDescription ner = createEngineDescription(MyStanfordNamedEntityRecognizer.class,
-					MyStanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
-					MyStanfordNamedEntityRecognizer.PARAM_VARIANT,
-							"ss_model.crf");
+			AnalysisEngineDescription ner = useStanfordModels ?
+                    createEngineDescription(MyStanfordNamedEntityRecognizer.class,
+					MyStanfordNamedEntityRecognizer.PARAM_LANGUAGE, language)
+                    :
+                    createEngineDescription(MyStanfordNamedEntityRecognizer.class,
+                            MyStanfordNamedEntityRecognizer.PARAM_LANGUAGE, language,
+                            MyStanfordNamedEntityRecognizer.PARAM_VARIANT,
+                            "ss_model.crf")
+                    ;
 
 			AnalysisEngineDescription xmiWriter = createEngineDescription(
 					XmiWriter.class,
