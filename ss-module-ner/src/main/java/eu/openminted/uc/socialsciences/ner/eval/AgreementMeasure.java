@@ -21,6 +21,12 @@ import java.util.*;
 
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 
+/**
+ * @implNote When argument ignoreDocumentId is set to false (default value) for each Gold-document there should be a
+ * Prediction-document in the prediction set with identical documentId (cf. documentId attribute in xmi file). If
+ * this requirement is not satisfied, #AgreementMeasure.{@link #calculateAgreement(Map, Map)} method will produce an
+ * error.
+ */
 public class AgreementMeasure {
     private static final Logger logger = Logger.getLogger(AgreementMeasure.class);
 
@@ -32,24 +38,47 @@ public class AgreementMeasure {
     public static void main(String[] args)
             throws ResourceInitializationException
     {
-        //fixme
-        String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
-				.getFile();
+        if (args.length < 2)
+        {
+            printUsage();
+            System.exit(1);
+        }
 
-        runTest(typesystemFile);
-    }
+        String typeSystemFileName = "typesystem.xml";
+        String typesystemFile;
+        try
+        {
+            typesystemFile = AgreementMeasure.class.getClassLoader().getResource(typeSystemFileName).getFile();
+        }catch (NullPointerException x)
+        {
+            logger.error("Type system file [" + typeSystemFileName + "] could not be found on classpath!");
+            throw new IllegalStateException(x);
+        }
 
-    //todo move tests to test package
-    private static void runTest(String typesystemFile) throws ResourceInitializationException {
+        String goldDocumentPathPattern = args[0];
+        String predictionDocumentPathPattern = args[1];
+        boolean ignoreDocumentId = false;
+        if (args.length == 3)
+            ignoreDocumentId = Boolean.parseBoolean(args[2]);
+
         Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(typesystemFile,
-                "ss-module-ner/src/test/resources/evaluation/gold/**/*.xmi", false);
+                goldDocumentPathPattern, ignoreDocumentId);
         Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(typesystemFile,
-                "ss-module-ner/src/test/resources/evaluation/prediction/**/*.xmi", false);
+                predictionDocumentPathPattern, ignoreDocumentId);
 
-        calculate(goldJcasMap, predictionJcasMap);
+        calculateAgreement(goldJcasMap, predictionJcasMap);
     }
 
-    public static void calculate(Map<String, JCas> goldJcasMap, Map<String, JCas> predictionJcasMap)
+    private static void printUsage() {
+        System.out.printf("Please run the program with the following arguments: %n" +
+                "\t[arg1] input pattern for gold data%n" +
+                "\t[arg2] input pattern for prediction data%n" +
+                "\t[arg3] [optional] ignoreDocumentId flag. If set to false (default value) for each Gold-document " +
+                "there should be a Prediction-document in the prediction set with identical documentId " +
+                "(cf. documentId attribute in xmi file). If this requirement is not satisfied, program will produce an error.");
+    }
+
+    public static void calculateAgreement(Map<String, JCas> goldJcasMap, Map<String, JCas> predictionJcasMap)
     {
         Map<String, UnitizingAnnotationStudy> studyList = new HashMap<>();
         final int raterOne = 0;
