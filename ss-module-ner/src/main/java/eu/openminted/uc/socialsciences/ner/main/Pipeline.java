@@ -23,11 +23,6 @@ public class Pipeline {
 
     private static final Logger logger = Logger.getLogger(Pipeline.class);
 
-    public static final String LANGUAGE_CODE_EN = "en";
-    public static final String LANGUAGE_CODE_DE = "de";
-
-    public static final String DEFAULT_LANGUAGE = LANGUAGE_CODE_EN;
-
     private static void printUsage() {
 		System.out.printf("Please run the program with the following arguments: %n" +
 				"\t[arg1] input pattern for input data to be labeled %n");
@@ -53,13 +48,9 @@ public class Pipeline {
 		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
 				.getFile();
 
-		//fixme currently model files should be located at
-		//fixme 	ss-module-ner/target/
-		//fixme so that the pipeline works.
-		/*
-		 * language should be read from document metadata
-		 */
-
+		//fixme currently model files should be located on the classpath i.e.
+		//		 	target/classes
+		//		 so that the pipeline works.
 		try {
 			TypeSystemDescription allTypes = mergeBuiltInAndCustomTypes(typesystemFile);
 			/*for (TypeDescription type : allTypes.getTypes()) {
