@@ -1,72 +1,41 @@
 PER=webanno.custom.NamedEntity.PER
-B-PER=webanno.custom.NamedEntity.PER
-I-PER=webanno.custom.NamedEntity.PER
 
 PERind=webanno.custom.NamedEntity.PERind
-B-PERind=webanno.custom.NamedEntity.PERind
-I-PERind=webanno.custom.NamedEntity.PERind
 
 PERgrp=webanno.custom.NamedEntity.PERgrp
-B-PERgrp=webanno.custom.NamedEntity.PERgrp
-I-PERgrp=webanno.custom.NamedEntity.PERgrp
 
 
 
 ORG=webanno.custom.NamedEntity.ORG
-B-ORG=webanno.custom.NamedEntity.ORG
-I-ORG=webanno.custom.NamedEntity.ORG
 
 ORGsci=webanno.custom.NamedEntity.ORGsci
-B-ORGsci=webanno.custom.NamedEntity.ORGsci
-I-ORGsci=webanno.custom.NamedEntity.ORGsci
 
 ORGgov=webanno.custom.NamedEntity.ORGgov
-B-ORGgov=webanno.custom.NamedEntity.ORGgov
-I-ORGgov=webanno.custom.NamedEntity.ORGgov
 
 ORGpar=webanno.custom.NamedEntity.ORGpar
-B-ORGpar=webanno.custom.NamedEntity.ORGpar
-I-ORGpar=webanno.custom.NamedEntity.ORGpar
 
 ORGoth=webanno.custom.NamedEntity.ORGoth
-B-ORGoth=webanno.custom.NamedEntity.ORGoth
-I-ORGoth=webanno.custom.NamedEntity.ORGoth
 
 
 
 LOC=webanno.custom.NamedEntity.LOC
-B-LOC=webanno.custom.NamedEntity.LOC
-I-LOC=webanno.custom.NamedEntity.LOC
 
 
 
 SUB=webanno.custom.NamedEntity.SUB
-B-SUB=webanno.custom.NamedEntity.SUB
-I-SUB=webanno.custom.NamedEntity.SUB
 
 SUBthe=webanno.custom.NamedEntity.SUBthe
-B-SUBthe=webanno.custom.NamedEntity.SUBthe
-I-SUBthe=webanno.custom.NamedEntity.SUBthe
 
 SUBres=webanno.custom.NamedEntity.SUBres
-B-SUBres=webanno.custom.NamedEntity.SUBres
-I-SUBres=webanno.custom.NamedEntity.SUBres
 
 
 
 OTH=webanno.custom.NamedEntity.OTH
-B-OTH=webanno.custom.NamedEntity.OTH
-I-OTH=webanno.custom.NamedEntity.OTH
 
 OTHmed=webanno.custom.NamedEntity.OTHmed
-B-OTHmed=webanno.custom.NamedEntity.OTHmed
-I-OTHmed=webanno.custom.NamedEntity.OTHmed
 
 OTHoff=webanno.custom.NamedEntity.OTHoff
-B-OTHoff=webanno.custom.NamedEntity.OTHoff
-I-OTHoff=webanno.custom.NamedEntity.OTHoff
 
 OTHevt=webanno.custom.NamedEntity.OTHevt
-B-OTHevt=webanno.custom.NamedEntity.OTHevt
-I-OTHevt=webanno.custom.NamedEntity.OTHevt
-*=webanno.custom.NamedEntity
+
+*=webanno.custom.NamedEntity.OTH
