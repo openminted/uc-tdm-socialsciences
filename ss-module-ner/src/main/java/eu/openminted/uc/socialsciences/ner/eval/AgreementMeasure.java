@@ -33,7 +33,8 @@ public class AgreementMeasure {
             throws ResourceInitializationException
     {
         //fixme
-        String typesystemFile = "ss-module-ner/src/main/resources/typesystem.xml";
+        String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
+				.getFile();
 
         runTest(typesystemFile);
     }
