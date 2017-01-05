@@ -31,10 +31,11 @@ public class AgreementMeasure {
         runTest(typesystemFile);
     }
 
+    //todo move tests to test package
     protected static void runTest(String typesystemFile) throws ResourceInitializationException {
         //todo test with multiple documents
-        List<JCas> goldJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/gold/de/**/*.xmi");
-        List<JCas> predictionJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/prediction/de/**/*.xmi");
+        List<JCas> goldJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/gold/**/*.xmi");
+        List<JCas> predictionJcases = AgreementMeasure.getJcases(typesystemFile, "ss-module-ner/src/test/resources/evaluation/prediction/**/*.xmi");
 
         calculate(goldJcases, predictionJcases);
     }
