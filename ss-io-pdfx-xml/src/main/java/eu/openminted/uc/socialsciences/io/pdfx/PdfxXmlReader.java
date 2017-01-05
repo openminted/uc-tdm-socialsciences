@@ -281,7 +281,7 @@ public class PdfxXmlReader
             String documentTitle = getBuffer().substring(paragraphBegin).trim();
             documentId = documentTitle;
 
-            DocumentMetaData.get(getJCas()).setDocumentTitle(documentTitle);
+            DocumentMetaData.get(getJCas()).setDocumentTitle(documentId);
             DocumentMetaData.get(getJCas()).setDocumentId(documentId);
 
             endParagraph();
