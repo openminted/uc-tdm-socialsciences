@@ -24,8 +24,8 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 /**
  * @implNote When argument ignoreDocumentId is set to false (default value) for each Gold-document there should be a
  * Prediction-document in the prediction set with identical documentId (cf. documentId attribute in xmi file). If
- * this requirement is not satisfied, #AgreementMeasure.{@link #calculateAgreement(Map, Map)} method will produce an
- * error.
+ * this requirement is not satisfied, #AgreementMeasure.{@link #calculateAgreement(Map, Map)} method will not work
+ * properly.
  */
 public class AgreementMeasure {
     private static final Logger logger = Logger.getLogger(AgreementMeasure.class);
@@ -63,8 +63,10 @@ public class AgreementMeasure {
 
         Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(typesystemFile,
                 goldDocumentPathPattern, ignoreDocumentId);
+        logger.info("Found [" + goldJcasMap.size() + "] documents in gold document path.");
         Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(typesystemFile,
                 predictionDocumentPathPattern, ignoreDocumentId);
+        logger.info("Found [" + predictionJcasMap.size() + "] documents in prediction document path.");
 
         calculateAgreement(goldJcasMap, predictionJcasMap);
     }
@@ -75,12 +77,12 @@ public class AgreementMeasure {
                 "\t[arg2] input pattern for prediction data%n" +
                 "\t[arg3] [optional] ignoreDocumentId flag. If set to false (default value) for each Gold-document " +
                 "there should be a Prediction-document in the prediction set with identical documentId " +
-                "(cf. documentId attribute in xmi file). If this requirement is not satisfied, program will produce an error.");
+                "(cf. documentId attribute in xmi file). If this requirement is not satisfied, program will not work properly.");
     }
 
     public static void calculateAgreement(Map<String, JCas> goldJcasMap, Map<String, JCas> predictionJcasMap)
     {
-        Map<String, UnitizingAnnotationStudy> studyList = new HashMap<>();
+        Map<String, UnitizingAnnotationStudy> studyMap = new HashMap<>();
         final int raterOne = 0;
         final int raterTwo = 1;
 
@@ -91,7 +93,7 @@ public class AgreementMeasure {
         {
             JCas jcas = goldJcasMap.get(key);
             UnitizingAnnotationStudy study = new UnitizingAnnotationStudy(RATER_COUNT, jcas.getDocumentText().length());
-            studyList.put(key, study);
+            studyMap.put(key, study);
             Set<String> currentGoldCategories = new HashSet<>();
             goldCategories.put(key, currentGoldCategories);
 
@@ -111,8 +113,13 @@ public class AgreementMeasure {
         for (String key:predictionJcasMap.keySet())
         {
             JCas jcas = predictionJcasMap.get(key);
-            //todo handle case when key doesn't exist because of non-matching document id
-            UnitizingAnnotationStudy study = studyList.get(key);
+            if(!studyMap.containsKey(key))
+            {
+                logger.error("Gold set does not contain id [" + key + "] which was found in prediction set. " +
+                        "Program will skip this document.");
+                continue;
+            }
+            UnitizingAnnotationStudy study = studyMap.get(key);
             Set<String> currentPredictionCategories = new HashSet<>();
             predictionCategories.put(key, currentPredictionCategories);
 
@@ -146,10 +153,9 @@ public class AgreementMeasure {
         System.out.println("************************");
 
         int docId = 0;
-        for (String key : studyList.keySet())
+        for (String key : studyMap.keySet())
         {
-            UnitizingAnnotationStudy study = studyList.get(key);
-
+            UnitizingAnnotationStudy study = studyMap.get(key);
 
             ++docId;
             System.out.printf("%nAgreement scores on file %d [%s] %n", docId, key);
