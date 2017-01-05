@@ -23,10 +23,18 @@ public class Pipeline {
 
 	private static final Logger logger = Logger.getLogger(Pipeline.class);
 
+	private static void printUsage() {
+		System.out.printf("Please run the program with the following arguments:%n" +
+				"\t[arg1] input pattern for input data to be labeled");
+	}
+
 	public static void main(String[] args) {
-		// TODO should not reference test resources in main
-		// --> create separate tests and in main, let user specify input source
-		String inputPattern = "src/test/resources/originalDocs/**/*.xmi";
+		if (args.length < 1)
+		{
+			printUsage();
+			System.exit(1);
+		}
+		String inputPattern = args[0];
 
 		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
 				.getFile();
