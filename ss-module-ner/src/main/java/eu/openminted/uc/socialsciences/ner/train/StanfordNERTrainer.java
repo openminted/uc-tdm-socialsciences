@@ -12,8 +12,9 @@ public class StanfordNERTrainer {
 	private static final Logger logger = Logger.getLogger(StanfordNERTrainer.class);
 
 	public static void main(String[] args) {
-		if (args.length == 0)
+		if (args.length == 0) {
 			printHelp();
+		}
 
 		String prop = args[0];
 		logger.info("Reading properties file from [" + prop + "]");
@@ -21,16 +22,16 @@ public class StanfordNERTrainer {
 		logger.info("Reading training file from [" + trainFile + "]");
 
 		String serializeFile;
-		if (args.length >= 3)
+		if (args.length >= 3) {
 			serializeFile = args[2];
-		else {
+		} else {
 			logger.info("No path for saving the trained model was specified.");
 			serializeFile = "omtd-ner-model.ser.gz";
 		}
 		logger.info("Will write the trained model to [" + serializeFile + "]");
 
 		/*
-		 * options: IOB1, IOB2, IOE1, IOE2, SBIEO, IO
+		 * options: IOB1, IOB2, IOE1, IOE2, SBIEO, IO, BIO, BILOU, noprefix
 		 */
 		String classification = "IOB2";
 		/*
@@ -54,10 +55,12 @@ public class StanfordNERTrainer {
 	private void trainCrf(String serializeFile, String prop, String trainFile, String classification,
 			boolean retainClassification) {
 		Properties props = StringUtils.propFileToProperties(prop);
-		if (serializeFile != null)
+		if (serializeFile != null) {
 			props.setProperty("serializeTo", serializeFile);
-		if (trainFile != null)
+		}
+		if (trainFile != null) {
 			props.setProperty("trainFile", trainFile);
+		}
 		props.setProperty("entitySubclassification", classification);
 		SeqClassifierFlags flags = new SeqClassifierFlags(props);
 		flags.retainEntitySubclassification = retainClassification;
