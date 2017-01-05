@@ -21,19 +21,33 @@ import org.apache.uima.util.CasCreationUtils;
 
 public class Pipeline {
 
-	private static final Logger logger = Logger.getLogger(Pipeline.class);
+    private static final Logger logger = Logger.getLogger(Pipeline.class);
 
-	private static void printUsage() {
-		System.out.printf("Please run the program with the following arguments:%n" +
-				"\t[arg1] input pattern for input data to be labeled");
+    public static final String LANGUAGE_CODE_EN = "en";
+    public static final String LANGUAGE_CODE_DE = "de";
+
+    public static final String DEFAULT_LANGUAGE = LANGUAGE_CODE_EN;
+
+    private static void printUsage() {
+		System.out.printf("Please run the program with the following arguments: %n" +
+				"\t[arg1] input pattern for input data to be labeled %n" +
+                "\t[arg2] [optional] document language. Default: %s %n" +
+                "\t\tPossible values: %s or %s", DEFAULT_LANGUAGE, LANGUAGE_CODE_EN, LANGUAGE_CODE_DE);
 	}
 
 	public static void main(String[] args) {
+        //fixme language should be (1) input or (2) read from xmi header
+        String language = DEFAULT_LANGUAGE;
 		if (args.length < 1)
 		{
 			printUsage();
 			System.exit(1);
 		}
+		if (args.length == 2)
+        {
+            language = args[1];
+        }
+
 		String inputPattern = args[0];
 
 		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
@@ -45,9 +59,6 @@ public class Pipeline {
 		/*
 		 * language should be read from document metadata
 		 */
-
-		//fixme language should be (1) input or (2) read from xmi header
-		String language = "en";
 
 		try {
 			TypeSystemDescription allTypes = mergeBuiltInAndCustomTypes(typesystemFile);
