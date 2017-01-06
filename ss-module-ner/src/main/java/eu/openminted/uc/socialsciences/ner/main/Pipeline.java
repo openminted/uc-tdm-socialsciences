@@ -7,6 +7,7 @@ import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 import java.io.IOException;
 import java.util.Arrays;
 
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -25,67 +26,59 @@ public class Pipeline {
 
     private static void printUsage() {
 		System.out.printf("Please run the program with the following arguments: %n" +
-				"\t[arg1] input pattern for input data to be labeled %n");
-		System.out.printf("\t[arg2] [optional] if set to true, standard Stanford models will be used instead of the " +
+				"\t[arg1] input pattern for input data to be labeled %n" +
+				"\t[arg2] path to typesystem.xml file %n" +
+				"\t[arg3] path for output %n");
+		System.out.printf("\t[arg4] [optional] if set to true, standard Stanford models will be used instead of the " +
                 "custom models trained on social sciences data. Default: false.%n");
 	}
 
 	public static void main(String[] args) {
         boolean useStanfordModels = false;
-		if (args.length < 1)
+		if (args.length < 3)
 		{
 			printUsage();
 			System.exit(1);
 		}
-        if (args.length == 2)
+        if (args.length == 4)
         {
-            useStanfordModels = Boolean.parseBoolean(args[1]);
+            useStanfordModels = Boolean.parseBoolean(args[3]);
         }
 
 		String inputPattern = args[0];
+		String typesystemFile = args[1];
+		String outputPath = args[2];
 
-		String typesystemFile = Pipeline.class.getClassLoader().getResource("typesystem.xml")
-				.getFile();
-
+		final String modelVariant = "ss_model.crf";
 		//fixme currently model files should be located on the classpath i.e.
 		//		 	target/classes
 		//		 so that the pipeline works.
 		try {
 			TypeSystemDescription allTypes = mergeBuiltInAndCustomTypes(typesystemFile);
-			/*for (TypeDescription type : allTypes.getTypes()) {
-				logger.info("Type recognized: " + type.getName());
-			}*/
 
 			CollectionReaderDescription reader;
 			reader = createReaderDescription(XmiReader.class, allTypes,
 					XmiReader.PARAM_SOURCE_LOCATION, inputPattern);
 
 			AnalysisEngineDescription ner = useStanfordModels ?
-                    createEngineDescription(MyStanfordNamedEntityRecognizer.class)
+                    createEngineDescription(StanfordNamedEntityRecognizer.class)
                     :
                     createEngineDescription(MyStanfordNamedEntityRecognizer.class,
                             MyStanfordNamedEntityRecognizer.PARAM_VARIANT,
-                            "ss_model.crf")
+							modelVariant)
                     ;
 
 			AnalysisEngineDescription xmiWriter = createEngineDescription(
 					XmiWriter.class,
-					XmiWriter.PARAM_TARGET_LOCATION, "target",
-					XmiWriter.PARAM_TYPE_SYSTEM_FILE, "typesystem.xml",
+					XmiWriter.PARAM_TARGET_LOCATION, outputPath,
+					XmiWriter.PARAM_TYPE_SYSTEM_FILE, typesystemFile,
 					XmiWriter.PARAM_OVERWRITE, true,
 					XmiWriter.PARAM_STRIP_EXTENSION, true);
-
-			/*
-			 * test pipeline - XMI input, NER, XMI output (can be viewed with
-			 * UIMA
-			 * CAS editor)
-			 */
 			runPipeline(reader, ner, xmiWriter);
-
 		} catch (UIMAException | IOException e) {
-			e.printStackTrace();
+			logger.error("An error has occurred.", e);
+			throw new IllegalStateException(e);
 		}
-
 	}
 
 	public static TypeSystemDescription mergeBuiltInAndCustomTypes(String typesystemFile)
@@ -94,7 +87,6 @@ public class Pipeline {
 				.createTypeSystemDescription();
 		TypeSystemDescription customTypes = TypeSystemDescriptionFactory
 				.createTypeSystemDescriptionFromPath(typesystemFile);
-		//fixme is it necessary to merge the types at all?
 		return CasCreationUtils.mergeTypeSystems(Arrays.asList(builtInTypes, customTypes));
 	}
 
