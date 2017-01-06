@@ -4220,7 +4220,7 @@
     <type5:Token xmi:id="45339" sofa="45372" begin="28816" end="28822"/>
     <type5:Token xmi:id="45350" sofa="45372" begin="28823" end="28839"/>
     <type5:Token xmi:id="45361" sofa="45372" begin="28839" end="28840"/>
-    <type3:TagsetDescription xmi:id="45379" sofa="45372" begin="0" end="28840" layer="de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity" name="unknown" tags="45392 45394 45396 45398 45400 45402 45404 45406 45408 45410 45412 45414 45416 45418" componentName="eu.openminted.uc.socialsciences.ner.main.MyStanfordNamedEntityRecognizer" modelLocation="classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-de-ss_model.crf.properties" modelVariant="omtd-ner-model-de.ser.gz" modelLanguage="en" input="false"/>
+    <type3:TagsetDescription xmi:id="45379" sofa="45372" begin="0" end="28840" layer="de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity" name="unknown" tags="45392 45394 45396 45398 45400 45402 45404 45406 45408 45410 45412 45414 45416 45418" componentName="eu.openminted.uc.socialsciences.ner.main.MyStanfordNamedEntityRecognizer" modelLocation="classpath:/de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib/ner-de-ss_model.crf.properties" modelVariant="ss_model.crf" modelLanguage="de" input="false"/>
     <NamedEntity:PERind xmi:id="45436" sofa="45372" begin="415" end="438" value="PERind"/>
     <NamedEntity:PERind xmi:id="45460" sofa="45372" begin="1360" end="1384" value="PERind"/>
     <NamedEntity:PERind xmi:id="45472" sofa="45372" begin="2941" end="2950" value="PERind"/>
