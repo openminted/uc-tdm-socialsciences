@@ -72,7 +72,6 @@ public class Pipeline
 			AnalysisEngineDescription xmiWriter = createEngineDescription(
 					XmiWriter.class,
 					XmiWriter.PARAM_TARGET_LOCATION, outputPath,
-					XmiWriter.PARAM_TYPE_SYSTEM_FILE, typesystemFile,
 					XmiWriter.PARAM_OVERWRITE, true,
 					XmiWriter.PARAM_STRIP_EXTENSION, true);
 			runPipeline(reader, ner, xmiWriter);

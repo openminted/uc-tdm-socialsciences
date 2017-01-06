@@ -187,18 +187,16 @@ public class MyStanfordNamedEntityRecognizer
                 String tokenType = mappingProvider
                         .getTag(t.get(CoreAnnotations.AnswerAnnotation.class));
 
-                boolean annotationBegin = false;
-                if (tokenType.startsWith("B-"))
+                if (tokenType.startsWith("B-") && tokenType.length() > 2)
                 {
-                    annotationBegin = tokenType.startsWith("B-");
                     tokenType = tokenType.split("B-")[1];
-                } else if (tokenType.startsWith("I-"))
+                } else if (tokenType.startsWith("I-") && tokenType.length() > 2)
                 {
                     tokenType = tokenType.split("I-")[1];
                 }
 
                 // If an entity is currently open, then close it
-                if ("O".equals(tokenType) || annotationBegin || !tokenType.equals(entityType)) {
+                if ("O".equals(tokenType) || !tokenType.equals(entityType)) {
                     if (entityType != null) {
                         Type type = mappingProvider.getTagType(entityType);
                         NamedEntity neAnno = (NamedEntity) cas.createAnnotation(type, entityBegin, entityEnd);
