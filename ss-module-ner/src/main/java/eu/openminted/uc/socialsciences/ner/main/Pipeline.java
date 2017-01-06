@@ -20,7 +20,8 @@ import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import org.apache.uima.util.CasCreationUtils;
 
-public class Pipeline {
+public class Pipeline
+{
 
     private static final Logger logger = Logger.getLogger(Pipeline.class);
 
@@ -40,7 +41,7 @@ public class Pipeline {
 			printUsage();
 			System.exit(1);
 		}
-        if (args.length == 4)
+        if (args.length >= 4)
         {
             useStanfordModels = Boolean.parseBoolean(args[3]);
         }
