@@ -25,7 +25,6 @@ public class Pipeline
 
     private static final Logger logger = Logger.getLogger(Pipeline.class);
 
-    //fixme typesystem.xml should not be needed anymore
     private static void printUsage() {
 		System.out.printf("Please run the program with the following arguments: %n" +
 				"\t[arg1] input pattern for input data to be labeled %n" +
