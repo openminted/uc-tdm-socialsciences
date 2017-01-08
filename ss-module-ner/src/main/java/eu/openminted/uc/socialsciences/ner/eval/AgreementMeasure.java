@@ -44,6 +44,7 @@ public class AgreementMeasure {
             System.exit(1);
         }
 
+        //fixme delete reference to typesystem.xml
         String typeSystemFileName = "typesystem.xml";
         String typesystemFile;
         try

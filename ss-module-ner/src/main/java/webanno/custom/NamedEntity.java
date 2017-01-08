@@ -10,7 +10,6 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 /**
  * Updated by JCasGen Sun Jan 08 21:52:29 CET 2017
- * XML source: D:/localhost/development/Projects/ukp/openminted/uc-tdm-socialsciences/ss-module-ner/target/jcasgen/typesystem.xml
  * @generated */
 public class NamedEntity extends Annotation {
     /** @generated

@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 
 public class AgreementMeasureTest {
 
+    //fixme delete reference to typesystem.xml
     private static final String TYPESYSTEM_FILENAME = "typesystem.xml";
     private static final String GOLD_DATA_PATTERN = "src/test/resources/evaluation/gold/**/*.xmi";
     private static final String PREDICTION_DATA_PATTERN = "src/test/resources/evaluation/prediction/**/*.xmi";
