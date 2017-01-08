@@ -29,37 +29,33 @@ public class Pipeline
     private static void printUsage() {
 		System.out.printf("Please run the program with the following arguments: %n" +
 				"\t[arg1] input pattern for input data to be labeled %n" +
-				"\t[arg2] path to typesystem.xml file %n" +
-				"\t[arg3] path for output %n");
-		System.out.printf("\t[arg4] [optional] if set to true, standard Stanford models will be used instead of the " +
+				"\t[arg2] path for output %n");
+		System.out.printf("\t[arg3] [optional] if set to true, standard Stanford models will be used instead of the " +
                 "custom models trained on social sciences data. Default: false.%n");
 	}
 
 	public static void main(String[] args) {
         boolean useStanfordModels = false;
-		if (args.length < 3)
+		if (args.length < 2)
 		{
 			printUsage();
 			System.exit(1);
 		}
-        if (args.length >= 4)
+        if (args.length >= 3)
         {
             useStanfordModels = Boolean.parseBoolean(args[3]);
         }
 
 		String inputPattern = args[0];
-		String typesystemFile = args[1];
-		String outputPath = args[2];
+		String outputPath = args[1];
 
 		final String modelVariant = "ss_model.crf";
 		//fixme currently model files should be located on the classpath i.e.
 		//		 	target/classes
 		//		 so that the pipeline works.
 		try {
-			TypeSystemDescription allTypes = mergeBuiltInAndCustomTypes(typesystemFile);
-
 			CollectionReaderDescription reader;
-			reader = createReaderDescription(XmiReader.class, allTypes,
+			reader = createReaderDescription(XmiReader.class,
 					XmiReader.PARAM_SOURCE_LOCATION, inputPattern);
 
 			AnalysisEngineDescription ner = useStanfordModels ?
@@ -81,14 +77,4 @@ public class Pipeline
 			throw new IllegalStateException(e);
 		}
 	}
-
-	public static TypeSystemDescription mergeBuiltInAndCustomTypes(String typesystemFile)
-			throws ResourceInitializationException {
-		TypeSystemDescription builtInTypes = TypeSystemDescriptionFactory
-				.createTypeSystemDescription();
-		TypeSystemDescription customTypes = TypeSystemDescriptionFactory
-				.createTypeSystemDescriptionFromPath(typesystemFile);
-		return CasCreationUtils.mergeTypeSystems(Arrays.asList(builtInTypes, customTypes));
-	}
-
 }

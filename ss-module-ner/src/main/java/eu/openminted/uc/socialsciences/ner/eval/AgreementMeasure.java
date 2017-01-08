@@ -2,7 +2,6 @@ package eu.openminted.uc.socialsciences.ner.eval;
 
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import eu.openminted.uc.socialsciences.ner.main.Pipeline;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -11,7 +10,6 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.apache.uima.util.CasCopier;
 import org.dkpro.statistics.agreement.unitizing.KrippendorffAlphaUnitizingAgreement;
 import org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy;
@@ -44,28 +42,16 @@ public class AgreementMeasure {
             System.exit(1);
         }
 
-        //fixme delete reference to typesystem.xml
-        String typeSystemFileName = "typesystem.xml";
-        String typesystemFile;
-        try
-        {
-            typesystemFile = AgreementMeasure.class.getClassLoader().getResource(typeSystemFileName).getFile();
-        }catch (NullPointerException x)
-        {
-            logger.error("Type system file [" + typeSystemFileName + "] could not be found on classpath!");
-            throw new IllegalStateException(x);
-        }
-
         String goldDocumentPathPattern = args[0];
         String predictionDocumentPathPattern = args[1];
         boolean ignoreDocumentId = false;
         if (args.length == 3)
             ignoreDocumentId = Boolean.parseBoolean(args[2]);
 
-        Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(typesystemFile,
+        Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(
                 goldDocumentPathPattern, ignoreDocumentId);
         logger.info("Found [" + goldJcasMap.size() + "] documents in gold document path.");
-        Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(typesystemFile,
+        Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(
                 predictionDocumentPathPattern, ignoreDocumentId);
         logger.info("Found [" + predictionJcasMap.size() + "] documents in prediction document path.");
 
@@ -169,12 +155,10 @@ public class AgreementMeasure {
         }
     }
 
-    public static Map<String, JCas> getJcases(String typeSystemFile, String documentPathPattern, boolean ignoreDocumentId)
+    public static Map<String, JCas> getJcases(String documentPathPattern, boolean ignoreDocumentId)
             throws ResourceInitializationException
     {
-        TypeSystemDescription typeSystemDescription = Pipeline.mergeBuiltInAndCustomTypes(typeSystemFile);
         CollectionReaderDescription reader = createReaderDescription(XmiReader.class,
-                typeSystemDescription,
                 XmiReader.PARAM_SOURCE_LOCATION, documentPathPattern);
 
         Map<String, JCas> result = new HashMap<>();
@@ -194,10 +178,9 @@ public class AgreementMeasure {
 
             JCas myjcas;
             try {
-                myjcas = JCasFactory.createJCas(typeSystemDescription);
+                myjcas = JCasFactory.createJCas();
             } catch (UIMAException e) {
-                logger.error("An error occurred while trying to create a new JCas from type system file ["
-                        + typeSystemFile + "]", e);
+                logger.error("An error occurred while trying to create a new JCas", e);
                 throw new IllegalStateException(e);
             }
 
