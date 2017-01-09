@@ -33,7 +33,7 @@ public class StanfordNERTrainer {
 		/*
 		 * options: IOB1, IOB2, IOE1, IOE2, SBIEO, IO, BIO, BILOU, noprefix
 		 */
-		String classification = "IOB2";
+		String classification = "noprefix";
 		/*
 		 * if false, representation will be mapped back to IOB1 on output
 		 */
@@ -64,6 +64,7 @@ public class StanfordNERTrainer {
 		props.setProperty("entitySubclassification", classification);
 		SeqClassifierFlags flags = new SeqClassifierFlags(props);
 		flags.retainEntitySubclassification = retainClassification;
+		flags.readerAndWriter="edu.stanford.nlp.sequences.CoNLLDocumentReaderAndWriter";
 		CRFClassifier<CoreLabel> crf = new CRFClassifier<>(flags);
 		crf.train();
 		crf.serializeClassifier(serializeFile);
