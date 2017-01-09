@@ -7,6 +7,10 @@
 	<packaging>pom</packaging>
 	<name>social sciences text and data mining use-case</name>
 
+	<!-- todo fill this <description></description>-->
+	<url>https://github.com/openminted/uc-tdm-socialsciences</url>
+	<inceptionYear>2016</inceptionYear>
+
 	<modules>
 		<module>ss-tools-experiments</module>
 		<module>ss-kb-preparation</module>
@@ -55,6 +59,20 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>https://builds.openminted.eu/</url>
+	</ciManagement>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/openminted/uc-tdm-socialsciences/issues</url>
+	</issueManagement>
+	<scm>
+		<connection>scm:git:git://github.com/openminted/uc-tdm-socialsciences</connection>
+		<developerConnection>scm:git:git@github.com:openminted/uc-tdm-socialsciences.git</developerConnection>
+		<url>https://github.com/openminted/uc-tdm-socialsciences</url>
+	</scm>
 
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
