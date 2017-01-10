@@ -2,9 +2,10 @@
 
 === PDF processing
 
-//Components inside eu.openminted.uc_tdm_socialsciences.io.pdfx
-==== PDF to XMI conversion
+//Components inside eu.openminted.uc.tdm.socialsciences.io.pdfx
 
+==== PDF to XMI conversion
+[[pdf-conversion]]
 The PDF-to-XMI conversion pipeline (Pipeline) can be used to convert a collection of PDF files to XMI format.
 
 //==== PDF to XML conversion
@@ -17,7 +18,64 @@ The PDF-to-XMI conversion pipeline (Pipeline) can be used to convert a collectio
 //Describe usage of PdfxXmlToXmiConverter class
 
 
-
 === Named Entity Recognition
 
-//Describe usage of Pipeline class in ss-module-ner
+//Components inside eu.openminted.uc.tdm.socialsciences.ner
+[.lead]
+With this module, you can perform Named Entity Recognition on your own data.
+
+You can:
+
+* input some annotated data to train your own custom model
+* apply a trained model to new, un-annotated data
+* evaluate the performance of any model
+
+Training your own model is optional, you might also already have a pre-trained model and use that, or apply a standard model.
+
+==== Train your own custom model
+To train your own custom model, you will need annotated training data.
+The training data has to be in TSV format with one token per line, sentences separated by newlines, and annotations in the second column.
+If your training data is in binary CAS format (e.g. exported from WebAnno), you can use the `BinaryCasToStanfordTsvConverter` do perform the conversion.
+
+*Usage:*
+
+ $ java -jar ss-module-ner.jar BinaryCasToStanfordTsvConverter <inputPattern> (<inputLanguageCode>)
+ 
+//TODO correct usage
+
+Use the class StanfordNERTrainer to train the model with this training data. 
+You will have to provide a file containing the training properties. 
+//TODO we provide default training properties, right?
+
+*Usage:*
+
+ $ java -jar ss-module-ner.jar StanfordNERTrainer <propertiesFile> <tsvFile>
+ 
+//TODO correct usage
+
+==== Apply a trained model to new, un-annotated data
+With the Pipeline, you can input un-labeled data and apply a NER model to it, such that the output will contain labels for all recognized Named Entities.
+
+Input data has to be in XMI (UIMA) format, so if you want to label text from PDF, convert them first (see <<pdf-conversion,PDF to XMI conversion>>).
+You can provide the path to a model in case you pre-trained a model on your own data yourself. 
+You can also specify to use one of the pre-trained models that are available (but mind that those models are mostly trained on newswire text, so if you apply those models to a different domain, the results may have not the quality you expect).
+
+*Usage:*
+
+ $ java -jar ss-module-ner.jar Pipeline 
+ 
+//TODO correct usage
+
+The results will be written again to XMI files, containing the annotations produced by the Named Entity Recognizer.
+
+==== Evaluate the performance of any model
+We also provide a means to evaluate the results of NER. Use `AgreementMeasure` for evaluation. 
+You will need gold data, i.e. manually annotated data with the correct NE labels. 
+And of course you will need the prediction data, i.e. documents annotated with the NER. 
+Both have to be in XMI format again.
+
+*Usage:*
+
+ $ java -jar ss-module-ner.jar AgreementMeasure
+ 
+//TODO correct usage
