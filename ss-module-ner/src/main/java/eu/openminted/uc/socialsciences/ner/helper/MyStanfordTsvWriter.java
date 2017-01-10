@@ -33,6 +33,10 @@ import webanno.custom.NamedEntity;
 /**
  * Writer for Custom tsv format to be used as input for Stanford CoreNLP NER
  * training.
+ * This writer assumes that the data has been annotated with the type
+ * webanno.custom.NamedEntity, which has two features: "entityType" and
+ * "modifier". With the configuration parameters you can decide if you want to
+ * include the modifiers in the output, or not.
  *
  * @author neumanmy
  */
@@ -97,6 +101,9 @@ public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 		Feature neValue = neType.getFeatureByBaseName("value");
 		Feature neModifier = neType.getFeatureByBaseName("modifier");
 
+		/*
+		 * a custom IobEncoder that handles the mapping of the CAS annotations to IOB format
+		 */
 		MyIobEncoder encoder = new MyIobEncoder(aJCas.getCas(), neType, neValue, neModifier, useSubTypes);
 		for (Sentence sentence : select(aJCas, Sentence.class)) {
 			HashMap<Token, Row> ctokens = new LinkedHashMap<>();
