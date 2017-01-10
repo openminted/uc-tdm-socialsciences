@@ -35,11 +35,11 @@ Training your own model is optional, you might also already have a pre-trained m
 ==== Train your own custom model
 To train your own custom model, you will need annotated training data.
 The training data has to be in TSV format with one token per line, sentences separated by newlines, and annotations in the second column.
-If your training data is in binary CAS format (e.g. exported from WebAnno), you can use the `BinaryCasToStanfordTsvConverter` do perform the conversion.
+If your training data is in binary CAS format (e.g. exported from WebAnno), you can use the `BinaryCasToStanfordTsvConverter` to perform the conversion.
 
 *Usage:*
 
- $ java -jar ss-module-ner.jar BinaryCasToStanfordTsvConverter <inputPattern> (<inputLanguageCode>)
+ $ java BinaryCasToStanfordTsvConverter <inputPattern> (<inputLanguageCode>)
  
 //TODO correct usage
 
@@ -49,7 +49,7 @@ You will have to provide a file containing the training properties.
 
 *Usage:*
 
- $ java -jar ss-module-ner.jar StanfordNERTrainer <propertiesFile> <tsvFile>
+ $ java StanfordNERTrainer <propertiesFile> <tsvFile>
  
 //TODO correct usage
 
@@ -62,7 +62,7 @@ You can also specify to use one of the pre-trained models that are available (bu
 
 *Usage:*
 
- $ java -jar ss-module-ner.jar Pipeline 
+ $ java Pipeline <inputDataPattern> <outputPath> (<useStanfordModel>)
  
 //TODO correct usage
 
@@ -76,6 +76,6 @@ Both have to be in XMI format again.
 
 *Usage:*
 
- $ java -jar ss-module-ner.jar AgreementMeasure
+ $ java AgreementMeasure <inputPatternGold> <inputPatternPrediction> (<ignoreDocumentId>)
  
 //TODO correct usage
