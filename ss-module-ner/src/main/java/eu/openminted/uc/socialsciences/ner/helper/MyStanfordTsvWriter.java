@@ -92,12 +92,8 @@ public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 	}
 
 	private void convert(JCas aJCas, PrintWriter aOut) {
-		Type neType = JCasUtil.getType(aJCas, NamedEntity.class); // TODO
-																	 // use
-																	 // CustomNamedEntity
-																	 // somehow
+		Type neType = JCasUtil.getType(aJCas, NamedEntity.class);
 
-		// only "value" in test run, in real annotation it's "entityType"
 		Feature neValue = neType.getFeatureByBaseName("value");
 		Feature neModifier = neType.getFeatureByBaseName("modifier");
 
