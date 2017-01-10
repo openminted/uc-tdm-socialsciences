@@ -29,7 +29,16 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 /**
- * Converts a chunk annotations into IOB2-style
+ * Converts a chunk annotations into IOB2-style.
+ * When doing the encoding, it is assumed that there is one custom type with two
+ * features. Example: Type 'Named Entity' with the features 'value' and
+ * 'modifier'. The 'modifier' feature is expected to be used to create sub
+ * types. For example, you may have an annotation with value "LOC" and modifier
+ * "city", and another annotation with value "LOC" and modifier "country".
+ * The encoder can produce either coarse-grained or fine-grained annotations, so
+ * in the example either "B-LOC" for both annotations, or "B-LOCcity" and
+ * "B-LOCcountry" which can then be treated as different classes in training a
+ * model with these annotations..
  */
 public class MyIobEncoder {
 
@@ -38,13 +47,17 @@ public class MyIobEncoder {
 	private Int2ObjectMap<String> iobBeginMap;
 	private Int2ObjectMap<String> iobInsideMap;
 
-	public MyIobEncoder(CAS aCas, Type aType, Feature aValueFeature, Feature aModifierFeature) {
-		this(aCas, aType, aValueFeature, aModifierFeature, false);
-	}
-
 	// TODO: does not correctly handle overlapping annotations, where
 	// begin[anno1]<begin[anno2] and end[anno1]<end[anno2] and
 	// end[anno1]>begin[anno2]
+	/**
+	 * Constructor.
+	 * @param aCas The CAS.
+	 * @param aType The Type of annotation that should be encoded in IOB.
+	 * @param aValueFeature The Feature for the type that carries the annotation value.
+	 * @param aModifierFeature The Feature for the type that carries some additional info.
+	 * @param useSubTypes If true, {aModifierFeatue} will be included in the output, otherwise it will be ignored.
+	 */
 	public MyIobEncoder(CAS aCas, Type aType, Feature aValueFeature, Feature aModifierFeature, boolean useSubTypes) {
 		// fill map for whole JCas in order to efficiently encode IOB
 		iobBeginMap = new Int2ObjectOpenHashMap<>();
