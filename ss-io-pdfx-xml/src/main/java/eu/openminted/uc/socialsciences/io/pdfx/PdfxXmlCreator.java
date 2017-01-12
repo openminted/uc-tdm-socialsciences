@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import eu.openminted.uc.socialsciences.common.PDFChecker;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -20,7 +21,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import org.apache.log4j.Logger;
-import eu.openminted.uc.socialsciences.kb.preparation.util.PDFChecker;
 
 /**
  * This class is responsible for PDF to XML conversion by invoking the web

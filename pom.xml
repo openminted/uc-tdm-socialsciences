@@ -17,6 +17,7 @@
 		<module>ss-io-pdfx-xml</module>
 		<module>ss-module-ner</module>
 		<module>ss-doc</module>
+		<module>ss-common</module>
 	</modules>
 
 	<repositories>
@@ -80,7 +81,7 @@
 		<uimafit.version>2.3.0-SNAPSHOT</uimafit.version>
 		<uimafit.plugin.version>2.3.0-SNAPSHOT</uimafit.plugin.version>
 		<dkpro.core.version>1.9.0-SNAPSHOT</dkpro.core.version>
-		<log4j.version>2.6.2</log4j.version>
+		<log4j.version>2.7</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -105,6 +106,11 @@
 			<dependency>
 				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
 				<artifactId>ss-module-ner</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+				<artifactId>ss-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- end submodules -->

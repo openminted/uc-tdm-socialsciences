@@ -1,10 +1,11 @@
-package eu.openminted.uc.socialsciences.kb.preparation.util;
+package eu.openminted.uc.socialsciences.common;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.io.TikaInputStream;
@@ -15,7 +16,7 @@ import org.apache.tika.mime.MimeTypes;
 
 public class PDFChecker {
 
-	private static final Logger logger = Logger.getLogger(PDFChecker.class);
+	private static final Logger logger = LogManager.getLogger(PDFChecker.class);
 
 
 	public static boolean isPDFFile(Path file) {

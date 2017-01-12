@@ -8,9 +8,11 @@
 	</parent>
 	<!-- <groupId>eu.openminted.uc-tdm-socialsciences</groupId> <version>0.0.1-SNAPSHOT</version> -->
 	<artifactId>ss-kb-preparation</artifactId>
+
 	<properties>
 		<dkpro.core.version>1.8.0</dkpro.core.version>
 	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<!-- DK Pro Core dependencies -->
@@ -23,11 +25,18 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
 	<dependencies>
+		<dependency>
+			<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+			<artifactId>ss-common</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
+		<!-- TODO Check if this is used-->
 		<dependency>
 			<groupId>org.apache.tika</groupId>
 			<artifactId>tika-parsers</artifactId>
