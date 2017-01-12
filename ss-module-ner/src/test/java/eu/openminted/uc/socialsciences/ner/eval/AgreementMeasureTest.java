@@ -24,7 +24,13 @@ public class AgreementMeasureTest {
         Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(GOLD_DATA_PATTERN, false);
         Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(PREDICTION_DATA_PATTERN, false);
 
-        calculateAgreement(goldJcasMap, predictionJcasMap);
+        for (String key : goldJcasMap.keySet())
+        {
+            if (predictionJcasMap.containsKey(key))
+            {
+                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key);
+            }
+        }
     }
 
     @Test
@@ -33,7 +39,13 @@ public class AgreementMeasureTest {
         Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(GOLD_DATA_PATTERN, true);
         Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(PREDICTION_DATA_PATTERN, true);
 
-        calculateAgreement(goldJcasMap, predictionJcasMap);
+        for (String key : goldJcasMap.keySet())
+        {
+            if (predictionJcasMap.containsKey(key))
+            {
+                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key);
+            }
+        }
     }
 
     @Test

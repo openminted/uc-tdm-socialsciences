@@ -28,7 +28,7 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 /**
  * @implNote When argument ignoreDocumentId is set to false (default value) for each Gold-document there should be a
  * Prediction-document in the prediction set with identical documentId (cf. documentId attribute in xmi file). If
- * this requirement is not satisfied, #AgreementMeasure.{@link #calculateAgreement(Map, Map)} method will not work
+ * this requirement is not satisfied, #AgreementMeasure.{@link #main(String[])} method will not work
  * properly.
  */
 public class AgreementMeasure {
@@ -61,7 +61,6 @@ public class AgreementMeasure {
                 predictionDocumentPathPattern, ignoreDocumentId);
         logger.info("Found [" + predictionJcasMap.size() + "] documents in prediction document path.");
 
-        calculateAgreement(goldJcasMap, predictionJcasMap);
 
         for (String key : goldJcasMap.keySet())
         {
@@ -70,7 +69,10 @@ public class AgreementMeasure {
                 logger.error("Couldn't find document [" + key + "] in prediction set.");
             } else
             {
-                System.out.printf("Calculating precision/recall info for doc [%s]%n", key);
+                System.out.printf("%nCalculating agreement scores for doc [%s]%n", key);
+                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key);
+
+                System.out.printf("%nCalculating precision/recall scores for doc [%s]%n", key);
                 calculatePrecision(goldJcasMap.get(key), predictionJcasMap.get(key));
             }
         }
@@ -85,101 +87,58 @@ public class AgreementMeasure {
                 "(cf. documentId attribute in xmi file). If this requirement is not satisfied, program will not work properly.");
     }
 
-    public static void calculateAgreement(Map<String, JCas> goldJcasMap, Map<String, JCas> predictionJcasMap)
+    public static void calculateAgreement(JCas goldJcas, JCas predictionJcas, String docId)
     {
-        Map<String, UnitizingAnnotationStudy> unitizingStudyMap = new HashMap<>();
         final int raterOne = 0;
         final int raterTwo = 1;
 
-        Map<String, Set<String>> goldCategories = new HashMap<>();
-        Map<String, Set<String>> predictionCategories = new HashMap<>();
+        UnitizingAnnotationStudy unitizingStudy = new UnitizingAnnotationStudy(RATER_COUNT, goldJcas.getDocumentText().length());
 
-        for (String key:goldJcasMap.keySet())
-        {
-            JCas jcas = goldJcasMap.get(key);
+        Set<String> currentGoldCategories = new HashSet<>();
 
-            UnitizingAnnotationStudy unitizingStudy = new UnitizingAnnotationStudy(RATER_COUNT, jcas.getDocumentText().length());
-            unitizingStudyMap.put(key, unitizingStudy);
+        for (NamedEntity namedEntity : JCasUtil.select(goldJcas, NamedEntity.class)) {
+            String category;
+            if (namedEntity.getModifier() != null)
+                category = namedEntity.getValue() + namedEntity.getModifier();
+            else
+                category = namedEntity.getValue();
 
-            Set<String> currentGoldCategories = new HashSet<>();
-            goldCategories.put(key, currentGoldCategories);
-
-            for (NamedEntity namedEntity : JCasUtil.select(jcas, NamedEntity.class))
-            {
-                String category;
-                if (namedEntity.getModifier() != null)
-                    category = namedEntity.getValue() + namedEntity.getModifier();
-                else
-                    category = namedEntity.getValue();
-
-                currentGoldCategories.add(category);
-                int begin = namedEntity.getBegin();
-                int length = namedEntity.getEnd() - begin;
-                unitizingStudy.addUnit(begin, length, raterOne, category);
-            }
+            currentGoldCategories.add(category);
+            int begin = namedEntity.getBegin();
+            int length = namedEntity.getEnd() - begin;
+            unitizingStudy.addUnit(begin, length, raterOne, category);
         }
 
-        for (String key:predictionJcasMap.keySet())
-        {
-            JCas jcas = predictionJcasMap.get(key);
-            if(!unitizingStudyMap.containsKey(key))
-            {
-                logger.error("Gold set does not contain id [" + key + "] which was found in prediction set. " +
-                        "Program will skip this document.");
-                continue;
-            }
-            UnitizingAnnotationStudy study = unitizingStudyMap.get(key);
-            Set<String> currentPredictionCategories = new HashSet<>();
-            predictionCategories.put(key, currentPredictionCategories);
+        Set<String> currentPredictionCategories = new HashSet<>();
 
-            for (de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity namedEntity :
-                    JCasUtil.select(jcas, de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity.class))
-            {
-                String category = namedEntity.getValue();
-                currentPredictionCategories.add(category);
+        for (de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity namedEntity :
+                JCasUtil.select(predictionJcas, de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity.class)) {
+            String category = namedEntity.getValue();
+            currentPredictionCategories.add(category);
 
-                int begin = namedEntity.getBegin();
-                int length = namedEntity.getEnd() - begin;
-                study.addUnit(begin, length, raterTwo, category);
-            }
+            int begin = namedEntity.getBegin();
+            int length = namedEntity.getEnd() - begin;
+            unitizingStudy.addUnit(begin, length, raterTwo, category);
         }
 
         System.out.println("************************");
-        for (String key:goldCategories.keySet())
-        {
-            System.out.printf("gold categories in document %s %n", key);
-
-            for (String set:goldCategories.get(key))
-                System.out.printf("\t%s %n", set);
-            System.out.println("************");
-        }
-        System.out.println("************************");
-        for (String key:predictionCategories.keySet())
-        {
-            System.out.printf("prediction categories in document %s %n", key);
-            for (String set:predictionCategories.get(key))
-                System.out.printf("\t%s %n", set);
-            System.out.println("************");
-        }
+        System.out.printf("gold categories in document %s %n", docId);
+        for (String set : currentGoldCategories)
+            System.out.printf("\t%s %n", set);
+        System.out.println("************");
+        System.out.printf("prediction categories in document %s %n", docId);
+        for (String set:currentPredictionCategories)
+            System.out.printf("\t%s %n", set);
         System.out.println("************************");
 
-        int docId = 0;
-        for (String key : unitizingStudyMap.keySet())
-        {
-            UnitizingAnnotationStudy study = unitizingStudyMap.get(key);
-//            CodingAnnotationStudy codingStudy = codingStudyMap.get(key);
 
-            ++docId;
-            System.out.printf("%nAgreement scores on file %d [%s] %n", docId, key);
-            KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(study);
-//            PercentageAgreement pa = new PercentageAgreement(codingStudy);
+        System.out.printf("%nAgreement scores on file [%s] %n", docId);
+        KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(unitizingStudy);
 
-            for(String category : goldCategories.get(key))
-                System.out.printf("\t\tAlpha for category %s: %f %n", category, alpha.calculateCategoryAgreement(category));
+        for(String category : currentGoldCategories)
+            System.out.printf("\t\tAlpha for category %s: %f %n", category, alpha.calculateCategoryAgreement(category));
 
-            System.out.printf("\tOverall Alpha: %f %n", alpha.calculateAgreement());
-//            System.out.printf("Overall Percentage agreement: %f %n", pa.calculateAgreement());
-        }
+        System.out.printf("\tOverall Alpha: %f %n", alpha.calculateAgreement());
     }
 
     public static void calculatePrecision(JCas goldJcas, JCas predictionJcas)
