@@ -10,7 +10,7 @@ The PDF-to-XMI conversion pipeline can be used to convert a collection of PDF fi
 used via calling the main method:
 
 //TODO create standalone jar for the pipeline as well
- $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT.jar eu.openminted.uc.socialsciences.io.pdfx.Pipeline [args...]
+ $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
 
 The following arguments have to be provided for the program:
 

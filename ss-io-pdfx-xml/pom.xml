@@ -120,6 +120,7 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>2.4.1</version>
 				<executions>
+					<!-- FIXME this fat jar has problems -->
 					<execution>
 						<id>pdf-to-xmi-pipeline</id>
 						<phase>package</phase>
