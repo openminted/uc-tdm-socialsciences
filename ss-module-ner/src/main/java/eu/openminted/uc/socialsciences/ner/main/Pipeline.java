@@ -5,20 +5,15 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
-import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
-import org.apache.uima.resource.ResourceInitializationException;
-import org.apache.uima.resource.metadata.TypeSystemDescription;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
-import org.apache.uima.util.CasCreationUtils;
 
 public class Pipeline
 {
@@ -60,8 +55,8 @@ public class Pipeline
 			AnalysisEngineDescription ner = useStanfordModels ?
                     createEngineDescription(StanfordNamedEntityRecognizer.class)
                     :
-                    createEngineDescription(MyStanfordNamedEntityRecognizer.class,
-                            MyStanfordNamedEntityRecognizer.PARAM_VARIANT,
+                    createEngineDescription(StanfordNamedEntityRecognizer.class,
+							StanfordNamedEntityRecognizer.PARAM_VARIANT,
 							modelVariant)
                     ;
 
