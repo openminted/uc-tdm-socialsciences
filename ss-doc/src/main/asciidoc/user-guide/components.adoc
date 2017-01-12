@@ -45,12 +45,15 @@ You can:
 * apply a trained model to new, un-annotated data
 * evaluate the performance of any model
 
-Training your own model is optional, you might also already have a pre-trained model and use that, or apply a standard model.
+Training your own model is optional, you might also already have a pre-trained model and use that, or apply a standard
+model.
 
 ==== Train your own custom model
 To train your own custom model, you will need annotated training data.
-The training data has to be in TSV format with one token per line, sentences separated by newlines, and annotations in the second column.
-If your training data is in binary CAS format (e.g. exported from WebAnno), you can use the `BinaryCasToStanfordTsvConverter` to perform the conversion.
+The training data has to be in TSV format with one token per line, sentences separated by newlines, and annotations
+in the second column.
+If your training data is in binary CAS format (e.g. exported from WebAnno), you can use the
+`BinaryCasToStanfordTsvConverter` to perform the conversion.
 
 *Usage:*
 
@@ -69,11 +72,15 @@ You will have to provide a file containing the training properties.
 //TODO correct usage
 
 ==== Apply a trained model to new, un-annotated data
-With the Pipeline, you can input un-labeled data and apply a NER model to it, such that the output will contain labels for all recognized Named Entities.
+With the Pipeline, you can input un-labeled data and apply a NER model to it, such that the output will contain labels
+ for all recognized Named Entities.
 
-Input data has to be in XMI (UIMA) format, so if you want to label text from PDF, convert them first (see <<pdf-conversion,PDF to XMI conversion>>).
+Input data has to be in XMI (UIMA) format, so if you want to label text from PDF, convert them first
+(see <<pdf-conversion,PDF to XMI conversion>>).
 You can provide the path to a model in case you pre-trained a model on your own data yourself. 
-You can also specify to use one of the pre-trained models that are available (but mind that those models are mostly trained on newswire text, so if you apply those models to a different domain, the results may have not the quality you expect).
+You can also specify to use one of the pre-trained models that are available (but mind that those models are mostly
+trained on newswire text, so if you apply those models to a different domain, the results may have not the quality
+you expect).
 
 *Usage:*
 
