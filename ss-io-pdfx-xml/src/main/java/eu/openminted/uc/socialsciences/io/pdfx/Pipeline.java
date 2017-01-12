@@ -11,6 +11,12 @@ import org.apache.uima.UIMAException;
 public class Pipeline {
 
 	//todo rewrite this using Apache CLI https://commons.apache.org/proper/commons-cli/usage.html
+
+	/**
+	 * The pipeline for converting a collection of PDF documents to XMI format
+	 * @param args [arg0] input document(s) path (file or directory) <br/>
+	 *             [arg1] output directory
+	 */
 	public static void main(String[] args) {
 		String inputPath = null, outputPath = null, inputLanguage = PdfxXmlToXmiConverter.LANGUAGE_CODE_EN;
 
