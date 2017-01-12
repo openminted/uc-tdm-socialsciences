@@ -38,7 +38,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
  * The encoder can produce either coarse-grained or fine-grained annotations, so
  * in the example either "B-LOC" for both annotations, or "B-LOCcity" and
  * "B-LOCcountry" which can then be treated as different classes in training a
- * model with these annotations..
+ * model with these annotations.
  */
 public class MyIobEncoder {
 
@@ -47,27 +47,31 @@ public class MyIobEncoder {
 	private Int2ObjectMap<String> iobBeginMap;
 	private Int2ObjectMap<String> iobInsideMap;
 
-	// TODO: does not correctly handle overlapping annotations, where
-	// begin[anno1]<begin[anno2] and end[anno1]<end[anno2] and
-	// end[anno1]>begin[anno2]
 	/**
 	 * Constructor.
-	 * @param aCas The CAS.
-	 * @param aType The Type of annotation that should be encoded in IOB.
-	 * @param aValueFeature The Feature for the type that carries the annotation value.
-	 * @param aModifierFeature The Feature for the type that carries some additional info.
-	 * @param useSubTypes If true, {aModifierFeatue} will be included in the output, otherwise it will be ignored.
+	 *
+	 * @param aCas
+	 *            The CAS.
+	 * @param aType
+	 *            The Type of annotation that should be encoded in IOB.
+	 * @param aValueFeature
+	 *            The Feature for the type that carries the annotation value.
+	 * @param aModifierFeature
+	 *            The Feature for the type that carries some additional info.
+	 * @param useSubTypes
+	 *            If true, {aModifierFeatue} will be included in the output,
+	 *            otherwise it will be ignored.
 	 */
 	public MyIobEncoder(CAS aCas, Type aType, Feature aValueFeature, Feature aModifierFeature, boolean useSubTypes) {
 		// fill map for whole JCas in order to efficiently encode IOB
 		iobBeginMap = new Int2ObjectOpenHashMap<>();
 		iobInsideMap = new Int2ObjectOpenHashMap<>();
 
-		Map<AnnotationFS, Collection<AnnotationFS>> nestedAnnoIdx = CasUtil.indexCovering(aCas, aType, aType);
+		Map<AnnotationFS, Collection<AnnotationFS>> coveringNeIdx = CasUtil.indexCovering(aCas, aType, aType);
 		Map<AnnotationFS, Collection<AnnotationFS>> tokenIdx = CasUtil.indexCovered(aCas, aType,
 				CasUtil.getType(aCas, Token.class));
 
-		for (AnnotationFS chunk : CasUtil.select(aCas, aType)) {
+		nextChunk: for (AnnotationFS chunk : CasUtil.select(aCas, aType)) {
 			String value = chunk.getStringValue(aValueFeature);
 			String modifier = chunk.getStringValue(aModifierFeature);
 			logger.debug(String.format("Annotation: '%s' (%d:%d)", chunk.getCoveredText(), chunk.getBegin(),
@@ -75,18 +79,18 @@ public class MyIobEncoder {
 			logger.debug("Value: " + chunk.getStringValue(aValueFeature));
 			logger.debug("Modifier: " + chunk.getStringValue(aModifierFeature));
 
-			if (null == value) {
-				continue;
-			}
-
 			String label = useSubTypes && modifier != null ? value + modifier : value;
 
-			if (!nestedAnnoIdx.get(chunk).isEmpty()) {
-				continue;
+			if (coveringNeIdx.containsKey(chunk)) {
+				// there are covering annotations, so don't include this one
+				continue nextChunk;
 			}
 
 			for (AnnotationFS token : tokenIdx.get(chunk)) {
 				if (token.getBegin() == chunk.getBegin()) {
+					if (iobInsideMap.containsKey(token.getBegin())) {
+						continue nextChunk;
+					}
 					iobBeginMap.put(token.getBegin(), label);
 				} else {
 					iobInsideMap.put(token.getBegin(), label);

@@ -1,30 +1,28 @@
 package eu.openminted.uc.socialsciences.ner.helper.util;
 
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.fit.factory.JCasBuilder;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import webanno.custom.NamedEntity;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class MyIobEncoderTest {
 
-    //fixme this test fails
-    @Ignore
 	@Test
 	public void testMyIobEncoderWithComplexAnnotations() throws Exception {
 		String[] expected = new String[] {
-				"O", "O", "O", "B-ORGgov", "I-ORGgov", "I-ORGgov", "I-ORGgov", "O", "O", "O", "O", "O", "B-PERgrp",
-				"I-PERgrp", "O", "O", "O", "O"
+				"O", "O", "O", "B-ORGgov", "I-ORGgov", "I-ORGgov", "I-ORGgov", "O", "O", "O", "O", "O", "B-ORGgov",
+				"I-ORGgov", "O", "O", "O", "O"
 		};
 
 		JCas jcas = getComplexJCas();
@@ -150,8 +148,8 @@ public class MyIobEncoderTest {
 		 * overlaps with ne3
 		 */
 		NamedEntity ne4 = new NamedEntity(jcas, tokens.get(12).getBegin(), tokens.get(13).getEnd());
-		ne4.setValue("PER");
-		ne4.setModifier("grp");
+		ne4.setValue("ORG");
+		ne4.setModifier("gov");
 		ne4.addToIndexes();
 
 		return cb.getJCas();
