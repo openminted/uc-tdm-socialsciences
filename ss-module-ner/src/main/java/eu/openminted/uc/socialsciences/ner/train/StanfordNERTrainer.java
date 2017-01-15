@@ -7,28 +7,58 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.sequences.SeqClassifierFlags;
 import edu.stanford.nlp.util.StringUtils;
 import org.apache.log4j.Logger;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
 
 public class StanfordNERTrainer {
 	private static final Logger logger = Logger.getLogger(StanfordNERTrainer.class);
+	private static final String DEFAULT_OUTPUT_PATH = "omtd-ner-model.ser.gz";
 
-	public static void main(String[] args) {
-		if (args.length == 0) {
-			printHelp();
+	@Option(name="-i", usage="input pattern for input data to be labeled", required = true)
+	private String input = null;
+
+	@Option(name="-t", usage="path to training properties file", required = true)
+	private String trainingPropertiesFile = null;
+
+	@Option(name="-o", usage="[optional] path to save the model")
+	private String output = DEFAULT_OUTPUT_PATH;
+
+	private void parseInput(String[] args)
+	{
+		CmdLineParser parser = new CmdLineParser(this);
+
+		try
+		{
+			parser.parseArgument(args);
+		} catch( CmdLineException e )
+		{
+			System.err.println(e.getMessage());
+			System.err.println(String.format("java %s [options...] arguments...", StanfordNERTrainer.class.getSimpleName()));
+			// print the list of available options
+			parser.printUsage(System.err);
+			System.err.println();
+			System.exit(1);
 		}
+	}
 
-		String prop = args[0];
-		logger.info("Reading properties file from [" + prop + "]");
-		String trainFile = args[1];
-		logger.info("Reading training file from [" + trainFile + "]");
+	public static void main(String[] args)
+	{
+		new StanfordNERTrainer().run(args);
+	}
 
-		String serializeFile;
-		if (args.length >= 3) {
-			serializeFile = args[2];
-		} else {
-			logger.info("No path for saving the trained model was specified.");
-			serializeFile = "omtd-ner-model.ser.gz";
+	private void run(String[] args)
+	{
+		parseInput(args);
+
+		logger.info("Reading properties file from [" + trainingPropertiesFile + "]");
+		logger.info("Reading training file from [" + input + "]");
+
+		if (output.equals(DEFAULT_OUTPUT_PATH))
+		{
+			logger.info("No path for saving the trained model was specified. Default value will be used.");
 		}
-		logger.info("Will write the trained model to [" + serializeFile + "]");
+		logger.info("Will write the trained model to [" + output + "]");
 
 		/*
 		 * options: IOB1, IOB2, IOE1, IOE2, SBIEO, IO, BIO, BILOU, noprefix
@@ -40,16 +70,8 @@ public class StanfordNERTrainer {
 		boolean retainClassification = true;
 
 		StanfordNERTrainer trainModel = new StanfordNERTrainer();
-		trainModel.trainCrf(serializeFile, prop, trainFile, classification, retainClassification);
+		trainModel.trainCrf(output, trainingPropertiesFile, input, classification, retainClassification);
 		logger.info("Model training finished.");
-	}
-
-	private static void printHelp() {
-		System.out.printf("Please run the program using the following arguments:%n" +
-				"[arg1] path to training properties file%n" +
-				"[arg2] path to input file%n" +
-				"[arg3] [optional] path to output model%n");
-		System.exit(1);
 	}
 
 	private void trainCrf(String serializeFile, String prop, String trainFile, String classification,
