@@ -14,34 +14,55 @@ import org.apache.uima.collection.CollectionReaderDescription;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.spi.BooleanOptionHandler;
 
 public class Pipeline
 {
 
     private static final Logger logger = Logger.getLogger(Pipeline.class);
 
-    private static void printUsage() {
-		System.out.printf("Please run the program with the following arguments: %n" +
-				"\t[arg1] input pattern for input data to be labeled %n" +
-				"\t[arg2] path for output %n");
-		System.out.printf("\t[arg3] [optional] if set to true, standard Stanford models will be used instead of the " +
-                "custom models trained on social sciences data. Default: false.%n");
+    @Option(name="-i", usage="input pattern for input data to be labeled", required = true)
+	private String input = null;
+
+    @Option(name="-o", usage="path for output", required = true)
+	private String output = null;
+
+    @Option(name="-standardModel", handler=BooleanOptionHandler.class, usage="(Optional) if set to true, standard Stanford models will be used instead of the " +
+			"custom models trained on social sciences data.")
+    private boolean useStanfordModels = false;
+
+	private void parseInput(String[] args)
+	{
+		CmdLineParser parser = new CmdLineParser(this);
+
+		try {
+			// parse the arguments.
+			parser.parseArgument(args);
+
+		} catch( CmdLineException e ) {
+			// if there's a problem in the command line,
+			// you'll get this exception. this will report
+			// an error message.
+			System.err.println(e.getMessage());
+			System.err.println(String.format("java %s [options...] arguments...", Pipeline.class.getSimpleName()));
+			// print the list of available options
+			parser.printUsage(System.err);
+			System.err.println();
+
+			System.exit(1);
+		}
 	}
 
 	public static void main(String[] args) {
-        boolean useStanfordModels = false;
-		if (args.length < 2)
-		{
-			printUsage();
-			System.exit(1);
-		}
-        if (args.length >= 3)
-        {
-            useStanfordModels = Boolean.parseBoolean(args[3]);
-        }
+		new Pipeline().run(args);
+	}
 
-		String inputPattern = args[0];
-		String outputPath = args[1];
+	private void run(String[] args)
+	{
+		parseInput(args);
 
 		final String modelVariant = "ss_model.crf";
 		//fixme currently model files should be located on the classpath i.e.
@@ -50,19 +71,19 @@ public class Pipeline
 		try {
 			CollectionReaderDescription reader;
 			reader = createReaderDescription(XmiReader.class,
-					XmiReader.PARAM_SOURCE_LOCATION, inputPattern);
+					XmiReader.PARAM_SOURCE_LOCATION, input);
 
 			AnalysisEngineDescription ner = useStanfordModels ?
-                    createEngineDescription(StanfordNamedEntityRecognizer.class)
-                    :
-                    createEngineDescription(StanfordNamedEntityRecognizer.class,
+					createEngineDescription(StanfordNamedEntityRecognizer.class)
+					:
+					createEngineDescription(StanfordNamedEntityRecognizer.class,
 							StanfordNamedEntityRecognizer.PARAM_VARIANT,
 							modelVariant)
-                    ;
+					;
 
 			AnalysisEngineDescription xmiWriter = createEngineDescription(
 					XmiWriter.class,
-					XmiWriter.PARAM_TARGET_LOCATION, outputPath,
+					XmiWriter.PARAM_TARGET_LOCATION, output,
 					XmiWriter.PARAM_OVERWRITE, true,
 					XmiWriter.PARAM_STRIP_EXTENSION, true);
 			runPipeline(reader, ner, xmiWriter);
