@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UIMAException;
-import org.kohsuke.args4j.CmdLineException;
-import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
-public class Pipeline {
-
+public class Pipeline
+{
 	@Option(name="-i", usage="Path to input PDF document(s) (file or directory)", required = true)
 	private String input = null;
 
@@ -26,23 +25,6 @@ public class Pipeline {
 			+ PdfxXmlToXmiConverter.LANGUAGE_CODE_EN + ", " + PdfxXmlToXmiConverter.LANGUAGE_CODE_DE, required = true)
 	private String language = null;
 
-	private void parseInput(String[] args)
-	{
-		CmdLineParser parser = new CmdLineParser(this);
-		try
-		{
-			parser.parseArgument(args);
-		} catch( CmdLineException e )
-		{
-			System.err.println(e.getMessage());
-			System.err.println(String.format("java %s [options...] arguments...", Pipeline.class.getSimpleName()));
-			// print the list of available options
-			parser.printUsage(System.err);
-			System.err.println();
-			System.exit(1);
-		}
-	}
-
 	/**
 	 * The pipeline for converting a collection of PDF documents to XMI format
 	 */
@@ -52,7 +34,7 @@ public class Pipeline {
 
 	private void run(String[] args)
 	{
-		parseInput(args);
+		new CommandLineArgumentHandler().parseInput(args, this);
 
 		PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
 		pdfxXmlCreator.setOverwriteOutput(overwriteOutput);

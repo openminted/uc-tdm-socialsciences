@@ -6,9 +6,8 @@ import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.sequences.SeqClassifierFlags;
 import edu.stanford.nlp.util.StringUtils;
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import org.apache.log4j.Logger;
-import org.kohsuke.args4j.CmdLineException;
-import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
 public class StanfordNERTrainer {
@@ -24,24 +23,6 @@ public class StanfordNERTrainer {
 	@Option(name="-o", usage="[optional] path to save the model")
 	private String output = DEFAULT_OUTPUT_PATH;
 
-	private void parseInput(String[] args)
-	{
-		CmdLineParser parser = new CmdLineParser(this);
-
-		try
-		{
-			parser.parseArgument(args);
-		} catch( CmdLineException e )
-		{
-			System.err.println(e.getMessage());
-			System.err.println(String.format("java %s [options...] arguments...", StanfordNERTrainer.class.getSimpleName()));
-			// print the list of available options
-			parser.printUsage(System.err);
-			System.err.println();
-			System.exit(1);
-		}
-	}
-
 	public static void main(String[] args)
 	{
 		new StanfordNERTrainer().run(args);
@@ -49,7 +30,7 @@ public class StanfordNERTrainer {
 
 	private void run(String[] args)
 	{
-		parseInput(args);
+		new CommandLineArgumentHandler().parseInput(args, this);
 
 		logger.info("Reading properties file from [" + trainingPropertiesFile + "]");
 		logger.info("Reading training file from [" + input + "]");

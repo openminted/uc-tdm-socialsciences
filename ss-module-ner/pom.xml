@@ -13,6 +13,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- project modules -->
+		<dependency>
+			<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+			<artifactId>ss-common</artifactId>
+		</dependency>
+		<!--  -->
+
 		<dependency>
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimaj-core</artifactId>

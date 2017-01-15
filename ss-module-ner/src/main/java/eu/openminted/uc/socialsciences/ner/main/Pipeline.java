@@ -7,6 +7,7 @@ import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 import java.io.IOException;
 
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -14,8 +15,6 @@ import org.apache.uima.collection.CollectionReaderDescription;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
-import org.kohsuke.args4j.CmdLineException;
-import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.spi.BooleanOptionHandler;
 
@@ -34,35 +33,13 @@ public class Pipeline
 			"custom models trained on social sciences data.")
     private boolean useStanfordModels = false;
 
-	private void parseInput(String[] args)
-	{
-		CmdLineParser parser = new CmdLineParser(this);
-
-		try {
-			// parse the arguments.
-			parser.parseArgument(args);
-
-		} catch( CmdLineException e ) {
-			// if there's a problem in the command line,
-			// you'll get this exception. this will report
-			// an error message.
-			System.err.println(e.getMessage());
-			System.err.println(String.format("java %s [options...] arguments...", Pipeline.class.getSimpleName()));
-			// print the list of available options
-			parser.printUsage(System.err);
-			System.err.println();
-
-			System.exit(1);
-		}
-	}
-
 	public static void main(String[] args) {
 		new Pipeline().run(args);
 	}
 
 	private void run(String[] args)
 	{
-		parseInput(args);
+		new CommandLineArgumentHandler().parseInput(args, this);
 
 		final String modelVariant = "ss_model.crf";
 		//fixme currently model files should be located on the classpath i.e.
