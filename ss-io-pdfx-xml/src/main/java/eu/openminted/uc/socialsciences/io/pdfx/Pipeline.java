@@ -3,82 +3,68 @@ package eu.openminted.uc.socialsciences.io.pdfx;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UIMAException;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
 
 public class Pipeline {
 
-	//todo rewrite this using Apache CLI https://commons.apache.org/proper/commons-cli/usage.html
+	@Option(name="-i", usage="Path to input PDF document(s) (file or directory)", required = true)
+	private String input = null;
+
+	@Option(name="-o", usage="Output directory", required = true)
+	private String output = null;
+
+	@Option(name="-overwrite", usage = "(Optional) if set to true, program will overwrite files that already exist " +
+			"in output directory.")
+	private boolean overwriteOutput = false;
+
+	@Option(name="-lang", usage="Language of input documents. Possible values: "
+			+ PdfxXmlToXmiConverter.LANGUAGE_CODE_EN + ", " + PdfxXmlToXmiConverter.LANGUAGE_CODE_DE, required = true)
+	private String language = null;
+
+	private void parseInput(String[] args)
+	{
+		CmdLineParser parser = new CmdLineParser(this);
+		try
+		{
+			parser.parseArgument(args);
+		} catch( CmdLineException e )
+		{
+			System.err.println(e.getMessage());
+			System.err.println(String.format("java %s [options...] arguments...", Pipeline.class.getSimpleName()));
+			// print the list of available options
+			parser.printUsage(System.err);
+			System.err.println();
+			System.exit(1);
+		}
+	}
 
 	/**
 	 * The pipeline for converting a collection of PDF documents to XMI format
-	 * @param args [arg0] input document(s) path (file or directory) <br/>
-	 *             [arg1] output directory
 	 */
 	public static void main(String[] args) {
-		String inputPath = null, outputPath = null, inputLanguage = PdfxXmlToXmiConverter.LANGUAGE_CODE_EN;
+		new Pipeline().run(args);
+	}
 
-		switch (args.length) {
-			case 0:
-				break;
-			case 2:
-				outputPath = args[1];
-			case 1:
-				inputPath = args[0];
-				break;
-			default:
-				System.err.println(
-						"Illegal number of command line arguments given. Provide input path as first argument (mandatory) and output path as second argument (optional).");
-				System.exit(0);
-		}
-
-		Scanner scanner = new Scanner(System.in);
-		while (null == inputPath || inputPath.length() < 1) {
-			System.out.println(
-					"Please provide path to input directory containing pdf files or to the file you want to process:");
-			inputPath = scanner.nextLine();
-		}
+	private void run(String[] args)
+	{
+		parseInput(args);
 
 		PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
-		System.out.println("Overwrite existing output? (y/n)");
-		String answer = scanner.nextLine();
-		scanner.close();
-
-		switch (answer) {
-			case "y":
-			case "yes":
-				pdfxXmlCreator.setOverwriteOutput(true);
-				break;
-			case "n":
-			case "no":
-				pdfxXmlCreator.setOverwriteOutput(false);
-				break;
-			default:
-				System.out.println("Undefined answer. Setting overwriteOutput to false.");
-		}
-
-		System.out.println("Language of input documents? (en/de)");
-		answer = scanner.nextLine();
-		scanner.close();
-
-		switch (answer) {
-			case "en":
-			case "de":
-				inputLanguage = answer;
-				break;
-			default:
-				System.out.println("Undefined answer. Setting language to [" + inputLanguage + "]");
-		}
+		pdfxXmlCreator.setOverwriteOutput(overwriteOutput);
 
 		try {
-			List<Path> pdfxOutFiles = pdfxXmlCreator.process(inputPath, outputPath);
+			List<Path> pdfxOutFiles = pdfxXmlCreator.process(input, output);
 			System.out.println(pdfxOutFiles.size() + " files have been processed by Pdfx.");
 
 			for (Path p : pdfxOutFiles) {
 				new PdfxXmlToXmiConverter().
-						convertToXmi(p.toString(), FilenameUtils.getBaseName(p.toString()) + ".xmi", inputLanguage);
+						convertToXmi(p.toString(), FilenameUtils.getBaseName(p.toString()) + ".xmi",
+								language);
 			}
 
 		} catch (IOException | UIMAException e) {
