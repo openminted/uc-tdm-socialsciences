@@ -5,6 +5,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.eval.measure.FMeasure;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
@@ -19,6 +20,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.CasCopier;
 import org.dkpro.statistics.agreement.unitizing.KrippendorffAlphaUnitizingAgreement;
 import org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy;
+import org.kohsuke.args4j.Option;
 import webanno.custom.NamedEntity;
 
 import java.util.*;
@@ -28,37 +30,44 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
 /**
  * @implNote When argument ignoreDocumentId is set to false (default value) for each Gold-document there should be a
  * Prediction-document in the prediction set with identical documentId (cf. documentId attribute in xmi file). If
- * this requirement is not satisfied, #AgreementMeasure.{@link #main(String[])} method will not work
+ * this requirement is not satisfied, #PerformanceMeasure.{@link #main(String[])} method will not work
  * properly.
  */
-public class AgreementMeasure {
-    private static final Logger logger = Logger.getLogger(AgreementMeasure.class);
+public class PerformanceMeasure {
+    private static final Logger logger = Logger.getLogger(PerformanceMeasure.class);
 
     /**
      * Number of raters which includes (1) gold-standard and (2) system predictions
      */
     private static final int RATER_COUNT = 2;
 
+    @Option(name = "-iGold", usage = "input pattern for gold data", required = true)
+    private String inputGold;
+
+    @Option(name = "-iPred", usage = "input pattern for prediction data", required = true)
+    private String inputPrediction;
+
+    @Option(name = "-noId", usage = "[optional] ignoreDocumentId flag. If set to true for each Gold-document " +
+            "there should be a Prediction-document in the prediction set with identical documentId " +
+            "(cf. documentId attribute in xmi file). If this requirement is not satisfied, program will not work properly.")
+    private boolean ignoreDocumentId = true;
+
     public static void main(String[] args)
             throws ResourceInitializationException
     {
-        if (args.length < 2)
-        {
-            printUsage();
-            System.exit(1);
-        }
+        new PerformanceMeasure().run(args);
+    }
 
-        String goldDocumentPathPattern = args[0];
-        String predictionDocumentPathPattern = args[1];
-        boolean ignoreDocumentId = true;
-        if (args.length == 3)
-            ignoreDocumentId = Boolean.parseBoolean(args[2]);
+    private void run(String[] args)
+            throws ResourceInitializationException
+    {
+        new CommandLineArgumentHandler().parseInput(args, this);
 
-        Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(
-                goldDocumentPathPattern, ignoreDocumentId);
+        Map<String, JCas> goldJcasMap = PerformanceMeasure.getJcases(
+                inputGold, ignoreDocumentId);
         logger.info("Found [" + goldJcasMap.size() + "] documents in gold document path.");
-        Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(
-                predictionDocumentPathPattern, ignoreDocumentId);
+        Map<String, JCas> predictionJcasMap = PerformanceMeasure.getJcases(
+                inputPrediction, ignoreDocumentId);
         logger.info("Found [" + predictionJcasMap.size() + "] documents in prediction document path.");
 
 
@@ -76,15 +85,6 @@ public class AgreementMeasure {
                 calculatePrecision(goldJcasMap.get(key), predictionJcasMap.get(key));
             }
         }
-    }
-
-    private static void printUsage() {
-        System.out.printf("Please run the program with the following arguments: %n" +
-                "\t[arg1] input pattern for gold data%n" +
-                "\t[arg2] input pattern for prediction data%n" +
-                "\t[arg3] [optional] ignoreDocumentId flag. If set to true for each Gold-document " +
-                "there should be a Prediction-document in the prediction set with identical documentId " +
-                "(cf. documentId attribute in xmi file). If this requirement is not satisfied, program will not work properly.");
     }
 
     public static void calculateAgreement(JCas goldJcas, JCas predictionJcas, String docId)

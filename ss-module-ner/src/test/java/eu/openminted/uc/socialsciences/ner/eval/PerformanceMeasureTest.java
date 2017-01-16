@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static eu.openminted.uc.socialsciences.ner.eval.AgreementMeasure.calculateAgreement;
+import static eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure.calculateAgreement;
 import static org.junit.Assert.*;
 
-public class AgreementMeasureTest {
+public class PerformanceMeasureTest {
     private static final String GOLD_DATA_PATTERN = "src/test/resources/evaluation/gold/**/*.xmi";
     private static final String PREDICTION_DATA_PATTERN = "src/test/resources/evaluation/prediction/**/*.xmi";
 
@@ -21,8 +21,8 @@ public class AgreementMeasureTest {
     @Test
     public void calculateAgreementTest() throws Exception {
 
-        Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(GOLD_DATA_PATTERN, false);
-        Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(PREDICTION_DATA_PATTERN, false);
+        Map<String, JCas> goldJcasMap = PerformanceMeasure.getJcases(GOLD_DATA_PATTERN, false);
+        Map<String, JCas> predictionJcasMap = PerformanceMeasure.getJcases(PREDICTION_DATA_PATTERN, false);
 
         for (String key : goldJcasMap.keySet())
         {
@@ -36,8 +36,8 @@ public class AgreementMeasureTest {
     @Test
     public void calculateAgreementTestWithIgnoreDocumentId() throws Exception {
 
-        Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(GOLD_DATA_PATTERN, true);
-        Map<String, JCas> predictionJcasMap = AgreementMeasure.getJcases(PREDICTION_DATA_PATTERN, true);
+        Map<String, JCas> goldJcasMap = PerformanceMeasure.getJcases(GOLD_DATA_PATTERN, true);
+        Map<String, JCas> predictionJcasMap = PerformanceMeasure.getJcases(PREDICTION_DATA_PATTERN, true);
 
         for (String key : goldJcasMap.keySet())
         {
@@ -50,7 +50,7 @@ public class AgreementMeasureTest {
 
     @Test
     public void getJcases() throws Exception {
-        Map<String, JCas> goldJcasMap = AgreementMeasure.getJcases(GOLD_DATA_PATTERN, false);
+        Map<String, JCas> goldJcasMap = PerformanceMeasure.getJcases(GOLD_DATA_PATTERN, false);
         assertEquals(2, goldJcasMap.size());
     }
 }

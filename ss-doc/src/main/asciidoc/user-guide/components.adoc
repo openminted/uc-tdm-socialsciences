@@ -90,13 +90,13 @@ you expect).
 The results will be written again to XMI files, containing the annotations produced by the Named Entity Recognizer.
 
 ==== Evaluate the performance of any model
-We also provide a means to evaluate the results of NER. Use `AgreementMeasure` for evaluation. 
+We also provide a means to evaluate the results of NER. Use `PerformanceMeasure` for evaluation.
 You will need gold data, i.e. manually annotated data with the correct NE labels. 
 And of course you will need the prediction data, i.e. documents annotated with the NER. 
 Both have to be in XMI format again.
 
 *Usage:*
 
- $ java AgreementMeasure <inputPatternGold> <inputPatternPrediction> (<ignoreDocumentId>)
+ $ java PerformanceMeasure <inputPatternGold> <inputPatternPrediction> (<ignoreDocumentId>)
  
 //TODO correct usage
