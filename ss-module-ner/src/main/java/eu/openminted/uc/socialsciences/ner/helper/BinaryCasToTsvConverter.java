@@ -14,9 +14,9 @@ import org.kohsuke.args4j.spi.StringOptionHandler;
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 
-public class BinaryCasToStanfordTsvConverter {
+public class BinaryCasToTsvConverter {
 
-	private static final Logger logger = Logger.getLogger(BinaryCasToStanfordTsvConverter.class);
+	private static final Logger logger = Logger.getLogger(BinaryCasToTsvConverter.class);
 
 	private static final String DEFAULT_LANGUAGE = "en";
 	private static final String DEFAULT_OUTPUT = "stanfordTrain.tsv";
@@ -31,7 +31,7 @@ public class BinaryCasToStanfordTsvConverter {
 	private String inputLanguage = DEFAULT_LANGUAGE;
 
 	public static void main(String[] args) {
-		new BinaryCasToStanfordTsvConverter().run(args);
+		new BinaryCasToTsvConverter().run(args);
 	}
 
 	protected void run(String[] args) {
