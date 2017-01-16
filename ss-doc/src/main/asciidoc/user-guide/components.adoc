@@ -7,21 +7,20 @@
 ==== PDF to XMI conversion
 [[pdf-conversion]]
 The PDF-to-XMI conversion pipeline can be used to convert a collection of PDF files to XMI format. This pipeline can be
-used via calling the main method:
+used via calling the main method, like the following:
 
 //TODO create standalone jar for the pipeline as well
- $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
+ $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
 
 The following arguments have to be provided for the program:
 
-* first argument: path to input PDF documents. This path can either point to a single file or a directory.
-* second argument (optional): path to output directory. If this argument is not provided output will be written to a
-default directory inside the input directory.
+* *-i <path>* path to input PDF documents. This path can either point to a single file or a directory.
+* *-o <path>* path to output directory.
+* *-lang <value>* Language of input documents. Possible values: *en* or *de*
 
-When pipeline class starts running it will prompt for the language of the input documents. This parameter is required to
-correctly post-process the converted text files (e.g. remove hyphenations inside words that are split into two lines).
-This attribute will also be stored in the output XMI files so it can be used in subsequent text analysis components
-(e.g. nanmed entity recognition).
+The language parameter is required to correctly post-process the converted text files (e.g. remove hyphenations inside
+words that are split into two lines). This attribute will also be stored in the output XMI files so it can be used
+in subsequent text analysis components (e.g. nanmed entity recognition).
 
 //==== PDF to XML conversion
 //
@@ -63,7 +62,7 @@ If your training data is in binary CAS format (e.g. exported from WebAnno), you 
 
 Use the class StanfordNERTrainer to train the model with this training data. 
 You will have to provide a file containing the training properties. 
-//TODO we provide default training properties, right?
+//TODO we provide default training properties, right? yes
 
 *Usage:*
 
