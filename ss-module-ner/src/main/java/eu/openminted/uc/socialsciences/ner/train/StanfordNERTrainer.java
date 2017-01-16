@@ -14,7 +14,7 @@ public class StanfordNERTrainer {
 	private static final Logger logger = Logger.getLogger(StanfordNERTrainer.class);
 	private static final String DEFAULT_OUTPUT_PATH = "omtd-ner-model.ser.gz";
 
-	@Option(name="-i", usage="input pattern for input data to be labeled", required = true)
+	@Option(name="-i", usage="path to labeled input data (.tsv file)", required = true)
 	private String input = null;
 
 	@Option(name="-t", usage="path to training properties file", required = true)
