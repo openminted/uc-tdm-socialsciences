@@ -28,7 +28,7 @@ import java.util.*;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 
 /**
- * @implNote When argument ignoreDocumentId is set to false (default value) for each Gold-document there should be a
+ * @implNote When argument strictId is set to false (default value) for each Gold-document there should be a
  * Prediction-document in the prediction set with identical documentId (cf. documentId attribute in xmi file). If
  * this requirement is not satisfied, #PerformanceMeasure.{@link #main(String[])} method will not work
  * properly.
@@ -47,10 +47,10 @@ public class PerformanceMeasure {
     @Option(name = "-iPred", usage = "input pattern for prediction data", required = true)
     private String inputPrediction;
 
-    @Option(name = "-noId", usage = "[optional] ignoreDocumentId flag. If set to true for each Gold-document " +
+    @Option(name = "-strictId", usage = "[optional] strictId flag. If set for each Gold-document " +
             "there should be a Prediction-document in the prediction set with identical documentId " +
             "(cf. documentId attribute in xmi file). If this requirement is not satisfied, program will not work properly.")
-    private boolean ignoreDocumentId = true;
+    private boolean strictId = false;
 
     public static void main(String[] args)
             throws ResourceInitializationException
@@ -64,10 +64,10 @@ public class PerformanceMeasure {
         new CommandLineArgumentHandler().parseInput(args, this);
 
         Map<String, JCas> goldJcasMap = PerformanceMeasure.getJcases(
-                inputGold, ignoreDocumentId);
+                inputGold, strictId);
         logger.info("Found [" + goldJcasMap.size() + "] documents in gold document path.");
         Map<String, JCas> predictionJcasMap = PerformanceMeasure.getJcases(
-                inputPrediction, ignoreDocumentId);
+                inputPrediction, strictId);
         logger.info("Found [" + predictionJcasMap.size() + "] documents in prediction document path.");
 
 
@@ -173,7 +173,7 @@ public class PerformanceMeasure {
         System.out.printf("\tOverall F-Measure: %f %n", fMeasure.getFMeasure());
     }
 
-    public static Map<String, JCas> getJcases(String documentPathPattern, boolean ignoreDocumentId)
+    public static Map<String, JCas> getJcases(String documentPathPattern, boolean strictId)
             throws ResourceInitializationException
     {
         CollectionReaderDescription reader = createReaderDescription(XmiReader.class,
@@ -185,7 +185,7 @@ public class PerformanceMeasure {
         {
             ++count;
             String id;
-            if (ignoreDocumentId)
+            if (!strictId)
             {
                 id = Integer.toString(count);
             } else
