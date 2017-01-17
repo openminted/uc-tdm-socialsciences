@@ -132,6 +132,17 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+							<filters>
+								<!-- exclude manifest signature files -->
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+							</filters>
 							<transformers>
 								<!-- Set the main class of the executable JAR -->
 								<transformer
