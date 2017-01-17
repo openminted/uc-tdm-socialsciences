@@ -84,7 +84,8 @@ The following arguments have to be provided for the program:
 * *-o <path>* (optional) path of output file for the serialized model. Default: ./omtd-ner-model.ser.gz
 * *-t <value>* path to the training properties file
 
-The file containing the parameters for training has to be in properties format, i.e. one parameter per line in key-value-pairs like this:
+The file containing the parameters for training has to be in properties format, i.e. one parameter per line in
+key-value-pairs like this:
 
  parameter = value
 
@@ -108,7 +109,8 @@ The following arguments have to be provided for the program:
 
 * *-i <path>* path to input data to be labeled. Can also be a pattern for matching files in a directory, e.g. ./**/*.xmi
 * *-o <path>* path to output directory.
-* *-standardModel* (optional) Use standard stanford model flag. If this flag is set, standard Stanford models will be used instead of a custom model.
+* *-standardModel* (optional) Use standard stanford model flag. If this flag is set, standard Stanford models will
+be used instead of a custom model.
 
 The results will be written again to XMI files, containing the annotations produced by the Named Entity Recognizer.
 
