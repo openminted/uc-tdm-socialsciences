@@ -56,11 +56,13 @@ If your training data is in binary CAS format (e.g. exported from WebAnno), you 
 
 *Usage:*
 
- $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-stanford-ner-converter-standalone.jar [args...]
+ $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+        eu.openminted.uc.socialsciences.ner.helper.BinaryCasToTsvConverter [args...]
 
 The following arguments have to be provided for the program:
 
-* *-i <path>* path to input documents containing annotations in binary CAS format. This path can either point to a single file or a directory.
+* *-i <path>* path to input documents containing annotations in binary CAS format. This path can either point to a
+single file or a directory.
 * *-o <path>* (optional) path of output file. Default: ./stanfordTrain.tsv
 * *-l <value>* (optional) Language of input documents. Possible values: *en* or *de*. Default: en
 
@@ -73,7 +75,8 @@ You will have to provide a file containing the training properties.
 
 *Usage:*
 
- $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-stanford-ner-trainer-standalone.jar [args...]
+ $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+        eu.openminted.uc.socialsciences.ner.train.StanfordNERTrainer [args...]
 
 The following arguments have to be provided for the program:
 
@@ -98,7 +101,8 @@ you expect).
 
 *Usage:*
 
- $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-stanford-ner-pipeline-standalone.jar [args...]
+ $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+        eu.openminted.uc.socialsciences.ner.main.Pipeline [args...]
 
 The following arguments have to be provided for the program:
 
