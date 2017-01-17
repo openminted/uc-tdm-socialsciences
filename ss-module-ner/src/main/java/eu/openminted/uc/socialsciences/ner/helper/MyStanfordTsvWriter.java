@@ -90,6 +90,7 @@ public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 			out = new PrintWriter(new OutputStreamWriter(getOutputStream(aJCas, filenameSuffix),
 					encoding));
 			convert(aJCas, out);
+			logger.info("Processing JCas finished.");
 		} catch (Exception e) {
 			throw new AnalysisEngineProcessException(e);
 		} finally {

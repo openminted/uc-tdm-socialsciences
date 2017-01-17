@@ -59,6 +59,8 @@ public class BinaryCasToTsvConverter {
 							MyStanfordTsvWriter.PARAM_USE_SUBTYPES, true,
 							MyStanfordTsvWriter.PARAM_SINGULAR_TARGET, true, MyStanfordTsvWriter.PARAM_OVERWRITE,
 							true));
+
+			logger.info("Process complete.");
 		} catch (UIMAException | IOException e) {
 			e.printStackTrace();
 		}
