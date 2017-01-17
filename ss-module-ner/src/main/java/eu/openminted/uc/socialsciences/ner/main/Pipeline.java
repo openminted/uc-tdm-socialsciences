@@ -29,7 +29,7 @@ public class Pipeline
     @Option(name="-o", usage="path for output", required = true)
 	private String output = null;
 
-    @Option(name="-standardModel", handler=BooleanOptionHandler.class, usage="(Optional) Use standard stanford model " +
+    @Option(name="-standardModel", handler=BooleanOptionHandler.class, usage="[optional] Use standard stanford model " +
 			"flag. If this flag is set, standard Stanford models will be used instead of the custom models trained on " +
 			"social sciences data.")
     private boolean useStanfordModels = false;
