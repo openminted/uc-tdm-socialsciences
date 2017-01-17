@@ -6,9 +6,11 @@ import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
@@ -101,11 +103,24 @@ public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 		Feature neValue = neType.getFeatureByBaseName("value");
 		Feature neModifier = neType.getFeatureByBaseName("modifier");
 
+		Map<Sentence, Collection<NamedEntity>> idx = JCasUtil.indexCovered(aJCas, Sentence.class,
+                NamedEntity.class);
 		/*
 		 * a custom IobEncoder that handles the mapping of the CAS annotations to IOB format
 		 */
 		MyIobEncoder encoder = new MyIobEncoder(aJCas.getCas(), neType, neValue, neModifier, useSubTypes);
+
 		for (Sentence sentence : select(aJCas, Sentence.class)) {
+
+			 /*
+             * don't include sentence in temp file that contains no annotations
+             *
+             * (saves memory for training)
+             */
+            if (idx.get(sentence).isEmpty()) {
+                continue;
+            }
+
 			HashMap<Token, Row> ctokens = new LinkedHashMap<>();
 
 			// Tokens
