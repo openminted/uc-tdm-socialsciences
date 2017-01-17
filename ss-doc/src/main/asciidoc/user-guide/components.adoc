@@ -9,7 +9,6 @@
 The PDF-to-XMI conversion pipeline can be used to convert a collection of PDF files to XMI format. This pipeline can be
 used via calling the main method, like the following:
 
-//TODO create standalone jar for the pipeline as well
  $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
 
 The following arguments have to be provided for the program:
@@ -57,19 +56,34 @@ If your training data is in binary CAS format (e.g. exported from WebAnno), you 
 
 *Usage:*
 
- $ java BinaryCasToStanfordTsvConverter <inputPattern> (<inputLanguageCode>)
- 
-//TODO correct usage
+ $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-stanford-ner-converter-standalone.jar [args...]
 
-Use the class StanfordNERTrainer to train the model with this training data. 
+The following arguments have to be provided for the program:
+
+* *-i <path>* path to input documents containing annotations in binary CAS format. This path can either point to a single file or a directory.
+* *-o <path>* (optional) path of output file. Default: ./stanfordTrain.tsv
+* *-l <value>* (optional) Language of input documents. Possible values: *en* or *de*. Default: en
+
+//TODO I'm still not sure what's the effect of the language parameter. 
+//I would expect that only those CASes are chosen for processing that have specified language.
+//This doesn't seem to be the case.
+
+Use the class StanfordNERTrainer to train a new model with training data. 
 You will have to provide a file containing the training properties. 
-//TODO we provide default training properties, right? yes
 
 *Usage:*
 
- $ java StanfordNERTrainer <propertiesFile> <tsvFile>
- 
-//TODO correct usage
+ $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-stanford-ner-trainer-standalone.jar [args...]
+
+The following arguments have to be provided for the program:
+
+* *-i <path>* path to file with training data in .tsv format
+* *-o <path>* (optional) path of output file for the serialized model. Default: ./omtd-ner-model.ser.gz
+* *-t <value>* path to the training properties file
+
+The file containing the parameters for training has to be in properties format, i.e. one parameter per line in key-value-pairs like this:
+
+ parameter = value
 
 ==== Apply a trained model to new, un-annotated data
 With the Pipeline, you can input un-labeled data and apply a NER model to it, such that the output will contain labels
@@ -84,9 +98,13 @@ you expect).
 
 *Usage:*
 
- $ java Pipeline <inputDataPattern> <outputPath> (<useStanfordModel>)
- 
-//TODO correct usage
+ $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-stanford-ner-pipeline-standalone.jar [args...]
+
+The following arguments have to be provided for the program:
+
+* *-i <path>* path to input data to be labeled. Can also be a pattern for matching files in a directory, e.g. ./**/*.xmi
+* *-o <path>* path to output directory.
+* *-standardModel* (optional) Use standard stanford model flag. If this flag is set, standard Stanford models will be used instead of a custom model.
 
 The results will be written again to XMI files, containing the annotations produced by the Named Entity Recognizer.
 
