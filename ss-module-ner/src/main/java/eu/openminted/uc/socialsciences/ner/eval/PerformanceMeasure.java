@@ -153,7 +153,8 @@ public class PerformanceMeasure {
         MyIobEncoder myIobEncoder = new MyIobEncoder(goldJcas.getCas(), neType, neValue, neModifier, true);
         for (Token token : JCasUtil.select(goldJcas, Token.class)) {
             MyAnnotation annotation = new MyAnnotation(myIobEncoder.encode(token), token.getBegin(), token.getEnd());
-            goldAnnotations.add(annotation);
+            if (!annotation.getType().equalsIgnoreCase("O"))
+                goldAnnotations.add(annotation);
         }
 
         Type dkproNamedEntityType = JCasUtil.getType(predictionJcas, de.tudarmstadt.ukp.dkpro.core.api.ner.type.NamedEntity.class);
@@ -161,7 +162,8 @@ public class PerformanceMeasure {
         IobEncoder iobEncoder = new IobEncoder(predictionJcas.getCas(), dkproNamedEntityType, dkproNamedEntityValue);
         for (Token token : JCasUtil.select(predictionJcas, Token.class)) {
             MyAnnotation annotation = new MyAnnotation(iobEncoder.encode(token), token.getBegin(), token.getEnd());
-            predictedAnnotations.add(annotation);
+            if (!annotation.getType().equalsIgnoreCase("O"))
+                predictedAnnotations.add(annotation);
         }
 
         FMeasure fMeasure = new FMeasure();
@@ -219,6 +221,11 @@ public class PerformanceMeasure {
             this.type = type;
             this.begin = begin;
             this.length = length;
+        }
+
+        public String getType()
+        {
+            return type;
         }
 
         @Override
