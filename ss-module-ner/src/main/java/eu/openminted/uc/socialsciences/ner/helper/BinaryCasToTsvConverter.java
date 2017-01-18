@@ -30,7 +30,7 @@ public class BinaryCasToTsvConverter {
 		new BinaryCasToTsvConverter().run(args);
 	}
 
-	protected void run(String[] args) {
+	private void run(String[] args) {
 		new CommandLineArgumentHandler().parseInput(args, this);
 
 		logger.info("Reading training file from [" + inputPath + "]");
