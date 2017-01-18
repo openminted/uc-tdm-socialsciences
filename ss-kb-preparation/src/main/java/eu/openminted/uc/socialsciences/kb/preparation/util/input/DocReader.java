@@ -13,6 +13,13 @@ import eu.openminted.uc.socialsciences.kb.preparation.util.convert.Converter;
 import eu.openminted.uc.socialsciences.kb.preparation.util.convert.PDFConverter;
 import eu.openminted.uc.socialsciences.kb.preparation.util.output.DBManager;
 
+/**
+ * Class for reading documents in PDF format from a directory, converting them
+ * to text and storing this text in the database.
+ * Documents must have unique names.
+ *
+ * @author neumanmy
+ */
 public class DocReader {
 
 	private List<Path> toProcess;
@@ -20,6 +27,13 @@ public class DocReader {
 
 	private static final Logger logger = Logger.getLogger(DocReader.class);
 
+	/**
+	 * Constructor. Sets the root directory from which the reader will read
+	 * input documents recursively.
+	 *
+	 * @param root
+	 *            root directory
+	 */
 	public DocReader(Path root) {
 		toProcess = new ArrayList<>();
 		converter = Converter.TIKA;
@@ -34,6 +48,13 @@ public class DocReader {
 		}
 	}
 
+	/**
+	 * Read all documents recursively starting from the root directory and store
+	 * their texts into the database.
+	 *
+	 * @param writer
+	 *            Database writer
+	 */
 	public void readDocuments(DBManager writer) {
 		for (Path path : toProcess) {
 			logger.info("Reading document " + path);
@@ -47,6 +68,12 @@ public class DocReader {
 		}
 	}
 
+	/**
+	 * Get the list of files that this instance will be able to process
+	 * (collected from the root directory and all its sub-folders).
+	 *
+	 * @return list of documents to be processed
+	 */
 	public List<Path> getToProcess() {
 		return toProcess;
 	}

@@ -13,7 +13,7 @@ import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 
 /*
- * this class was used before we decided for a pdf converter. We can get rid of
+ * This class was used before we decided for a pdf converter. We can get rid of
  * it if we replace all uses with the call to the pdf converter class from
  * ss-io-pdfx-xml module.
  */
