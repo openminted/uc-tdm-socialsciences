@@ -18,7 +18,6 @@ public class BinaryCasToTsvConverter {
 
 	private static final Logger logger = Logger.getLogger(BinaryCasToTsvConverter.class);
 
-	private static final String DEFAULT_LANGUAGE = "en";
 	private static final String DEFAULT_OUTPUT = "stanfordTrain.tsv";
 
 	@Option(name = "-i", handler=StringOptionHandler.class, usage = "input directory containing binary CAS files to be converted", required = true)
@@ -26,9 +25,6 @@ public class BinaryCasToTsvConverter {
 
 	@Option(name = "-o", usage = "[optional] path to save the converted file to")
 	private String outputPath = DEFAULT_OUTPUT;
-
-	@Option(name = "-l", usage = "[optional] language of input")
-	private String inputLanguage = DEFAULT_LANGUAGE;
 
 	public static void main(String[] args) {
 		new BinaryCasToTsvConverter().run(args);
@@ -52,8 +48,7 @@ public class BinaryCasToTsvConverter {
 			runPipeline(
 					createReaderDescription(BinaryCasReader.class,
 							BinaryCasReader.PARAM_SOURCE_LOCATION, inputPath,
-							BinaryCasReader.PARAM_PATTERNS, "/**/*.bin",
-							BinaryCasReader.PARAM_LANGUAGE, inputLanguage),
+							BinaryCasReader.PARAM_PATTERNS, "/**/*.bin"),
 					createEngineDescription(MyStanfordTsvWriter.class,
 							MyStanfordTsvWriter.PARAM_TARGET_LOCATION, outputPath,
 							MyStanfordTsvWriter.PARAM_USE_SUBTYPES, true,
