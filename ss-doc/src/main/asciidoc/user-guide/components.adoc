@@ -56,7 +56,7 @@ If your training data is in binary CAS format (e.g. exported from WebAnno), you 
 
 *Usage:*
 
- $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.helper.BinaryCasToTsvConverter [args...]
 
 The following arguments have to be provided for the program:
@@ -75,7 +75,7 @@ You will have to provide a file containing the training properties.
 
 *Usage:*
 
- $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.train.StanfordNERTrainer [args...]
 
 The following arguments have to be provided for the program:
@@ -102,7 +102,7 @@ you expect).
 
 *Usage:*
 
- $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.main.Pipeline [args...]
 
 The following arguments have to be provided for the program:
@@ -121,7 +121,7 @@ And of course you will need the prediction data, i.e. documents annotated with t
 Both have to be in XMI format again.
 
 *Usage:*
-
- $ java PerformanceMeasure <inputPatternGold> <inputPatternPrediction> (<ignoreDocumentId>)
+ $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+        eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure [args...]
  
 //TODO correct usage
