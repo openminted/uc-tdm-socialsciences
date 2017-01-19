@@ -9,6 +9,7 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.spi.BooleanOptionHandler;
 import org.kohsuke.args4j.spi.StringOptionHandler;
 
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
@@ -20,11 +21,16 @@ public class BinaryCasToTsvConverter {
 
 	private static final String DEFAULT_OUTPUT = "stanfordTrain.tsv";
 
-	@Option(name = "-i", handler=StringOptionHandler.class, usage = "input directory containing binary CAS files to be converted", required = true)
+	@Option(name = "-i", handler = StringOptionHandler.class,
+			usage = "input directory containing binary CAS files to be converted", required = true)
 	private String inputPath = null;
 
 	@Option(name = "-o", usage = "[optional] path to save the converted file to")
 	private String outputPath = DEFAULT_OUTPUT;
+
+	@Option(name = "-subtypes", handler = BooleanOptionHandler.class,
+			usage = "[optional] useSubTypes flag. If set, value and modifier of an annotation will be merged to create more fine-grained classes.")
+	private boolean useSubTypes = false;
 
 	public static void main(String[] args) {
 		new BinaryCasToTsvConverter().run(args);
@@ -51,7 +57,7 @@ public class BinaryCasToTsvConverter {
 							BinaryCasReader.PARAM_PATTERNS, "/**/*.bin"),
 					createEngineDescription(MyStanfordTsvWriter.class,
 							MyStanfordTsvWriter.PARAM_TARGET_LOCATION, outputPath,
-							MyStanfordTsvWriter.PARAM_USE_SUBTYPES, true,
+							MyStanfordTsvWriter.PARAM_USE_SUBTYPES, useSubTypes,
 							MyStanfordTsvWriter.PARAM_SINGULAR_TARGET, true, MyStanfordTsvWriter.PARAM_OVERWRITE,
 							true));
 
