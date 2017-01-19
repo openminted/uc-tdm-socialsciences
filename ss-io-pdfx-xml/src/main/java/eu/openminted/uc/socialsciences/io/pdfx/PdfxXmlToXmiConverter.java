@@ -24,7 +24,7 @@ import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRe
 
 /**
  * This class is responsible for converting the output of pdfx, which is XML
- * with an own schema, into UIMA XMI format.
+ * with a custom schema, into UIMA XMI format.
  */
 public class PdfxXmlToXmiConverter {
 	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);

@@ -124,8 +124,11 @@ Both have to be in XMI format again.
 
 The following arguments have to be provided for the program:
 
-* *-iGold <path>* path to gold data with correct labels. Can also be a pattern for matching files in a directory, e.g. ./**/*.xmi
-* *-iPred <path>* path to prediction data, i.e. labeled by an algorithm. Can also be a pattern for matching files in a directory, e.g. ./**/*.xmi
-* *-strictId* (optional) If set, for each Gold-document there should be a Prediction-document in the prediction set with identical documentId (cf. documentId attribute in xmi file). If this requirement is not satisfied, program will not work properly.
+* *-iGold <path>* path to gold data with correct labels. Can also be a pattern for matching files in a directory, e.g. ./****/*.xmi
+* *-iPred <path>* path to prediction data, i.e. labeled by an algorithm. Can also be a pattern for matching files
+in a directory, e.g. ./****/*.xmi
+* *-strictId* (optional) If set, for each Gold-document there should be a Prediction-document in the prediction
+set with identical documentId (cf. documentId attribute in xmi file). If this requirement is not satisfied,
+program will not work properly.
 
 The program will output agreement scores as well as precision and recall.
