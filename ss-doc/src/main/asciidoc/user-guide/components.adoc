@@ -64,11 +64,7 @@ The following arguments have to be provided for the program:
 * *-i <path>* path to input documents containing annotations in binary CAS format. This path can either point to a
 single file or a directory.
 * *-o <path>* (optional) path of output file. Default: ./stanfordTrain.tsv
-* *-l <value>* (optional) Language of input documents. Possible values: *en* or *de*. Default: en
-
-//TODO I'm still not sure what's the effect of the language parameter. 
-//I would expect that only those CASes are chosen for processing that have specified language.
-//This doesn't seem to be the case.
+* *-subtypes <value>* [optional] useSubTypes flag. If set, value and modifier of an annotation will be merged to create more fine-grained classes.
 
 Use the class StanfordNERTrainer to train a new model with training data. 
 You will have to provide a file containing the training properties. 
@@ -88,6 +84,8 @@ The file containing the parameters for training has to be in properties format, 
 key-value-pairs like this:
 
  parameter = value
+ 
+Mind that it is in general possible to set paths to training file(s) and model output file also in the training properties file, but these values will be overriden.
 
 ==== Apply a trained model to new, un-annotated data
 With the Pipeline, you can input un-labeled data and apply a NER model to it, such that the output will contain labels
