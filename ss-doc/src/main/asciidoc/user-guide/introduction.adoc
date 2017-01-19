@@ -11,6 +11,20 @@ Current package contains the following components:
 To learn more about each component and to find example code, you can refer to the corresponding test classes for each
 component.
 
+=== Useful links
+Get sources from GitHub:
+
+https://github.com/openminted/uc-tdm-socialsciences
+
+Project snapshot builds can be retrieved from:
+
+https://builds.openminted.eu/job/uc-socialsciences/
+
+Developers mailing list (request to join):
+
+https://groups.google.com/forum/#!forum/uc-tdm-socialsciences-developers
+
+//add [about us] page like https://dkpro.github.io/dkpro-core/info/
 //It would be helpful if answers for the following questions are provided:
 //- What can I do with this project?
 //- Where can I find examples for using these components?
