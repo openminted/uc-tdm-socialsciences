@@ -105,7 +105,7 @@ you expect).
 
 The following arguments have to be provided for the program:
 
-* *-i <path>* path to input data to be labeled. Can also be a pattern for matching files in a directory, e.g. ./**/*.xmi
+* *-i <path>* path to input data to be labeled. Can also be a pattern for matching files in a directory, e.g. ./****/*.xmi
 * *-o <path>* path to output directory.
 * *-standardModel* (optional) Use standard stanford model flag. If this flag is set, standard Stanford models will
 be used instead of a custom model.
