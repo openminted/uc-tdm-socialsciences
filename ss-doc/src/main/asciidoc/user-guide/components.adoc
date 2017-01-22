@@ -16,7 +16,8 @@ The following arguments have to be provided for the program:
 * *-i <path>* path to input PDF documents. This path can either point to a single file or a directory.
 * *-o <path>* path to output directory.
 * *-lang <value>* Language of input documents. Possible values: *en* or *de*
-* *-overwrite* (Optional) Overwrite output flag. If this option is set program will overwrite any existing files in output directory.
+* *-overwrite* (Optional) Overwrite output flag. If this option is set program will overwrite any existing files in
+output directory.
 * *-home* Path to application home where required files (e.g. dictionary files) are located.
 
 The language parameter is required to correctly post-process the converted text files (e.g. remove hyphenations inside
@@ -26,12 +27,24 @@ in subsequent text analysis components (e.g. named entity recognition).
 NOTE: Currently PDF-to-XML converter can only convert files smaller than 5 MB and containing less than 100 pages. This
 limit is enforced by the PDFX service which is used internally to convert PDF documents to XML format.
 
-//==== PDF to XML conversion
+===== PDF to XML conversion
+[[pdf-to-pdfx]]
+The PdfxXmlCreator class can be used to convert a collection of PDF files to PDFX XML format
+(http://pdfx.cs.man.ac.uk/static/article-schema.xsd[schema]). This class is used internally by PDF-to-XMI converter
+component. This component can be used via calling the main method, like the following:
+
+ $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
+        eu.openminted.uc.socialsciences.io.pdfx.PdfxXmlCreator [args...]
+
+The following arguments have to be provided for the program:
+
+* *-i <path>* path to input PDF documents. This path can either point to a single file or a directory.
+* *-o <path>* path to output directory.
+* *-overwrite* (Optional) Overwrite output flag. If this option is set program will overwrite any existing files in
+output directory.
+
 //
-//Describe usage of PdfxXmlCreator class
-//
-//
-//==== PDFX-XML to XMI conversion
+//===== PDFX-XML to XMI conversion
 //
 //Describe usage of PdfxXmlToXmiConverter class
 
