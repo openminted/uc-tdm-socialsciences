@@ -148,6 +148,7 @@ And of course you will need the prediction data, i.e. documents annotated with t
 Both have to be in XMI format again.
 
 *Usage:*
+
  $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure [args...]
 
