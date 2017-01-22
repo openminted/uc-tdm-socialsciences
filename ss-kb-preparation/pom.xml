@@ -36,12 +36,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-		<!-- TODO Check if this is used-->
-		<dependency>
-			<groupId>org.apache.tika</groupId>
-			<artifactId>tika-parsers</artifactId>
-			<version>1.13</version>
-		</dependency>
 		<!-- http://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
 		<dependency>
 			<groupId>org.xerial</groupId>

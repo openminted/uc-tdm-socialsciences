@@ -47,10 +47,6 @@ public class BinaryCasToTsvConverter {
 		}
 		logger.info("Will write the trained model to [" + outputPath + "]");
 
-		/*
-		 * TODO: filter by language, i.e. read language from metadata and create
-		 * output separately for each language!
-		 */
 		try {
 			runPipeline(
 					createReaderDescription(BinaryCasReader.class,

@@ -44,7 +44,8 @@ public class MyIobEncoderTest {
             throws Exception
     {
         String[] expected = new String[] {
-                "O","O","O","B-ORGgov","I-ORGgov","I-ORGgov","I-ORGgov","O","O","O","O","O","B-PERind","O","B-LOC","O","O","O"
+                "O","O","O","B-ORGgov","I-ORGgov","I-ORGgov","I-ORGgov","O","O","O","O","O","B-PERind","O","B-LOC"
+                ,"O","O","O"
         };
 
         JCas jcas = getSimpleJCas();

@@ -84,7 +84,6 @@ public class PdfxXmlToXmiConverter {
 		logger.debug("English Dictionary path: " + englishDictionaryPath);
 	}
 
-	// TODO do not throw exceptions from main method
 	/**
 	 * Main method to run the converter from command line. Input directory
 	 * containing XML files may be provided as parameter, otherwise it will be
