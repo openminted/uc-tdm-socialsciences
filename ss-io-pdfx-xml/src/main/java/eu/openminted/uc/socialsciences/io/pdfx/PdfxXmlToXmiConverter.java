@@ -11,9 +11,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
@@ -21,6 +21,7 @@ import org.apache.uima.UIMAException;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
 import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRemover;
+import org.kohsuke.args4j.Option;
 
 /**
  * This class is responsible for converting the output of pdfx, which is XML
@@ -32,33 +33,58 @@ public class PdfxXmlToXmiConverter {
 	public static final String GERMAN_WORDS_DICTIONARY_FILENAME = "german-words.dic";
 	public static final String ENGLISH_WORDS_DICTIONARY_FILENAME = "english-words.dic";
 	public static final boolean DEFAULT_SENTENCE_TRIMMER_ENABLED_VALUE = true;
-	private String GERMAN_DICTIONARY_PATH;
-	private String ENGLISH_DICTIONARY_PATH;
 
 	public static final String LANGUAGE_CODE_EN = "en";
 	public static final String LANGUAGE_CODE_DE = "de";
 
+	private String germanDictionaryPath;
+	private String englishDictionaryPath;
+
+	@Option(name = "-i", required = true, usage = "input directory containing pdfx XML files")
 	private String inputPath = null;
+
+	@Option(name = "-o", required = true, usage = "output directory to save converted XMI files")
 	private String outputPathXmi = null;
+
+	@Option(name = "-lang", usage = "language of input documents.")
 	private String inputLanguage = LANGUAGE_CODE_EN;
 
+	@Option(name = "-home", required = true, usage = "Path to application home where required files (e.g. dictionary " +
+			"files are located")
+	private String homePath = null;
+
+	@Option(name = "-overwrite", usage = "(Optional) if set to true, program will overwrite XMI files " +
+			" that already exist in output directory. If not set, program will throw an exception if a file already " +
+			"exists in the output directory.")
 	private boolean overwriteOutput = false;
+
 	private boolean SentenceTrimmerEnabled = DEFAULT_SENTENCE_TRIMMER_ENABLED_VALUE;
 
-	@SuppressWarnings("ConstantConditions")
 	public PdfxXmlToXmiConverter(String homePath, boolean overwriteOutput) {
-		logger.info(String.format("homePath: %s", homePath));
-		GERMAN_DICTIONARY_PATH = new File(homePath, GERMAN_WORDS_DICTIONARY_FILENAME).getPath();
-		ENGLISH_DICTIONARY_PATH = new File(homePath, ENGLISH_WORDS_DICTIONARY_FILENAME).getPath();
+		setHomePath(homePath);
+		setOverwriteOutput(overwriteOutput);
+	}
 
-		logger.debug("German Dictionary path: " + GERMAN_DICTIONARY_PATH);
-		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
+	public PdfxXmlToXmiConverter() {
+	}
+
+	public void setOverwriteOutput(boolean overwriteOutput) {
 		this.overwriteOutput = overwriteOutput;
 		logger.info(String.format("overwrite output set to [%s]", overwriteOutput));
 	}
 
+	public void setHomePath(String homePath) {
+		this.homePath = homePath;
+		logger.info(String.format("homePath: %s", homePath));
+
+		germanDictionaryPath = new File(homePath, GERMAN_WORDS_DICTIONARY_FILENAME).getPath();
+		englishDictionaryPath = new File(homePath, ENGLISH_WORDS_DICTIONARY_FILENAME).getPath();
+
+		logger.debug("German Dictionary path: " + germanDictionaryPath);
+		logger.debug("English Dictionary path: " + englishDictionaryPath);
+	}
+
 	// TODO do not throw exceptions from main method
-	// TODO move main method + main argument handling to a new class
 	/**
 	 * Main method to run the converter from command line. Input directory
 	 * containing XML files may be provided as parameter, otherwise it will be
@@ -69,13 +95,26 @@ public class PdfxXmlToXmiConverter {
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
-	public static void main(String[] args) throws UIMAException, IOException {
-		//fixme
-//		new PdfxXmlToXmiConverter().process(args);
+	public static void main(String[] args)
+			throws UIMAException, IOException
+	{
+		new PdfxXmlToXmiConverter().run(args);
 	}
 
-	protected void process(String[] args) throws UIMAException, IOException {
-		processArguments(args);
+	private void run(String[] args)
+			throws IOException, UIMAException
+	{
+		new CommandLineArgumentHandler().parseInput(args, this);
+
+		germanDictionaryPath = new File(homePath, GERMAN_WORDS_DICTIONARY_FILENAME).getPath();
+		englishDictionaryPath = new File(homePath, ENGLISH_WORDS_DICTIONARY_FILENAME).getPath();
+
+		logger.debug("German Dictionary path: " + germanDictionaryPath);
+		logger.debug("English Dictionary path: " + englishDictionaryPath);
+
+		logger.info("Input path: " + inputPath);
+		logger.info("Output xmi path: " + outputPathXmi);
+		logger.info("Input language: " + inputLanguage);
 
 		convertToXmi(inputPath, outputPathXmi, inputLanguage);
 
@@ -88,32 +127,6 @@ public class PdfxXmlToXmiConverter {
 					.toString();
 			createCasDump(inputResource, outputResourceCasDump, inputLanguage);
 		}
-	}
-
-	//todo rewrite this using Apache CLI https://commons.apache.org/proper/commons-cli/usage.html
-	protected void processArguments(String[] args) {
-		if (args.length >= 1) {
-			inputPath = args[0];
-		}
-		if (args.length >= 2) {
-			if(args[1].equalsIgnoreCase(LANGUAGE_CODE_DE) || args[1].equalsIgnoreCase(LANGUAGE_CODE_EN))
-				inputLanguage = args[1].toLowerCase();
-			else
-				logger.warn("Undefined input language was provided, default value [" + inputLanguage + "] will be used");
-		}else
-			logger.warn("Input language was not provided, default value [" + inputLanguage + "] will be used");
-
-		Scanner scanner = new Scanner(System.in);
-		while (null == inputPath || inputPath.length() < 1) {
-			System.out.println("Please provide path to input directory containing pdfx-xml files:");
-			inputPath = scanner.nextLine();
-		}
-		scanner.close();
-		outputPathXmi = inputPath + File.separator + "uima-xmi" + File.separator;
-
-		logger.info("Input path: " + inputPath);
-		logger.info("Output xmi path: " + outputPathXmi);
-		logger.info("Input language: " + inputLanguage);
 	}
 
 	public static List<Path> getXmlListFromDirectory(Path inputDir) {
@@ -145,10 +158,10 @@ public class PdfxXmlToXmiConverter {
 		String dictionaryPath;
 		switch (language){
 			case LANGUAGE_CODE_EN:
-				dictionaryPath = ENGLISH_DICTIONARY_PATH;
+				dictionaryPath = englishDictionaryPath;
 				break;
 			case LANGUAGE_CODE_DE:
-				dictionaryPath = GERMAN_DICTIONARY_PATH;
+				dictionaryPath = germanDictionaryPath;
 				break;
 			default:
 				throw new IllegalArgumentException("Unknown language selected.");
@@ -237,10 +250,10 @@ public class PdfxXmlToXmiConverter {
 		String dictionaryPath;
 		switch (language){
 			case LANGUAGE_CODE_EN:
-				dictionaryPath = ENGLISH_DICTIONARY_PATH;
+				dictionaryPath = englishDictionaryPath;
 				break;
 			case LANGUAGE_CODE_DE:
-				dictionaryPath = GERMAN_DICTIONARY_PATH;
+				dictionaryPath = germanDictionaryPath;
 				break;
 			default:
 				throw new IllegalArgumentException("Unknown language selected.");

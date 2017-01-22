@@ -16,7 +16,7 @@ public class Pipeline
 	@Option(name="-o", usage="Output directory", required = true)
 	private String output = null;
 
-	@Option(name="-overwrite", usage = "(Optional) if set to true, program will overwrite xml files (converted from PDF)" +
+	@Option(name="-overwrite", usage = "(Optional) if set to true, program will overwrite files " +
 			" that already exist in output directory.")
 	private boolean overwriteOutput = false;
 
