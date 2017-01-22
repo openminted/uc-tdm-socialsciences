@@ -53,8 +53,7 @@
                     -->
                     <!-- Attributes common to all output formats -->
                     <attributes>
-                        <!-- todo fix these -->
-                        <endpoint-url>http://example.org</endpoint-url>
+                        <endpoint-url>https://builds.openminted.eu/job/uc-socialsciences/ws/ss-doc/target/generated-docs/user-guide.html</endpoint-url>
                         <sourcedir>${project.build.sourceDirectory}</sourcedir>
                         <project-version>${project.version}</project-version>
                     </attributes>

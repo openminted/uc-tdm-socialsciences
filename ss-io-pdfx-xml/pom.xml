@@ -124,7 +124,6 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>2.4.1</version>
 				<executions>
-					<!-- FIXME this fat jar has problems -->
 					<execution>
 						<id>pdf-to-xmi-pipeline</id>
 						<phase>package</phase>
@@ -180,7 +179,7 @@
 						<componentVendor>eu.openminted.uc-tdm-socialsciences</componentVendor>
 						<componentCopyright>
 							<!-- todo put copyright notice here-->
-							Copyright 2015-2016
+							Copyright 2016-2017
 						</componentCopyright>
 						<failOnMissingMetaData>false</failOnMissingMetaData>
 						<encoding>UTF-8</encoding>

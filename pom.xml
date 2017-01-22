@@ -6,8 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>social sciences text and data mining use-case</name>
-
-	<!-- todo fill this <description></description>-->
+	<description>This software package contains components for text mining in scientific publicatons.</description>
 	<url>https://github.com/openminted/uc-tdm-socialsciences</url>
 	<inceptionYear>2016</inceptionYear>
 
