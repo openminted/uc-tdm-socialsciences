@@ -55,6 +55,7 @@
     </target>
 
     <target name="omtd-ner-model-de">
+        <property name="install-artifact-mode" value="remote"/>
         <mkdir dir="target/download"/>
         <get
                 src="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/de/omtd-ner-model-de-20170104-1.ser.gz"
