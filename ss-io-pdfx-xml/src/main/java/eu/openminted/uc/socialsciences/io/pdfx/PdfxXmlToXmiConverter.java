@@ -50,7 +50,7 @@ public class PdfxXmlToXmiConverter {
 	private String inputLanguage = LANGUAGE_CODE_EN;
 
 	@Option(name = "-home", required = true, usage = "Path to application home where required files (e.g. dictionary " +
-			"files are located")
+			"files) are located")
 	private String homePath = null;
 
 	@Option(name = "-overwrite", usage = "(Optional) if set to true, program will overwrite XMI files " +

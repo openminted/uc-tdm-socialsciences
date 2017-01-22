@@ -24,7 +24,7 @@ public class Pipeline
 			+ PdfxXmlToXmiConverter.LANGUAGE_CODE_EN + ", " + PdfxXmlToXmiConverter.LANGUAGE_CODE_DE, required = true)
 	private String language = null;
 
-	@Option(name="-home", usage = "Path to application home where required files (e.g. dictionary files are located",
+	@Option(name="-home", usage = "Path to application home where required files (e.g. dictionary files) are located",
 			required = true)
 	private String homePath = null;
 	/**
