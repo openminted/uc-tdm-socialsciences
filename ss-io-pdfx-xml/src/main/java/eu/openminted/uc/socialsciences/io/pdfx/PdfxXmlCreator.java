@@ -6,8 +6,8 @@ import java.io.InputStream;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import eu.openminted.uc.socialsciences.common.PDFChecker;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
@@ -21,12 +21,12 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import org.apache.log4j.Logger;
+import org.kohsuke.args4j.Option;
 
 /**
  * This class is responsible for PDF to XML conversion by invoking the web
  * service of pdfx.
  *
- * @author neumanmy
  */
 public class PdfxXmlCreator {
 	public static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
@@ -45,7 +45,16 @@ public class PdfxXmlCreator {
 
 	private List<String> skippedFileList;
 
+	@Option(name = "-overwrite", usage = "(Optional) if this option is set, program will overwrite files " +
+			" that already exist in output directory.")
 	private boolean overwriteOutput = false;
+
+	@Option(name = "-i", required = true, usage = "path to input file or directory containing pdf files " +
+			"you want to process")
+	private String input;
+
+	@Option(name = "-o", required = true, usage = "path to output directory")
+	private String output;
 
 	/**
 	 * Main method. Used for invoking the converter from command line.
@@ -57,33 +66,15 @@ public class PdfxXmlCreator {
 	 *            be stored. If no output directory is specified, output will be
 	 *            stored in subdirectory of input directory called "pdfx-out".
 	 */
-	public static void main(String[] args) {
-		PdfxXmlCreator creator = new PdfxXmlCreator();
+	public static void main(String[] args)
+	{
+		new PdfxXmlCreator().run(args);
+	}
 
-		String inputPath = null, outputPath = null;
-
-		switch (args.length) {
-		case 0:
-			break;
-		case 2:
-			outputPath = args[1];
-		case 1:
-			inputPath = args[0];
-			break;
-		default:
-			logger.error(
-					"Illegal number of command line arguments given. Provide input path as first argument (mandatory) and output path as second argument (optional).");
-		}
-
-		Scanner scanner = new Scanner(System.in);
-		while (null == inputPath || inputPath.length() < 1) {
-			System.out.println(
-					"Please provide path to input directory containing pdf files or to the file you want to process:");
-			inputPath = scanner.nextLine();
-		}
-		scanner.close();
-
-		creator.process(inputPath, outputPath);
+	private void run(String[] args)
+	{
+		new CommandLineArgumentHandler().parseInput(args, this);
+		process(input, output);
 	}
 
 	public List<String> getSkippedFileList() {
