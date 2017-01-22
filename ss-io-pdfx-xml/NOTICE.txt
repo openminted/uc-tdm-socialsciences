@@ -5,7 +5,7 @@ is retrieved from the following urls
 And was originally distributed with the following license:
 Creative Commons - Attribution-NonCommercial-ShareAlike : http://creativecommons.org/licenses/by-nc-sa/3.0/
 
-The English words dictionary (english-words-dictionary.txt) is retrieved from
+The English words dictionary (english-words.dic) is retrieved from
 	- https://github.com/dwyl/english-words
 and was originally distributed by
 	www.infochimps.com

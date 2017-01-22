@@ -30,7 +30,7 @@ public class PdfxXmlToXmiConverter {
 	private static final Logger logger = Logger.getLogger(PdfxXmlToXmiConverter.class);
 
 	public static final String GERMAN_WORDS_DICTIONARY_FILENAME = "german-words.dic";
-	public static final String ENGLISH_WORDS_DICTIONARY_FILENAME = "english-words-dictionary.txt";
+	public static final String ENGLISH_WORDS_DICTIONARY_FILENAME = "english-words.dic";
 	public static final boolean DEFAULT_SENTENCE_TRIMMER_ENABLED_VALUE = true;
 	private String GERMAN_DICTIONARY_PATH;
 	private String ENGLISH_DICTIONARY_PATH;
