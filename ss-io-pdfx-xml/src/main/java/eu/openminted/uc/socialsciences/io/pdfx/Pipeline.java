@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.util.List;
 
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.uima.UIMAException;
 import org.kohsuke.args4j.Option;
 
@@ -17,14 +16,17 @@ public class Pipeline
 	@Option(name="-o", usage="Output directory", required = true)
 	private String output = null;
 
-	@Option(name="-overwrite", usage = "(Optional) if set to true, program will overwrite files that already exist " +
-			"in output directory.")
+	@Option(name="-overwrite", usage = "(Optional) if set to true, program will overwrite xml files (converted from PDF)" +
+			" that already exist in output directory.")
 	private boolean overwriteOutput = false;
 
 	@Option(name="-lang", usage="Language of input documents. Possible values: "
 			+ PdfxXmlToXmiConverter.LANGUAGE_CODE_EN + ", " + PdfxXmlToXmiConverter.LANGUAGE_CODE_DE, required = true)
 	private String language = null;
 
+	@Option(name="-home", usage = "Path to application home where required files (e.g. dictionary files are located",
+			required = true)
+	private String homePath = null;
 	/**
 	 * The pipeline for converting a collection of PDF documents to XMI format
 	 */
@@ -39,17 +41,15 @@ public class Pipeline
 		PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
 		pdfxXmlCreator.setOverwriteOutput(overwriteOutput);
 
-		try {
+		try
+		{
 			List<Path> pdfxOutFiles = pdfxXmlCreator.process(input, output);
 			System.out.println(pdfxOutFiles.size() + " files have been processed by Pdfx.");
 
-			for (Path p : pdfxOutFiles) {
-				new PdfxXmlToXmiConverter().
-						convertToXmi(p.toString(), FilenameUtils.getBaseName(p.toString()) + ".xmi",
-								language);
-			}
-
-		} catch (IOException | UIMAException e) {
+			PdfxXmlToXmiConverter pdfxXmlToXmiConverter = new PdfxXmlToXmiConverter(homePath, overwriteOutput);
+			pdfxXmlToXmiConverter.convertToXmi(output, output, language);
+		} catch (IOException | UIMAException e)
+		{
 			e.printStackTrace();
 		}
 	}

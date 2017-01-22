@@ -42,17 +42,19 @@ public class PdfxXmlToXmiConverter {
 	private String outputPathXmi = null;
 	private String inputLanguage = LANGUAGE_CODE_EN;
 
+	private boolean overwriteOutput = false;
 	private boolean SentenceTrimmerEnabled = DEFAULT_SENTENCE_TRIMMER_ENABLED_VALUE;
 
 	@SuppressWarnings("ConstantConditions")
-	public PdfxXmlToXmiConverter() {
-		GERMAN_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
-				.getResource(GERMAN_WORDS_DICTIONARY_FILENAME).getFile();
-		ENGLISH_DICTIONARY_PATH = PdfxXmlToXmiConverter.class.getClassLoader()
-				.getResource(ENGLISH_WORDS_DICTIONARY_FILENAME).getFile();
+	public PdfxXmlToXmiConverter(String homePath, boolean overwriteOutput) {
+		logger.info(String.format("homePath: %s", homePath));
+		GERMAN_DICTIONARY_PATH = new File(homePath, GERMAN_WORDS_DICTIONARY_FILENAME).getPath();
+		ENGLISH_DICTIONARY_PATH = new File(homePath, ENGLISH_WORDS_DICTIONARY_FILENAME).getPath();
 
 		logger.debug("German Dictionary path: " + GERMAN_DICTIONARY_PATH);
 		logger.debug("English Dictionary path: " + ENGLISH_DICTIONARY_PATH);
+		this.overwriteOutput = overwriteOutput;
+		logger.info(String.format("overwrite output set to [%s]", overwriteOutput));
 	}
 
 	// TODO do not throw exceptions from main method
@@ -68,7 +70,8 @@ public class PdfxXmlToXmiConverter {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws UIMAException, IOException {
-		new PdfxXmlToXmiConverter().process(args);
+		//fixme
+//		new PdfxXmlToXmiConverter().process(args);
 	}
 
 	protected void process(String[] args) throws UIMAException, IOException {
@@ -136,7 +139,9 @@ public class PdfxXmlToXmiConverter {
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
-	public void convertToXmi(String inputResource, String outputResource, String language) throws UIMAException, IOException {
+	public void convertToXmi(String inputResource, String outputResource, String language)
+			throws UIMAException, IOException
+	{
 		String dictionaryPath;
 		switch (language){
 			case LANGUAGE_CODE_EN:
@@ -177,9 +182,11 @@ public class PdfxXmlToXmiConverter {
 							new String[] {
 									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
 							}),
-					createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
-					createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
-							XmiWriter.PARAM_OVERWRITE, true,
+					createEngineDescription(CasValidatorComponent.class,
+							CasValidatorComponent.PARAM_STRICT_CHECK, true),
+					createEngineDescription(XmiWriter.class,
+							XmiWriter.PARAM_TARGET_LOCATION, outputResource,
+							XmiWriter.PARAM_OVERWRITE, overwriteOutput,
 							XmiWriter.PARAM_STRIP_EXTENSION, true));
 		}else
 		{
@@ -203,9 +210,11 @@ public class PdfxXmlToXmiConverter {
 							new String[] {
 									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
 							}),
-					createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
-					createEngineDescription(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputResource,
-							XmiWriter.PARAM_OVERWRITE, true,
+					createEngineDescription(CasValidatorComponent.class,
+							CasValidatorComponent.PARAM_STRICT_CHECK, true),
+					createEngineDescription(XmiWriter.class,
+							XmiWriter.PARAM_TARGET_LOCATION, outputResource,
+							XmiWriter.PARAM_OVERWRITE, overwriteOutput,
 							XmiWriter.PARAM_STRIP_EXTENSION, true));
 		}
 	}
@@ -222,7 +231,9 @@ public class PdfxXmlToXmiConverter {
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
-	public void createCasDump(String inputResource, String outputResource, String language) throws UIMAException, IOException {
+	public void createCasDump(String inputResource, String outputResource, String language)
+			throws UIMAException, IOException
+	{
 		String dictionaryPath;
 		switch (language){
 			case LANGUAGE_CODE_EN:
@@ -262,7 +273,8 @@ public class PdfxXmlToXmiConverter {
 							new String[] {
 									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
 							}),
-					createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
+					createEngineDescription(CasValidatorComponent.class,
+							CasValidatorComponent.PARAM_STRICT_CHECK, true),
 					createEngineDescription(CasDumpWriter.class,
 							CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
 							CasDumpWriter.PARAM_SORT, true));
@@ -287,7 +299,8 @@ public class PdfxXmlToXmiConverter {
 							new String[] {
 									"de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence"
 							}),
-					createEngineDescription(CasValidatorComponent.class, CasValidatorComponent.PARAM_STRICT_CHECK, true),
+					createEngineDescription(CasValidatorComponent.class,
+							CasValidatorComponent.PARAM_STRICT_CHECK, true),
 					createEngineDescription(CasDumpWriter.class,
 							CasDumpWriter.PARAM_TARGET_LOCATION, outputResource,
 							CasDumpWriter.PARAM_SORT, true));
