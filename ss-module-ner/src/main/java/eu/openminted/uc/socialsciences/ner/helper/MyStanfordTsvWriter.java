@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -51,7 +52,7 @@ import webanno.custom.NamedEntity;
 				"webanno.custom.NamedEntity" })
 public class MyStanfordTsvWriter extends JCasFileWriter_ImplBase {
 
-	private static final Logger logger = Logger.getLogger(MyStanfordTsvWriter.class);
+	private static final Logger logger = LogManager.getLogger(MyStanfordTsvWriter.class);
 
 	/**
 	 * Name of configuration parameter that defines the file name extension of

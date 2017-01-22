@@ -7,6 +7,7 @@ import de.tudarmstadt.ukp.dkpro.core.eval.measure.FMeasure;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.Feature;
@@ -34,7 +35,7 @@ import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDe
  * properly.
  */
 public class PerformanceMeasure {
-    private static final Logger logger = Logger.getLogger(PerformanceMeasure.class);
+    private static final Logger logger = LogManager.getLogger(PerformanceMeasure.class);
 
     /**
      * Number of raters which includes (1) gold-standard and (2) system predictions

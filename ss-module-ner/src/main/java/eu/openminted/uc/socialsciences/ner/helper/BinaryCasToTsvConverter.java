@@ -6,6 +6,7 @@ import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 import java.io.IOException;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.kohsuke.args4j.Option;
@@ -17,7 +18,7 @@ import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 
 public class BinaryCasToTsvConverter {
 
-	private static final Logger logger = Logger.getLogger(BinaryCasToTsvConverter.class);
+	private static final Logger logger = LogManager.getLogger(BinaryCasToTsvConverter.class);
 
 	private static final String DEFAULT_OUTPUT = "stanfordTrain.tsv";
 

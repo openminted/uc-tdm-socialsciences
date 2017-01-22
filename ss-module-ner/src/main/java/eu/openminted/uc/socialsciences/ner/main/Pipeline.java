@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -21,7 +22,7 @@ import org.kohsuke.args4j.spi.BooleanOptionHandler;
 public class Pipeline
 {
 
-    private static final Logger logger = Logger.getLogger(Pipeline.class);
+    private static final Logger logger = LogManager.getLogger(Pipeline.class);
 
     @Option(name="-i", usage="input pattern for input data to be labeled", required = true)
 	private String input = null;

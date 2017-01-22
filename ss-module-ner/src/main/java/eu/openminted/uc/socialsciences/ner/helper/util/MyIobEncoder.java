@@ -17,6 +17,7 @@ package eu.openminted.uc.socialsciences.ner.helper.util;
 import java.util.Collection;
 import java.util.Map;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
@@ -42,7 +43,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
  */
 public class MyIobEncoder {
 
-	private static final Logger logger = Logger.getLogger(MyIobEncoder.class);
+	private static final Logger logger = LogManager.getLogger(MyIobEncoder.class);
 
 	private Int2ObjectMap<String> iobBeginMap;
 	private Int2ObjectMap<String> iobInsideMap;

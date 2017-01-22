@@ -7,11 +7,12 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.sequences.SeqClassifierFlags;
 import edu.stanford.nlp.util.StringUtils;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.kohsuke.args4j.Option;
 
 public class StanfordNERTrainer {
-	private static final Logger logger = Logger.getLogger(StanfordNERTrainer.class);
+	private static final Logger logger = LogManager.getLogger(StanfordNERTrainer.class);
 	private static final String DEFAULT_OUTPUT_PATH = "omtd-ner-model.ser.gz";
 
 	@Option(name="-i", usage="path to labeled input data (.tsv file)", required = true)
