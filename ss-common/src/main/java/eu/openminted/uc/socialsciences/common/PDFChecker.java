@@ -13,7 +13,6 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeTypes;
 
-
 public class PDFChecker {
 
 	private static final Logger logger = LogManager.getLogger(PDFChecker.class);
