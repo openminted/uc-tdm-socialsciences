@@ -43,11 +43,23 @@ The following arguments have to be provided for the program:
 * *-overwrite* (Optional) Overwrite output flag. If this option is set program will overwrite any existing files in
 output directory.
 
-//
-//===== PDFX-XML to XMI conversion
-//
-//Describe usage of PdfxXmlToXmiConverter class
+===== PDFX-XML to XMI conversion
+[[pdfx-to-xmi]]
+The PdfxXmlToXmiConverter class can be used to convert a collection of PDFX XML documents to XMI format. This class is
+used internally by PDF-to-XMI converter component. This component can be used via calling the main method, like the
+following:
 
+ $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
+        eu.openminted.uc.socialsciences.io.pdfx.PdfxXmlToXmiConverter [args...]
+
+The following arguments have to be provided for the program:
+
+* *-i <path>* path to input directory containing pdfx XML files
+* *-o <path>* path to output directory to save converted XMI files
+* *-overwrite* (Optional) Overwrite output flag. If this option is set program will overwrite any existing files in
+output directory.
+* *-lang* language of input documents.
+* *-home* Path to application home where required files (e.g. dictionary files) are located
 
 === Named Entity Recognition
 
