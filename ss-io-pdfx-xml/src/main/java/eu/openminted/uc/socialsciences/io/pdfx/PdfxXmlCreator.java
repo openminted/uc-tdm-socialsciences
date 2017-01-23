@@ -57,13 +57,7 @@ public class PdfxXmlCreator {
 
 	/**
 	 * Main method. Used for invoking the converter from command line.
-	 *
-	 * @param args
-	 *            two paths to directories have to be given as arguments.
-	 *            First arg is input directory containing pdf files.
-	 *            Second is output directory where XML files should
-	 *            be stored.
-	 */
+	 * */
 	public static void main(String[] args) {
 		new PdfxXmlCreator().run(args);
 	}
