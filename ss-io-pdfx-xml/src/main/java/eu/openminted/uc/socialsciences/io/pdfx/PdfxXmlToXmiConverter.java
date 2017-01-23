@@ -85,12 +85,8 @@ public class PdfxXmlToXmiConverter {
 	}
 
 	/**
-	 * Main method to run the converter from command line. Input directory
-	 * containing XML files may be provided as parameter, otherwise it will be
-	 * prompted for.
+	 * Main method to run the converter from command line.
 	 *
-	 * @param args
-	 *            (optional) path to directory containing XML files
 	 * @throws UIMAException
 	 * @throws IOException
 	 */
