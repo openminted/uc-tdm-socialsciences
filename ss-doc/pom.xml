@@ -113,6 +113,8 @@
                             <attributes>
                                 <imagesdir>./images</imagesdir>
                                 <toc>left</toc>
+                                <docinfo1>true</docinfo1>
+                                <toclevels>5</toclevels>
                                 <icons>font</icons>
                                 <sectanchors>true</sectanchors>
                                 <!-- set the idprefix to blank -->
