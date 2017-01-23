@@ -143,6 +143,9 @@ Here, both are labeled with the same coarse class 'organization' (ORG). Thus, se
 Use the class StanfordNERTrainer to train a new model with training data. 
 You will have to provide a file containing the training properties. 
 
+IMPORTANT: Training might require a lot of memory (RAM).
+How much is needed is highly dependent on the number and type of features, on the amount of training data and on the number of different class labels in the training data.
+
 *Usage:*
 
  $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
