@@ -39,8 +39,7 @@
         <antcall target="separate-jars"/>
     </target>
 
-    <!-- FIXME <target name="separate-jars" depends="de, en"> -->
-    <target name="separate-jars" depends="de">
+    <target name="separate-jars" depends="de, en">
         <antcall target="jar-notice"/>
     </target>
 
