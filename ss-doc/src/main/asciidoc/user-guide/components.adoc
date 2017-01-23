@@ -157,6 +157,8 @@ key-value-pairs like this:
 
  parameter = value
  
+You can find detailed descriptions of available training parameters in the FAQ of the Stanford CoreNLP NER: http://nlp.stanford.edu/software/crf-faq.html
+
 Mind that it is in general possible to set paths to training file(s) and model output file also in the training properties file, but these values will be overriden.
 
 ==== Apply a trained model to new, un-annotated data
