@@ -93,7 +93,7 @@ public class MyIobEncoder {
 						continue nextChunk;
 					}
 					iobBeginMap.put(token.getBegin(), label);
-				} else {
+				} else if (token.getBegin() > chunk.getBegin()){
 					iobInsideMap.put(token.getBegin(), label);
 				}
 			}
