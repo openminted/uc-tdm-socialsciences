@@ -95,6 +95,49 @@ single file or a directory.
 * *-o <path>* (optional) path of output file. Default: ./stanfordTrain.tsv
 * *-subtypes <value>* [optional] useSubTypes flag. If set, value and modifier of an annotation will be merged to create more fine-grained classes.
 
+To see the difference the setting of the `-subtypes` flag makes, consider the following excerpt from a training data file. In the first case, the flag is set:
+--------------------------------------
+ by	O
+ the	O
+ Communist	B-ORGpar
+ Party	I-ORGpar
+ .	O
+
+ For	O
+ instance	O
+ ,	O
+ researchers	O
+ at	O
+ the	O
+ Institute	B-ORGsci
+ of	I-ORGsci
+ Economics	I-ORGsci
+--------------------------------------
+
+This results in different labels for the two entities that are different kinds of organizations (ORG). 
+Whereas in the second case, the flag has not been set:
+
+--------------------------------------
+ by	O
+ the	O
+ Communist	B-ORG
+ Party	I-ORG
+ .	O
+
+ For	O
+ instance	O
+ ,	O
+ researchers	O
+ at	O
+ the	O
+ Institute	B-ORG
+ of	I-ORG
+ Economics	I-ORG
+--------------------------------------
+
+Here, both are labeled with the same coarse class 'organization' (ORG). Thus, setting the `-subtypes` flag allows to differentiate sub-types of annotations, but mind that this means an increase in the number of classes for training.
+
+
 Use the class StanfordNERTrainer to train a new model with training data. 
 You will have to provide a file containing the training properties. 
 
