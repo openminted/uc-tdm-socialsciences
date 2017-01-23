@@ -26,7 +26,6 @@ import org.kohsuke.args4j.Option;
 /**
  * This class is responsible for PDF to XML conversion by invoking the web
  * service of pdfx.
- *
  */
 public class PdfxXmlCreator {
 	public static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
@@ -60,19 +59,16 @@ public class PdfxXmlCreator {
 	 * Main method. Used for invoking the converter from command line.
 	 *
 	 * @param args
-	 *            one or two paths to directories may be given as arguments.
-	 *            First arg (mandatory) is input directory containing pdf files.
-	 *            Second (optional) is output directory where XML files should
-	 *            be stored. If no output directory is specified, output will be
-	 *            stored in subdirectory of input directory called "pdfx-out".
+	 *            two paths to directories have to be given as arguments.
+	 *            First arg is input directory containing pdf files.
+	 *            Second is output directory where XML files should
+	 *            be stored.
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		new PdfxXmlCreator().run(args);
 	}
 
-	private void run(String[] args)
-	{
+	private void run(String[] args) {
 		new CommandLineArgumentHandler().parseInput(args, this);
 		process(input, output);
 	}
