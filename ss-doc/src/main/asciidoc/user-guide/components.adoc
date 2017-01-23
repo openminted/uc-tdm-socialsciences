@@ -187,6 +187,9 @@ The following arguments have to be provided for the program:
 be used instead of a custom model.
 
 The results will be written again to XMI files, containing the annotations produced by the Named Entity Recognizer.
+Example:
+
+ <NamedEntity:LOC xmi:id="46865" sofa="46711" begin="7014" end="7027" value="LOC" />
 
 ==== Evaluate the performance of any model
 We also provide a means to evaluate the results of NER. Use `PerformanceMeasure` for evaluation.
