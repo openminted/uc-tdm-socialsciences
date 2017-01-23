@@ -80,6 +80,8 @@ model.
 To train your own custom model, you will need annotated training data.
 The training data has to be in TSV format with one token per line, sentences separated by newlines, and annotations
 in the second column.
+
+===== Creating training data in correct format
 If your training data is in binary CAS format (e.g. exported from WebAnno), you can use the
 `BinaryCasToStanfordTsvConverter` to perform the conversion.
 
@@ -137,7 +139,7 @@ Whereas in the second case, the flag has not been set:
 
 Here, both are labeled with the same coarse class 'organization' (ORG). Thus, setting the `-subtypes` flag allows to differentiate sub-types of annotations, but mind that this means an increase in the number of classes for training.
 
-
+===== Training the model
 Use the class StanfordNERTrainer to train a new model with training data. 
 You will have to provide a file containing the training properties. 
 
