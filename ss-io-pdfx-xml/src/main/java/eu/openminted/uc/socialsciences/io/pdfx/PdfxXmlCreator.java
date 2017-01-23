@@ -156,7 +156,7 @@ public class PdfxXmlCreator {
 		// create output directory
 		if (!Files.exists(outputDirectoryPath)) {
 			try {
-				Files.createDirectory(outputDirectoryPath);
+				Files.createDirectories(outputDirectoryPath);
 				logger.info("Successfully created output directory: " + outputDirectoryPath.toUri());
 			} catch (IOException e) {
 				logger.error("IO Exception occurred when trying to create output directory.", e);
