@@ -76,12 +76,6 @@
                 <entry key="DC.creator" value="OpenMinTeD project"/>
                 <entry key="DC.identifier" value="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/de/omtd-ner-model-de-20170104-1.ser.gz"/>
                 <entry key="DC.rights" value="https://creativecommons.org/licenses/by-nc-sa/3.0/"/>
-                <entry key="ner.tag.map.0" value="O"/>
-                <entry key="ner.tag.map.per" value="PER"/>
-                <entry key="ner.tag.map.loc" value="LOC"/>
-                <entry key="ner.tag.map.org" value="ORG"/>
-                <entry key="ner.tag.map.sub" value="SUB"/>
-                <entry key="ner.tag.map.oth" value="OTH"/>
             </metadata>
         </install-stub-and-upstream-file>
     </target>
@@ -112,12 +106,6 @@
                 <entry key="DC.creator" value="OpenMinTeD project"/>
                 <entry key="DC.identifier" value="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/en/omtd-ner-model-en-20170104-1.ser.gz"/>
                 <entry key="DC.rights" value="https://creativecommons.org/licenses/by-nc-sa/3.0/"/>
-                <entry key="ner.tag.map.0" value="O"/>
-                <entry key="ner.tag.map.per" value="PER"/>
-                <entry key="ner.tag.map.loc" value="LOC"/>
-                <entry key="ner.tag.map.org" value="ORG"/>
-                <entry key="ner.tag.map.sub" value="SUB"/>
-                <entry key="ner.tag.map.oth" value="OTH"/>
             </metadata>
         </install-stub-and-upstream-file>
     </target>
