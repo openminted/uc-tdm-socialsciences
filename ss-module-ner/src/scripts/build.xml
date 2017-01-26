@@ -19,12 +19,6 @@
     </import>
 
     <!--
-      - Upstream versions - meta data versions are maintained per model below
-      -->
-
-    <property name="core.german.date" value="2016-10-31"/>
-
-    <!--
       - Output package configuration
       -->
     <property name="outputPackage" value="de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib"/>
