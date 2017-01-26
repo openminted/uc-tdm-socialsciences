@@ -51,24 +51,24 @@
     <target name="omtd-ner-model-de">        
         <mkdir dir="target/download"/>
         <get
-                src="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/de/omtd-ner-model-de-20170124-1.ser.gz"
-                dest="target/download/omtd-ner-model-de-20170124-1.ser.gz"
+                src="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/de/omtd-ner-model-de-20170125.ser.gz"
+                dest="target/download/omtd-ner-model-de-20170125.ser.gz"
                 skipexisting="true"/>
         <install-stub-and-upstream-file
-                file="target/download/omtd-ner-model-de-20170124-1.ser.gz"
-                md5="71e7b6a9a9ee5d9e05b26a97589f9838"
+                file="target/download/omtd-ner-model-de-20170125.ser.gz"
+                md5="6450ec8c83037bf9aacd6b1a97ff7559"
                 groupId="de.tudarmstadt.ukp.dkpro.core"
                 artifactIdBase="de.tudarmstadt.ukp.dkpro.core.stanfordnlp"
-                upstreamVersion="20170124"
+                upstreamVersion="20170125"
                 metaDataVersion="1"
                 tool="ner"
                 language="de"
                 variant="openminted_ss_model.crf"
                 extension="ser.gz">
             <metadata>
-                <entry key="DC.title" value="omtd-ner-model-de-20170124-1.ser.gz"/>
+                <entry key="DC.title" value="omtd-ner-model-de-20170125.ser.gz"/>
                 <entry key="DC.creator" value="OpenMinTeD project"/>
-                <entry key="DC.identifier" value="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/de/omtd-ner-model-de-20170124-1.ser.gz"/>
+                <entry key="DC.identifier" value="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/de/omtd-ner-model-de-20170125.ser.gz"/>
                 <entry key="DC.rights" value="https://creativecommons.org/licenses/by-nc-sa/3.0/"/>
             </metadata>
         </install-stub-and-upstream-file>
@@ -81,24 +81,24 @@
     <target name="omtd-ner-model-en">
         <mkdir dir="target/download"/>
         <get
-                src="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/en/omtd-ner-model-en-20170124-1.ser.gz"
-                dest="target/download/omtd-ner-model-en-20170124-1.ser.gz"
+                src="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/en/omtd-ner-model-en-20170125.ser.gz"
+                dest="target/download/omtd-ner-model-en-20170125.ser.gz"
                 skipexisting="true"/>
         <install-stub-and-upstream-file
-                file="target/download/omtd-ner-model-en-20170124-1.ser.gz"
-                md5="4b943c9ed3c08e562325eabc7776f7be"
+                file="target/download/omtd-ner-model-en-20170125.ser.gz"
+                md5="0aa00a619902ff4329851a5a61ad548b"
                 groupId="de.tudarmstadt.ukp.dkpro.core"
                 artifactIdBase="de.tudarmstadt.ukp.dkpro.core.stanfordnlp"
-                upstreamVersion="20170124"
+                upstreamVersion="20170125"
                 metaDataVersion="1"
                 tool="ner"
                 language="en"
                 variant="openminted_ss_model.crf"
                 extension="ser.gz">
             <metadata>
-                <entry key="DC.title" value="omtd-ner-model-en-20170124-1.ser.gz"/>
+                <entry key="DC.title" value="omtd-ner-model-en-20170125.ser.gz"/>
                 <entry key="DC.creator" value="OpenMinTeD project"/>
-                <entry key="DC.identifier" value="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/en/omtd-ner-model-en-20170124-1.ser.gz"/>
+                <entry key="DC.identifier" value="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/en/omtd-ner-model-en-20170125.ser.gz"/>
                 <entry key="DC.rights" value="https://creativecommons.org/licenses/by-nc-sa/3.0/"/>
             </metadata>
         </install-stub-and-upstream-file>
