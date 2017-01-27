@@ -43,10 +43,7 @@ public class Pipeline
 	{
 		new CommandLineArgumentHandler().parseInput(args, this);
 
-		final String modelVariant = "ss_model.crf";
-		//fixme currently model files should be located on the classpath i.e.
-		//		 	target/classes
-		//		 so that the pipeline works.
+		final String modelVariant = "openminted_ss_model.crf";
 		try {
 			CollectionReaderDescription reader;
 			reader = createReaderDescription(XmiReader.class,

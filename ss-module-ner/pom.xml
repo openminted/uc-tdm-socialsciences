@@ -12,7 +12,32 @@
 		<dkpro.statistics.version>2.1.0</dkpro.statistics.version>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-de-openminted_ss_model.crf</artifactId>
+				<version>20170125.1</version>
+			</dependency>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-en-openminted_ss_model.crf</artifactId>
+				<version>20170125.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<!-- Models -->
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-de-openminted_ss_model.crf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-en-openminted_ss_model.crf</artifactId>
+		</dependency>
+
 		<!-- project modules -->
 		<dependency>
 			<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
