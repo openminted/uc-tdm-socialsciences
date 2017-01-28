@@ -29,7 +29,7 @@ public class PerformanceMeasureTest {
         {
             if (predictionJcasMap.containsKey(key))
             {
-                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key);
+                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key, true);
             }
         }
     }
@@ -44,7 +44,7 @@ public class PerformanceMeasureTest {
         {
             if (predictionJcasMap.containsKey(key))
             {
-                calculatePrecision(goldJcasMap.get(key), predictionJcasMap.get(key));
+                calculatePrecision(goldJcasMap.get(key), predictionJcasMap.get(key), true);
             }
         }
     }
@@ -59,7 +59,7 @@ public class PerformanceMeasureTest {
         {
             if (predictionJcasMap.containsKey(key))
             {
-                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key);
+                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key, true);
             }
         }
     }

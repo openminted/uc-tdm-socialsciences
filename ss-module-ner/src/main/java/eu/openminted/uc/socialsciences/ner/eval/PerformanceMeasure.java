@@ -53,6 +53,10 @@ public class PerformanceMeasure {
             "(cf. documentId attribute in xmi file). If this requirement is not satisfied, program will not work properly.")
     private boolean strictId = false;
 
+    @Option(name = "-v", usage = "[optional] verbose output flag. If this flag is set, output will " +
+            "contain comprehensive information about tags found in gold and prediction sets.")
+    private boolean verbose = false;
+
     public static void main(String[] args)
             throws ResourceInitializationException
     {
@@ -64,12 +68,15 @@ public class PerformanceMeasure {
     {
         new CommandLineArgumentHandler().parseInput(args, this);
 
+        logger.info(String.format("Gold path: %s", inputGold));
         Map<String, JCas> goldJcasMap = PerformanceMeasure.getJcases(
                 inputGold, strictId);
-        logger.info("Found [" + goldJcasMap.size() + "] documents in gold document path.");
+        logger.info(String.format("Found [%d] documents in gold document path.", goldJcasMap.size()));
+
+        logger.info(String.format("Prediction path: %s", inputPrediction));
         Map<String, JCas> predictionJcasMap = PerformanceMeasure.getJcases(
                 inputPrediction, strictId);
-        logger.info("Found [" + predictionJcasMap.size() + "] documents in prediction document path.");
+        logger.info(String.format("Found [%d] documents in prediction document path.", predictionJcasMap.size()));
 
 
         for (String key : goldJcasMap.keySet())
@@ -80,15 +87,15 @@ public class PerformanceMeasure {
             } else
             {
                 System.out.printf("%nCalculating agreement scores for doc [%s]%n", key);
-                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key);
+                calculateAgreement(goldJcasMap.get(key), predictionJcasMap.get(key), key, verbose);
 
                 System.out.printf("%nCalculating precision/recall scores for doc [%s]%n", key);
-                calculatePrecision(goldJcasMap.get(key), predictionJcasMap.get(key));
+                calculatePrecision(goldJcasMap.get(key), predictionJcasMap.get(key), verbose);
             }
         }
     }
 
-    public static void calculateAgreement(JCas goldJcas, JCas predictionJcas, String docId)
+    public static void calculateAgreement(JCas goldJcas, JCas predictionJcas, String docId, boolean verbose)
     {
         final int raterOne = 0;
         final int raterTwo = 1;
@@ -122,27 +129,29 @@ public class PerformanceMeasure {
             unitizingStudy.addUnit(begin, length, raterTwo, category);
         }
 
-        System.out.println("************************");
-        System.out.printf("gold categories in document %s %n", docId);
-        for (String set : currentGoldCategories)
-            System.out.printf("\t%s %n", set);
-        System.out.println("************");
-        System.out.printf("prediction categories in document %s %n", docId);
-        for (String set:currentPredictionCategories)
-            System.out.printf("\t%s %n", set);
-        System.out.println("************************");
+        if (verbose)
+        {
+            System.out.println("************************");
+            System.out.printf("gold categories in document %s %n", docId);
+            for (String set : currentGoldCategories)
+                System.out.printf("\t%s %n", set);
+            System.out.println("************");
+            System.out.printf("prediction categories in document %s %n", docId);
+            for (String set:currentPredictionCategories)
+                System.out.printf("\t%s %n", set);
+            System.out.printf("************************%n%n");
+        }
 
-
-        System.out.printf("%nAgreement scores on file [%s] %n", docId);
+        System.out.printf("Agreement scores on file [%s] %n", docId);
         KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(unitizingStudy);
 
         for(String category : currentGoldCategories)
-            System.out.printf("\t\tAlpha for category %s: %f %n", category, alpha.calculateCategoryAgreement(category));
+            System.out.printf("\t-\tAlpha for category %s: %f %n", category, alpha.calculateCategoryAgreement(category));
 
         System.out.printf("\tOverall Alpha: %f %n", alpha.calculateAgreement());
     }
 
-    public static void calculatePrecision(JCas goldJcas, JCas predictionJcas)
+    public static void calculatePrecision(JCas goldJcas, JCas predictionJcas, boolean verbose)
     {
         List<MyAnnotation> goldAnnotations = new ArrayList<>();
         List<MyAnnotation> predictedAnnotations = new ArrayList<>();
@@ -169,8 +178,13 @@ public class PerformanceMeasure {
 
         FMeasure fMeasure = new FMeasure();
         int hitCount = fMeasure.process(goldAnnotations, predictedAnnotations);
+        if (verbose)
+        {
+            System.out.printf("Total annotations in gold file: %d%n", goldAnnotations.size());
+            System.out.printf("Intersection of annotations found in gold and prediction file: %d%n", hitCount);
+        }
 
-        System.out.printf("%nFMeasure scores%n");
+        System.out.printf("FMeasure scores%n");
         System.out.printf("\tOverall precision: %f %n", fMeasure.getPrecision());
         System.out.printf("\tOverall recall: %f %n", fMeasure.getRecall());
         System.out.printf("\tOverall F-Measure: %f %n", fMeasure.getFMeasure());
