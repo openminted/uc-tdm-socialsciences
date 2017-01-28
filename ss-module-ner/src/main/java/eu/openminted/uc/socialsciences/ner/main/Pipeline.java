@@ -61,7 +61,8 @@ public class Pipeline
 					XmiWriter.class,
 					XmiWriter.PARAM_TARGET_LOCATION, output,
 					XmiWriter.PARAM_OVERWRITE, true,
-					XmiWriter.PARAM_STRIP_EXTENSION, true);
+					XmiWriter.PARAM_STRIP_EXTENSION, true,
+					XmiWriter.PARAM_USE_DOCUMENT_ID, true);
 			runPipeline(reader, ner, xmiWriter);
 		} catch (UIMAException | IOException e) {
 			logger.error("An error has occurred.", e);
