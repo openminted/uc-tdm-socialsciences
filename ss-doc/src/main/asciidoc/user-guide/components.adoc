@@ -95,9 +95,11 @@ The following arguments have to be provided for the program:
 * *-i <path>* path to input documents containing annotations in binary CAS format. This path can either point to a
 single file or a directory.
 * *-o <path>* (optional) path of output file. Default: ./stanfordTrain.tsv
-* *-subtypes <value>* [optional] useSubTypes flag. If set, value and modifier of an annotation will be merged to create more fine-grained classes.
+* *-subtypes <value>* [optional] useSubTypes flag. If set, value and modifier of an annotation will be merged to
+create more fine-grained classes.
 
-To see the difference the setting of the `-subtypes` flag makes, consider the following excerpt from a training data file. In the first case, the flag is set:
+To see the difference the setting of the `-subtypes` flag makes, consider the following excerpt from a training data
+file. In the first case, the flag is set:
 --------------------------------------
  by	O
  the	O
@@ -137,14 +139,16 @@ Whereas in the second case, the flag has not been set:
  Economics	I-ORG
 --------------------------------------
 
-Here, both are labeled with the same coarse class 'organization' (ORG). Thus, setting the `-subtypes` flag allows to differentiate sub-types of annotations, but mind that this means an increase in the number of classes for training.
+Here, both are labeled with the same coarse class 'organization' (ORG). Thus, setting the `-subtypes` flag allows to
+differentiate sub-types of annotations, but mind that this means an increase in the number of classes for training.
 
 ===== Training the model
 Use the class StanfordNERTrainer to train a new model with training data. 
 You will have to provide a file containing the training properties. 
 
 IMPORTANT: Training might require a lot of memory (RAM).
-How much is needed is highly dependent on the number and type of features, on the amount of training data and on the number of different class labels in the training data.
+How much is needed is highly dependent on the number and type of features, on the amount of training data and on the
+number of different class labels in the training data.
 
 *Usage:*
 
@@ -162,9 +166,11 @@ key-value-pairs like this:
 
  parameter = value
  
-You can find detailed descriptions of available training parameters in the FAQ of the Stanford CoreNLP NER: http://nlp.stanford.edu/software/crf-faq.html
+You can find detailed descriptions of available training parameters in the FAQ of the Stanford CoreNLP NER:
+http://nlp.stanford.edu/software/crf-faq.html
 
-Mind that it is in general possible to set paths to training file(s) and model output file also in the training properties file, but these values will be overriden.
+Mind that it is in general possible to set paths to training file(s) and model output file also in the training
+properties file, but these values will be overriden.
 
 ==== Apply a trained model to new, un-annotated data
 With the Pipeline, you can input un-labeled data and apply a NER model to it, such that the output will contain labels
@@ -207,32 +213,36 @@ Both have to be in XMI format again.
 
 The following arguments have to be provided for the program:
 
-* *-iGold <path>* path to gold data with correct labels. Can also be a pattern for matching files in a directory, e.g. ./****/*.xmi
+* *-iGold <path>* path to gold data with correct labels. Can also be a pattern for matching files in a directory,
+e.g. ./****/*.xmi
 * *-iPred <path>* path to prediction data, i.e. labeled by an algorithm. Can also be a pattern for matching files
 in a directory, e.g. ./****/*.xmi
 * *-strictId* (optional) If set, for each Gold-document there should be a Prediction-document in the prediction
 set with identical documentId (cf. documentId attribute in xmi file). If this requirement is not satisfied,
 program will not work properly.
+* *-v" (optional) verbose output flag. If this flag is set, output will contain comprehensive information about
+tags found in gold and prediction sets.
 
 The program will output agreement scores as well as precision and recall. The output will look similar to this:
 
 --------------------------------------
-Agreement scores on file [3]
-                Alpha for category OTHevt: -0,002954
-                Alpha for category ORGsci: -0,002556
-                Alpha for category LOC: 0,097573
-                Alpha for category PERind: 0,066458
-                Alpha for category OTHmed: -0,002251
-                Alpha for category ORGoth: 0,375528
-                Alpha for category OTHoff: 0,636486
-                Alpha for category PERgrp: -0,000983
-                Alpha for category ORGgov: -0,000386
-        Overall Alpha: 0,207015
+Calculating agreement scores for doc [5]
+Agreement scores on file [5]
+	-	Alpha for category OTHevt: -0.000365
+	-	Alpha for category LOC: 0.539081
+	-	Alpha for category ORGsci: 0.555925
+	-	Alpha for category PERind: 0.641172
+	-	Alpha for category OTHmed: 1.000000
+	-	Alpha for category ORGoth: 0.817166
+	-	Alpha for category OTHoff: -0.000134
+	-	Alpha for category SUBthe: -0.000594
+	-	Alpha for category ORGgov: 1.000000
+	-	Alpha for category SUBres: 1.000000
+	Overall Alpha: 0.691863
 
-Calculating precision/recall scores for doc [3]
-
+Calculating precision/recall scores for doc [5]
 FMeasure scores
-        Overall precision: 0,023529
-        Overall recall: 0,035714
-        Overall F-Measure: 0,028369
+	Overall precision: 0.601852
+	Overall recall: 0.970149
+	Overall F-Measure: 0.742857
 --------------------------------------
