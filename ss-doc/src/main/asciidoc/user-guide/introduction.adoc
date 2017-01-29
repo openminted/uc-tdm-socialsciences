@@ -16,9 +16,29 @@ Get sources from GitHub:
 
 https://github.com/openminted/uc-tdm-socialsciences
 
-Project snapshot builds can be retrieved from:
+To use the latest snapshot, please add the following piece to your pom file:
 
-https://builds.openminted.eu/job/uc-socialsciences/
+--------------------------------------
+<repository>
+    <id>openminted.snapshots</id>
+    <name>OpenMinTeD Project Snapshot Repository</name>
+    <url>https://repo.openminted.eu/content/repositories/snapshots</url>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+</repository>
+
+<dependencies>
+    <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+</dependencies>
+--------------------------------------
 
 Developers mailing list (request to join):
 
