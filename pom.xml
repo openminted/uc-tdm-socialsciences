@@ -8,7 +8,14 @@
 	<name>social sciences text and data mining use-case</name>
 	<description>This software package contains components for text mining in scientific publicatons.</description>
 	<url>https://github.com/openminted/uc-tdm-socialsciences</url>
+	<organization>
+		<name>OpenMinTeD</name>
+		<url>http://openminted.eu/</url>
+	</organization>
 	<inceptionYear>2016</inceptionYear>
+	<prerequisites>
+		<maven>3.3.3</maven>
+	</prerequisites>
 
 	<modules>
 		<module>ss-tools-experiments</module>
@@ -68,6 +75,15 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<mailingLists>
+		<mailingList>
+			<name>SS TDM Software Collection developers mailing list</name>
+			<archive>https://groups.google.com/forum/#!forum/uc-tdm-socialsciences-developers</archive>
+			<post>uc-tdm-socialsciences-developers@googlegroups.com</post>
+			<subscribe>uc-tdm-socialsciences-developers+subscribe@googlegroups.com</subscribe>
+			<unsubscribe>uc-tdm-socialsciences-developers+unsubscribe@googlegroups.com</unsubscribe>
+		</mailingList>
+	</mailingLists>
 	<ciManagement>
 		<system>Jenkins</system>
 		<url>https://builds.openminted.eu/</url>
@@ -219,6 +235,46 @@
 	</dependencyManagement>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<notimestamp>true</notimestamp>
+					<groups>
+						<group>
+							<title>I/O Components</title>
+							<packages>eu.openminted.uc.socialsciences.io*</packages>
+						</group>
+						<group>
+							<title>Named Entity Recognition</title>
+							<packages>eu.openminted.uc.socialsciences.ner*</packages>
+						</group>
+					</groups>
+					<!--<sourceFileExcludes>
+						<exclude>**/*_Type.java</exclude>
+					</sourceFileExcludes>-->
+					<tags>
+						<tag>
+							<name>generated</name>
+							<placement>X</placement>
+						</tag>
+						<tag>
+							<name>ordered</name>
+							<placement>X</placement>
+						</tag>
+						<tag>
+							<name>modifiable</name>
+							<placement>X</placement>
+						</tag>
+					</tags>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.uima</groupId>
+				<artifactId>uimafit-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
