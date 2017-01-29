@@ -18,20 +18,24 @@ import de.tudarmstadt.ukp.dkpro.core.testing.TestRunner;
 
 public class NERTest
 {
-    //fixme
-    @Ignore
     @Test
     public void testEnglish()
        throws Exception
     {
-        JCas jcas = runTest("en", "openminted_ss_model.crf", "10 jaar Markus werkzaam bij SAP in Duitsland .");
+        String variant = "openminted_ss_model.crf";
+        String language = "en";
+        String testDocument1 = "was reversed during the Vietnam War in the 1960s";
+        JCas jcas = runTest(language, variant, testDocument1);
 
-        String[] ne = {
-                "[  8, 14]Person(I-PER) (Markus)",
-                "[ 28, 31]Organization(I-ORG) (SAP)",
-                "[ 35, 44]Location(I-LOC) (Duitsland)" };
+        String[] neArray1 = {
+                "[ 24, 35]NamedEntity(OTHevt) (Vietnam War)"};
+        AssertAnnotations.assertNamedEntity(neArray1, select(jcas, NamedEntity.class));
 
-        AssertAnnotations.assertNamedEntity(ne, select(jcas, NamedEntity.class));
+        String testDocument2 = "Europeans are leading the way in having already embraced an additional identity.";
+        jcas = runTest(language, variant, testDocument2);
+        String[] neArray2 = {
+                "[  0,  9]NamedEntity(PERgrp) (Europeans)"};
+        AssertAnnotations.assertNamedEntity(neArray2, select(jcas, NamedEntity.class));
     }
 
     @Test
