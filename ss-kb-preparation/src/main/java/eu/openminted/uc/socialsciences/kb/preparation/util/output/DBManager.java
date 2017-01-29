@@ -53,10 +53,6 @@ public class DBManager {
 		this.conn = c;
 	}
 
-	/**
-	 *
-	 *
-	 */
 	public static DBManager getInstance(boolean test) {
 		// return instance if it is not null and the connection is alive
 		try {

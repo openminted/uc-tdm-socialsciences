@@ -27,8 +27,10 @@ public class Pipeline
 	@Option(name="-home", usage = "Path to application home where required files (e.g. dictionary files) are located",
 			required = true)
 	private String homePath = null;
+
 	/**
 	 * The pipeline for converting a collection of PDF documents to XMI format
+	 * @param args program arguments
 	 */
 	public static void main(String[] args) {
 		new Pipeline().run(args);

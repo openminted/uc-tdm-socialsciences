@@ -17,7 +17,7 @@ import webanno.custom.Reference;
 
 /**
  * Reader for PDFX XML format.
- * </br>
+ * <br>
  * <b>note:</b> This reader is expected to ignore figures and tables (also their captions) inside the document.
  * <br>
  * schema available at : http://pdfx.cs.man.ac.uk/static/article-schema.xsd

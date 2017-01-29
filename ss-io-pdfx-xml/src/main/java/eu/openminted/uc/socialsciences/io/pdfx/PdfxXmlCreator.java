@@ -57,6 +57,7 @@ public class PdfxXmlCreator {
 
 	/**
 	 * Main method. Used for invoking the converter from command line.
+	 * @param args program arguments
 	 * */
 	public static void main(String[] args) {
 		new PdfxXmlCreator().run(args);

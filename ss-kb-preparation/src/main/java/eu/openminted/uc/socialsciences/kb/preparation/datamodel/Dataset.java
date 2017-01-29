@@ -44,7 +44,7 @@ public class Dataset implements Serializable {
 	/**
 	 * Get dataset title.
 	 *
-	 * @return
+	 * @return title
 	 */
 	public String getTitle() {
 		return title;

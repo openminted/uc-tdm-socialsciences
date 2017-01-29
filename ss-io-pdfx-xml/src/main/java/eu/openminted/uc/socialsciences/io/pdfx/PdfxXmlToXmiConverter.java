@@ -86,9 +86,10 @@ public class PdfxXmlToXmiConverter {
 
 	/**
 	 * Main method to run the converter from command line.
+	 * @param args program arguments
 	 *
-	 * @throws UIMAException
-	 * @throws IOException
+	 * @throws UIMAException uima exception
+	 * @throws IOException io exception
 	 */
 	public static void main(String[] args)
 			throws UIMAException, IOException
@@ -144,8 +145,9 @@ public class PdfxXmlToXmiConverter {
 	 *            The path to the XML file to be converted
 	 * @param outputResource
 	 *            The path of the output file
-	 * @throws UIMAException
-	 * @throws IOException
+	 * @param language language of input documents
+	 * @throws UIMAException uima exception
+	 * @throws IOException ui exception
 	 */
 	public void convertToXmi(String inputResource, String outputResource, String language)
 			throws UIMAException, IOException
@@ -236,8 +238,9 @@ public class PdfxXmlToXmiConverter {
 	 *            The path to the XML file to be converted
 	 * @param outputResource
 	 *            The path of the output file for the dump
-	 * @throws UIMAException
-	 * @throws IOException
+	 * @param language language of input document
+	 * @throws UIMAException uima exception
+	 * @throws IOException io exception
 	 */
 	public void createCasDump(String inputResource, String outputResource, String language)
 			throws UIMAException, IOException

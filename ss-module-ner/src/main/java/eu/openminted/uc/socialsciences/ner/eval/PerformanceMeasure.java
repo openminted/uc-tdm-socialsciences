@@ -29,7 +29,9 @@ import java.util.*;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 
 /**
- * @implNote When argument strictId is set to false (default value) for each Gold-document there should be a
+ * Class for evaluating system performance
+ *
+ * <b>Note:</b> When argument strictId is set to false (default value) for each Gold-document there should be a
  * Prediction-document in the prediction set with identical documentId (cf. documentId attribute in xmi file). If
  * this requirement is not satisfied, #PerformanceMeasure.{@link #main(String[])} method will not work
  * properly.
