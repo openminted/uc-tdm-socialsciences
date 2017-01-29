@@ -34,20 +34,27 @@ public class NERTest
         AssertAnnotations.assertNamedEntity(ne, select(jcas, NamedEntity.class));
     }
 
-    //fixme
-    @Ignore
     @Test
     public void testGerman()
        throws Exception
     {
-        JCas jcas = runTest("de", "openminted_ss_model.crf", "10 jaar Markus werkzaam bij SAP in Duitsland .");
+        String testDocument1 = "verschiedene Workshops an Der Deutschen Bibliothek und der Aufbau eines " +
+                "Kompetenznetzwerks zum Thema Langzeitarchivierung,";
+        String variant = "openminted_ss_model.crf";
+        String language = "de";
+        JCas jcas = runTest(language, variant, testDocument1);
 
-        String[] ne = {
-                "[  8, 14]Person(I-PER) (Markus)",
-                "[ 28, 31]Organization(I-ORG) (SAP)",
-                "[ 35, 44]Location(I-LOC) (Duitsland)" };
+        String[] neArray1 = {
+                "[ 30, 50]NamedEntity(ORGoth) (Deutschen Bibliothek)"};
+        AssertAnnotations.assertNamedEntity(neArray1, select(jcas, NamedEntity.class));
 
-        AssertAnnotations.assertNamedEntity(ne, select(jcas, NamedEntity.class));
+        String testDocument2 = "von den Verfassern zusammen mit Prof. Wolfram Koch von der GDCh durchgeführte";
+        jcas = runTest(language, variant, testDocument2);
+        String[] neArray2 = {
+                "[ 32, 50]NamedEntity(PERind) (Prof. Wolfram Koch)",
+                "[ 59, 63]NamedEntity(ORGsci) (GDCh)"};
+        AssertAnnotations.assertNamedEntity(neArray2, select(jcas, NamedEntity.class));
+
     }
     
 
