@@ -140,18 +140,20 @@ public class MyIobEncoderTest {
 		ne2.setModifier("ind");
 		ne2.addToIndexes();
 
-		NamedEntity ne3 = new NamedEntity(jcas, tokens.get(13).getBegin(), tokens.get(14).getEnd());
-		ne3.setValue("LOC");
-		ne3.setModifier("");
-		ne3.addToIndexes();
-
 		/*
-		 * overlaps with ne3
+		 * overlaps with ne4
 		 */
-		NamedEntity ne4 = new NamedEntity(jcas, tokens.get(12).getBegin(), tokens.get(13).getEnd());
-		ne4.setValue("ORG");
-		ne4.setModifier("gov");
+        NamedEntity ne3 = new NamedEntity(jcas, tokens.get(12).getBegin(), tokens.get(13).getEnd());
+        ne3.setValue("ORG");
+        ne3.setModifier("gov");
+        ne3.addToIndexes();
+
+		NamedEntity ne4 = new NamedEntity(jcas, tokens.get(13).getBegin(), tokens.get(14).getEnd());
+		ne4.setValue("LOC");
+		ne4.setModifier("");
 		ne4.addToIndexes();
+
+
 
 		return cb.getJCas();
 	}

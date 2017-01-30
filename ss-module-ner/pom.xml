@@ -45,6 +45,12 @@
 		</dependency>
 		<!--  -->
 
+		<!-- https://mvnrepository.com/artifact/it.unimi.dsi/fastutil -->
+		<dependency>
+			<groupId>it.unimi.dsi</groupId>
+			<artifactId>fastutil</artifactId>
+			<version>7.0.13</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.uima</groupId>
 			<artifactId>uimaj-core</artifactId>
@@ -90,16 +96,6 @@
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.conll-asl</artifactId>
-			<version>${dkpro.core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.eval-asl</artifactId>
-			<version>${dkpro.core.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.datasets-asl</artifactId>
 			<version>${dkpro.core.version}</version>
 		</dependency>
 
