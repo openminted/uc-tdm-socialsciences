@@ -3,7 +3,6 @@ package eu.openminted.uc.socialsciences.ner.eval;
 import de.tudarmstadt.ukp.dkpro.core.api.io.IobEncoder;
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import de.tudarmstadt.ukp.dkpro.core.eval.measure.FMeasure;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder;

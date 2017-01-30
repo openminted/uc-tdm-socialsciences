@@ -19,7 +19,6 @@ import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
-import org.apache.uima.fit.descriptor.MimeTypeCapability;
 import org.apache.uima.fit.descriptor.TypeCapability;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -27,7 +26,6 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.io.JCasFileWriter_ImplBase;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
-import de.tudarmstadt.ukp.dkpro.core.api.parameter.MimeTypes;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder;
@@ -43,7 +41,8 @@ import webanno.custom.NamedEntity;
  *
  * @author neumanmy
  */
-@MimeTypeCapability({ MimeTypes.TEXT_X_CONLL_2003 })
+//todo this will come in next uimafit release
+//@MimeTypeCapability({ MimeTypes.TEXT_X_CONLL_2003 })
 @TypeCapability(
 		inputs = {
 				"de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
