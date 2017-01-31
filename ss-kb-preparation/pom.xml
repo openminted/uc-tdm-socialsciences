@@ -6,7 +6,6 @@
 		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<!-- <groupId>eu.openminted.uc-tdm-socialsciences</groupId> <version>0.0.1-SNAPSHOT</version> -->
 	<artifactId>ss-kb-preparation</artifactId>
 
 	<properties>
