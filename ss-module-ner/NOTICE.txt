@@ -1,0 +1,3 @@
+Following classes contain code backported from DKPro Core 1.8.0+
+    eu.openminted.uc.socialsciences.ner.eval.FMeasure
+    eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder
