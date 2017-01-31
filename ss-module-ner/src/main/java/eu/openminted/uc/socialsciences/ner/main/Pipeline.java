@@ -6,6 +6,7 @@ import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 import java.io.IOException;
 
+import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import org.apache.log4j.LogManager;
@@ -14,7 +15,6 @@ import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.spi.BooleanOptionHandler;
@@ -47,7 +47,8 @@ public class Pipeline
 		try {
 			CollectionReaderDescription reader;
 			reader = createReaderDescription(XmiReader.class,
-					XmiReader.PARAM_SOURCE_LOCATION, input);
+					XmiReader.PARAM_SOURCE_LOCATION, input,
+					XmiReader.PARAM_LENIENT, true);
 
 			AnalysisEngineDescription ner = useStanfordModels ?
 					createEngineDescription(StanfordNamedEntityRecognizer.class)

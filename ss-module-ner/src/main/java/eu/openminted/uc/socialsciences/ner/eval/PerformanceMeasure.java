@@ -195,7 +195,8 @@ public class PerformanceMeasure {
             throws ResourceInitializationException
     {
         CollectionReaderDescription reader = createReaderDescription(XmiReader.class,
-                XmiReader.PARAM_SOURCE_LOCATION, documentPathPattern);
+                XmiReader.PARAM_SOURCE_LOCATION, documentPathPattern,
+                XmiReader.PARAM_LENIENT, true);
 
         Map<String, JCas> result = new HashMap<>();
         int count = 0;

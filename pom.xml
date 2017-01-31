@@ -103,7 +103,7 @@
 		<uima.version>2.9.0</uima.version>
 		<uimafit.version>2.2.0</uimafit.version>
 		<uimafit.plugin.version>2.2.0</uimafit.plugin.version>
-		<dkpro.core.version>1.9.0-SNAPSHOT</dkpro.core.version>
+		<dkpro.core.version>1.8.0</dkpro.core.version>
 		<log4j.version>2.7</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -155,6 +155,7 @@
 				<artifactId>log4j-api</artifactId>
 				<version>${log4j.version}</version>
 			</dependency>
+			<!-- DKPro Core -->
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 				<artifactId>de.tudarmstadt.ukp.dkpro.core.api.io-asl</artifactId>
@@ -195,6 +196,7 @@
 				<artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
 				<version>${dkpro.core.version}</version>
 			</dependency>
+			<!-- END DKPro Core-->
 			<dependency>
 				<groupId>org.apache.uima</groupId>
 				<artifactId>uimaj-core</artifactId>
