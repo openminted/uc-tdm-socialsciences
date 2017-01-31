@@ -43,6 +43,23 @@ public class Pipeline
 	{
 		new CommandLineArgumentHandler().parseInput(args, this);
 
+		runInternal();
+	}
+
+	public void run()
+	{
+		assertFields();
+		runInternal();
+	}
+
+	private void assertFields() {
+		if(input == null)
+			throw new IllegalArgumentException("input can not be empty!");
+		if(output == null)
+			throw new IllegalArgumentException("output can not be empty!");
+	}
+
+	private void runInternal() {
 		final String modelVariant = "openminted_ss_model.crf";
 		try {
 			CollectionReaderDescription reader;
@@ -69,5 +86,35 @@ public class Pipeline
 			logger.error("An error has occurred.", e);
 			throw new IllegalStateException(e);
 		}
+	}
+
+	public void setInput(String input)
+	{
+		this.input = input;
+	}
+
+	public String getInput()
+	{
+		return input;
+	}
+
+	public void setOutput(String output)
+	{
+		this.output = output;
+	}
+
+	public String getOutput()
+	{
+		return output;
+	}
+
+	public void setUseStanfordModels(boolean value)
+	{
+		useStanfordModels = value;
+	}
+
+	public boolean isUseStanfordModels()
+	{
+		return useStanfordModels;
 	}
 }

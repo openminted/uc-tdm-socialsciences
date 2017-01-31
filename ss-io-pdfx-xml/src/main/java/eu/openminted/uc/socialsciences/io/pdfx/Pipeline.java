@@ -36,10 +36,32 @@ public class Pipeline
 		new Pipeline().run(args);
 	}
 
+	public void run()
+	{
+		assertFields();
+		runInternal();
+	}
+
+	private void assertFields()
+	{
+		if(input==null)
+			throw new IllegalArgumentException("input can not be null!");
+		if(output==null)
+			throw new IllegalArgumentException("output can not be null!");
+		if(language==null)
+			throw new IllegalArgumentException("language can not be null!");
+		if(homePath==null)
+			throw new IllegalArgumentException("homePath can not be null!");
+	}
+
 	private void run(String[] args)
 	{
 		new CommandLineArgumentHandler().parseInput(args, this);
 
+		runInternal();
+	}
+
+	private void runInternal() {
 		PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
 		pdfxXmlCreator.setOverwriteOutput(overwriteOutput);
 
@@ -54,5 +76,48 @@ public class Pipeline
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void setInput(String input)
+	{
+		this.input = input;
+	}
+	public String getInput()
+	{
+		return input;
+	}
+	public void setOutput(String output)
+	{
+		this.output = output;
+	}
+	public String getOutput()
+	{
+		return output;
+	}
+	public void setOverwriteOutput(boolean value)
+	{
+		this.overwriteOutput = value;
+	}
+	public boolean isOverwriteOutput()
+	{
+		return overwriteOutput;
+	}
+
+	public void setLanguage(String language)
+	{
+		this.language = language;
+	}
+	public String getLanguage()
+	{
+		return language;
+	}
+
+	public void setHomePath(String homePath)
+	{
+		this.homePath = homePath;
+	}
+	public String getHomePath()
+	{
+		return homePath;
 	}
 }

@@ -64,11 +64,29 @@ public class PerformanceMeasure {
         new PerformanceMeasure().run(args);
     }
 
+    public void run()
+            throws ResourceInitializationException
+    {
+        assertFields();
+        runInternal();
+    }
+
+    private void assertFields() {
+        if(inputGold==null)
+            throw new IllegalArgumentException("inputGold can not be null.");
+        if(inputPrediction==null)
+            throw new IllegalArgumentException("InputPrediction can not be null.");
+    }
+
     private void run(String[] args)
             throws ResourceInitializationException
     {
         new CommandLineArgumentHandler().parseInput(args, this);
 
+        runInternal();
+    }
+
+    private void runInternal() throws ResourceInitializationException {
         logger.info(String.format("Gold path: %s", inputGold));
         Map<String, JCas> goldJcasMap = PerformanceMeasure.getJcases(
                 inputGold, strictId);
@@ -259,5 +277,38 @@ public class PerformanceMeasure {
         public int hashCode() {
             return Objects.hash(type, begin, length);
         }
+    }
+
+    public void setInputGold(String inputGold)
+    {
+        this.inputGold = inputGold;
+    }
+    public String getInputGold()
+    {
+        return inputGold;
+    }
+    public void setInputPrediction(String inputPrediction)
+    {
+        this.inputPrediction = inputPrediction;
+    }
+    public String getInputPrediction()
+    {
+        return inputPrediction;
+    }
+    public void setStrictId(boolean value)
+    {
+        strictId = value;
+    }
+    public boolean isStrictId()
+    {
+        return strictId;
+    }
+    public void setVerbose(boolean value)
+    {
+        this.verbose = value;
+    }
+    public boolean isVerbose()
+    {
+        return verbose;
     }
 }

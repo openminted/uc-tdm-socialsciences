@@ -37,9 +37,26 @@ public class BinaryCasToTsvConverter {
 		new BinaryCasToTsvConverter().run(args);
 	}
 
+	public void run()
+	{
+		assertFields();
+		runInternal();
+	}
+
+	private void assertFields() {
+		if(inputPath==null)
+			throw new IllegalArgumentException("inputPath can not be null!");
+		if(outputPath==null)
+			throw new IllegalArgumentException("outputPath can not be null!");
+	}
+
 	private void run(String[] args) {
 		new CommandLineArgumentHandler().parseInput(args, this);
 
+		runInternal();
+	}
+
+	private void runInternal() {
 		logger.info("Reading training file from [" + inputPath + "]");
 
 		if (outputPath.equals(DEFAULT_OUTPUT)) {
@@ -62,5 +79,30 @@ public class BinaryCasToTsvConverter {
 		} catch (UIMAException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setInputPath(String inputPath)
+	{
+		this.inputPath = inputPath;
+	}
+	public String getInputPath()
+	{
+		return inputPath;
+	}
+	public void setOutputPath(String outputPath)
+	{
+		this.outputPath = outputPath;
+	}
+	public String getOutputPath()
+	{
+		return outputPath;
+	}
+	public void setUseSubTypes(boolean value)
+	{
+		useSubTypes = value;
+	}
+	public boolean isUseSubTypes()
+	{
+		return useSubTypes;
 	}
 }
