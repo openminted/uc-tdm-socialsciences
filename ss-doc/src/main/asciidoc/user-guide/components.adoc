@@ -5,7 +5,6 @@
 //Components inside eu.openminted.uc.tdm.socialsciences.io.pdfx
 
 ==== PDF to XMI conversion
-[[pdf-conversion]]
 The PDF-to-XMI conversion pipeline can be used to convert a collection of PDF files to XMI format. This pipeline can be
 used via calling the main method, like the following:
 
@@ -28,7 +27,6 @@ NOTE: Currently PDF-to-XML converter can only convert files smaller than 5 MB an
 limit is enforced by the PDFX service which is used internally to convert PDF documents to XML format.
 
 ===== PDF to XML conversion
-[[pdf-to-pdfx]]
 The PdfxXmlCreator class can be used to convert a collection of PDF files to PDFX XML format
 (http://pdfx.cs.man.ac.uk/static/article-schema.xsd[schema]). This class is used internally by PDF-to-XMI converter
 component. This component can be used via calling the main method, like the following:
@@ -44,7 +42,6 @@ The following arguments have to be provided for the program:
 output directory.
 
 ===== PDFX-XML to XMI conversion
-[[pdfx-to-xmi]]
 The PdfxXmlToXmiConverter class can be used to convert a collection of PDFX XML documents to XMI format. This class is
 used internally by PDF-to-XMI converter component. This component can be used via calling the main method, like the
 following:
@@ -62,26 +59,24 @@ output directory.
 * *-home* Path to application home where required files (e.g. dictionary files) are located
 
 === Named Entity Recognition
-
 //Components inside eu.openminted.uc.tdm.socialsciences.ner
-[.lead]
-With this module, you can perform Named Entity Recognition on your own data.
+With this module, you can perform Named Entity Recognition (NER) on your own data.
 
 You can:
 
-* input some annotated data to train your own custom model
-* apply a trained model to new, un-annotated data
-* evaluate the performance of any model
+* input some annotated data to train your own NER model
+* apply a trained NER model to new, un-annotated data
+* evaluate the performance of any NER model
 
-Training your own model is optional, you might also already have a pre-trained model and use that, or apply a standard
-model.
+Training your own model is optional, you might also already have a pre-trained model and use that, or use a model
+provided by third parties (e.g. Stanford website).
 
-==== Train your own custom model
-To train your own custom model, you will need annotated training data.
-The training data has to be in TSV format with one token per line, sentences separated by newlines, and annotations
-in the second column.
+==== Training your own NER model
+To train your own NER model, you will need annotated training data.
+The training data has to be in TSV format with one token per line, each sentence separated by a blank line,
+with the tokens in the first column and annotations in the second column.
 
-===== Creating training data in correct format
+===== Preparing training data
 If your training data is in binary CAS format (e.g. exported from WebAnno), you can use the
 `BinaryCasToStanfordTsvConverter` to perform the conversion.
 
@@ -142,8 +137,8 @@ Whereas in the second case, the flag has not been set:
 Here, both are labeled with the same coarse class 'organization' (ORG). Thus, setting the `-subtypes` flag allows to
 differentiate sub-types of annotations, but mind that this means an increase in the number of classes for training.
 
-===== Training the model
-Use the class StanfordNERTrainer to train a new model with training data. 
+===== Model training
+You can use the StanfordNERTrainer class to train a new NER model with training data.
 You will have to provide a file containing the training properties. 
 
 IMPORTANT: Training might require a lot of memory (RAM).
@@ -172,7 +167,7 @@ http://nlp.stanford.edu/software/crf-faq.html
 Mind that it is in general possible to set paths to training file(s) and model output file also in the training
 properties file, but these values will be overriden.
 
-==== Apply a trained model to new, un-annotated data
+==== Apply a NER model to un-annotated data
 With the Pipeline, you can input un-labeled data and apply a NER model to it, such that the output will contain labels
  for all recognized Named Entities.
 
@@ -200,7 +195,7 @@ Example:
 
  <NamedEntity:LOC xmi:id="46865" sofa="46711" begin="7014" end="7027" value="LOC" />
 
-==== Evaluate the performance of any model
+==== Evaluate the performance of NER model
 We also provide a means to evaluate the results of NER. Use `PerformanceMeasure` for evaluation.
 You will need gold data, i.e. manually annotated data with the correct NE labels. 
 And of course you will need the prediction data, i.e. documents annotated with the NER. 

@@ -8,8 +8,8 @@ Current package contains the following components:
 - PDF-to-XMI converter: for transforming PDF documents (publication full-texts) to XMI format.
 - Named entity recognizer: for identifying named entities in XMI document (supports English and German)
 
-To learn more about each component and to find example code, you can refer to the corresponding test classes for each
-component.
+To learn more about each component you can refer to its corresponding section in this manual, and to find example code
+ you can refer to the corresponding test classes for each component.
 
 === Useful links
 Get sources from GitHub:
@@ -36,6 +36,7 @@ To use the latest snapshot, please add the following piece to your pom file:
         <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
         <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <packaging>pom</packaging>
     </dependency>
 </dependencies>
 --------------------------------------
