@@ -112,17 +112,19 @@ public class PdfxXmlToXmiConverter {
 		logger.info("Output xmi path: " + outputPathXmi);
 		logger.info("Input language: " + inputLanguage);
 
+		logger.info("Conversion started...");
 		convertToXmi(inputPath, outputPathXmi, inputLanguage);
+		logger.info("Process finished.");
 
 		//Create Cas Dump files
-		Path inputDir = Paths.get(inputPath);
+		/*Path inputDir = Paths.get(inputPath);
 		String outputDir = inputDir.toString();
 		for (Path xml : getXmlListFromDirectory(inputDir)) {
 			String inputResource = xml.toString();
 			String outputResourceCasDump = Paths.get(outputDir, FilenameUtils.getBaseName(inputResource) + ".cas.dump")
 					.toString();
 			createCasDump(inputResource, outputResourceCasDump, inputLanguage);
-		}
+		}*/
 	}
 
 	public static List<Path> getXmlListFromDirectory(Path inputDir) {
