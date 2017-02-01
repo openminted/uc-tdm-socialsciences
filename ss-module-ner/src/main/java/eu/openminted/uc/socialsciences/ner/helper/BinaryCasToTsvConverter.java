@@ -57,12 +57,12 @@ public class BinaryCasToTsvConverter {
 	}
 
 	private void runInternal() {
-		logger.info("Reading training file from [" + inputPath + "]");
+		logger.info("Reading input files from [" + inputPath + "]");
 
 		if (outputPath.equals(DEFAULT_OUTPUT)) {
-			logger.info("No path for saving the trained model was specified. Default value will be used.");
+			logger.info("No path for saving the tsv files was specified. Default value will be used.");
 		}
-		logger.info("Will write the trained model to [" + outputPath + "]");
+		logger.info("Will write the output to [" + outputPath + "]");
 
 		try {
 			runPipeline(
