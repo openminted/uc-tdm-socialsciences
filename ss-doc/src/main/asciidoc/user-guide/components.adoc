@@ -58,7 +58,7 @@ in subsequent text analysis components (e.g. named entity recognition).
 NOTE: Currently PDF-to-XML converter can only convert files smaller than 5 MB and containing less than 100 pages. This
 limit is enforced by the PDFX service which is used internally to convert PDF documents to XML format.
 
-===== PDF to XML conversion
+==== PDF to PDFX-XML conversion
 The PdfxXmlCreator class can be used to convert a collection of PDF files to PDFX XML format
 (http://pdfx.cs.man.ac.uk/static/article-schema.xsd[schema]). This class is used internally by PDF-to-XMI converter
 component. This component can be used via calling the main method, like the following:
@@ -73,7 +73,7 @@ The following arguments have to be provided for the program:
 * *-overwrite* (Optional) Overwrite output flag. If this option is set program will overwrite any existing files in
 output directory.
 
-===== PDFX-XML to XMI conversion
+==== PDFX-XML to XMI conversion
 The PdfxXmlToXmiConverter class can be used to convert a collection of PDFX XML documents to XMI format. This class is
 used internally by PDF-to-XMI converter component. This component can be used via calling the main method, like the
 following:
