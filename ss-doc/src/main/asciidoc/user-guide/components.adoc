@@ -5,8 +5,10 @@
 //Components inside eu.openminted.uc.tdm.socialsciences.io.pdfx
 
 ==== PDF to XMI conversion
-The PDF-to-XMI conversion pipeline can be used to convert a collection of PDF files to XMI format. This pipeline can be
-used via calling the main method, like the following:
+The PDF-to-XMI conversion pipeline can be used to convert a collection of PDF files to XMI format.
+
+===== Usage: command line
+This pipeline can be used via calling the main method, like the following:
 
  $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
 
@@ -17,9 +19,39 @@ The following arguments have to be provided for the program:
 * *-lang <value>* Language of input documents. Possible values: *en* or *de*
 * *-overwrite* (Optional) Overwrite output flag. If this option is set program will overwrite any existing files in
 output directory.
-* *-home* Path to application home where required files (e.g. dictionary files) are located.
+* *-home* Path to application home where required files (e.g. dictionary files) are located. You can download the
+dictionary files from https://github.com/openminted/uc-tdm-socialsciences/releases[here] (ss-io-dictionaries.zip).
 
-The language parameter is required to correctly post-process the converted text files (e.g. remove hyphenations inside
+===== Usage: java
+Add the following dependency to your pom file:
+
+----
+<dependency>
+    <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+    <artifactId>ss-io-pdfx-xml</artifactId>
+</dependency>
+----
+
+Create an example method like the following:
+
+----
+import static org.junit.Assert.*;
+
+public class PipelineTest
+{
+    public void runPipelineExample()
+    {
+        Pipeline pipeline = new Pipeline();
+        pipeline.setInput("my/input/directory");
+        pipeline.setOutput("my/output/directory");
+        pipeline.setLanguage(PdfxXmlToXmiConverter.LANGUAGE_CODE_EN);
+        pipeline.setHomePath("my/dictionary/files/directory");
+        pipeline.run();
+    }
+}
+----
+
+NOTE: The language parameter is required to correctly post-process the converted text files (e.g. remove hyphenations inside
 words that are split into two lines). This attribute will also be stored in the output XMI files so it can be used
 in subsequent text analysis components (e.g. named entity recognition).
 
