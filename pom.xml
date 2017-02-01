@@ -281,6 +281,7 @@
 			<plugin>
 				<groupId>org.apache.uima</groupId>
 				<artifactId>uimafit-maven-plugin</artifactId>
+				<version>${uimafit.plugin.version}</version>
 			</plugin>
 		</plugins>
 		<pluginManagement>
