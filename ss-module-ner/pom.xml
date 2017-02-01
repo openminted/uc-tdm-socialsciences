@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
 		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>ss-module-ner</artifactId>
 
