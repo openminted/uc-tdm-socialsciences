@@ -5,7 +5,7 @@
 	<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>social sciences text and data mining use-case</name>
+	<name>Social sciences literature Text Mining software collection</name>
 	<description>This software package contains components for text mining in scientific publicatons.</description>
 	<url>https://github.com/openminted/uc-tdm-socialsciences</url>
 	<organization>
