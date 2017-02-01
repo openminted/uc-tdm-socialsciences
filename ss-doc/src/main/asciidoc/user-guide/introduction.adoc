@@ -16,6 +16,25 @@ Get sources from GitHub:
 
 https://github.com/openminted/uc-tdm-socialsciences
 
+To use the latest release, please add the following piece to your pom file:
+
+--------------------------------------
+<repository>
+    <id>openminted.releases</id>
+    <name>OpenMinTeD Project Release Repository</name>
+    <url>https://repo.openminted.eu/content/repositories/releases</url>
+</repository>
+
+<dependencies>
+    <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+        <version>1.0.0</version>
+        <type>pom</type>
+    </dependency>
+</dependencies>
+--------------------------------------
+
 To use the latest snapshot, please add the following piece to your pom file:
 
 --------------------------------------
