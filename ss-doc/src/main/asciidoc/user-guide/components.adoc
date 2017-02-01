@@ -35,7 +35,7 @@ Add the following dependency to your pom file:
 Create an example method like the following:
 
 ----
-import static org.junit.Assert.*;
+import eu.openminted.uc.socialsciences.io.pdfx.Pipeline;
 
 public class PipelineTest
 {
