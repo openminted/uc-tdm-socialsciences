@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
 	<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>Social sciences literature Text Mining software collection</name>
 	<description>This software package contains components for text mining in scientific publicatons.</description>
@@ -95,7 +95,7 @@
 		<connection>scm:git:git://github.com/openminted/uc-tdm-socialsciences</connection>
 		<developerConnection>scm:git:git@github.com:openminted/uc-tdm-socialsciences.git</developerConnection>
 		<url>https://github.com/openminted/uc-tdm-socialsciences</url>
-	  <tag>HEAD</tag>
+	  <tag>uc-tdm-socialsciences-1.0.0</tag>
   </scm>
 
 	<distributionManagement>
