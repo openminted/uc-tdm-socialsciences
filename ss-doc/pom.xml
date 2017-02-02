@@ -127,7 +127,7 @@
                         </configuration>
                     </execution>
                     <!-- Uncomment to produce PDF documentation -->
-                    <!--
+<!--
                     <execution>
                         <id>user-guide-pdf</id>
                         <phase>prepare-package</phase>
@@ -140,6 +140,7 @@
                             <sourceDocumentName>user-guide.adoc</sourceDocumentName>
                             <imagesDir>./user-guide/images</imagesDir>
                             <attributes>
+                                <toclevels>5</toclevels>
                                 <toc>preamble</toc>
                                 <include-dir>${project.basedir}/src/main/asciidoc/user-guide/</include-dir>
                                 <source-dir>${project.basedir}/../</source-dir>
@@ -147,7 +148,7 @@
                             </attributes>
                         </configuration>
                     </execution>
-                    -->
+-->
                 </executions>
             </plugin>
             <!--
