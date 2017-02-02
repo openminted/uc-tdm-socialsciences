@@ -4,6 +4,7 @@
 
 //Components inside eu.openminted.uc.tdm.socialsciences.io.pdfx
 
+[[pdf-conversion]]
 ==== PDF to XMI conversion
 The PDF-to-XMI conversion pipeline can be used to convert a collection of PDF files to XMI format.
 
@@ -51,7 +52,7 @@ public class PipelineTest
 }
 ----
 
-NOTE: The language parameter is required to correctly post-process the converted text files (e.g. remove hyphenations inside
+NOTE: The `language` parameter is required to correctly post-process the converted text files (e.g. remove hyphenations inside
 words that are split into two lines). This attribute will also be stored in the output XMI files so it can be used
 in subsequent text analysis components (e.g. named entity recognition).
 
@@ -59,7 +60,7 @@ NOTE: Currently PDF-to-XML converter can only convert files smaller than 5 MB an
 limit is enforced by the PDFX service which is used internally to convert PDF documents to XML format.
 
 ==== PDF to PDFX-XML conversion
-The PdfxXmlCreator class can be used to convert a collection of PDF files to PDFX XML format
+The `PdfxXmlCreator` class can be used to convert a collection of PDF files to PDFX XML format
 (http://pdfx.cs.man.ac.uk/static/article-schema.xsd[schema]). This class is used internally by PDF-to-XMI converter
 component. This component can be used via calling the main method, like the following:
 
@@ -74,7 +75,7 @@ The following arguments have to be provided for the program:
 output directory.
 
 ==== PDFX-XML to XMI conversion
-The PdfxXmlToXmiConverter class can be used to convert a collection of PDFX XML documents to XMI format. This class is
+The `PdfxXmlToXmiConverter` class can be used to convert a collection of PDFX XML documents to XMI format. This class is
 used internally by PDF-to-XMI converter component. This component can be used via calling the main method, like the
 following:
 
@@ -92,7 +93,7 @@ output directory.
 
 === Named Entity Recognition
 //Components inside eu.openminted.uc.tdm.socialsciences.ner
-With this module, you can perform Named Entity Recognition (NER) on your own data.
+With this module, you can perform Named Entity Recognition (NER) on your data.
 
 You can:
 
@@ -145,7 +146,7 @@ file. In the first case, the flag is set:
  Economics	I-ORGsci
 --------------------------------------
 
-This results in different labels for the two entities that are different kinds of organizations (ORG). 
+This results in different labels for the two entities that are different kinds of organizations (`ORG`).
 Whereas in the second case, the flag has not been set:
 
 --------------------------------------
@@ -166,11 +167,11 @@ Whereas in the second case, the flag has not been set:
  Economics	I-ORG
 --------------------------------------
 
-Here, both are labeled with the same coarse class 'organization' (ORG). Thus, setting the `-subtypes` flag allows to
+Here, both are labeled with the same coarse class 'organization' (`ORG`). Thus, setting the `-subtypes` flag allows to
 differentiate sub-types of annotations, but mind that this means an increase in the number of classes for training.
 
 ===== Model training
-You can use the StanfordNERTrainer class to train a new NER model with training data.
+You can use the `StanfordNERTrainer` class to train a new NER model with training data.
 You will have to provide a file containing the training properties. 
 
 IMPORTANT: Training might require a lot of memory (RAM).
@@ -197,11 +198,11 @@ You can find detailed descriptions of available training parameters in the FAQ o
 http://nlp.stanford.edu/software/crf-faq.html
 
 Mind that it is in general possible to set paths to training file(s) and model output file also in the training
-properties file, but these values will be overriden.
+properties file, but these values will be overridden.
 
 ==== Apply a NER model to un-annotated data
-With the Pipeline, you can input un-labeled data and apply a NER model to it, such that the output will contain labels
- for all recognized Named Entities.
+With the `Pipeline` class, you can input un-labeled data and apply a NER model to it, such that the output will contain
+labels for all recognized Named Entities.
 
 Input data has to be in XMI (UIMA) format, so if you want to label text from PDF, convert them first
 (see <<pdf-conversion,PDF to XMI conversion>>).
