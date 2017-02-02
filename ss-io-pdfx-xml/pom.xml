@@ -140,6 +140,14 @@
 										<exclude>META-INF/*.RSA</exclude>
 									</excludes>
 								</filter>
+								<!--
+								todo: check this
+								<filter>
+									<artifact>eu.openminted.uc-tdm-socialsciences:ss-io-pdfx-xml</artifact>
+									<excludes>
+										<exclude>src/main/resources/*.dic</exclude>
+									</excludes>
+								</filter>-->
 							</filters>
 							<transformers>
 								<!-- Set the main class of the executable JAR -->
