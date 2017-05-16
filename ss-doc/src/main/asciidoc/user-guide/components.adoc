@@ -248,7 +248,7 @@ in a directory, e.g. ./****/*.xmi
 * *-strictId* (optional) If set, for each Gold-document there should be a Prediction-document in the prediction
 set with identical documentId (cf. documentId attribute in xmi file). If this requirement is not satisfied,
 program will not work properly.
-* *-v" (optional) verbose output flag. If this flag is set, output will contain comprehensive information about
+* *-v* (optional) verbose output flag. If this flag is set, output will contain comprehensive information about
 tags found in gold and prediction sets.
 
 The program will output agreement scores as well as precision and recall. The output will look similar to this:
