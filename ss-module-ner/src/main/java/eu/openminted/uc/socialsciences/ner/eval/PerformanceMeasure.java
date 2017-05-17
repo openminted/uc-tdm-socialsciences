@@ -125,6 +125,12 @@ public class PerformanceMeasure {
 
         for (NamedEntity namedEntity : JCasUtil.select(goldJcas, NamedEntity.class)) {
             String category;
+            if (namedEntity.getValue() == null)
+            {
+                logger.warn(String.format("found a named entity with null value at (begin, end)=(%d, %d)! Will skip this annotation..."
+                        , namedEntity.getBegin(), namedEntity.getEnd()));
+                continue;
+            }
             if (namedEntity.getModifier() != null)
                 category = namedEntity.getValue() + namedEntity.getModifier();
             else
@@ -165,7 +171,10 @@ public class PerformanceMeasure {
         KrippendorffAlphaUnitizingAgreement alpha = new KrippendorffAlphaUnitizingAgreement(unitizingStudy);
 
         for(String category : currentGoldCategories)
-            System.out.printf("\t-\tAlpha for category %s: %f %n", category, alpha.calculateCategoryAgreement(category));
+            if (currentPredictionCategories.contains(category))
+                System.out.printf("\t-\tAlpha for category %s: %f %n", category, alpha.calculateCategoryAgreement(category));
+            else
+                System.out.printf("\t-\tCategory %s doesn't exist in prediction data! %n", category);
 
         System.out.printf("\tOverall Alpha: %f %n", alpha.calculateAgreement());
     }

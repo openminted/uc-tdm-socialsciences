@@ -80,6 +80,8 @@ public class MyIobEncoder {
 			logger.debug("Value: " + chunk.getStringValue(aValueFeature));
 			logger.debug("Modifier: " + chunk.getStringValue(aModifierFeature));
 
+			if (value == null)
+				continue;
 			String label = useSubTypes && modifier != null ? value + modifier : value;
 
 			if (coveringNeIdx.containsKey(chunk)) {
