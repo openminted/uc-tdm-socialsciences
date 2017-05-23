@@ -127,7 +127,6 @@
                         </configuration>
                     </execution>
                     <!-- Uncomment to produce PDF documentation -->
-<!--
                     <execution>
                         <id>user-guide-pdf</id>
                         <phase>prepare-package</phase>
@@ -148,7 +147,6 @@
                             </attributes>
                         </configuration>
                     </execution>
--->
                 </executions>
             </plugin>
             <!--
