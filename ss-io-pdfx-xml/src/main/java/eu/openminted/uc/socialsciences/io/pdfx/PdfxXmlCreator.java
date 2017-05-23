@@ -290,8 +290,7 @@ public class PdfxXmlCreator {
 		} else {
 			logger.error("Request for " + pdf.getPath() + " was unsuccessful: "
 					+ response.getStatusLine().getReasonPhrase());
-			throw new IllegalArgumentException("Server returned null for parse request of file [" + pdf.getPath() + "]."
-					+ System.lineSeparator() + " Entity contents: " + EntityUtils.toString(entity));
+			throw new IllegalStateException("Server returned null for parse request of file [" + pdf.getPath() + "].");
 		}
 
 		return result;
