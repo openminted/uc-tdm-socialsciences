@@ -5,6 +5,13 @@ is retrieved from the following urls
 And was originally distributed with the following license:
 Creative Commons - Attribution-NonCommercial-ShareAlike : http://creativecommons.org/licenses/by-nc-sa/3.0/
 
+Following file
+    - '457680_Paper.pdf'
+is retrieved from the following url
+    - http://nbn-resolving.de/urn:nbn:de:0168-ssoar-457680
+And was originally distributed with the following license:
+Creative Commons - Attribution-NonCommercial : https://creativecommons.org/licenses/by-nc/3.0/
+
 The English words dictionary (english-words.dic) is retrieved from
 	- https://github.com/dwyl/english-words
 and was originally distributed by
