@@ -12,12 +12,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
 import org.apache.log4j.Logger;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-
-import de.tudarmstadt.ukp.dkpro.core.testing.DkproTestContext;
 
 public class PdfxXmlReaderTest {
 	private static final Logger logger = Logger.getLogger(PdfxXmlReaderTest.class);
@@ -102,7 +100,4 @@ public class PdfxXmlReaderTest {
 				TEST_RESOURCE_ARTICLE1_APPENDED_XML_DUMP, TEST_RESOURCE_ARTICLE1);
 
 	}
-
-	@Rule
-	public DkproTestContext testContext = new DkproTestContext();
 }
