@@ -27,7 +27,7 @@ import org.kohsuke.args4j.Option;
  * This class is responsible for PDF to XML conversion by invoking the web
  * service of pdfx.
  */
-public class PdfxXmlCreator {
+public class PdfxXmlCreator implements XmlCreator {
 	private static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
 	private static final String REQUEST_PARAM_JOB_ID = "job_id";
 	private static final String REQUEST_PARAM_CLIENT = "client";
@@ -66,7 +66,8 @@ public class PdfxXmlCreator {
 		process(input, output);
 	}
 
-	public List<String> getSkippedFileList() {
+	@Override
+    public List<String> getSkippedFileList() {
 		List<String> result = new ArrayList<>();
 		result.addAll(skippedFileList);
 		return result;
@@ -88,7 +89,8 @@ public class PdfxXmlCreator {
 	 *            input directory.
 	 * @return a list of all the Paths of the generated output files
 	 */
-	public List<Path> process(String inputPathString, String outputPathString) {
+	@Override
+    public List<Path> process(String inputPathString, String outputPathString) {
 		Path inputPath;
 		skippedFileList = new ArrayList<>();
 		try {
@@ -319,7 +321,8 @@ public class PdfxXmlCreator {
 	/**
 	 * @return true iff parameter for overwriting existing output is set to true
 	 */
-	public boolean isOverwriteOutput() {
+	@Override
+    public boolean isOverwriteOutput() {
 		return overwriteOutput;
 	}
 
@@ -331,7 +334,8 @@ public class PdfxXmlCreator {
 	 *            set to true if you want to overwrite existing output,
 	 *            otherwise to false.
 	 */
-	public void setOverwriteOutput(boolean overwriteOutput) {
+	@Override
+    public void setOverwriteOutput(boolean overwriteOutput) {
 		this.overwriteOutput = overwriteOutput;
 	}
 }
