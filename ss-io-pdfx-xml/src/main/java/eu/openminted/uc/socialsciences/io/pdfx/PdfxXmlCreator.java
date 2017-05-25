@@ -9,6 +9,7 @@ import java.util.List;
 
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import eu.openminted.uc.socialsciences.common.PDFChecker;
+import eu.openminted.uc.socialsciences.io.pdf.XmlCreator;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,7 +28,8 @@ import org.kohsuke.args4j.Option;
  * This class is responsible for PDF to XML conversion by invoking the web
  * service of pdfx.
  */
-public class PdfxXmlCreator implements XmlCreator {
+public class PdfxXmlCreator implements XmlCreator
+{
 	private static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
 	private static final String REQUEST_PARAM_JOB_ID = "job_id";
 	private static final String REQUEST_PARAM_CLIENT = "client";

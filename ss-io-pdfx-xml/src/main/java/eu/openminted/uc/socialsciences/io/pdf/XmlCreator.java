@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.io.pdfx;
+package eu.openminted.uc.socialsciences.io.pdf;
 
 import java.nio.file.Path;
 import java.util.List;
