@@ -28,19 +28,17 @@ import org.kohsuke.args4j.Option;
  * service of pdfx.
  */
 public class PdfxXmlCreator {
-	public static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
-
-	public static final String REQUEST_PARAM_JOB_ID = "job_id";
-	public static final String REQUEST_PARAM_CLIENT = "client";
-	public static final String REQUEST_PARAM_SENT_SPLITTER = "sent_splitter";
-	public static final String REQUEST_PARAM_CLIENT_VALUE_WEB_INTERFACE = "web-interface";
-	public static final String REQUEST_PARAM_SENT_SPLITTER_VALUE_PUNKT = "punkt";
-	public static final String REQUEST_PARAM_USERFILE = "userfile";
-	public static final String REQUEST_PARAM_USERFILE_TYPE_APPLICATION_PDF = "application/pdf";
-
-	public static final String REQUEST_RESPONSE_VALUE_ERROR = "error";
+	private static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
+	private static final String REQUEST_PARAM_JOB_ID = "job_id";
+	private static final String REQUEST_PARAM_CLIENT = "client";
+	private static final String REQUEST_PARAM_SENT_SPLITTER = "sent_splitter";
+	private static final String REQUEST_PARAM_CLIENT_VALUE_WEB_INTERFACE = "web-interface";
+	private static final String REQUEST_PARAM_SENT_SPLITTER_VALUE_PUNKT = "punkt";
+	private static final String REQUEST_PARAM_USERFILE = "userfile";
+	private static final String REQUEST_PARAM_USERFILE_TYPE_APPLICATION_PDF = "application/pdf";
+	private static final String REQUEST_RESPONSE_VALUE_ERROR = "error";
+	private static final String DEFAULT_OUTPUT_PATH = "pdfx-out";
 	private static final Logger logger = Logger.getLogger(PdfxXmlCreator.class);
-	public static final String DEFAULT_OUTPUT_PATH = "pdfx-out";
 
 	private List<String> skippedFileList;
 
@@ -314,7 +312,7 @@ public class PdfxXmlCreator {
 	 *            a HttpResponse object
 	 * @return true iff status code of response equals 200
 	 */
-	public static boolean isHttpResponseSuccessful(CloseableHttpResponse response) {
+	protected static boolean isHttpResponseSuccessful(CloseableHttpResponse response) {
 		return response.getStatusLine().getStatusCode() == 200;
 	}
 
