@@ -14,18 +14,6 @@
 
 	<repositories>
 		<repository>
-			<id>icm</id>
-			<name>ICM repository</name>
-			<url>http://maven.icm.edu.pl/artifactory/repo</url>
-			<releases>
-				<enabled>true</enabled>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
 			<id>backingdata</id>
 			<name>Backingdata repository</name>
 			<url>http://backingdata.org/dri/library/mavenRepo/</url>
