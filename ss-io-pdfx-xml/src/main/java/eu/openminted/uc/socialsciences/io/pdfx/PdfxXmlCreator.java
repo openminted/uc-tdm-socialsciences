@@ -28,7 +28,7 @@ import org.kohsuke.args4j.Option;
  * This class is responsible for PDF to XML conversion by invoking the web
  * service of pdfx.
  */
-public class PdfxXmlCreator implements XmlCreator
+public class PdfxXmlCreator extends AbstractXmlCreator
 {
 	private static final String SERVICE_URL = "http://pdfx.cs.man.ac.uk";
 	private static final String REQUEST_PARAM_JOB_ID = "job_id";
@@ -41,12 +41,6 @@ public class PdfxXmlCreator implements XmlCreator
 	private static final String REQUEST_RESPONSE_VALUE_ERROR = "error";
 	private static final String DEFAULT_OUTPUT_PATH = "pdfx-out";
 	private static final Logger logger = Logger.getLogger(PdfxXmlCreator.class);
-
-	private List<String> skippedFileList;
-
-	@Option(name = "-overwrite", usage = "(Optional) if this option is set, program will overwrite files " +
-			" that already exist in output directory.")
-	private boolean overwriteOutput = false;
 
 	@Option(name = "-i", required = true, usage = "path to input file or directory containing pdf files " +
 			"you want to process")
@@ -68,43 +62,6 @@ public class PdfxXmlCreator implements XmlCreator
 		process(input, output);
 	}
 
-	@Override
-    public List<String> getSkippedFileList() {
-		List<String> result = new ArrayList<>();
-		result.addAll(skippedFileList);
-		return result;
-	}
-
-	/**
-	 * Processes a single pdf file or all pdf files in a given directory with
-	 * pdfx service which
-	 * converts them into XML files. Stores the XML file(s) in a given output
-	 * directory. If outputPathString is null, the input directory will be used.
-	 *
-	 * @param inputPathString
-	 *            Path to pdf file to be processed. Or: The directory that
-	 *            contains PDF files. It is scanned
-	 *            recursively, non-pdf files will be ignored.
-	 * @param outputPathString
-	 *            The directory where the output XML file(s) will be stored.
-	 *            if set to <i>null</i> generated files will be written to the
-	 *            input directory.
-	 * @return a list of all the Paths of the generated output files
-	 */
-	@Override
-    public List<Path> process(String inputPathString, String outputPathString) {
-		Path inputPath;
-		skippedFileList = new ArrayList<>();
-		try {
-			inputPath = Paths.get(inputPathString);
-			Path outputPath = outputPathString == null ? null : Paths.get(outputPathString);
-			return process(inputPath, outputPath);
-		} catch (InvalidPathException e) {
-			logger.error("Given String cannot be converted to valid path.", e);
-			return null;
-		}
-	}
-
 	/*
 	 * Processes all pdf files in a given directory with pdfx service which
 	 * converts them into XML files. Stores the XML files in a given output
@@ -116,7 +73,8 @@ public class PdfxXmlCreator implements XmlCreator
 	 * The directory where the output XML files will be stored.
 	 * @return a list of all the Paths of the generated output files
 	 */
-	private List<Path> process(Path inputPath, Path outputDirectoryPath) {
+	@Override
+	protected List<Path> process(Path inputPath, Path outputDirectoryPath) {
 		List<Path> outputFiles = new ArrayList<>();
 		if (!inputPath.toFile().exists()) {
 			logger.error("Given path doesn't exist on the file system.");
@@ -320,24 +278,4 @@ public class PdfxXmlCreator implements XmlCreator
 		return response.getStatusLine().getStatusCode() == 200;
 	}
 
-	/**
-	 * @return true iff parameter for overwriting existing output is set to true
-	 */
-	@Override
-    public boolean isOverwriteOutput() {
-		return overwriteOutput;
-	}
-
-	/**
-	 * Set the parameter which controls if already existing output files should
-	 * be overwritten.
-	 *
-	 * @param overwriteOutput
-	 *            set to true if you want to overwrite existing output,
-	 *            otherwise to false.
-	 */
-	@Override
-    public void setOverwriteOutput(boolean overwriteOutput) {
-		this.overwriteOutput = overwriteOutput;
-	}
 }
