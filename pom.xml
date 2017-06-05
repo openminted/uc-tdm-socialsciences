@@ -5,7 +5,7 @@
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Social sciences literature Text Mining software collection</name>
-	<description>This software package contains components for text mining in scientific publicatons.</description>
+	<description>This software package contains components for text mining in scientific publications.</description>
 	<url>https://github.com/openminted/uc-tdm-socialsciences</url>
 	<organization>
 		<name>OpenMinTeD</name>
@@ -19,7 +19,7 @@
 	<modules>
 		<module>ss-tools-experiments</module>
 		<module>ss-kb-preparation</module>
-		<module>ss-io-pdfx-xml</module>
+		<module>ss-io-pdf</module>
 		<module>ss-module-ner</module>
 		<module>ss-doc</module>
 		<module>ss-common</module>
@@ -147,7 +147,7 @@
 			</dependency>
 			<dependency>
 				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-				<artifactId>ss-io-pdfx-xml</artifactId>
+				<artifactId>ss-io-pdf</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

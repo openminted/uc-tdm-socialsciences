@@ -7,7 +7,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>ss-io-pdfx-xml</artifactId>
+	<artifactId>ss-io-pdf</artifactId>
 
 
 	<dependencies>
