@@ -67,24 +67,24 @@ public class CerminePdfReader
         public void process(Element root, JCas jcas)
         {
             sb = new StringBuilder();
-            parse(root, jcas);
+            parse(root);
             jcas.setDocumentText(sb.toString());
             DocumentMetaData.get(jcas).setDocumentTitle(title);
             DocumentMetaData.get(jcas).setDocumentId(title);
         }
 
-        private void parse(Element root, JCas jcas)
+        private void parse(Element root)
         {
             for (Object node : root.getChildren())
             {
                 Element element = (Element) node;
                 if (element.getName().equals("front"))
                 {
-                    parseHeader(element, jcas);
+                    parseHeader(element);
                 }
                 else if (element.getName().equals("body"))
                 {
-                    parseBody(element, jcas);
+                    parseBody(element);
                 }
                 else if (element.getName().equals("back"))
                 {
@@ -93,7 +93,7 @@ public class CerminePdfReader
             }
         }
 
-        private void parseBody(Element root, JCas jcas)
+        private void parseBody(Element root)
         {
             for (Object node : root.getChildren())
             {
@@ -101,7 +101,7 @@ public class CerminePdfReader
                 switch (element.getName())
                 {
                     case "sec":
-                        parseBody(element, jcas);
+                        parseBody(element);
                         break;
                     case "p":
                         sb.append(" ").append(element.getValue().trim());
@@ -113,7 +113,7 @@ public class CerminePdfReader
             }
         }
 
-        private void parseHeader(Element root, JCas jcas)
+        private void parseHeader(Element root)
         {
             for (Object node : root.getChildren())
             {
