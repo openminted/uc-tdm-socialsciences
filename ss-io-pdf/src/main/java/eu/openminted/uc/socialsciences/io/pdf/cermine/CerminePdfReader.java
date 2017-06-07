@@ -140,8 +140,10 @@ public class CerminePdfReader
         {
             sb = new StringBuilder();
             title = "";
-            parse(root);
             cas = aCas;
+
+            parse(root);
+
             cas.setDocumentText(sb.toString());
             DocumentMetaData.get(cas).setDocumentTitle(title);
             DocumentMetaData.get(cas).setDocumentId(title);
