@@ -124,9 +124,9 @@
 	</distributionManagement>
 	<properties>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-		<uima.version>2.9.0</uima.version>
+		<uima.version>2.10.0</uima.version>
 		<uimafit.version>2.3.0-SNAPSHOT</uimafit.version>
-		<uimafit.plugin.version>2.2.0</uimafit.plugin.version>
+		<uimafit.plugin.version>2.3.0-SNAPSHOT</uimafit.plugin.version>
 		<dkpro.core.version>1.9.0-SNAPSHOT</dkpro.core.version>
 		<log4j.version>2.7</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
