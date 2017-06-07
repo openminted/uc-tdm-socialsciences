@@ -19,6 +19,7 @@ public class CerminePdfReaderTest
             String filePath = "src/test/resources/42466_Paper.pdf";
             String expectedFilePath = filePath + ".cermine.dump";
 
+/*
 			runPipeline(
 					createReaderDescription(CerminePdfReader.class,
 							CerminePdfReader.PARAM_LANGUAGE, "en",
@@ -26,6 +27,7 @@ public class CerminePdfReaderTest
 					createEngineDescription(CasDumpWriter.class,
 							CasDumpWriter.PARAM_TARGET_LOCATION, expectedFilePath,
 							CasDumpWriter.PARAM_SORT, true));
+*/
 
 
             String fileName = "42466_Paper.pdf";
