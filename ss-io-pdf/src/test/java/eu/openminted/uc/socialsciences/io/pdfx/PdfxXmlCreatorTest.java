@@ -89,7 +89,6 @@ public class PdfxXmlCreatorTest {
 
 	@Test
 	public void testSingleFile() {
-        //FIXME this test fails with other test resources
 		String inputFile = "src/test/resources/457680_Paper.pdf";
         pdfxXmlCreator.setOverwriteOutput(true);
 		List<Path> process = pdfxXmlCreator.process(inputFile, null);

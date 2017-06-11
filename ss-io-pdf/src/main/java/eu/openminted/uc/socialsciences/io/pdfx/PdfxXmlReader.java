@@ -135,7 +135,6 @@ public class PdfxXmlReader
         private String referenceRId = "";
         private int referenceStart = -1;
 
-        //todo: create specific annotations for footer and header?
         @Override
         public void startElement(String aUri, String aLocalName, String aName,
                                  Attributes aAttributes)
