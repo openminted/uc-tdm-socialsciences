@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
+import eu.openminted.uc.socialsciences.io.pdf.cermine.CerminePdfToXmiConverter;
 import org.apache.uima.UIMAException;
 import org.kohsuke.args4j.Option;
 
@@ -27,6 +28,14 @@ public class Pipeline
 	@Option(name="-home", usage = "Path to application home where required files (e.g. dictionary files) are located",
 			required = true)
 	private String homePath = null;
+
+	@Option(name = "-converter", usage = "(Optional) the converter to be used for extracting text from PDF documents. " +
+			"Possible values: " + CONVERTER_CERMINE + ", " + CONVERTER_PDFX + ". Default value: " + CONVERTER_CERMINE
+			, required = false)
+	private String converter = CONVERTER_CERMINE;
+
+	public static final String CONVERTER_CERMINE = "cermine";
+	public static final String CONVERTER_PDFX = "pdfx";
 
 	/**
 	 * The pipeline for converting a collection of PDF documents to XMI format
@@ -52,6 +61,14 @@ public class Pipeline
 			throw new IllegalArgumentException("language can not be null!");
 		if(homePath==null)
 			throw new IllegalArgumentException("homePath can not be null!");
+		switch (converter)
+		{
+			case CONVERTER_CERMINE:
+			case CONVERTER_PDFX:
+				break;
+			default:
+				throw new IllegalArgumentException("Illegal value [" + converter + "] for converter.");
+		}
 	}
 
 	private void run(String[] args)
@@ -61,7 +78,33 @@ public class Pipeline
 		runInternal();
 	}
 
-	private void runInternal() {
+	private void runInternal()
+	{
+		switch (converter)
+		{
+			case CONVERTER_CERMINE:
+				processWithCermine();
+				break;
+			case CONVERTER_PDFX:
+				processWithPdfx();
+				break;
+		}
+	}
+
+	private void processWithCermine()
+	{
+		try
+		{
+			CerminePdfToXmiConverter cerminePdfToXmiConverter = new CerminePdfToXmiConverter(homePath, overwriteOutput);
+			cerminePdfToXmiConverter.convertToXmi(input, output, language);
+		} catch (IOException | UIMAException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private void processWithPdfx()
+	{
 		PdfxXmlCreator pdfxXmlCreator = new PdfxXmlCreator();
 		pdfxXmlCreator.setOverwriteOutput(overwriteOutput);
 
@@ -119,5 +162,15 @@ public class Pipeline
 	public String getHomePath()
 	{
 		return homePath;
+	}
+
+	public void setConverter(String aConverter)
+	{
+		converter = aConverter;
+	}
+
+	public String getConverter()
+	{
+		return converter;
 	}
 }
