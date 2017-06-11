@@ -177,8 +177,9 @@
 					<configuration>
 						<componentVendor>eu.openminted.uc-tdm-socialsciences</componentVendor>
 						<componentCopyright>
-							<!-- todo put copyright notice here -->
 							Copyright 2015-2016
+							OpenMinTeD Project
+							http://openminted.eu/
 						</componentCopyright>
 						<failOnMissingMetaData>false</failOnMissingMetaData>
 						<encoding>UTF-8</encoding>
