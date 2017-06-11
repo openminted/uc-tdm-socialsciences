@@ -21,6 +21,7 @@ import pl.edu.icm.cermine.exception.AnalysisException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import static org.apache.commons.io.IOUtils.closeQuietly;
 /**
@@ -51,7 +52,6 @@ public class CerminePdfReader
     @ConfigurationParameter(name = PARAM_PARAGRAPH_TYPE, mandatory = false, defaultValue = BUILT_IN)
     private String paragraphType;
 
-    private ContentExtractor extractor;
     private NlmHandler nlmHandler;
 
     @Override
@@ -68,14 +68,6 @@ public class CerminePdfReader
             paragraphType = Paragraph.class.getName();
         }
 
-        //Create PDF extractor
-        try
-        {
-            extractor = new ContentExtractor();
-        } catch (AnalysisException e)
-        {
-            throw new ResourceInitializationException(e);
-        }
         nlmHandler = new NlmHandler()
                 .withHeadingAnnotation(headingType)
                 .withParagraphAnnotation(paragraphType);
@@ -93,6 +85,7 @@ public class CerminePdfReader
         {
             is = res.getInputStream();
 
+            ContentExtractor extractor = new ContentExtractor();
             // Process PDF
             extractor.setPDF(is);
             Element result = extractor.getContentAsNLM();
@@ -141,6 +134,7 @@ public class CerminePdfReader
             sb = new StringBuilder();
             title = "";
             cas = aCas;
+            beginIndex = 0;
 
             parse(root);
 
