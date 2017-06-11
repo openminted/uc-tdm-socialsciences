@@ -146,14 +146,12 @@
 										<exclude>META-INF/*.RSA</exclude>
 									</excludes>
 								</filter>
-								<!--
-								todo: check this
 								<filter>
 									<artifact>eu.openminted.uc-tdm-socialsciences:ss-io-pdfx-xml</artifact>
 									<excludes>
 										<exclude>src/main/resources/*.dic</exclude>
 									</excludes>
-								</filter>-->
+								</filter>
 							</filters>
 							<transformers>
 								<!-- Set the main class of the executable JAR -->
@@ -187,8 +185,9 @@
 					<configuration>
 						<componentVendor>eu.openminted.uc-tdm-socialsciences</componentVendor>
 						<componentCopyright>
-							<!-- todo put copyright notice here-->
 							Copyright 2016-2017
+							OpenMinTeD Project
+							http://openminted.eu/
 						</componentCopyright>
 						<failOnMissingMetaData>false</failOnMissingMetaData>
 						<encoding>UTF-8</encoding>
