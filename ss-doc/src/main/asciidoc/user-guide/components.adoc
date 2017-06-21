@@ -22,6 +22,7 @@ The following arguments have to be provided for the program:
 output directory.
 * *-home* Path to application home where required files (e.g. dictionary files) are located. You can download the
 dictionary files from https://github.com/openminted/uc-tdm-socialsciences/releases[here] (ss-io-dictionaries.zip).
+* *-converter* (Optional) the converter to be used for extracting text from PDF documents. Possible values: *cermine* or *pdfx*
 
 ===== Usage: java
 Add the following dependency to your pom file:
@@ -47,6 +48,8 @@ public class PipelineTest
         pipeline.setOutput("my/output/directory");
         pipeline.setLanguage(PdfxXmlToXmiConverter.LANGUAGE_CODE_EN);
         pipeline.setHomePath("my/dictionary/files/directory");
+        pipeline.setConverter(Pipeline.CONVERTER_CERMINE); //default is CERMINE
+        pipeline.setOverwriteOutput(true); //default is false
         pipeline.run();
     }
 }
