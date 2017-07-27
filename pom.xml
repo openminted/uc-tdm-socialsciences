@@ -162,6 +162,11 @@
 				<artifactId>ss-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+			 <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+			 <artifactId>ss-variable-detection</artifactId>
+			 <version>${project.version}</version>
+			</dependency>
 			<!-- end submodules -->
 
 			<!-- https://mvnrepository.com/artifact/args4j/args4j -->
