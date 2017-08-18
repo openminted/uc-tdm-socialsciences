@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class PdfxXmlCreatorTest {
@@ -87,6 +88,7 @@ public class PdfxXmlCreatorTest {
         }
     }
 
+    @Ignore
 	@Test
 	public void testSingleFile() {
 		String inputFile = "src/test/resources/457680_Paper.pdf";
