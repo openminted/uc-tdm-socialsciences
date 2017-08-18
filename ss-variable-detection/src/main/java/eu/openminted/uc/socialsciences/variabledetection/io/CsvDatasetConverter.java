@@ -1,11 +1,8 @@
 package eu.openminted.uc.socialsciences.variabledetection.io;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
@@ -38,7 +35,6 @@ public class CsvDatasetConverter
         CsvParser parser = new CsvParser(settings);
 
         File initialFile = new File(originalDataset);
-        InputStream stream = new FileInputStream(initialFile);
         parser.beginParsing(initialFile);
 
         FileWriter fileWriter = new FileWriter(flatDataset);
