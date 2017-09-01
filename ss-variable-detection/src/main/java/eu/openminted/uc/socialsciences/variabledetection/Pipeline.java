@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.io;
+package eu.openminted.uc.socialsciences.variabledetection;
 
 import static java.util.Arrays.asList;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
@@ -25,6 +25,7 @@ import org.dkpro.tc.ml.report.BatchTrainTestReport;
 import org.dkpro.tc.ml.weka.WekaClassificationAdapter;
 
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
+import eu.openminted.uc.socialsciences.variabledetection.io.CsvReader;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
 import weka.classifiers.functions.SMO;
