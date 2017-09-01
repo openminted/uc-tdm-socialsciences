@@ -22,14 +22,16 @@ import org.dkpro.tc.core.Constants;
 import org.dkpro.tc.features.entityrecognition.NEFeatureExtractor;
 import org.dkpro.tc.features.ngram.LuceneCharacterNGram;
 import org.dkpro.tc.features.ngram.LuceneNGram;
-import org.dkpro.tc.features.ngram.LucenePhoneticNGram;
 import org.dkpro.tc.features.ngram.LuceneSkipNGram;
 import org.dkpro.tc.ml.ExperimentTrainTest;
 import org.dkpro.tc.ml.report.BatchTrainTestReport;
 import org.dkpro.tc.ml.weka.WekaClassificationAdapter;
 
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNamedEntityRecognizer;
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
+import eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram;
 import eu.openminted.uc.socialsciences.variabledetection.io.TextDatasetReader;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
@@ -104,6 +106,9 @@ public class Pipeline
                 new TcFeatureSet(TcFeatureFactory.create(LuceneNGram.class,
                         LuceneNGram.PARAM_NGRAM_USE_TOP_K, 50, LuceneNGram.PARAM_NGRAM_MIN_N, 1,
                         LuceneNGram.PARAM_NGRAM_MAX_N, 3),
+                        TcFeatureFactory.create(LuceneLemmaNGram.class,
+                                LuceneLemmaNGram.PARAM_NGRAM_USE_TOP_K, 50, LuceneLemmaNGram.PARAM_NGRAM_MIN_N, 2,
+                                LuceneLemmaNGram.PARAM_NGRAM_MAX_N, 3),
                         TcFeatureFactory.create(LuceneCharacterNGram.class,
                                 LuceneCharacterNGram.PARAM_NGRAM_USE_TOP_K, 50, LuceneCharacterNGram.PARAM_NGRAM_MIN_N, 1,
                                 LuceneCharacterNGram.PARAM_NGRAM_MAX_N, 3),
@@ -149,6 +154,8 @@ public class Pipeline
     {
         return createEngineDescription(createEngineDescription(BreakIteratorSegmenter.class,
                 BreakIteratorSegmenter.PARAM_LANGUAGE, LANGUAGE_CODE),
+                createEngineDescription(OpenNlpPosTagger.class),
+                createEngineDescription(StanfordLemmatizer.class),
                 createEngineDescription(OpenNlpNamedEntityRecognizer.class));
     }
     
