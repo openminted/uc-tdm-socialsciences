@@ -144,7 +144,8 @@ public class CsvReader
     @Override
     public String getTextClassificationOutcome(JCas arg0) throws CollectionException
     {
-        throw new IllegalStateException("Method not implemented!");
+        //TODO not implemented
+        return "N/A";
     }
     
     /**
