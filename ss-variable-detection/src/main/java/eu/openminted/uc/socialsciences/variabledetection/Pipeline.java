@@ -25,7 +25,7 @@ import org.dkpro.tc.ml.report.BatchTrainTestReport;
 import org.dkpro.tc.ml.weka.WekaClassificationAdapter;
 
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import eu.openminted.uc.socialsciences.variabledetection.io.CsvReader;
+import eu.openminted.uc.socialsciences.variabledetection.io.TextDatasetReader;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
 import weka.classifiers.functions.SMO;
@@ -37,8 +37,10 @@ import weka.classifiers.trees.RandomForest;
 public class Pipeline
     implements Constants
 {
-    private static final String CORPUS_FILEPATH_TRAIN = "src/main/resources/data/train";
-    private static final String COPRUS_FILEPATH_TEST = "src/main/resources/data/test";
+    private static final String CORPUS_FILEPATH_TRAIN = "/home/local/UKP/kiaeeha/workspace/Datasets/"
+            + "openminted/uc-ss/variable-detection/2017-08-22-SurveyVariables_E/train";
+    private static final String COPRUS_FILEPATH_TEST = "/home/local/UKP/kiaeeha/workspace/Datasets/"
+            + "openminted/uc-ss/variable-detection/2017-08-22-SurveyVariables_E/test";
     private static final String LANGUAGE_CODE = "en";
     private static final String EXPERIMENT_NAME = "AllbusVariableDetection";
     
@@ -48,11 +50,6 @@ public class Pipeline
     public static void main(String[] args)
         throws Exception
     {
-        // This is used to ensure that the required DKPRO_HOME environment variable is set.
-        // Ensures that people can run the experiments even if they haven't read the setup
-        // instructions first :)
-        // Don't use this in real experiments! Read the documentation and set DKPRO_HOME as
-        // explained there.
         setDkproHome(Pipeline.class.getSimpleName());
 
         ParameterSpace pSpace = getParameterSpace();
@@ -68,19 +65,19 @@ public class Pipeline
         Map<String, Object> dimReaders = new HashMap<String, Object>();
         
         CollectionReaderDescription readerTrain = CollectionReaderFactory.createReaderDescription(
-                CsvReader.class,
-                CsvReader.PARAM_SOURCE_LOCATION, CORPUS_FILEPATH_TRAIN,
-                CsvReader.PARAM_LANGUAGE, LANGUAGE_CODE,
-                CsvReader.PARAM_PATTERNS,
-                Arrays.asList(CsvReader.INCLUDE_PREFIX + "*/*.csv"));
+                TextDatasetReader.class,
+                TextDatasetReader.PARAM_SOURCE_LOCATION, CORPUS_FILEPATH_TRAIN,
+                TextDatasetReader.PARAM_LANGUAGE, LANGUAGE_CODE,
+                TextDatasetReader.PARAM_PATTERNS,
+                Arrays.asList(TextDatasetReader.INCLUDE_PREFIX + "**/*.txt"));
         dimReaders.put(DIM_READER_TRAIN, readerTrain);
         
         CollectionReaderDescription readerTest = CollectionReaderFactory.createReaderDescription(
-                CsvReader.class,
-                CsvReader.PARAM_SOURCE_LOCATION, COPRUS_FILEPATH_TEST,
-                CsvReader.PARAM_LANGUAGE, LANGUAGE_CODE,
-                CsvReader.PARAM_PATTERNS,
-                Arrays.asList(CsvReader.INCLUDE_PREFIX + "*/*.csv"));
+                TextDatasetReader.class,
+                TextDatasetReader.PARAM_SOURCE_LOCATION, COPRUS_FILEPATH_TEST,
+                TextDatasetReader.PARAM_LANGUAGE, LANGUAGE_CODE,
+                TextDatasetReader.PARAM_PATTERNS,
+                Arrays.asList(TextDatasetReader.INCLUDE_PREFIX + "**/*.txt"));
         dimReaders.put(DIM_READER_TEST, readerTest);
 
      // We configure 3 different classifiers, which will be swept, each with a special
@@ -138,14 +135,10 @@ public class Pipeline
     }
     
     /**
-     * Set the DKPRO_HOME environment variable to some folder in "target". This is mainly used to
-     * ensure that demo experiments run even if people have not set DKPRO_HOME before.
+     * Set the DKPRO_HOME environment variable to some folder in "target".
      * 
      * If DKPRO_HOME is already set, nothing is done (in order not to override already working
      * environments).
-     * 
-     * It is highly recommended not to use that anywhere else than in the demo experiments, as
-     * DKPRO_HOME is usually also used to store other data required for (real) experiments.
      * 
      * @param experimentName
      *            name of the experiment (will be used as folder name, no slashes/backslashes,
