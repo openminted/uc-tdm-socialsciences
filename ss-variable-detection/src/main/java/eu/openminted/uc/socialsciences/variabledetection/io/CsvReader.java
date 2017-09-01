@@ -11,6 +11,9 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.JCasBuilder;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.dkpro.tc.api.io.TCReaderSingleLabel;
+import org.dkpro.tc.api.type.TextClassificationOutcome;
+import org.dkpro.tc.api.type.TextClassificationTarget;
 
 import com.univocity.parsers.common.record.Record;
 import com.univocity.parsers.csv.CsvParser;
@@ -23,6 +26,7 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 
 public class CsvReader
     extends JCasResourceCollectionReader_ImplBase
+    implements TCReaderSingleLabel
 {
     /**
      * Character encoding of the input data.
@@ -79,6 +83,14 @@ public class CsvReader
         //Close the reader after reading is finished
         if (goToNextFile)
             closeQuietly(reader);
+        
+        //from org.dkpro.tc.core.io.SingleLabelReaderBase
+        TextClassificationOutcome outcome = new TextClassificationOutcome(aJCas);
+        outcome.setOutcome(getTextClassificationOutcome(aJCas));
+        outcome.setWeight(getTextClassificationOutcomeWeight(aJCas));
+        outcome.addToIndexes();
+        
+        new TextClassificationTarget(aJCas, 0, aJCas.getDocumentText().length()).addToIndexes();
     }
     
     private void readRecord(JCas aJCas, CsvParser aParser)
@@ -127,5 +139,25 @@ public class CsvReader
         throws IOException, CollectionException
     {
         return super.hasNext() || nextRecord != null;
+    }
+
+    @Override
+    public String getTextClassificationOutcome(JCas arg0) throws CollectionException
+    {
+        throw new IllegalStateException("Method not implemented!");
+    }
+    
+    /**
+     * This methods adds a (default) weight to instances. Readers which assign specific weights to
+     * instances need to override this method.
+     * 
+     * @param jcas
+     *            the JCas to add the annotation to
+     * @return a double between zero and one
+     * @throws CollectionException if an error occurs
+     */
+    public double getTextClassificationOutcomeWeight(JCas jcas)
+            throws CollectionException {
+        return 1.0;
     }
 }
