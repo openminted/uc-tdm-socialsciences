@@ -1,10 +1,14 @@
 package eu.openminted.uc.socialsciences.variabledetection.io;
 
-import static de.tudarmstadt.ukp.dkpro.core.testing.AssertAnnotations.assertSentence;
+import static de.tudarmstadt.ukp.dkpro.core.testing.AssertAnnotations.asCopyableString;
+import static java.util.Arrays.asList;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.util.JCasUtil.select;
+import static org.apache.uima.fit.util.JCasUtil.toText;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.uima.collection.CollectionReaderDescription;
@@ -38,8 +42,35 @@ public class CsvReaderTest
         while (jcasIterator.hasNext())
         {
             JCas jcas = jcasIterator.next();
-            assertSentence(expectedSentences.get(0), select(jcas, Sentence.class));
-            expectedSentences.remove(0);
+            int index = find(expectedSentences, select(jcas, Sentence.class));
+            assertTrue(index >= 0);            
+            expectedSentences.remove(index);
         }
+    }
+
+    private int find(List<String[]> expectedSentences, Collection<Sentence> aActual)
+    {   
+        int index = 0;
+        boolean found = false;
+        for (String[] sentences : expectedSentences)
+        {
+            List<String> expected = asList(sentences);
+            List<String> actual = toText(aActual);
+
+            System.out.printf("%-20s - Expected: %s%n", "Sentences", asCopyableString(expected, false));
+            System.out.printf("%-20s - Actual  : %s%n", "Sentences", asCopyableString(actual, false));
+
+            if (asCopyableString(expected, true).equals(asCopyableString(actual, true)))
+            {
+                found = true;
+                break;
+            }
+            ++index;
+        }        
+        
+        if (found)
+            return index;
+        else
+            return -1;
     }
 }
