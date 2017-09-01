@@ -16,11 +16,49 @@
 	</properties>
 
 	<dependencies>
+	 <!-- DKPro Core -->
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.io-asl</artifactId>
 		</dependency>
-
+		<dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
+    </dependency>
+		
+		<dependency>
+      <groupId>org.dkpro.lab</groupId>
+      <artifactId>dkpro-lab-core</artifactId>
+    </dependency>
+    
+    <!-- DKPro TC -->
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-features</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-features-ngram</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-ml</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-ml-weka</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>nz.ac.waikato.cms.weka</groupId>
+      <artifactId>weka-dev</artifactId>
+      <version>3.9.1</version>
+    </dependency>
+    
 		<dependency>
 			<groupId>com.univocity</groupId>
 			<artifactId>univocity-parsers</artifactId>

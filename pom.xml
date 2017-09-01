@@ -194,6 +194,20 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+				<groupId>org.dkpro.tc</groupId>
+				<artifactId>dkpro-tc</artifactId>
+				<version>0.9.0</version>
+				<type>pom</type>
+        <scope>import</scope>
+			</dependency>
+			<dependency>
+        <groupId>org.dkpro.lab</groupId>
+        <artifactId>dkpro-lab</artifactId>
+        <version>0.14.0-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
 			
 			<dependency>
 				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
