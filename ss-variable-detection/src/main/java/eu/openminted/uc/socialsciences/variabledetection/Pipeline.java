@@ -19,15 +19,21 @@ import org.dkpro.lab.task.ParameterSpace;
 import org.dkpro.tc.api.features.TcFeatureFactory;
 import org.dkpro.tc.api.features.TcFeatureSet;
 import org.dkpro.tc.core.Constants;
+import org.dkpro.tc.features.entityrecognition.NEFeatureExtractor;
+import org.dkpro.tc.features.ngram.LuceneCharacterNGram;
 import org.dkpro.tc.features.ngram.LuceneNGram;
+import org.dkpro.tc.features.ngram.LucenePhoneticNGram;
+import org.dkpro.tc.features.ngram.LuceneSkipNGram;
 import org.dkpro.tc.ml.ExperimentTrainTest;
 import org.dkpro.tc.ml.report.BatchTrainTestReport;
 import org.dkpro.tc.ml.weka.WekaClassificationAdapter;
 
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.io.TextDatasetReader;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
+import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.functions.SMO;
 import weka.classifiers.functions.supportVector.PolyKernel;
 import weka.classifiers.meta.Bagging;
@@ -88,6 +94,7 @@ public class Pipeline
                         PolyKernel.class.getName() + " " + "-C -1 -E 2" }),
                 // "-I": number of trees
                 asList(new String[] { RandomForest.class.getName(), "-I", "5" }),
+                asList(new String[] { NaiveBayes.class.getName(), "-K"}),
                 // "W": base classifier
                 asList(new String[] { Bagging.class.getName(), "-I", "2", "-W", J48.class.getName(),
                         "--", "-C", "0.5", "-M", "2" }));
@@ -96,7 +103,17 @@ public class Pipeline
         Dimension<TcFeatureSet> dimFeatureSets = Dimension.create(DIM_FEATURE_SET,                
                 new TcFeatureSet(TcFeatureFactory.create(LuceneNGram.class,
                         LuceneNGram.PARAM_NGRAM_USE_TOP_K, 50, LuceneNGram.PARAM_NGRAM_MIN_N, 1,
-                        LuceneNGram.PARAM_NGRAM_MAX_N, 3)));
+                        LuceneNGram.PARAM_NGRAM_MAX_N, 3),
+                        TcFeatureFactory.create(LuceneCharacterNGram.class,
+                                LuceneCharacterNGram.PARAM_NGRAM_USE_TOP_K, 50, LuceneCharacterNGram.PARAM_NGRAM_MIN_N, 1,
+                                LuceneCharacterNGram.PARAM_NGRAM_MAX_N, 3),
+//                        TcFeatureFactory.create(LucenePhoneticNGram.class,
+//                                LucenePhoneticNGram.PARAM_NGRAM_USE_TOP_K, 50, LucenePhoneticNGram.PARAM_NGRAM_MIN_N, 1,
+//                                LucenePhoneticNGram.PARAM_NGRAM_MAX_N, 3),
+                        TcFeatureFactory.create(LuceneSkipNGram.class,
+                                LuceneSkipNGram.PARAM_NGRAM_USE_TOP_K, 50, LuceneSkipNGram.PARAM_NGRAM_MIN_N, 2,
+                                LuceneSkipNGram.PARAM_NGRAM_MAX_N, 3),
+                        TcFeatureFactory.create(NEFeatureExtractor.class)));
         
      // single-label feature selection (Weka specific options), reduces the feature set to 10
         Map<String, Object> dimFeatureSelection = new HashMap<String, Object>();
@@ -131,7 +148,8 @@ public class Pipeline
     protected AnalysisEngineDescription getPreprocessing() throws ResourceInitializationException
     {
         return createEngineDescription(createEngineDescription(BreakIteratorSegmenter.class,
-                BreakIteratorSegmenter.PARAM_LANGUAGE, LANGUAGE_CODE));
+                BreakIteratorSegmenter.PARAM_LANGUAGE, LANGUAGE_CODE),
+                createEngineDescription(OpenNlpNamedEntityRecognizer.class));
     }
     
     /**
