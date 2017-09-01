@@ -57,9 +57,6 @@ public class CsvReaderTest
             List<String> expected = asList(sentences);
             List<String> actual = toText(aActual);
 
-            System.out.printf("%-20s - Expected: %s%n", "Sentences", asCopyableString(expected, false));
-            System.out.printf("%-20s - Actual  : %s%n", "Sentences", asCopyableString(actual, false));
-
             if (asCopyableString(expected, true).equals(asCopyableString(actual, true)))
             {
                 found = true;
