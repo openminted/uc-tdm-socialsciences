@@ -32,6 +32,7 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram;
+import eu.openminted.uc.socialsciences.variabledetection.features.WordnetFeatures;
 import eu.openminted.uc.socialsciences.variabledetection.io.TextDatasetReader;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
@@ -40,7 +41,6 @@ import weka.classifiers.functions.SMO;
 import weka.classifiers.functions.supportVector.PolyKernel;
 import weka.classifiers.meta.Bagging;
 import weka.classifiers.trees.J48;
-import weka.classifiers.trees.RandomForest;
 
 public class Pipeline
     implements Constants
@@ -94,8 +94,6 @@ public class Pipeline
                 // "-C": complexity, "-K": kernel
                 asList(new String[] { SMO.class.getName(), "-C", "1.0", "-K",
                         PolyKernel.class.getName() + " " + "-C -1 -E 2" }),
-                // "-I": number of trees
-                asList(new String[] { RandomForest.class.getName(), "-I", "5" }),
                 asList(new String[] { NaiveBayes.class.getName(), "-K"}),
                 // "W": base classifier
                 asList(new String[] { Bagging.class.getName(), "-I", "2", "-W", J48.class.getName(),
@@ -118,7 +116,12 @@ public class Pipeline
                         TcFeatureFactory.create(LuceneSkipNGram.class,
                                 LuceneSkipNGram.PARAM_NGRAM_USE_TOP_K, 50, LuceneSkipNGram.PARAM_NGRAM_MIN_N, 2,
                                 LuceneSkipNGram.PARAM_NGRAM_MAX_N, 3),
-                        TcFeatureFactory.create(NEFeatureExtractor.class)));
+                        TcFeatureFactory.create(NEFeatureExtractor.class)/*,
+                        TcFeatureFactory.create(WordnetFeatures.class,
+                                WordnetFeatures.PARAM_RESOURCE_NAME, "wordnet",
+                                WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
+                                WordnetFeatures.PARAM_SYNONYM_FEATURE, true,
+                                WordnetFeatures.PARAM_HYPERNYM_FEATURE, true)*/));
         
      // single-label feature selection (Weka specific options), reduces the feature set to 10
         Map<String, Object> dimFeatureSelection = new HashMap<String, Object>();

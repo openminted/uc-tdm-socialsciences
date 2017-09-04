@@ -37,6 +37,17 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!-- Required for DKPro-LSR https://github.com/dkpro/dkpro-lsr -->
+		<repository>
+      <id>ukp-oss-releases</id>
+      <url>https://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-ukp-releases-local</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
 		<!-- For SNAPSHOTs from the DKPro family -->
 		<repository>
 			<id>ukp-oss-snapshots</id>
@@ -321,7 +332,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.4</version>
 				<executions>
 					<execution>
 						<goals>
