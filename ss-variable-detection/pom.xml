@@ -16,111 +16,111 @@
 		<lsr.version>0.8.1</lsr.version>
 	</properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource-asl</artifactId>
-        <version>${lsr.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.germanet-gpl</artifactId>
-        <version>${lsr.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource-asl</artifactId>
+				<version>${lsr.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+				<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.germanet-gpl</artifactId>
+				<version>${lsr.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
-	 <!-- DKPro Core -->
+		<!-- DKPro Core -->
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.io-asl</artifactId>
 		</dependency>
 		<dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-asl</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
-    </dependency>
-		
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
+		</dependency>
 		<dependency>
-      <groupId>org.dkpro.lab</groupId>
-      <artifactId>dkpro-lab-core</artifactId>
-      <!-- because of this issue https://github.com/dkpro/dkpro-lab/issues/102 , should be removed 
-      after switching to the next version of dkpro-lab -->
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-asm</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    
-    <!-- DKPro TC -->
-    <dependency>
-      <groupId>org.dkpro.tc</groupId>
-      <artifactId>dkpro-tc-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.dkpro.tc</groupId>
-      <artifactId>dkpro-tc-features</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.dkpro.tc</groupId>
-      <artifactId>dkpro-tc-features-ngram</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.dkpro.tc</groupId>
-      <artifactId>dkpro-tc-ml</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.dkpro.tc</groupId>
-      <artifactId>dkpro-tc-ml-weka</artifactId>
-    </dependency>
-    
-    <!-- DKPro LexSem -->
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.core-asl</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.graph-asl</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.wordnet-asl</artifactId>
-    </dependency>
-    
-    <dependency>
-      <groupId>nz.ac.waikato.cms.weka</groupId>
-      <artifactId>weka-dev</artifactId>
-    </dependency>
-    
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.dkpro.lab</groupId>
+			<artifactId>dkpro-lab-core</artifactId>
+			<!-- because of this issue https://github.com/dkpro/dkpro-lab/issues/102 
+				, should be removed after switching to the next version of dkpro-lab -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-asm</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- DKPro TC -->
+		<dependency>
+			<groupId>org.dkpro.tc</groupId>
+			<artifactId>dkpro-tc-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.dkpro.tc</groupId>
+			<artifactId>dkpro-tc-features</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.dkpro.tc</groupId>
+			<artifactId>dkpro-tc-features-ngram</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.dkpro.tc</groupId>
+			<artifactId>dkpro-tc-ml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.dkpro.tc</groupId>
+			<artifactId>dkpro-tc-ml-weka</artifactId>
+		</dependency>
+
+		<!-- DKPro LexSem -->
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.core-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.graph-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.wordnet-asl</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>weka-dev</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>com.univocity</groupId>
 			<artifactId>univocity-parsers</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-  
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
-      <scope>test</scope>
-    </dependency>
+			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+			<artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>
