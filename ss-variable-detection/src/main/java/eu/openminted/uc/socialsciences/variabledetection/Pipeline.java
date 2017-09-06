@@ -116,17 +116,17 @@ public class Pipeline
                         TcFeatureFactory.create(LuceneSkipNGram.class,
                                 LuceneSkipNGram.PARAM_NGRAM_USE_TOP_K, 50, LuceneSkipNGram.PARAM_NGRAM_MIN_N, 2,
                                 LuceneSkipNGram.PARAM_NGRAM_MAX_N, 3),
-                        TcFeatureFactory.create(NEFeatureExtractor.class)/*,
+                        TcFeatureFactory.create(NEFeatureExtractor.class),
                         TcFeatureFactory.create(WordnetFeatures.class,
                                 WordnetFeatures.PARAM_RESOURCE_NAME, "wordnet",
                                 WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
                                 WordnetFeatures.PARAM_SYNONYM_FEATURE, true,
-                                WordnetFeatures.PARAM_HYPERNYM_FEATURE, true)*/));
+                                WordnetFeatures.PARAM_HYPERNYM_FEATURE, false)));
         
      // single-label feature selection (Weka specific options), reduces the feature set to 10
         Map<String, Object> dimFeatureSelection = new HashMap<String, Object>();
         dimFeatureSelection.put(DIM_FEATURE_SEARCHER_ARGS,
-                asList(new String[] { Ranker.class.getName(), "-N", "10" }));
+                asList(new String[] { Ranker.class.getName(), "-N", "100" }));
         dimFeatureSelection.put(DIM_ATTRIBUTE_EVALUATOR_ARGS,
                 asList(new String[] { InfoGainAttributeEval.class.getName() }));
         dimFeatureSelection.put(DIM_APPLY_FEATURE_SELECTION, true);
@@ -134,8 +134,9 @@ public class Pipeline
         ParameterSpace pSpace = new ParameterSpace(Dimension.createBundle("readers", dimReaders),
                 Dimension.create(DIM_LEARNING_MODE, LM_SINGLE_LABEL),
                 Dimension.create(DIM_FEATURE_MODE, FM_DOCUMENT), dimFeatureSets,
-                dimClassificationArgs,
-                Dimension.createBundle("featureSelection", dimFeatureSelection));
+                dimClassificationArgs
+                ,Dimension.createBundle("featureSelection", dimFeatureSelection)
+                );
 
         return pSpace;
     }
