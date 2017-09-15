@@ -323,13 +323,13 @@ After the download has finished, unzip the package and copy the `dict/` director
 
 Download the Wordnet properties file
  `uc-tdm-socialsciences/src/test/resources/installation/wordnet_properties.xml`
- (https://github.com/openminted/uc-tdm-socialsciences/blob/master/ss-variable-detection/src/test/resources/installation/wordnet_properties.xml[download])
+ (https://raw.githubusercontent.com/openminted/uc-tdm-socialsciences/master/ss-variable-detection/src/test/resources/installation/wordnet_properties.xml[download])
  and place it under
  `$DKPRO_HOME/LexSemResources/Wordnet/`. Adjust the value of the `param` element with name `dictionary_path` so it
  contains the absolute path to the dict directory.
 
 Create a directory named `de.tudarmstadt.ukp.dkpro.lexsemresource.core.ResourceFactory` under `$DKPRO_HOME`. Download the
  resources file `uc-tdm-socialsciences/src/test/resources/installation/resources.xml`
- (https://github.com/openminted/uc-tdm-socialsciences/blob/master/ss-variable-detection/src/test/resources/installation/resources.xml[download])
+ (https://raw.githubusercontent.com/openminted/uc-tdm-socialsciences/master/ss-variable-detection/src/test/resources/installation/resources.xml[download])
  and place it under
  this directory.
