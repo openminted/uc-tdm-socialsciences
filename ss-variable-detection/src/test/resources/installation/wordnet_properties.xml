@@ -48,7 +48,7 @@
             <!--<param name="cache_use_count" value="true"/>-->
             
             <!-- Change the following path to point to your WordNet installation -->
-            <param name="dictionary_path" value="/home/local/UKP/kiaeeha/DKPRO_HOME/LexSemResources/wordnet/dict"/>
+            <param name="dictionary_path" value="[path-to-your-dkpro-home]/LexSemResources/wordnet/dict"/>
 
         </param>
     </dictionary>
