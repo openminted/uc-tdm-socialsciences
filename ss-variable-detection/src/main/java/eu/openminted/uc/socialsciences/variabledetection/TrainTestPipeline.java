@@ -32,8 +32,10 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram;
+import eu.openminted.uc.socialsciences.variabledetection.features.TheSozFeatures;
 import eu.openminted.uc.socialsciences.variabledetection.features.WordnetFeatures;
 import eu.openminted.uc.socialsciences.variabledetection.io.TextDatasetReader;
+import eu.openminted.uc.socialsciences.variabledetection.resource.TheSozResource;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
 import weka.classifiers.bayes.NaiveBayes;
@@ -116,9 +118,11 @@ public class TrainTestPipeline
                         LuceneSkipNGram.PARAM_NGRAM_MIN_N, 2, LuceneSkipNGram.PARAM_NGRAM_MAX_N, 3),
                 TcFeatureFactory.create(NEFeatureExtractor.class),
                 TcFeatureFactory.create(WordnetFeatures.class, WordnetFeatures.PARAM_RESOURCE_NAME,
-                        "wordnet", WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
+                        WordnetFeatures.WORDNET_FIELD, WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
                         WordnetFeatures.PARAM_SYNONYM_FEATURE, true,
-                        WordnetFeatures.PARAM_HYPERNYM_FEATURE, false)));
+                        WordnetFeatures.PARAM_HYPERNYM_FEATURE, false),
+                TcFeatureFactory.create(TheSozFeatures.class, TheSozFeatures.PARAM_RESOURCE_NAME,
+                        TheSozResource.NAME)));
 
         // single-label feature selection (Weka specific options), reduces the feature set to 10
         Map<String, Object> dimFeatureSelection = new HashMap<String, Object>();
