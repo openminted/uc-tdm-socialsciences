@@ -28,5 +28,7 @@ public class TheSozResourceTest
     public void testContainsConceptLabelLanguage()
     {
         Assert.assertTrue(thesoz.containsConceptLabel("abduction", "en"));
+        Assert.assertTrue(thesoz.containsConceptLabel("Studienabbrecher", "de"));
+        Assert.assertTrue(thesoz.containsConceptLabel("étudiant qui abandonne ses études", "fr"));
     }
 }
