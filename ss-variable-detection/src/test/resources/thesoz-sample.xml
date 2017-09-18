@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dct="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/spec/" xmlns:void="http://rdfs.org/ns/void#" xmlns:iqvoc="http://try.iqvoc.net/schema#" xmlns:skosxl="http://www.w3.org/2008/05/skos-xl#" xmlns="http://lod.gesis.org/thesoz/" xmlns:schema="http://lod.gesis.org/thesoz/schema#">
+<rdf:Description rdf:about="http://lod.gesis.org/thesoz/concept_10034303">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:topConceptOf rdf:resource="http://lod.gesis.org/thesoz/scheme"/>
+    <skos:inScheme rdf:resource="http://lod.gesis.org/thesoz/scheme"/>
+    <skosxl:prefLabel rdf:resource="http://lod.gesis.org/thesoz/term_10034303_de"/>
+    <skos:prefLabel xml:lang="de">Abbrecher</skos:prefLabel>
+    <skosxl:prefLabel rdf:resource="http://lod.gesis.org/thesoz/term_10034303_en"/>
+    <skos:prefLabel xml:lang="en">drop-out</skos:prefLabel>
+    <skosxl:prefLabel rdf:resource="http://lod.gesis.org/thesoz/term_10034303_fr"/>
+    <skos:prefLabel xml:lang="fr">drop-out</skos:prefLabel>
+    <skosxl:prefLabel rdf:resource="http://lod.gesis.org/thesoz/term_10034303_ru"/>
+    <skos:prefLabel xml:lang="ru">прервавший обучение</skos:prefLabel>
+    <skosxl:altLabel rdf:resource="http://lod.gesis.org/thesoz/term_10034307_de"/>
+    <skos:altLabel xml:lang="de">Studienabbrecher</skos:altLabel>
+    <skosxl:altLabel rdf:resource="http://lod.gesis.org/thesoz/term_10034307_en"/>
+    <skos:altLabel xml:lang="en">university drop-out</skos:altLabel>
+    <skosxl:altLabel rdf:resource="http://lod.gesis.org/thesoz/term_10034307_fr"/>
+    <skos:altLabel xml:lang="fr">étudiant qui abandonne ses études</skos:altLabel>
+    <skosxl:altLabel rdf:resource="http://lod.gesis.org/thesoz/term_10034307_ru"/>
+    <skos:altLabel xml:lang="ru">студент, прервавший учебу</skos:altLabel>
+    <skos:related rdf:resource="http://lod.gesis.org/thesoz/concept_10034304"/>
+    <skos:related rdf:resource="http://lod.gesis.org/thesoz/concept_10034305"/>
+    <skos:related rdf:resource="http://lod.gesis.org/thesoz/concept_10034306"/>
+    <skos:exactMatch rdf:resource="http://dbpedia.org/resource/Drop-out"/>
+    <skos:exactMatch rdf:resource="http://zbw.eu/stw/descriptor/18856-0"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://lod.gesis.org/thesoz/concept_10040614">
+    <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+    <skos:topConceptOf rdf:resource="http://lod.gesis.org/thesoz/scheme"/>
+    <skos:inScheme rdf:resource="http://lod.gesis.org/thesoz/scheme"/>
+    <skosxl:prefLabel rdf:resource="http://lod.gesis.org/thesoz/term_10040614_de"/>
+    <skos:prefLabel xml:lang="de">Abduktion</skos:prefLabel>
+    <skosxl:prefLabel rdf:resource="http://lod.gesis.org/thesoz/term_10040614_en"/>
+    <skos:prefLabel xml:lang="en">abduction</skos:prefLabel>
+    <skosxl:prefLabel rdf:resource="http://lod.gesis.org/thesoz/term_10040614_fr"/>
+    <skos:prefLabel xml:lang="fr">abduction</skos:prefLabel>
+    <skos:related rdf:resource="http://lod.gesis.org/thesoz/concept_10040612"/>
+    <skos:related rdf:resource="http://lod.gesis.org/thesoz/concept_10040613"/>
+    <skos:historyNote xml:lang="de">validSince: 2001</skos:historyNote>
+    <skos:exactMatch rdf:resource="http://dbpedia.org/resource/Abduction"/>
+  </rdf:Description>
+</rdf:RDF>
