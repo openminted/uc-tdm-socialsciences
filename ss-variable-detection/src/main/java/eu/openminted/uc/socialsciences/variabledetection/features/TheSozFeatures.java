@@ -63,10 +63,9 @@ public class TheSozFeatures
         FrequencyDistribution<String> featureVector = new FrequencyDistribution<>();
         // TODO parameterize max ngram size
         FrequencyDistribution<String> documentNgrams = TheSozMetaCollector.getDocumentNgrams(view,
-                true, false, 1, 4, stopwords, Token.class);
+                true, false, ngramMinN, ngramMaxN, stopwords, Token.class);
         for (String ngram : documentNgrams.getKeys()) {
-            // TODO language check
-            if (kbr.containsConceptLabel(ngram)) {
+            if (kbr.containsConceptLabel(ngram, view.getDocumentLanguage())) {
                 featureVector.inc(ngram);
             }
         }

@@ -37,6 +37,12 @@ public class TheSozMetaCollector
     public static final String PARAM_STOPWORDS_FILE = "stopwordsFile";
     @ConfigurationParameter(name = PARAM_STOPWORDS_FILE, mandatory = false)
     private String ngramStopwordsFile;
+    
+    @ConfigurationParameter(name = TheSozFeatures.PARAM_NGRAM_MIN_N, mandatory = true)
+    protected int ngramMinN;
+
+    @ConfigurationParameter(name = TheSozFeatures.PARAM_NGRAM_MAX_N, mandatory = true)
+    protected int ngramMaxN;
 
     private Set<String> stopwords;
 
@@ -65,12 +71,10 @@ public class TheSozMetaCollector
     {
         FrequencyDistribution<String> frequencyDistribution = new FrequencyDistribution<>();
 
-        //TODO parameterize max ngram size
-        FrequencyDistribution<String> documentNgrams = getDocumentNgrams(jcas, true, false, 1, 4,
+        FrequencyDistribution<String> documentNgrams = getDocumentNgrams(jcas, true, false, ngramMinN, ngramMaxN,
                 stopwords, Token.class);
         for (String ngram : documentNgrams.getKeys()) {
-            // TODO language check
-            if (kbr.containsConceptLabel(ngram)) {
+            if (kbr.containsConceptLabel(ngram, jcas.getDocumentLanguage())) {
                 frequencyDistribution.inc(ngram);
             }
         }
