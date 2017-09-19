@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import org.dkpro.tc.ml.weka.WekaClassificationAdapter;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram;
 import eu.openminted.uc.socialsciences.variabledetection.features.TheSozFeatures;
@@ -126,7 +128,7 @@ public class TrainTestPipeline
                         TheSozFeatures.PARAM_NGRAM_MIN_N, 1,
                         TheSozFeatures.PARAM_NGRAM_MAX_N, 3)));
 
-        // single-label feature selection (Weka specific options), reduces the feature set to 10
+        // single-label feature selection (Weka specific options), reduces the feature set to N
         Map<String, Object> dimFeatureSelection = new HashMap<String, Object>();
         dimFeatureSelection.put(DIM_FEATURE_SEARCHER_ARGS,
                 asList(new String[] { Ranker.class.getName(), "-N", "100" }));
@@ -162,7 +164,9 @@ public class TrainTestPipeline
                         BreakIteratorSegmenter.PARAM_LANGUAGE, LANGUAGE_CODE),
                 createEngineDescription(OpenNlpPosTagger.class),
                 createEngineDescription(StanfordLemmatizer.class),
-                createEngineDescription(OpenNlpNamedEntityRecognizer.class));
+                createEngineDescription(OpenNlpNamedEntityRecognizer.class),
+                createEngineDescription(StopWordRemover.class,
+                        StopWordRemover.PARAM_MODEL_LOCATION, getClass().getResource("/stopwords/english.txt").toString()));
     }
 
     /**
