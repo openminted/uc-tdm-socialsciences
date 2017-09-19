@@ -21,6 +21,7 @@ public class TheSozResourceTest
         Assert.assertTrue(thesoz.containsConceptLabel("abduction"));
         // Check an altLabel
         Assert.assertTrue(thesoz.containsConceptLabel("university drop-out"));
+        
         Assert.assertFalse(thesoz.containsConceptLabel("this should not really be there :)"));
     }
 
@@ -30,5 +31,9 @@ public class TheSozResourceTest
         Assert.assertTrue(thesoz.containsConceptLabel("abduction", "en"));
         Assert.assertTrue(thesoz.containsConceptLabel("Studienabbrecher", "de"));
         Assert.assertTrue(thesoz.containsConceptLabel("étudiant qui abandonne ses études", "fr"));
+
+        Assert.assertFalse(thesoz.containsConceptLabel("Studienabbrecher", "fr"));
+        Assert.assertFalse(thesoz.containsConceptLabel("Studienabbrecher", "en"));
+        Assert.assertFalse(thesoz.containsConceptLabel("étudiant qui abandonne ses études", "en"));
     }
 }
