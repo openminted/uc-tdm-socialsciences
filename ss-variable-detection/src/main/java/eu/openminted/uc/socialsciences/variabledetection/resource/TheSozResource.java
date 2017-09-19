@@ -37,45 +37,55 @@ public class TheSozResource
     @Override
     public boolean containsConceptLabel(String conceptLabel)
     {
-        Query query;
         try {
-            query = QueryFactory
-                    .create(prefixString
-                            + "SELECT ?term WHERE { "
-                            + "     ?term ?p ?label . "
-                            + "     FILTER ((?p IN (skos:prefLabel, skos:altLabel)) "
-                            + "         && str(?label) = \"" + conceptLabel + "\") }");
+            Query query = createSelectQuery(conceptLabel);
+            QueryExecution qexec = QueryExecutionFactory.create(query, model);
+            ResultSet results = qexec.execSelect();
+
+            return results.hasNext();
         }
         catch (QueryException ex) {
-            //TODO log
+            // TODO log
             System.err.println("Cannot parse query for conceptLabel=[" + conceptLabel + "]");
             return false;
-        }        
-        QueryExecution qexec = QueryExecutionFactory.create(query, model);
-        ResultSet results = qexec.execSelect();
-        
-        return results.hasNext();
+        }
     }
 
     @Override
     public boolean containsConceptLabel(String conceptLabel, String language)
     {
-        Query query = QueryFactory
+        boolean result = false;
+        try {
+            Query query = createSelectQuery(conceptLabel);
+            QueryExecution qexec = QueryExecutionFactory.create(query, model);
+            ResultSet results = qexec.execSelect();
+
+            while (results.hasNext()) {
+                QuerySolution solution = results.next();
+                Literal literal = solution.getLiteral("?label");
+                if (literal.getLanguage() != null && language.equals(literal.getLanguage())) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        catch (QueryException ex) {
+            // TODO log
+            System.err.println("Cannot parse query for conceptLabel=[" + conceptLabel + "]");
+        }
+        return result;
+    }
+
+    private Query createSelectQuery(String conceptLabel)
+            throws QueryException
+    {
+        Query query;
+        query = QueryFactory
                 .create(prefixString
                         + "SELECT ?label WHERE { "
                         + "     ?term ?p ?label . "
                         + "     FILTER ((?p IN (skos:prefLabel, skos:altLabel)) "
                         + "         && str(?label) = \"" + conceptLabel + "\") }");
-        QueryExecution qexec = QueryExecutionFactory.create(query, model);
-        ResultSet results = qexec.execSelect();
-        
-        while (results.hasNext()) {
-            QuerySolution solution = results.next();
-            Literal literal = solution.getLiteral("?label");
-            if (literal.getLanguage() != null && language.equals(literal.getLanguage())) {
-                return true;
-            }
-        }
-        return false;
+        return query;
     }
 }
