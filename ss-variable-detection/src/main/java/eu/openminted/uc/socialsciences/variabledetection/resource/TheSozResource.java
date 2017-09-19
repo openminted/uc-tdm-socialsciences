@@ -1,7 +1,12 @@
 package eu.openminted.uc.socialsciences.variabledetection.resource;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryException;
 import org.apache.jena.query.QueryExecution;
@@ -21,6 +26,8 @@ public class TheSozResource
 
     private Model model;
     private final String prefixString;
+    private Map<Pair<String, String>, Boolean> cache;
+    private final String NO_LANGUAGE = "";
 
     public TheSozResource(String theSozPath)
     {
@@ -32,36 +39,51 @@ public class TheSozResource
         model.read(in, null);
         
         prefixString = "prefix skos: <http://www.w3.org/2004/02/skos/core#>";
+        cache = new HashMap<>();
     }
 
     @Override
     public boolean containsConceptLabel(String conceptLabel)
     {
+        Optional<Boolean> valueFromCache = getFromCache(conceptLabel, NO_LANGUAGE);
+        if (valueFromCache.isPresent())
+        {
+            return valueFromCache.get();
+        }
+
+        boolean result = false;
         try {
             Query query = createSelectQuery(conceptLabel);
             QueryExecution qexec = QueryExecutionFactory.create(query, model);
-            ResultSet results = qexec.execSelect();
+            ResultSet resultSet = qexec.execSelect();
 
-            return results.hasNext();
+            result = resultSet.hasNext();
         }
         catch (QueryException ex) {
             // TODO log
             System.err.println("Cannot parse query for conceptLabel=[" + conceptLabel + "]");
-            return false;
         }
+        putInCache(conceptLabel, NO_LANGUAGE, result);
+        return result;
     }
 
     @Override
     public boolean containsConceptLabel(String conceptLabel, String language)
     {
+        Optional<Boolean> valueFromCache = getFromCache(conceptLabel, language);
+        if (valueFromCache.isPresent())
+        {
+            return valueFromCache.get();
+        }
+
         boolean result = false;
         try {
             Query query = createSelectQuery(conceptLabel);
             QueryExecution qexec = QueryExecutionFactory.create(query, model);
-            ResultSet results = qexec.execSelect();
+            ResultSet resultSet = qexec.execSelect();
 
-            while (results.hasNext()) {
-                QuerySolution solution = results.next();
+            while (resultSet.hasNext()) {
+                QuerySolution solution = resultSet.next();
                 Literal literal = solution.getLiteral("?label");
                 if (literal.getLanguage() != null && language.equals(literal.getLanguage())) {
                     result = true;
@@ -73,7 +95,20 @@ public class TheSozResource
             // TODO log
             System.err.println("Cannot parse query for conceptLabel=[" + conceptLabel + "]");
         }
+        putInCache(conceptLabel, language, result);
         return result;
+    }
+    
+    private Optional<Boolean> getFromCache(String conceptLabel, String language)
+    {
+        Pair<String, String> cacheEntryId = new MutablePair<>(conceptLabel, language);
+        return Optional.ofNullable(cache.get(cacheEntryId));
+    }
+    
+    private void putInCache(String conceptLabel, String language, boolean value)
+    {
+        Pair<String, String> cacheEntryId = new MutablePair<>(conceptLabel, language);
+        cache.put(cacheEntryId, value);
     }
 
     private Query createSelectQuery(String conceptLabel)
