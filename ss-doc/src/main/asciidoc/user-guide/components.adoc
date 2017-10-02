@@ -11,7 +11,10 @@ The PDF-to-XMI conversion pipeline can be used to convert a collection of PDF fi
 ===== Usage: command line
 This pipeline can be used via calling the main method, like the following:
 
+[source,text]
+----
  $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
+----
 
 The following arguments have to be provided for the program:
 
@@ -27,6 +30,7 @@ dictionary files from https://github.com/openminted/uc-tdm-socialsciences/releas
 ===== Usage: java
 Add the following dependency to your pom file:
 
+[source,xml]
 ----
 <dependency>
     <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
@@ -36,6 +40,7 @@ Add the following dependency to your pom file:
 
 Create an example method like the following:
 
+[source,java]
 ----
 import eu.openminted.uc.socialsciences.io.pdfx.Pipeline;
 
@@ -67,8 +72,11 @@ The `PdfxXmlCreator` class can be used to convert a collection of PDF files to P
 (http://pdfx.cs.man.ac.uk/static/article-schema.xsd[schema]). This class is used internally by PDF-to-XMI converter
 component. This component can be used via calling the main method, like the following:
 
+[source,text]
+----
  $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
         eu.openminted.uc.socialsciences.io.pdfx.PdfxXmlCreator [args...]
+----
 
 The following arguments have to be provided for the program:
 
@@ -82,8 +90,11 @@ The `PdfxXmlToXmiConverter` class can be used to convert a collection of PDFX XM
 used internally by PDF-to-XMI converter component. This component can be used via calling the main method, like the
 following:
 
+[source,text]
+----
  $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
         eu.openminted.uc.socialsciences.io.pdfx.PdfxXmlToXmiConverter [args...]
+----
 
 The following arguments have to be provided for the program:
 
@@ -118,8 +129,11 @@ If your training data is in binary CAS format (e.g. exported from WebAnno), you 
 
 *Usage:*
 
+[source,text]
+----
  $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.helper.BinaryCasToTsvConverter [args...]
+----
 
 The following arguments have to be provided for the program:
 
@@ -131,7 +145,9 @@ create more fine-grained classes.
 
 To see the difference the setting of the `-subtypes` flag makes, consider the following excerpt from a training data
 file. In the first case, the flag is set:
---------------------------------------
+
+[source,text]
+----
  by	O
  the	O
  Communist	B-ORGpar
@@ -147,12 +163,13 @@ file. In the first case, the flag is set:
  Institute	B-ORGsci
  of	I-ORGsci
  Economics	I-ORGsci
---------------------------------------
+----
 
 This results in different labels for the two entities that are different kinds of organizations (`ORG`).
 Whereas in the second case, the flag has not been set:
 
---------------------------------------
+[source,text]
+----
  by	O
  the	O
  Communist	B-ORG
@@ -168,7 +185,7 @@ Whereas in the second case, the flag has not been set:
  Institute	B-ORG
  of	I-ORG
  Economics	I-ORG
---------------------------------------
+----
 
 Here, both are labeled with the same coarse class 'organization' (`ORG`). Thus, setting the `-subtypes` flag allows to
 differentiate sub-types of annotations, but mind that this means an increase in the number of classes for training.
@@ -183,8 +200,11 @@ number of different class labels in the training data.
 
 *Usage:*
 
+[source,text]
+----
  $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.train.StanfordNERTrainer [args...]
+----
 
 The following arguments have to be provided for the program:
 
@@ -195,8 +215,11 @@ The following arguments have to be provided for the program:
 The file containing the parameters for training has to be in properties format, i.e. one parameter per line in
 key-value-pairs like this:
 
+[source,text]
+----
  parameter = value
- 
+----
+
 You can find detailed descriptions of available training parameters in the FAQ of the Stanford CoreNLP NER:
 http://nlp.stanford.edu/software/crf-faq.html
 
@@ -216,8 +239,11 @@ you expect).
 
 *Usage:*
 
+[source,text]
+----
  $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.main.Pipeline [args...]
+----
 
 The following arguments have to be provided for the program:
 
@@ -239,8 +265,11 @@ Both have to be in XMI format again.
 
 *Usage:*
 
+[source,text]
+----
  $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure [args...]
+----
 
 The following arguments have to be provided for the program:
 
@@ -256,7 +285,8 @@ tags found in gold and prediction sets.
 
 The program will output agreement scores as well as precision and recall. The output will look similar to this:
 
---------------------------------------
+[source,text]
+----
 Calculating agreement scores for doc [5]
 Agreement scores on file [5]
 	-	Alpha for category OTHevt: -0.000365
@@ -276,7 +306,7 @@ FMeasure scores
 	Overall precision: 0.601852
 	Overall recall: 0.970149
 	Overall F-Measure: 0.742857
---------------------------------------
+----
 
 === Variable mention detection
 With this module, you can perform variable mention detection on your data. This module can be used to detect whether
@@ -288,6 +318,9 @@ With this module, you can perform variable mention detection on your data. This 
 This pipeline can be used for benchmarking various classifiers on a specific dataset. The pipeline requires the training
  and test document files be in the following directory structure
 
+.Example of the dataset structure
+[source,text]
+----
  train/
  ├────variable-id-1/
  ├────────doc1.txt
@@ -304,6 +337,7 @@ This pipeline can be used for benchmarking various classifiers on a specific dat
  ├────variable-id-2/
  ├────────doc1.txt
  └────────...
+----
 
 The pipeline uses several different lexical features along with features extracted using external resources such as
  WordNet. Read the following instructions to correctly configure these resources.
