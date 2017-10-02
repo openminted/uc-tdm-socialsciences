@@ -81,6 +81,30 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!-- OpenMinTeD repository -->
+		<repository>
+		  <id>omtd-releases</id>
+      <name>OpenMinTeD releases repository</name>
+      <url>https://repo.openminted.eu/content/repositories/releases</url>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>warn</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+		</repository>
+		<repository>
+      <id>omtd-snapshot</id>
+      <name>OpenMinTeD snapshots repository</name>
+      <url>https://repo.openminted.eu/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -95,6 +119,17 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+		  <id>omtd-snapshots</id>
+      <name>OpenMinTeD snapshots repository</name>
+      <url>https://repo.openminted.eu/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -388,6 +423,19 @@
 				<artifactId>uimafit-maven-plugin</artifactId>
 				<version>${uimafit.plugin.version}</version>
 			</plugin>
+			<plugin>
+         <groupId>eu.openminted.share.annotations</groupId>
+         <artifactId>omtd-share-annotations-maven-plugin</artifactId>
+         <version>0.0.1-SNAPSHOT</version>
+         <executions>
+            <execution>
+               <phase>process-classes</phase>
+               <goals>
+                  <goal>generate</goal>
+               </goals>
+            </execution>
+         </executions>
+      </plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
