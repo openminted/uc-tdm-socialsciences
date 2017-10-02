@@ -342,8 +342,3 @@ Download TheSoz files from http://lod.gesis.org/download-thesoz.html[here]
 
 After the download has finished, unzip the package and copy the content files to
 `$DKPRO_HOME/LexSemResources/TheSoz/`.
-
-Create a directory named `de.tudarmstadt.ukp.dkpro.lexsemresource.core.ResourceFactory` under `$DKPRO_HOME`. Download the
-resources file `uc-tdm-socialsciences/src/test/resources/installation/resources.xml`
-(https://raw.githubusercontent.com/openminted/uc-tdm-socialsciences/master/ss-variable-detection/src/test/resources/installation/resources.xml[download])
-and place it under this directory.
