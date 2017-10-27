@@ -59,15 +59,16 @@ public class LoadAndApplyPipeline
         
         SimplePipeline.runPipeline(
                 readerTest,
-                AnalysisEngineFactory.createEngineDescription(BreakIteratorSegmenter.class),
+                //Preprocessing should be the same as the one used for model training
+                createEngineDescription(BreakIteratorSegmenter.class),
                 createEngineDescription(OpenNlpPosTagger.class),
                 createEngineDescription(StanfordLemmatizer.class),
                 createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
                         StopWordRemover.PARAM_MODEL_LOCATION, getClass().getResource("/stopwords/english.txt").toString()),
-                AnalysisEngineFactory.createEngineDescription(TcAnnotator.class,
+                createEngineDescription(TcAnnotator.class,
                         TcAnnotator.PARAM_TC_MODEL_LOCATION, modelPath),
-                AnalysisEngineFactory.createEngineDescription(XmiWriter.class,
+                createEngineDescription(XmiWriter.class,
                         XmiWriter.PARAM_TARGET_LOCATION, PREDICTION_PATH,
                         XmiWriter.PARAM_OVERWRITE, true));
     }
