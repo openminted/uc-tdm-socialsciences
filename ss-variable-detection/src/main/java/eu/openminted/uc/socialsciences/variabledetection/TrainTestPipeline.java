@@ -51,6 +51,7 @@ import weka.classifiers.trees.J48;
  * <a href="https://github.com/dkpro/dkpro-tc">DKPro-TC</a>.
  */
 public class TrainTestPipeline
+    extends AbstractPipeline
     implements Constants
 {
     private static final String CORPUS_FILEPATH_TRAIN = "/home/local/UKP/kiaeeha/workspace/Datasets/"
@@ -65,7 +66,7 @@ public class TrainTestPipeline
      */
     public static void main(String[] args) throws Exception
     {
-        setDkproHome(TrainTestPipeline.class.getSimpleName());
+        assertDkproHomeVariableIsSet();
 
         ParameterSpace pSpace = getParameterSpace();
         TrainTestPipeline experiment = new TrainTestPipeline();
@@ -197,39 +198,5 @@ public class TrainTestPipeline
                 createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
                         StopWordRemover.PARAM_MODEL_LOCATION, getClass().getResource("/stopwords/english.txt").toString()));
-    }
-
-    /**
-     * Set the DKPRO_HOME environment variable to some folder in "target".
-     * 
-     * If DKPRO_HOME is already set, nothing is done (in order not to override already working
-     * environments).
-     * 
-     * @param experimentName
-     *            name of the experiment (will be used as folder name, no slashes/backslashes,
-     *            better avoid spaces)
-     * @return True if DKPRO_HOME was correctly set and false if nothing was done.
-     */
-    public static boolean setDkproHome(String experimentName)
-    {
-        String dkproHome = "DKPRO_HOME";
-        Map<String, String> env = System.getenv();
-        if (!env.containsKey(dkproHome)) {
-            System.out.println("DKPRO_HOME not set.");
-
-            File folder = new File("target/results/" + experimentName);
-            folder.mkdirs();
-
-            System.setProperty(dkproHome, folder.getPath());
-            System.out.println("Setting DKPRO_HOME to: " + folder.getPath());
-
-            return true;
-        }
-        else {
-            System.out.println("DKPRO_HOME already set to: " + env.get(dkproHome));
-            System.out.println("Keeping those settings.");
-
-            return false;
-        }
     }
 }
