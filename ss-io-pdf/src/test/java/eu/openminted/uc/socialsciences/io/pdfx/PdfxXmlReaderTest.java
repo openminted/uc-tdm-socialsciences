@@ -32,7 +32,7 @@ public class PdfxXmlReaderTest {
 
 	}
 
-	@Test
+	@Ignore
 	public void testReadArticles() throws Exception {
 
 		List<Path> xmlFiles = getXmlFilesFromDir(Paths.get(TEST_RESOURCES_PATH));
