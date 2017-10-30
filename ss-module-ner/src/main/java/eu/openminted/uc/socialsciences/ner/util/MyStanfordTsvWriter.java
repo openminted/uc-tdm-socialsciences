@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.ner.helper;
+package eu.openminted.uc.socialsciences.ner.util;
 
 import static org.apache.commons.io.IOUtils.closeQuietly;
 import static org.apache.uima.fit.util.JCasUtil.select;
@@ -28,7 +28,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.io.JCasFileWriter_ImplBase;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder;
 import webanno.custom.NamedEntity;
 
 /**

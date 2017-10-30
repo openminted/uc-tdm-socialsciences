@@ -5,7 +5,8 @@ import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
-import eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder;
+import eu.openminted.uc.socialsciences.ner.util.MyIobEncoder;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;

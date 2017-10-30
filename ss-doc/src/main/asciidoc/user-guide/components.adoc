@@ -132,7 +132,7 @@ If your training data is in binary CAS format (e.g. exported from WebAnno), you 
 [source,text]
 ----
  $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
-        eu.openminted.uc.socialsciences.ner.helper.BinaryCasToTsvConverter [args...]
+        eu.openminted.uc.socialsciences.ner.util.BinaryCasToTsvConverter [args...]
 ----
 
 The following arguments have to be provided for the program:

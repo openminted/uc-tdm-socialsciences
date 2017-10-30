@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package eu.openminted.uc.socialsciences.ner.helper.util;
+package eu.openminted.uc.socialsciences.ner.util;
 
 import java.util.Collection;
 import java.util.Map;
