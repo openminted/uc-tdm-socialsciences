@@ -1,0 +1,484 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
+  <meta>
+    <job>47048f68ef06d4a24a068cc41533ea8d9e0bf6081fe758db4726d84416e6298a</job>
+    <base_name>iv4</base_name>
+    <warning>Name identification was not possible. </warning>
+    <warning>The NLTK library was not found. Sentence splitting was omitted.</warning>
+  </meta>
+  <article>
+    <front class="DoCO:FrontMatter">
+      <title-group>
+        <article-title class="DoCO:Title" id="1">Out-of-domain FrameNet Semantic Role Labeling</article-title>
+      </title-group>
+      <abstract class="DoCO:Abstract" id="5">Domain dependence of NLP systems is one of the major obstacles to their application in large-scale text analysis, also restrict- ing the applicability of FrameNet semantic role labeling (SRL) systems. Yet, current FrameNet SRL systems are still only evaluated on a single in-domain test set. For the first time, we study the domain dependence of FrameNet SRL on a wide range of benchmark sets. We create a novel test set for FrameNet SRL based on user-generated web text and find that the major bottleneck for out-of-domain FrameNet SRL is the frame identification step. To address this problem, we develop a simple, yet efficient system based on distributed word representations. Our system closely approaches the state-of-the-art in-domain while outper- forming the best available frame identification system out-of-domain. We publish our system and test data for research purposes. 1</abstract>
+    </front>
+    <body class="DoCO:BodyMatter">
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="2" page="1" column="1">Silvana Hartmann , Ilia Kuznetsov , Teresa Martin , Iryna Gurevych</h1>
+        <region class="unknown" id="4" page="1" column="1">§† † §† § Research Training Group AIPHES † Ubiquitous Knowledge Processing (UKP) Lab Department of Computer Science, Technische Universität Darmstadt <ext-link ext-link-type="uri" href="http://www.ukp.tu-darmstadt.de" id="3">http://www.ukp.tu-darmstadt.de</ext-link></region>
+      </section>
+      <section class="deo:Introduction">
+        <h1 class="DoCO:SectionTitle" id="6" page="1" column="1">1 Introduction</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="9" page="1" column="1">Domain dependence is a major problem for supervised NLP tasks such as FrameNet semantic role labeling (SRL): systems generally exhibit a strong performance drop when applied to test data from a different distribution than the training data. This prohibits their large-scale use in language technol- ogy applications. The same problems are expected for FrameNet SRL, but due to a lack of datasets, state-of-the- art FrameNet SRL is only evaluated on a single in-domain test set, see e.g. <xref ref-type="bibr" rid="R9" id="7" class="deo:Reference">Das et al. (2014)</xref> and <xref ref-type="bibr" rid="R13" id="8" class="deo:Reference">FitzGerald et al. (2015)</xref>. In this work, we present the first comprehensive study of the domain dependence of FrameNet SRL 1 www.ukp.tu-darmstadt.de/ood-fn-srl</region>
+      <region class="unknown" id="10" page="1" column="2">§†</region>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="11" page="1" column="2">Martin Gurevych</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="13" page="1" column="2">on a range of benchmark datasets. This is crucial as the demand for semantic textual analysis of large- scale web data keeps growing. Based on FrameNet (<xref ref-type="bibr" rid="R12" id="12" class="deo:Reference">Fillmore et al., 2003</xref>), FrameNet SRL extracts frame-semantic structures on the sentence level that describe a specific situation centered around a semantic predicate, often a verb, and its participants, typically syntactic arguments or adjuncts of the predicate. The predicate is assigned a frame label, essentially a word sense label, that defines the situation and determines the semantic roles of the participants. The following sentence from FrameNet provides an example of the Grinding frame and its roles:</region>
+      <region class="DoCO:TextChunk" id="14" confidence="possible" page="1" column="2">[The mill] Grinding cause grinds Grinding [the malt] P atient [to grist] Result .</region>
+      <region class="DoCO:TextChunk" id="23" page="1" column="2">FrameNet SRL consists of two steps, frame identification (frameId), assigning a frame to the current predicate, and role labeling (roleId), identifying the participants and assigning them role labels licensed by the frame. The frameId step reduces the hun- dreds of role labels in FrameNet to a manageable set of up to 30 roles. Thus, FrameNet SRL dif- fers from PropBank SRL ( <xref ref-type="bibr" rid="R5" id="15" class="deo:Reference">Carreras and Màrquez, 2005</xref>), that only uses a small set of 26 syntactically motivated role labels and puts less weight on the predicate sense. The advantage of FrameNet SRL is that it results in a more fine-grained and rich interpretation of the input sentences which is crucial for many applications, e.g. reasoning in online debates (<xref ref-type="bibr" rid="R3" id="16" class="deo:Reference">Berant et al., 2014</xref>). Domain dependence is a well-studied topic for PropBank SRL. However, to the best of our knowledge, there exists no analysis of the performance of modern FrameNet SRL systems when applied to data from new domains. In this work, we address this problem as follows: we introduce a new benchmark dataset YAGS<marker type="page" number="2"/><marker type="column" number="1"/><marker type="block"/> ( Y ahoo! A nswers G old S tandard), which is based on user-generated questions and answers and exem- plifies an out-of-domain application use case. We use YAGS, along with other out-of-domain test sets, to perform a detailed analysis of the domain dependence of FrameNet SRL using Semafor (<xref ref-type="bibr" rid="R9" id="20" class="deo:Reference">Das et al., 2014</xref>; <xref ref-type="bibr" rid="R20" id="21" class="deo:Reference">Kshirsagar et al., 2015</xref>) to identify which of the stages of FrameNet SRL, frameId or roleId, is particularly sensitive to domain shifts. Our results confirm that the major bottleneck in FrameNet SRL is the frame identification step. Motivated by that, we develop a simple, yet efficient frame identification method based on distributed word representations that promise better domain generalization. Our system’s performance matches the state-of-the-art in-domain (<xref ref-type="bibr" rid="R15" id="22" class="deo:Reference">Hermann et al., 2014</xref>), despite using a simpler model, and improves on the out-of-domain performance of Semafor . The contributions of the present work are two- fold: 1) we perform the first comprehensive study of the domain generalization capabilities of open- source FrameNet SRL, and 2) we propose a new frame identification method based on distributed word representations that enhances out-of-domain performance of frame identification. To enable our study, we created YAGS, a new, substantially-sized benchmark dataset for the out-of-domain testing of FrameNet SRL; we publish the annotations for the YAGS benchmark set and our frame identification system for research purposes.</region>
+      <outsider class="DoCO:TextBox" type="page_nr" id="18" page="1" column="2">471</outsider>
+      <outsider class="DoCO:TextBox" type="footer" id="19" page="1" column="2">Proceedings of the 15th Conference of the European Chapter of the Association for Computational Linguistics: Volume 1, Long Papers , pages 471–482, Valencia, Spain, April 3-7, 2017. c 2017 Association for Computational Linguistics</outsider>
+      <section class="deo:RelatedWork">
+        <h1 class="DoCO:SectionTitle" id="24" page="2" column="1">2 Related work</h1>
+        <region class="DoCO:TextChunk" id="60" page="2" column="1">The domain dependence of FrameNet SRL systems has been only studied sparsely, however, there exists a large body of work on out-of-domain PropBank SRL, as well as on general domain adaptation methods for NLP. This section briefly introduces some of the relevant approaches in these areas, and then summarizes the state-of-the-art in FrameNet frame identification. Domain adaptation in NLP Low out-of- domain performance is a problem common to many supervised machine learning tasks. The goal of domain adaptation is to improve model performance on the test data originating from a different distribution than the training data ( <xref ref-type="bibr" rid="R31" id="25" class="deo:Reference">Søgaard, 2013</xref>). For NLP, domain adaptation has been studied for various tasks such as POS-tagging and syntactic parsing (<xref ref-type="bibr" rid="R10" id="26" class="deo:Reference">Daumé III, 2007</xref>; <xref ref-type="bibr" rid="R4" id="27" class="deo:Reference">Blitzer et al., 2006</xref>). For the complex task of SRL, it is strongly associated with PropBank, because<marker type="column" number="2"/><marker type="block"/> the corresponding CoNLL shared tasks promote out-of-domain evaluation (<xref ref-type="bibr" rid="R32" id="29" class="deo:Reference">Surdeanu et al., 2008</xref>; <xref ref-type="bibr" rid="R14" id="30" class="deo:Reference">Haji c et al., 2009</xref>). In the shared tasks, in-domain newspaper text from the WSJ Corpus is contrasted to out-of-domain data from fiction texts in the Brown Corpus. Most of the participants in the shared tasks do not consider domain adaptation and report systematically lower scores for the out-of-domain data (<xref ref-type="bibr" rid="R14" id="31" class="deo:Reference">Haji c et al., 2009</xref>). Representation learning has been successfully used to improve on the CoNLL shared task results (<xref ref-type="bibr" rid="R16" id="32" class="deo:Reference">Huang and Yates, 2010</xref>; <xref ref-type="bibr" rid="R13" id="33" class="deo:Reference">FitzGerald et al., 2015</xref>; <xref ref-type="bibr" rid="R36" id="34" class="deo:Reference">Yang et al., 2015</xref>). <xref ref-type="bibr" rid="R36" id="35" class="deo:Reference">Yang et al. (2015)</xref> report the smallest performance difference (5.5 points in F 1 ) between in-domain and out-of-domain test data, leading to the best results to date on the CoNLL 2009 out-of-domain test. Their system learns common representations for in-domain and out-of-domain data based on deep belief networks.<marker type="block"/> Domain dependence of FrameNet SRL The FrameNet 1.5 fulltext corpus, used as a standard dataset for training and evaluating FrameNet SRL systems, contains texts from several domains (Ruppenhofer et al., 2010). However, the standard data split used to evaluate modern systems (<xref ref-type="bibr" rid="R7" id="37" class="deo:Reference">Das and Smith, 2011</xref>) ensures the presence of all domains in the training as well as test data and cannot be used to assess the systems’ ability to generalize. Moreover, all the texts in the FrameNet fulltext corpus, based on newspaper and literary texts, are post-edited and linguistically well-formed. The FrameNet test setup thus cannot provide information on SRL performance on less edited out-of- domain data, e.g. user-generated web data. There are few studies related to the out-of- domain generalization of FrameNet SRL. Johansson and <xref ref-type="bibr" rid="R19" id="38" class="deo:Reference">Nugues (2008)</xref> evaluate the impact of different parsers on FrameNet SRL using the Nuclear Threats Initiative (NTI) data as an out-of-domain test set. They observe low domain generalization abilities of their supervised system, but find that using dependency parsers instead of constituency parsers is beneficial in the out-of-domain scenario. <xref ref-type="bibr" rid="R6" id="39" class="deo:Reference">Croce et al. (2010)</xref> use a similar in-domain/out-of- domain split to evaluate their approach to open- domain FrameNet SRL. They integrate a distri- butional model into their SRL system to generalize lexicalized features to previously unseen arguments and thus create an SRL system with a smaller performance gap between in-domain and out-of- domain test data (only 4.5 percentage points F 1 ).<marker type="page" number="3"/><marker type="column" number="1"/><marker type="block"/> Note that they only evaluate the role labeling step. It is not transparent how their results would transfer to the current state-of-the-art SRL systems that already integrate methods to improve generalization, for instance using distributed representations. <xref ref-type="bibr" rid="R25" id="42" class="deo:Reference">Palmer and Sporleder (2010)</xref> analyze the FrameNet 1.3 training data coverage and the performance of the Shalmaneser SRL system (<xref ref-type="bibr" rid="R11" id="43" class="deo:Reference">Erk and Padó, 2006</xref>) for frame identification on several test sets across domains, i.e. the PropBank and NTI parts of the FrameNet fulltext corpus and the fictional texts from the SemEval-2007 shared task (<xref ref-type="bibr" rid="R2" id="44" class="deo:Reference">Baker et al., 2007</xref>). Having observed that the majority of errors results from coverage gaps in FrameNet, they suggest to focus on developing frame identification systems that generalize well to new domains. Our observations support their findings and show that the problem still persists even when modern SRL methods and the extended FrameNet 1.5 lexicon are used. <xref ref-type="bibr" rid="R18" id="45" class="deo:Reference">Søgaard et al. (2015)</xref> annotate 236 tweets with FrameNet labels to apply SRL to knowledge ex- traction from Twitter. They report that the frameId performance of Semafor 2.1 (<xref ref-type="bibr" rid="R8" id="46" class="deo:Reference">Das et al., 2010</xref>) on the new test set is similar to its performance on the SemEval-2007 newswire test set (<xref ref-type="bibr" rid="R2" id="47" class="deo:Reference">Baker et al., 2007</xref>). For full SRL, there are large differences: F 1 reaches only 25.96% on the Twitter set compared to the 46.5% reported by <xref ref-type="bibr" rid="R8" id="48" class="deo:Reference">Das et al. (2010)</xref> on the in- domain set. These results show that there is ample room for improvement for SRL on Twitter data. Recent FrameNet SRL systems are not evaluated in the context of their domain dependence: <xref ref-type="bibr" rid="R20" id="49" class="deo:Reference">Kshirsagar et al. (2015)</xref> use the domain adaptation approach from <xref ref-type="bibr" rid="R10" id="50" class="deo:Reference">Daumé III (2007)</xref> to augment the feature space for FrameNet SRL with FrameNet example sentences; <xref ref-type="bibr" rid="R13" id="51" class="deo:Reference">FitzGerald et al. (2015)</xref> and <xref ref-type="bibr" rid="R15" id="52" class="deo:Reference">Hermann et al. (2014)</xref> adopt deep learning methods, including learning representations that may generalize better to unseen data, to present state- of-the-art results for FrameNet SRL. All of the former only use the already introduced split of the FrameNet fulltext corpus for testing, as does the long-time state-of-the-art system Semafor (<xref ref-type="bibr" rid="R9" id="53" class="deo:Reference">Das et al., 2014</xref>). Out-of-domain evaluation is lacking, as are datasets that enable this kind of evaluation.<marker type="block"/> Frame identification Current state of the art in frame identification is the approach by <xref ref-type="bibr" rid="R15" id="55" class="deo:Reference">Hermann et al. (2014)</xref>, further referred to as Hermann-14 , followed by the previous state-of-the art model Semafor (<xref ref-type="bibr" rid="R9" id="56" class="deo:Reference">Das et al., 2014</xref>).<marker type="column" number="2"/><marker type="block"/> The frame identification system of Semafor relies on an elaborate feature set based on syntactic and lexical features, using the WordNet hierar- chy as a source of lexical information, and a label propagation-based approach to take unknown predicates into account. Semafor is not specifically designed for out-of-domain use: the WordNet coverage is limited, and the quality of syntactic parsing might drop when the system is applied to out-of- domain data, especially in case of non-standard user-generated texts. Hermann-14 uses distributed word representations augmented by syntactic information. General- purpose distributed word representations (such as word2vec (<xref ref-type="bibr" rid="R24" id="58" class="deo:Reference">Mikolov et al., 2013</xref>) and GloVe (Pennington et al., 2014)) are beneficial for many NLP tasks: word representations are calculated on a large unlabeled corpus, and then used as input for high-level tasks for which training data is scarce, such as syntactic parsing, word sense disambiguation, and SRL. In the syntax-augmented representations of Hermann-14 , a region of the input vector, a container , is reserved for each syntactic path that can connect predicates to their arguments. This container is populated with a corresponding argument word representation, if the argument on this path is found in the training data. Hermann-14 uses the WSABIE algorithm (<xref ref-type="bibr" rid="R35" id="59" class="deo:Reference">Weston et al., 2011</xref>) to map input and frame representations to a common latent space. WSABIE uses WARP loss and gradient-based updates to minimize the distance between the latent representations of the predicate target and the correct frame, while maximizing the distance to all the other irrelevant frames. During testing, cosine similarity is used to find the closest frame given the input. One advantage of this approach is that similar frames are positioned close to each other in the latent space which allows information to be shared between similar predicates and similar frames. This system is the current state-of- the-art for in-domain frame identification, but has not been applied in an out-of-domain setting.</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="41" page="2" column="2">472</outsider>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="61" page="3" column="2">3 Out-of-domain FrameNet test data</h1>
+        <region class="DoCO:TextChunk" id="83" page="3" column="2">This section describes available in-domain and out- of-domain FrameNet test sets and the creation of YAGS, a new out-of-domain FrameNet test set. FrameNet test sets FrameNet SRL is typically evaluated on das-test , the test set first introduced by <xref ref-type="bibr" rid="R7" id="62" class="deo:Reference">Das and Smith (2011)</xref>. It is a held-out set ran- domly sampled from the FrameNet 1.5 fulltext cor-<marker type="page" number="4"/><marker type="column" number="1"/><marker type="block"/> pus. While the FrameNet fulltext corpus contains data from various sources, we consider das-test an in-domain test set: all data sources of the test set are also represented in the training set. There are two additional datasets from other domains that we use in our study on domain generalization: The MASC word sense sentences corpus contains FrameNet annotations for a lexical sample of roughly 100 lemmas from ANC (Passonneau et al., 2012). The Twitter-based dataset from <xref ref-type="bibr" rid="R18" id="67" class="deo:Reference">Søgaard et al. (2015)</xref>, henceforth TW , has some very distinctive properties: it does not provide a gold standard, but annotations by three annotators. This leads to a high variance in role annotations: the annotator TW 3 annotated only 82% of the number of roles annotated by TW 1 , see <xref ref-type="table" rid="T1" id="68" class="deo:Reference">Table 1</xref>. Like <xref ref-type="bibr" rid="R18" id="69" class="deo:Reference">Søgaard et al. (2015)</xref>, we report SRL results as averages over the three annotations (TW-av). <xref ref-type="table" rid="T1" id="70" class="deo:Reference">Table 1</xref> shows statistics on these datasets. For TW, it displays the statistics for each annotator. The TW datasets are fairly small, containing only around 1,000 frame labels. The MASC dataset is of substantial size, but it constitutes a lexical sample and therefore a slightly artificial evaluation setup. There is another Twitter-based test set (<xref ref-type="bibr" rid="R18" id="71" class="deo:Reference">Johannsen et al., 2015</xref>), which we do not use in our experiments, because it was created semi-automatically and is therefore of lower quality. We conclude that existing out-of-domain test sets for FrameNet SRL are insufficient, in particular for increasingly important domains like user-generated text, because available datasets are either small or of low quality. YAGS: a new FrameNet test set based on user- generated text To address the need for new out- of-domain test datasets, we created YAGS , a new FrameNet-annotated evaluation dataset based on question-answer data from Yahoo! Answers (YA), a community-driven question-and-answer forum. The corpus is based on a random sample of 55 questions and their answers from the test split of the YA Manner Questions dataset used by Surdeanu et al. (2011) and published as part of the Yahoo! Webscope program ( https://webscope. sandbox.yahoo.com/ ).<marker type="column" number="2"/><marker type="block"/> YAGS contains 1,415 sentences, 3,091 frame annotations, and 6,081 role annotations. <xref ref-type="fig" rid="F1" id="73" class="deo:Reference">Figure 1</xref> shows a sentence from YAGS that demonstrates some non-standard properties of the user-generated question-answer data, such as typos ( mortal instead of mortar ). We publish the annotations as stand-off annotations to the original dataset.<marker type="block"/> Annotation study Each document was annotated by a two linguistically trained annotators provided with detailed guidelines and then curated by an experienced expert, all using WebAnno 2.0.0 (<xref ref-type="bibr" rid="R37" id="75" class="deo:Reference">Yimam et al., 2014</xref>). Up to five predicates per sentence were pre-selected automatically based on lemma and POS, preferring verbal predicates to other POS, which leads to a larger proportion of verbs in YAGS. The annotation task was to identify the correct frame label for each predicate, if any, and then to identify the role spans as arguments and adjuncts of the frame, and to label them with the appropriate role. For reference, annotators accessed the FrameNet 1.5 definitions and examples with the FrameNet Explorer tool ( www.clres.com/FNExplorer.html ). Inter-rater agreement for frame labels is Krippendorff’s α =0.76; agreement for role labels given matching spans is α =0.62, and Krippendorff’s α unitizing agreement for role spans is 0.7 – a good result for such a difficult task on user-generated text. Average pairwise F 1 agreement for frame labels is high at 0.96, higher than the 0.84 reported by <xref ref-type="bibr" rid="R18" id="76" class="deo:Reference">Søgaard et al. (2015)</xref> for the TW sets. Our high frame agreement is a result of annotator experience and our elaborate annotation setup.<marker type="block"/> YAGS statistics and properties <xref ref-type="table" rid="T1" id="78" class="deo:Reference">Table 1</xref> presents dataset statistics for YAGS and the other test sets. Due to the predicate selection, YAGS contains a larger proportion of verbal predicates than the other sets, and has three times more frames and roles than TW, approximating the size of das-test. The proportion of core roles, roles that are obligatory for a frame and thus typically more frequent in datasets than non-core roles, in the out-of-domain test sets (TW, YAGS, MASC) is slightly smaller<marker type="page" number="5"/><marker type="column" number="1"/><marker type="block"/> compared to das-test. This goes along with a larger variance of roles in YAGS. The user-generated aspect of YAGS manifests in spelling errors, and in the lack of punctuation and structure of the texts. The language is informal, but there are only few emoticons or other special words such as the hashtags typically found in tweets. In the next section, we use the test sets from <xref ref-type="table" rid="T1" id="82" class="deo:Reference">Table 1</xref> to analyze the domain generalization capabilities of an open-source FrameNet SRL system.</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="64" page="3" column="2">473</outsider>
+        <region class="DoCO:FigureBox" id="F1">
+          <image class="DoCO:Figure" src="iv4.page_004.image_01.png" thmb="iv4.page_004.image_01-thumb.png"/>
+          <caption class="deo:Caption" id="66" page="4" column="1">Figure 1: Example sentence from YAGS with multiword predicate and typo ( mortal vs. mortar ).</caption>
+        </region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="80" page="4" column="2">474</outsider>
+        <region class="DoCO:TableBox" id="T1">
+          <caption class="deo:Caption" id="81" page="5" column="1">Table 1: Text dataset statistics: sentences s ; frames f ; % of adjectives a , nouns n and verbs v ; roles r , % of core roles cr . Subscripts for TW indicate the respective annotator.</caption>
+        </region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="84" page="5" column="1">4 Domain generalization capabilities of open-source FrameNet SRL</h1>
+        <region class="DoCO:TextChunk" id="100" page="5" column="1">To analyze the domain generalization capabilities of contemporary open-source SRL, we ran the frame identification from Semafor ( <xref ref-type="bibr" rid="R9" id="85" class="deo:Reference">Das et al., 2014</xref>) with the enhanced role labeler from Kshirsagar et al. (2015), both trained on the in-domain das-train set, on the four test sets das-test, YAGS, TW, and MASC. The systems receive text annotated with predicate spans as input, which has be- come the standard in recent evaluations. Evaluation script The Semafor evaluation script (<xref ref-type="bibr" rid="R9" id="86" class="deo:Reference">Das et al., 2014</xref>) provides precision P, recall R, and F 1 scores for full SRL (SRL), and accuracy A for frame identification (frameId). Full SRL evaluation can be performed with and without using gold frames instead of predicted (auto) frames. The script does not provide results on the role labeling (argument identification and labeling, roleId) alone: the scoring mechanism for SRL/gold also considers the by default correct gold frames. This is useful when comparing different SRL systems on the same test set, but not sufficient when 1) comparing role labeling performance on different test sets with a different ratio of frame labels to role labels (resulting from different annotation strate- gies), and 2) analyzing the contribution of frameId and roleId to full SRL performance across test sets.<marker type="column" number="2"/><marker type="block"/> We therefore evaluate the output of the script to re- tain the original counts for role labels and compute scores on the role labeling proper (roleId). Moreover, there are two evaluation settings for frameId: exact frame match and partial frame match. We use the exact match setting that does not credit related frames and roles. Results <xref ref-type="table" rid="T2" id="91" class="deo:Reference">Table 2</xref> presents scores for exact match frameId and for SRL and roleId with automatic frames (auto) and with gold frames (gold). For TW, the results are averaged over the number of annotators. According to column SRL/auto , we observe best Semafor performance for full SRL on das- test, results for the other test sets are at least 16 percentage points F 1 lower. This is mostly due to the worse frameId performance of Semafor on the new test sets, as shown in column frameId : frameId performance is at least 19 percentage points lower. This negatively affects roleId for the out-of-domain test sets (see column roleId/auto ). RoleId/auto scores are also low on das-test, but higher than for the other sets. When using gold frame labels, roleId and SRL performance improve for all test sets. As shown in columns roleId/gold and SRL/gold , the difference between in-domain and out-of-domain evaluation vanishes. Only MASC scores are still two points lower for full SRL than those for das-test. TW-av scores even surpass the in-domain scores. 2 This shows how much FrameNet role labels are dependent on correct frame labels. Thus, it is crucial to improve the out-of-domain performance of frameId systems. Domain dependence appears to be less of a problem for the role labeling step. The MASC dataset is the most difficult for both frameId and roleId. This is mostly a consequence of the lower training data coverage of MASC, as discussed below. 2 Our TW-av results are not comparable to those from <xref ref-type="bibr" rid="R18" id="92" class="deo:Reference">Søgaard et al. (2015)</xref> because their test setup includes predicate target identification and uses different evaluation metrics.<marker type="page" number="6"/><marker type="column" number="1"/><marker type="block"/> Analysis In our study, it became clear that domain dependence is crucial to the frame identification step in SRL. The lower scores for the out-of- domain test sets can be a result of different domain- specific predicate-frame distributions, or a lack of coverage of the domain in the training data. To get a better understanding of these phenom- ena, we compared detailed statistics of the different test sets, cf. <xref ref-type="table" rid="T3" id="98" class="deo:Reference">Table 3</xref>. Das-test has the largest predicate coverage and contains a lot of monosemous predicates, which boosts the overall performance. The occurrence of fewer monosemous predicates is expected for the lexical sample dataset MASC, but might indicate a domain preference for polysemous predicates in the YAGS and TW datasets. The percentage of unseen predicates (lemmas ∈ / das-train) is slightly higher for the user-generated test sets than for das-test, and much higher for MASC. This is mirrored in the lower frameId performance for MASC compared to the other test sets, and the slightly higher performance of TW-av and YAGS. Not all errors can be explained by insufficient training data coverage, which indicates that domain effects occur for the out-of-domain sets. To support this assumption, we performed a detailed error analysis on the misclassified instances for all test sets. We compute the proportion of wrongly classified instances with unseen predicates, predicates that do not occur in the training set. For MASC, the majority of the errors, 68%, are based on unseen predicates, while the number ranges between 37% and 43% for the other test sets, i.e. 37% for TW, 39% for das-test and 43% for YAGS. This shows that training data coverage is a bigger issue for MASC than for the other test sets. The proportions of in-train errors for YAGS and TW-av are similar to das-test. Together with the fact that overall proportion of errors is still much higher for the user-generated test sets YAGS and TW-av, this further supports our hypothesis of domain effects<marker type="column" number="2"/><marker type="block"/> for YAGS and TW-av. Manual analysis further- more shows that there are differences in frequently confused frames between the in-domain das-test and out-of-domain YAGS and TW-av. In the next section, we study new methods to improve out-of-domain frame identification.</region>
+        <region class="DoCO:TableBox" id="Tx88">
+          <content>
+            <table class="DoCO:Table" number="2" page="5">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> data</th>
+                  <th class="table"> s</th>
+                  <th class="table"> f</th>
+                  <th class="table"> a</th>
+                  <th class="table"> n</th>
+                  <th class="table"> v</th>
+                  <th class="table"> r</th>
+                  <th class="table"> cr</th>
+                  <th class="table"> data</th>
+                  <th class="table"> frameId</th>
+                  <th class="table"> roleId</th>
+                  <th class="table"> SRL</th>
+                </tr>
+                <tr class="table">
+                  <th class="table"> das-test</th>
+                  <th class="table"> 2,420</th>
+                  <th class="table"> 4,458</th>
+                  <th class="table"> 12</th>
+                  <th class="table"> 42</th>
+                  <th class="table"> 33</th>
+                  <th class="table"> 7,172</th>
+                  <th class="table"> 83</th>
+                  <th class="table"></th>
+                  <th class="table"> auto</th>
+                  <th class="table"> auto gold</th>
+                  <th class="table"> auto gold</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table">
+                  <td class="table"> YAGS</td>
+                  <td class="table"> 1,415</td>
+                  <td class="table"> 3,091</td>
+                  <td class="table"> 5</td>
+                  <td class="table"> 18</td>
+                  <td class="table"> 75</td>
+                  <td class="table"> 6,081</td>
+                  <td class="table"> 74</td>
+                  <td class="table"> das-test</td>
+                  <td class="table"> 82.09</td>
+                  <td class="table"> 30.08 55.20</td>
+                  <td class="table"> 55.40 73.16</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> MASC</td>
+                  <td class="table"> 8,444</td>
+                  <td class="table"> 7,226</td>
+                  <td class="table"> 25</td>
+                  <td class="table"> 42</td>
+                  <td class="table"> 33</td>
+                  <td class="table"> 11,214</td>
+                  <td class="table"> 78</td>
+                  <td class="table"> YAGS</td>
+                  <td class="table"> 59.62</td>
+                  <td class="table"> 18.60 56.99</td>
+                  <td class="table"> 37.22 72.58</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> TW 1</td>
+                  <td class="table"> 236</td>
+                  <td class="table"> 1,085</td>
+                  <td class="table"> 10</td>
+                  <td class="table"> 47</td>
+                  <td class="table"> 40</td>
+                  <td class="table"> 1,704</td>
+                  <td class="table"> 77</td>
+                  <td class="table"> MASC</td>
+                  <td class="table"> 39.52</td>
+                  <td class="table"> 19.46 51.74</td>
+                  <td class="table"> 29.05 71.08</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> TW 2</td>
+                  <td class="table"> 236</td>
+                  <td class="table"> 1,027</td>
+                  <td class="table"> 11</td>
+                  <td class="table"> 46</td>
+                  <td class="table"> 39</td>
+                  <td class="table"> 1,614</td>
+                  <td class="table"> 79</td>
+                  <td class="table"> TW-av</td>
+                  <td class="table"> 62.17</td>
+                  <td class="table"> 15.91 61.45</td>
+                  <td class="table"> 38.44 76.74</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> TW 3</td>
+                  <td class="table"> 236</td>
+                  <td class="table"> 1,038</td>
+                  <td class="table"> 11</td>
+                  <td class="table"> 47</td>
+                  <td class="table"> 39</td>
+                  <td class="table"> 1,399</td>
+                  <td class="table"> 89</td>
+                  <td class="table"></td>
+                  <td class="table"></td>
+                  <td class="table"></td>
+                  <td class="table"></td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="89" confidence="possible" page="5" column="2">data s f a n v r cr frameId roleId SRL data auto auto gold auto gold das-test 2,420 4,458 12 42 33 7,172 83 YAGS 1,415 3,091 5 18 75 6,081 74 das-test 82.09 30.08 55.20 55.40 73.16 MASC 8,444 7,226 25 42 33 11,214 78 YAGS 59.62 18.60 56.99 37.22 72.58 TW 1 236 1,085 10 47 40 1,704 77 MASC 39.52 19.46 51.74 29.05 71.08 TW 2 236 1,027 11 46 39 1,614 79 TW-av 62.17 15.91 61.45 38.44 76.74 TW 3 236 1,038 11 47 39 1,399 89</region>
+          <caption class="deo:Caption" id="90" page="5" column="2">Table 2: Semafor performance on test sets in %: exact frameId A; then F 1 for roleId and SRL with system frames (auto) and gold frames (gold).</caption>
+        </region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="94" page="5" column="2">475</outsider>
+        <region class="DoCO:TableBox" id="Tx95">
+          <content>
+            <table class="DoCO:Table" number="3" page="6">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> dataset</th>
+                  <th class="table"> lemmas ∈ /</th>
+                  <th class="table"> senses ∈ /</th>
+                  <th class="table"> monosemous</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table.strange">
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> lexicon das-train</td>
+                  <td class="table.strange"> das-train</td>
+                  <td class="table.strange"> ∈ das-train</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> das-test</td>
+                  <td class="table"> 2.59 9.99</td>
+                  <td class="table"> 14.03</td>
+                  <td class="table"> 53.99</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> YAGS</td>
+                  <td class="table"> 2.79 17.33</td>
+                  <td class="table"> 30.36</td>
+                  <td class="table"> 27.07</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> MASC</td>
+                  <td class="table"> 7.45 21.72</td>
+                  <td class="table"> 51.25</td>
+                  <td class="table"> 23.51</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> TW 1</td>
+                  <td class="table"> 1.01 17.51</td>
+                  <td class="table"> 36.06</td>
+                  <td class="table"> 26.73</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> TW 2</td>
+                  <td class="table"> 1.27 17.91</td>
+                  <td class="table"> 51.25</td>
+                  <td class="table"> 27.07</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> TW 3</td>
+                  <td class="table"> 1.25 17.24</td>
+                  <td class="table"> 35.65</td>
+                  <td class="table"> 27.17</td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="96" confidence="possible" page="6" column="1">dataset lemmas ∈ / senses ∈ / monosemous lexicon das-train das-train ∈ das-train das-test 2.59 9.99 14.03 53.99 YAGS 2.79 17.33 30.36 27.07 MASC 7.45 21.72 51.25 23.51 TW 1 1.01 17.51 36.06 26.73 TW 2 1.27 17.91 51.25 27.07 TW 3 1.25 17.24 35.65 27.17</region>
+          <caption class="deo:Caption" id="97" page="6" column="1">Table 3: Training data coverage of test sets in %. Sense is a combination of predicate lemma, POS and frame; lexicon refers to the Semafor lexicon.</caption>
+        </region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="101" page="6" column="2">5 Frame identification with distributed word representations</h1>
+        <region class="DoCO:TextChunk" id="106" page="6" column="2">Given a predicate and a set of frames associated with this predicate, a frame identification system has to choose the correct frame based on the context. In this section we introduce our frame identification method and compare it to the state of the art in both in-domain and out-of-domain settings. <marker type="block"/> Our system SimpleFrameId We developed a straightforward approach to frame identification based on distributed word representations, and were surprised to find that this simple model achieves results comparable to the state-of-the- art system, Hermann-14 . Our initial attempts to replicate Hermann-14 , which is not publicly available, revealed that the container-based input feature space is very sparse: there exist many syntactic paths that can connect a predicate to its arguments, but a predicate instance rarely has more than five arguments in the sentence. So by design the input representation bears no information in most of its path containers. Moreover, Hermann-14 makes heavy use of automatically created dependency parses, which might decline in quality when applied to a new domain. We demonstrate that our simple system achieves competitive in-domain and out-of-domain performance. Our system, called SimpleFrameId, is specified as follows: given the lexicon L , the vector space vsm and the training data, our goal is to predict the frame f given the sentence S and the predicate p . From the machine learning perspective, the lexicon and the vector space are external resources. The lexicon contains associations between predicates and frames, and we further denote the set of frames available for a predicate as L ( p ) . The vector space provides a pre-defined dense vector representation vsm ( w ) for each word w . In our case vsm is a simple word lookup function, since we do not modify our word representations during training. From the sentence we extract the context rep- vsm ( w ) resentation, x c = w ∈ C | C | . We experiment with two kinds of contexts: SentBOW includes all<marker type="page" number="7"/><marker type="column" number="1"/><marker type="block"/> the words in the sentence, i.e. C = S , DepBOW considers the dependency parse of the sentence and only includes direct dependents of the predicate, C = dep ( p, S ) . As for the predicate, the plain em- bedding from the source vector space model is used, x p = vsm ( p ) . A simple concatenation of x c and x p serves as input to the disambiguation classifier D , which outputs weights D ( x c , x p , f ) for each frame known to the system f ∈ L . Note that the classifier itself is agnostic to the predicate’s part of speech and exact lemma and only relies on the word representations from the vsm . We experiment with two different classification methods: one is a two- layer neural network D N N , the other one is D W SB , which follows the line of Hermann-14 and learns representations for frames and predicates in the same latent space using the WSABIE algorithm. 3 Hyperparameters are tuned on the development sets das-dev and YAGS-dev (sampled from YAGS); we test on the remaining 2,093 instances in YAGS-test.<marker type="block"/> Lexicon-based filtering In the testing stage, the classifier outputs weights for all the frames available in the lexicon, and the best-scoring frame is selected, f ← argmax f ∈ L D ( x c , x p , f ) . Since the lexicon specifies available frames for each lexical unit (i.e. lemma and POS), additional filtering can be performed, which lim- its the search only to the available frames, f ← argmax f ∈ L ( p ) D ( x c , x p , f ) . If the predicate is unknown to the lexicon, p ∈ / L , the overall best- scoring frame is chosen. If the target has only one entry in the lexicon, it’s declared unambiguous and the frame is assigned directly. Despite being common, this setup has several flaws that can obscure the differences between systems in the testing stage. As we showed in Section 4, the FrameNet lexicon has coverage issues when applied to new domains. Neither the predicate list nor the frame associations are guaranteed to be complete, and hence the total results are highly de- termined by the lexicon coverage. 4 To take this into account, we also perform evaluation in the no-lexicon setting, where frames are assigned directly by the classifier and no lexicon-based fil-</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="104" page="6" column="2">476</outsider>
+        <region class="DoCO:TextChunk" id="109" confidence="possible" page="7" column="1">3 In our implementation, we use the LightFM package (<xref ref-type="bibr" rid="R21" id="107" class="deo:Reference">Kula, 2015</xref>) with the WARP option for hybrid matrix fac- torization. 4 A justification for this can also be found in <xref ref-type="bibr" rid="R15" id="108" class="deo:Reference">Hermann et al. (2014)</xref>: the difference in Hermann-14 accuracy when switching from the Semafor lexicon to the full lexicon is comparable to the difference between Semafor and Hermann-14 when evaluated on the same lexicon.</region>
+        <region class="DoCO:TableBox" id="Tx110">
+          <content>
+            <table class="DoCO:Table" number="4" page="7">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> system</th>
+                  <th class="table"> total</th>
+                  <th class="table"> ambig</th>
+                  <th class="table"> no-lex</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table">
+                  <td class="table"> DataBaseline</td>
+                  <td class="table"> 79.09</td>
+                  <td class="table"> 70.68</td>
+                  <td class="table"> 2.21</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> LexiconBaseline</td>
+                  <td class="table"> 79.05</td>
+                  <td class="table"> 56.62</td>
+                  <td class="table"> 2.21</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Semafor *</td>
+                  <td class="table"> 83.60</td>
+                  <td class="table"> 69.19</td>
+                  <td class="table"> -</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Hermann-14 * (best)</td>
+                  <td class="table"> 88.41</td>
+                  <td class="table"> 73.10</td>
+                  <td class="table"> -</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> WSB+SentBOW</td>
+                  <td class="table"> 84.46</td>
+                  <td class="table"> 67.56</td>
+                  <td class="table"> 72.05</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> WSB+DepBOW</td>
+                  <td class="table"> 85.69</td>
+                  <td class="table"> 69.93</td>
+                  <td class="table"> 71.21</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> NN+SentBOW</td>
+                  <td class="table"> 87.63</td>
+                  <td class="table"> 73.80</td>
+                  <td class="table"> 77.49</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> NN+DepBOW</td>
+                  <td class="table"> 87.53</td>
+                  <td class="table"> 73.58</td>
+                  <td class="table"> 76.51</td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="111" confidence="possible" page="7" column="2">system total ambig no-lex DataBaseline 79.09 70.68 2.21 LexiconBaseline 79.05 56.62 2.21 Semafor * 83.60 69.19 - Hermann-14 * (best) 88.41 73.10 WSB+SentBOW 84.46 67.56 72.05 WSB+DepBOW 85.69 69.93 71.21 NN+SentBOW 87.63 73.80 77.49 NN+DepBOW 87.53 73.58 76.51</region>
+          <caption class="deo:Caption" id="113" page="7" column="2">Table 4: In-domain system comparison on das- test, * denotes results from <xref ref-type="bibr" rid="R15" id="112" class="deo:Reference">Hermann et al. (2014)</xref>; ambig : evaluation on ambiguous predicates; no- lex : system without lexicon filter.</caption>
+        </region>
+        <region class="DoCO:TextChunk" id="140" page="7" column="2">tering is performed. We find that our frame identification system performs surprisingly well in this setting, and we encourage the no-lexicon performance to be additionally reported in the future, since it better reflects the frame identification quality and smoothens the effect of lexicon coverage. Baselines We employ two majority baseline models for comparison. The DataBaseline assigns frames based on how often a frame is evoked by the given predicate. This corresponds to the most frequent sense baseline in word sense disambiguation (WSD). The frames available for predicates are obtained by scanning the training data. The LexiconBaseline calculates overall frame counts first (i.e. how often a frame appears in the training data in general), and, given the predicate, selects the overall most frequent frame among the ones available for this predicate. We expect this baseline to better handle the cases when limited data is available for a given predicate sense. Experiments In our experiments, we generate the lexicon L in the same way as in Hermann-14 , by scanning the “frames” folder of the FrameNet 1.5 distribution. For the external vector space model vsm we use dependency-based word embeddings from <xref ref-type="bibr" rid="R22" id="114" class="deo:Reference">Levy and Goldberg (2014)</xref>. In-domain performance We report the performance of our system in the in-domain setting to compare to the state-of-the-art results from Hermann-14 . 5 We train our system on das-train and test it on das-test using the full FrameNet lexicon. When available, we report the no-lexicon scores as well. As <xref ref-type="table" rid="T4" id="115" class="deo:Reference">Table 4</xref> shows, our system out- 5 Based on the errata version of <xref ref-type="bibr" rid="R15" id="116" class="deo:Reference">Hermann et al. (2014)</xref> in <ext-link ext-link-type="uri" href="http://www.aclweb.org/anthology/P/" id="117">http://www.aclweb.org/anthology/P/</ext-link> P14/P14-1136v2.pdf<marker type="page" number="8"/><marker type="column" number="1"/><marker type="block"/> performs Semafor and performs on par with the results reported for Hermann-14 . One interest- ing observation is that our systems perform al- most as well in the no-lexicon setting as the DataBaseline , which has access to the lexicon, in the total setting. To our surprise, the WSABIE- based frame identification did not yield a consistent improvement in-domain, compared to the simple NN-based approach. We also observe that in many cases the SentBOW representation performs on par with the DepBOW , while requiring significantly less data preprocessing: SentBOW only uses tok- enization, whereas DepBow relies on lemmatiza- tion, POS-tagging, and dependency parsing. We attribute this effect to the fact that SentBOW provides more context information than the sparse, dependency-filtered DepBOW .<marker type="block"/> Out-of-domain performance We also investigate how well the systems perform in the out-of- domain setting. <xref ref-type="table" rid="T5" id="124" class="deo:Reference">Table 5</xref> summarizes the results. Each of the systems was trained on das-train and tested on a variety of test sets. As we can see, our systems outperform Semafor for all datasets. The YAGS dataset is the only dataset on which we do not strongly outperform Semafor . We attribute this to the complexity of the YAGS dataset that contains a high proportion of verbs. Overall out-of-domain performance stays behind the F 1 -agreement observed for the human annotators for TW and YAGS, which shows that there is a large margin for improvement. Corresponding scores for in-domain data are not available.<marker type="block"/> Error analysis To further investigate the performance of our system in the out-of-domain setup we analyse statistics on the errors made by the system variant NN+SentBOW . The system’s wrong predictions are affected by the lexicon in two ways. First, if the predicate is<marker type="column" number="2"/><marker type="block"/> not listed in the lexicon (unknown), the system has to choose among all frames. As we have shown before, the quality of predictions for unknown predicates is generally lower. The second case is when the predicate is listed in lexicon (so it is not unknown), but the correct frame is not associated with this predicate. We further refer to this class of errors as unlinked . For unlinked predicates, the system is restricted to the set of frames provided by the lexicon, and by design has no means to select the right frame for a given predicate occurrence. The unlinked-predicate issue points to a major design flaw in the standard frameId architecture. Although choosing among frames defined in the lexicon provides a quality boost, it also renders many instances intractable for the system, if the lexicon coverage is incomplete. As <xref ref-type="table" rid="T6" id="127" class="deo:Reference">Table 6</xref> shows, unknown and unlinked predicates are al- most non-present in the in-domain case, but are a major source of errors in the out-of-domain case and even might be responsible for the majority of errors occurring due to domain shift (see MASC). It is important to point out that there is still no guar- antee that these would be classified correctly once the missing linking information is available in the lexicon. However, if the correct frame is not listed among the frames available for the predicate, the misclassification is inevitable. A more detailed analysis of the errors made by the system shows that the majority of false predictions for known and linked predicates are due to the domain differences in word usage. For example, the predicate window was assigned the frame Connecting architecture instead of the correct frame Time period of action in the following sentence:<marker type="block"/> “No effect of anesthetic protocol on IOP during a 12 minute measurement [ window ].”<marker type="block"/> This problem is also relevant in generic WSD (<xref ref-type="bibr" rid="R1" id="130" class="deo:Reference">Agirre et al., 2010</xref>) and benefits from the same solutions, for instance adapting embeddings to a particular domain (<xref ref-type="bibr" rid="R34" id="131" class="deo:Reference">Taghipour and Ng, 2015</xref>) and efficient use of embeddings (<xref ref-type="bibr" rid="R17" id="132" class="deo:Reference">Iacobacci et al., 2016</xref>). Another major source of errors are subtle syntactic and semantic differences between frames which are hard to resolve on the sentence level (e.g. distinguishing between Similarity and Iden- ticality for the predicate different ). This could be addressed by incorporating subcategorization information and document context into the disam-<marker type="page" number="9"/><marker type="column" number="1"/><marker type="block"/> biguation model, which has been proposed in recent work in FrameNet SRL, see e.g. <xref ref-type="bibr" rid="R15" id="138" class="deo:Reference">Hermann et al. (2014)</xref> and <xref ref-type="bibr" rid="R28" id="139" class="deo:Reference">Roth and Lapata (2015)</xref>. To further explore the impact of user-generated text, we applied word-processor spelling correction to YAGS and tested our systems on the corrected set. The results do not change significantly, which indicates that a) our distributed representations provide enough information to classify also noisy user- generated text, and b) frameId errors cannot be attributed to preprocessing problems at large scale.</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="119" page="7" column="2">477</outsider>
+        <region class="DoCO:TableBox" id="Tx120">
+          <content>
+            <table class="DoCO:Table" number="5" page="8">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> system</th>
+                  <th class="table"> das-test</th>
+                  <th class="table"> YAGS</th>
+                  <th class="table"> MASC</th>
+                  <th class="table"> TW-av</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table">
+                  <td class="table"> DataBaseline</td>
+                  <td class="table"> 79.09</td>
+                  <td class="table"> 52.27</td>
+                  <td class="table"> 43.85</td>
+                  <td class="table"> 47.68</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> LexiconBaseline</td>
+                  <td class="table"> 79.05</td>
+                  <td class="table"> 50.02</td>
+                  <td class="table"> 36.86</td>
+                  <td class="table"> 55.40</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Semafor</td>
+                  <td class="table"> 82.09</td>
+                  <td class="table"> 60.01</td>
+                  <td class="table"> 39.52</td>
+                  <td class="table"> 62.17</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> WSB+SentBOW</td>
+                  <td class="table"> 84.46</td>
+                  <td class="table"> 59.68</td>
+                  <td class="table"> 54.90</td>
+                  <td class="table"> 66.84</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> WSB+DepBOW</td>
+                  <td class="table"> 85.69</td>
+                  <td class="table"> 61.50</td>
+                  <td class="table"> 54.56</td>
+                  <td class="table"> 67.14</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> NN+SentBOW</td>
+                  <td class="table"> 87.63</td>
+                  <td class="table"> 62.03</td>
+                  <td class="table"> 53.73</td>
+                  <td class="table"> 68.67</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> NN+DepBOW</td>
+                  <td class="table"> 87.53</td>
+                  <td class="table"> 62.51</td>
+                  <td class="table"> 55.09</td>
+                  <td class="table"> 67.76</td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="121" confidence="possible" page="8" column="1">system das-test YAGS MASC TW-av DataBaseline 79.09 52.27 43.85 47.68 LexiconBaseline 79.05 50.02 36.86 55.40 Semafor 82.09 60.01 39.52 62.17 WSB+SentBOW 84.46 59.68 54.90 66.84 WSB+DepBOW 85.69 61.50 54.56 67.14 NN+SentBOW 87.63 62.03 53.73 68.67 NN+DepBOW 87.53 62.51 55.09 67.76</region>
+          <caption class="deo:Caption" id="122" page="8" column="1">Table 5: Out-of-domain frameId, total accuracy. Semafor scores calculated during our own experiments; YAGS results on YAGS-test.</caption>
+        </region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="134" page="8" column="2">478</outsider>
+        <region class="DoCO:TableBox" id="Tx135">
+          <content>
+            <table class="DoCO:Table" number="6" page="9">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> dataset</th>
+                  <th class="table"></th>
+                  <th class="table"> % errors</th>
+                  <th class="table"></th>
+                  <th class="table"> accuracy loss</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table.strange">
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> unk</td>
+                  <td class="table.strange"> unl</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> unk ∪ unl total</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> test-das</td>
+                  <td class="table"> 0.83</td>
+                  <td class="table"> 0.66</td>
+                  <td class="table"> 1.49</td>
+                  <td class="table"> 0.18 -</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> YAGS-test</td>
+                  <td class="table"> 3.76</td>
+                  <td class="table"> 13.05</td>
+                  <td class="table"> 16.81</td>
+                  <td class="table"> 6.40 25.60</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> MASC</td>
+                  <td class="table"> 12.15</td>
+                  <td class="table"> 33.70</td>
+                  <td class="table"> 45.85</td>
+                  <td class="table"> 24.03 33.90</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> TW-avg</td>
+                  <td class="table"> 10.40</td>
+                  <td class="table"> 9.68</td>
+                  <td class="table"> 20.08</td>
+                  <td class="table"> 6.31 18.96</td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="136" confidence="possible" page="9" column="1">% errors accuracy loss dataset unk unl unk ∪ unl total test-das 0.83 0.66 1.49 0.18 YAGS-test 3.76 13.05 16.81 6.40 25.60 MASC 12.15 33.70 45.85 24.03 33.90 TW-avg 10.40 9.68 20.08 6.31 18.96</region>
+          <caption class="deo:Caption" id="137" page="9" column="1">Table 6: Error sources for NN+Dep ; unk is the percentage of unknown and unl is the percentage of unlinked predicates among misclassified instances.</caption>
+        </region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="141" page="9" column="1">6 Discussion and outlook</h1>
+        <region class="DoCO:TextChunk" id="144" page="9" column="1">Our analysis in Section 4 shows that domain adaptation is mainly required for the frameId step of FrameNet SRL. Unlike in PropBank SRL, in FrameNet SRL there is no significant performance drop for roleId once correct frames are available. The number of available roles given the correct frame is lower, on average 10, which reduces the complexity of the roleId task. In Section 5 we introduced a simple, yet efficient frame identification method and evaluated it on in-domain and out-of-domain data. The method achieves competitive in-domain results, and outperforms the best available open-source system in out-of-domain accuracy. We also observe that our system performs well in the newly introduced no-lexicon evaluation setting, where no lexicon-based filtering is applied. We identified a major issue in the standard frameId architecture: shifting to a new domain might render the predicate-frame associations in the FrameNet lexicon incomplete, which leads to errors for a standard classifier trained on in-domain data. One could optimize a frameId system to work in the no-lexicon setting which does not rely on the lexicon knowledge at all. However, in this setting the classification results are currently lower. Manually or automatically increasing both predicate and predicate-frame association coverage of <marker type="column" number="2"/><marker type="block"/> the FrameNet lexicon could help, and we suggest investigating this line of research in future work. While our method achieves state-of-the-art results on out-of-domain data, overall results are still significantly lower than the human performance observed for YAGS and TW, which shows that there is large room for improvement. Some further benefits could be gained from combining the WSABIE and NN-based classification, using advanced context representations, e.g. context2vec (<xref ref-type="bibr" rid="R23" id="143" class="deo:Reference">Melamud et al., 2016</xref>) and incorporating syntactic information into the model. The out-of-domain performance could be further improved by adapting word representations to a new domain. A direct comparison to the Hermann-14 system in the out-of-domain setup would shed some more light on the properties of the task affecting the out-of-domain performance. On the one hand, we expect Hermann-14 to perform worse due to its heavy reliance on syntactic information, which might decline in quality when moved to a new domain; on the other hand, the WSABIE-based classification might smoothen this effect. We make our dataset publicly available to enable comparison to related work. 6</region>
+      </section>
+      <section class="deo:Conclusion">
+        <h1 class="DoCO:SectionTitle" id="145" page="9" column="2">7 Conclusion</h1>
+        <region class="DoCO:TextChunk" id="146" page="9" column="2">Domain dependence is a well-known issue for supervised NLP tasks such as FrameNet SRL. To the best of our knowledge, there is no recent study of the domain dependence of FrameNet SRL, also prohibited by a lack of appropriate datasets. To address this problem, we 1) present the first comprehensive study of the domain generalization performance of the open-source Semafor system on several diverse benchmark sets. As a prerequi- site, we introduce YAGS, a new, substantially sized test set in the domain of user-generated question- and-answer text. We find that the major bottleneck for out-of-domain FrameNet SRL is the frame identification step; we 2) explore a promising way to improve out-of-domain frame identification, i.e. using distributed word representations. Our simple frame identification system based on distributed word representations achieves higher scores for out-of-domain frame identification than previous systems and approaches state-of-the-art results in- domain. To support reproducibility of our results, we publish the YAGS test set annotations and our frame identification system for research purposes. 6 www.ukp.tu-darmstadt.de/ood-fn-srl</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="147" page="9" column="2">479</outsider>
+      </section>
+      <section class="deo:Acknowledgements">
+        <h1 class="DoCO:SectionTitle" id="148" page="10" column="1">Acknowledgements</h1>
+        <region class="DoCO:TextChunk" id="149" page="10" column="1">This work was supported by FAZIT-Stiftung and by the German Research Foundation (DFG) through grant GU 798/18-1 (QAEduInf) and the research training group “Adaptive Preparation of Information form Heterogeneous Sources” (AIPHES, GRK 1994/1). We thank Orin Hargraves and our annotators for their excellent work on the annotation study, Dr. Richard Eckart de Castilho for support regard- ing WebAnno, as well as Dr. Judith Eckle-Kohler and the anonymous reviewers for their comments on earlier versions of this paper.</region>
+      </section>
+      <section class="DoCO:Bibliography">
+        <h1 class="DoCO:SectionTitle" id="150" page="10" column="1">References</h1>
+        <ref-list class="DoCO:BiblioGraphicReferenceList">
+          <ref rid="R1" class="deo:BibliographicReference" id="151" page="10" column="1">Eneko Agirre, Oier López de Lacalle, Christiane Fellbaum, Shu-Kai Hsieh, Maurizio Tesconi, Monica Monachini, Piek Vossen, and Roxanne Segers. 2010. SemEval-2010 Task 17: All-Words Word Sense Disambiguation on a Specific Domain. In Proceedings of the 5th International Workshop on Semantic Evaluation , pages 75–80. Association for Computational Linguistics.</ref>
+          <ref rid="R2" class="deo:BibliographicReference" id="152" confidence="possible" page="10" column="1">Collin Baker, Michael Ellsworth, and Katrin Erk. 2007. SemEval-2007 Task 19: Frame Semantic Structure Extraction. In Proceedings of the Fourth International Workshop on Semantic Evaluations (SemEval- 2007) , pages 99–104, Prague, Czech Republic, June. Association for Computational Linguistics.</ref>
+          <ref rid="R3" class="deo:BibliographicReference" id="153" confidence="possible" page="10" column="1">Jonathan Berant, Vivek Srikumar, Pei-Chun Chen, Abby Vander Linden, Brittany Harding, Brad Huang, Peter Clark, and Christopher D. Manning. 2014. Modeling Biological Processes for Reading Compre- hension. In Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP) , pages 1499–1510, Doha, Qatar. Association for Computational Linguistics.</ref>
+          <ref rid="R4" class="deo:BibliographicReference" id="154" confidence="possible" page="10" column="1">John Blitzer, Ryan McDonald, and Fernando Pereira. 2006. Domain adaptation with structural correspon- dence learning. In Proceedings of the 2006 Conference on Empirical Methods in Natural Language Processing , pages 120–128, Sydney, Australia, July. Association for Computational Linguistics.</ref>
+          <ref rid="R5" class="deo:BibliographicReference" id="155" confidence="possible" page="10" column="1">Xavier Carreras and Lluıs Màrquez. 2005. Introduction to the CoNLL-2005 shared task: Semantic role labeling. In Proceedings of the Ninth Conference on Computational Natural Language Learning (CoNLL-2005) , pages 152–164, Ann Arbor, Michi- gan, June. Association for Computational Linguistics.</ref>
+          <ref rid="R6" class="deo:BibliographicReference" id="156" confidence="possible" page="10" column="1">Danilo Croce, Cristina Giannone, Paolo Annesi, and Roberto Basili. 2010. Towards open-domain semantic role labeling. In Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics , pages 237–246, Uppsala, Sweden, July. Association for Computational Linguistics.</ref>
+          <ref rid="R7" class="deo:BibliographicReference" id="157" page="10" column="2">Dipanjan Das and Noah A. Smith. 2011. Semi- Supervised Frame-Semantic Parsing for Unknown Predicates. In Proc. of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies , pages 1435–1444, Portland, Oregon, USA.</ref>
+          <ref rid="R8" class="deo:BibliographicReference" id="158" confidence="possible" page="10" column="2">Dipanjan Das, Nathan Schneider, Desai Chen, and Noah A. Smith. 2010. Probabilistic Frame- Semantic Parsing. In Human Language Technologies: The 2010 Annual Conference of the North American Chapter of the Association for Computational Linguistics , pages 948–956, Los Angeles, Cal- ifornia. Association for Computational Linguistics.</ref>
+          <ref rid="R9" class="deo:BibliographicReference" id="159" confidence="possible" page="10" column="2">Dipanjan Das, Desai Chen, André F. T. Martins, Nathan Schneider, and Noah A. Smith. 2014. Frame-semantic parsing. Computational Linguistics , 40(1):9–56.</ref>
+          <ref rid="R10" class="deo:BibliographicReference" id="160" confidence="possible" page="10" column="2">Hal Daumé III. 2007. Frustratingly easy domain adaptation. In Proceedings of the 45th Annual Meeting of the Association of Computational Linguistics , pages 256–263, Prague, Czech Republic, June. Association for Computational Linguistics.</ref>
+          <ref rid="R11" class="deo:BibliographicReference" id="161" confidence="possible" page="10" column="2">Katrin Erk and Sebastian Padó. 2006. SHAL- MANESER – A Toolchain For Shallow Semantic Parsing. In Proceedings of the 5th International Conference on Language Resources and Evaluation (LREC 2006) , volume 6, pages 527–532, Genoa, Italy. ELRA.</ref>
+          <ref rid="R12" class="deo:BibliographicReference" id="162" confidence="possible" page="10" column="2">Charles J. Fillmore, Christopher R. Johnson, and Miriam R.L. Petruck. 2003. Background to FrameNet. International journal of lexicography , 16(3):235–250.</ref>
+          <ref rid="R13" class="deo:BibliographicReference" id="163" confidence="possible" page="10" column="2">Nicholas FitzGerald, Oscar Täckström, Kuzman Ganchev, and Dipanjan Das. 2015. Semantic role labeling with neural network factors. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing , pages 960–970, Lisbon, Portugal, September. Association for Computational Linguistics.</ref>
+          <ref rid="R14" class="deo:BibliographicReference" id="164" confidence="possible" page="10" column="2">Jan Haji c, Massimiliano Ciaramita, Richard Johansson, Daisuke Kawahara, Maria Antònia Martı, Lluıs Màrquez, Adam Meyers, Joakim Nivre, Sebastian Padó, Jan St ˇ epánek, Pavel Stra nák, Mihai Surdeanu, Nianwen Xue, and Yi Zhang. 2009. The conll- 2009 shared task: Syntactic and semantic dependencies in multiple languages. In Proceedings of the Thirteenth Conference on Computational Natural Language Learning (CoNLL 2009): Shared Task , pages 1–18, Boulder, Colorado, June. Association for Computational Linguistics.</ref>
+          <ref rid="R15" class="deo:BibliographicReference" id="165" confidence="possible" page="10" column="2">Karl Moritz Hermann, Dipanjan Das, Jason Weston, and Kuzman Ganchev. 2014. Semantic frame identification with distributed word representations. In Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 1448–1458, Baltimore, Mary- land, June. Association for Computational Linguistics.</ref>
+          <ref rid="R16" class="deo:BibliographicReference" id="167" page="11" column="1">Fei Huang and Alexander Yates. 2010. Open-domain semantic role labeling by modeling word spans. In Proceedings of the 48th Annual Meeting of the Association for Computational Linguistics , pages 968– 978, Uppsala, Sweden, July. Association for Computational Linguistics.</ref>
+          <ref rid="R17" class="deo:BibliographicReference" id="168" confidence="possible" page="11" column="1">Ignacio Iacobacci, Mohammad Taher Pilehvar, and Roberto Navigli. 2016. Embeddings for Word Sense Disambiguation: An Evaluation Study. In Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 897–907, Berlin, Germany, August. Association for Computational Linguistics.</ref>
+          <ref rid="R18" class="deo:BibliographicReference" id="169" confidence="possible" page="11" column="1">Anders Johannsen, Héctor Martınez Alonso, and Anders Søgaard. 2015. Any-language frame-semantic parsing. In Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing , pages 2062–2066, Lisbon, Portugal, September. Association for Computational Linguistics.</ref>
+          <ref rid="R19" class="deo:BibliographicReference" id="170" confidence="possible" page="11" column="1">Richard Johansson and Pierre Nugues. 2008. The effect of syntactic representation on semantic role labeling. In Proceedings of the 22nd International Conference on Computational Linguistics (Coling 2008) , pages 393–400, Manchester, UK, August. Coling 2008 Organizing Committee.</ref>
+          <ref rid="R20" class="deo:BibliographicReference" id="171" confidence="possible" page="11" column="1">Meghana Kshirsagar, Sam Thomson, Nathan Schneider, Jaime Carbonell, Noah A. Smith, and Chris Dyer. 2015. Frame-semantic role labeling with heterogeneous annotations. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics and the 7th International Joint Conference on Natural Language Processing (Volume 2: Short Papers) , pages 218–224, Beijing, China, July. Association for Computational Linguistics.</ref>
+          <ref rid="R21" class="deo:BibliographicReference" id="172" confidence="possible" page="11" column="1">Maciej Kula. 2015. Metadata embeddings for user and item cold-start recommendations. In Toine Bogers and Marijn Koolen, editors, Proceedings of the 2nd Workshop on New Trends on Content-Based Recommender Systems co-located with 9th ACM Conference on Recommender Systems (RecSys 2015) , volume 1448 of CEUR Workshop Proceedings , pages 14–21, Vienna, Austria, September. CEUR-WS.org.</ref>
+          <ref rid="R22" class="deo:BibliographicReference" id="173" confidence="possible" page="11" column="1">Omer Levy and Yoav Goldberg. 2014. Dependency- based word embeddings. In Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics, ACL 2014, June 22-27, 2014, Baltimore, MD, USA, Volume 2: Short Papers , pages 302–308. The Association for Computer Linguistics.</ref>
+          <ref rid="R23" class="deo:BibliographicReference" id="174" confidence="possible" page="11" column="1">Oren Melamud, Jacob Goldberger, and Ido Dagan. 2016. context2vec: Learning generic context em- bedding with bidirectional LSTM. In Proceedings of the 20th SIGNLL Conference on Computational Natural Language Learning, CoNLL 2016, Berlin, Germany, August 11-12, 2016 , pages 51–61.</ref>
+          <ref rid="R24" class="deo:BibliographicReference" id="175" page="11" column="2">Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg Cor- rado, and Jeffrey Dean. 2013. Distributed Representations of Words and Phrases and Their Com- positionality. In Proceedings of the 26th International Conference on Neural Information Processing Systems (NIPS ’13) , pages 3111–3119, Lake Tahoe, Nevada, USA.</ref>
+          <ref rid="R25" class="deo:BibliographicReference" id="176" confidence="possible" page="11" column="2">Alexis Palmer and Caroline Sporleder. 2010. Eval- uating FrameNet-style semantic parsing: the role of coverage gaps in FrameNet. In Proceedings of the 23rd International Conference on Computational Linguistics: Posters , pages 928–936, Beijing, China, August.</ref>
+          <ref rid="R26" class="deo:BibliographicReference" id="177" confidence="possible" page="11" column="2">Rebecca J. Passonneau, Collin F. Baker, Christiane Fellbaum, and Nancy Ide. 2012. The MASC Word Sense Corpus. In Proceedings of the Eight International Conference on Language Resources and Evaluation (LREC’12) , pages 3025–3030, Istanbul, Turkey.</ref>
+          <ref rid="R27" class="deo:BibliographicReference" id="178" confidence="possible" page="11" column="2">Jeffrey Pennington, Richard Socher, and Christopher Manning. 2014. Glove: Global vectors for word representation. In Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP) , pages 1532– 1543, Doha, Qatar, October. Association for Computational Linguistics.</ref>
+          <ref rid="R28" class="deo:BibliographicReference" id="179" confidence="possible" page="11" column="2">Michael Roth and Mirella Lapata. 2015. Context- aware frame-semantic role labeling. Transactions of the Association for Computational Linguistics , 3:449–460.</ref>
+          <ref rid="R29" class="deo:BibliographicReference" id="180" confidence="possible" page="11" column="2">Josef Ruppenhofer, Michael Ellsworth, Miriam R. L. Petruck, Christopher R. Johnson, and Jan Schef- fczyk. 2010. FrameNet II: Extended Theory and Practice. Technical report, ICSI, University of Cali- fornia, Berkeley.</ref>
+          <ref rid="R30" class="deo:BibliographicReference" id="181" confidence="possible" page="11" column="2">Anders Søgaard, Barbara Plank, and Héctor Martınez Alonso. 2015. Using Frame Semantics for Knowledge Extraction from Twitter. In Proceedings of the Twenty-Ninth AAAI Conference on Artificial Intelligence , pages 2447–2452, Austin, Texas, USA.</ref>
+          <ref rid="R31" class="deo:BibliographicReference" id="182" confidence="possible" page="11" column="2">Anders Søgaard. 2013. Semi-supervised learning and domain adaptation in natural language processing. Synthesis Lectures on Human Language Technologies , 6(2):1–103.</ref>
+          <ref rid="R32" class="deo:BibliographicReference" id="183" confidence="possible" page="11" column="2">Mihai Surdeanu, Richard Johansson, Adam Meyers, Lluıs Màrquez, and Joakim Nivre. 2008. The conll 2008 shared task on joint parsing of syntactic and semantic dependencies. In CoNLL 2008: Proceedings of the Twelfth Conference on Computational Natural Language Learning , pages 159–177, Manchester, England, August. Coling 2008 Organizing Committee.</ref>
+          <ref rid="R33" class="deo:BibliographicReference" id="184" confidence="possible" page="11" column="2">Mihai Surdeanu, Massimiliano Ciaramita, and Hugo Zaragoza. 2011. Learning to rank answers to non- factoid questions from web collections. Computational Linguistics , 37(2):351–383.</ref>
+          <ref rid="R34" class="deo:BibliographicReference" id="186" page="12" column="1">Kaveh Taghipour and Hwee Tou Ng. 2015. Semi- Supervised Word Sense Disambiguation Using Word Embeddings in General and Specific Domains. In Proceedings of the 2015 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies , pages 314–323, Denver, Colorado, May–June. Association for Computational Linguistics.</ref>
+          <ref rid="R35" class="deo:BibliographicReference" id="187" confidence="possible" page="12" column="1">Jason Weston, Samy Bengio, and Nicolas Usunier. 2011. WSABIE: Scaling Up to Large Vocabu- lary Image Annotation. In Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence - Volume Volume Three , IJ- CAI’11, pages 2764–2770, Barcelona, Catalonia, Spain. AAAI Press.</ref>
+          <ref rid="R36" class="deo:BibliographicReference" id="188" confidence="possible" page="12" column="1">Haitong Yang, Tao Zhuang, and Chengqing Zong. 2015. Domain adaptation for syntactic and semantic dependency parsing using deep belief networks. Transactions of the Association for Computational Linguistics , 3:271–282.</ref>
+          <ref rid="R37" class="deo:BibliographicReference" id="189" confidence="possible" page="12" column="1">Seid Muhie Yimam, Richard Eckart de Castilho, Iryna Gurevych, and Chris Biemann. 2014. Auto- matic Annotation Suggestions and Custom Annotation Layers in WebAnno. In Kalina Bontcheva and Zhu Jingbo, editors, Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics. System Demonstrations , pages 91–96, Stroudsburg, PA 18360, USA. Association for Computational Linguistics.</ref>
+        </ref-list>
+        <outsider class="DoCO:TextBox" type="page_nr" id="166" page="10" column="2">480</outsider>
+        <outsider class="DoCO:TextBox" type="page_nr" id="185" page="11" column="2">481</outsider>
+        <outsider class="DoCO:TextBox" type="page_nr" id="190" page="12" column="2">482</outsider>
+      </section>
+    </body>
+  </article>
+</pdfx>
