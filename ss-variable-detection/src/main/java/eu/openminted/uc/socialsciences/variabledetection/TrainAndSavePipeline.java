@@ -120,7 +120,6 @@ public class TrainAndSavePipeline
                         WordnetFeatures.PARAM_SYNONYM_FEATURE, true,
                         WordnetFeatures.PARAM_HYPERNYM_FEATURE, false),
                 TcFeatureFactory.create(TheSozFeatures.class,
-                        TheSozFeatures.PARAM_RESOURCE_NAME, TheSozResource.NAME,
                         TheSozFeatures.PARAM_NGRAM_MIN_N, 1,
                         TheSozFeatures.PARAM_NGRAM_MAX_N, 3)));
     }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.descriptor.TypeCapability;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
@@ -33,10 +32,6 @@ public class TheSozFeatures
     extends LuceneFeatureExtractorBase
     implements FeatureExtractor
 {
-    public static final String PARAM_RESOURCE_NAME = "knowledgeBaseName";
-    @ConfigurationParameter(name = PARAM_RESOURCE_NAME, mandatory = true)
-    protected String knowledgeBaseName;
-
     protected KnowledgeBaseResource kbr;
 
     @Override
@@ -48,7 +43,7 @@ public class TheSozFeatures
         }
 
         try {
-            kbr = KnowledgeBaseFactory.getInstance().get(knowledgeBaseName);
+            kbr = KnowledgeBaseFactory.getInstance().get(TheSozResource.NAME);
         }
         catch (ResourceLoaderException e) {
             throw new ResourceInitializationException(e);

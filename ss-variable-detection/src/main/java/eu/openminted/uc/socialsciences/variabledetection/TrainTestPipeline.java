@@ -3,7 +3,6 @@ package eu.openminted.uc.socialsciences.variabledetection;
 import static java.util.Arrays.asList;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +19,7 @@ import org.dkpro.tc.api.features.TcFeatureFactory;
 import org.dkpro.tc.api.features.TcFeatureSet;
 import org.dkpro.tc.core.Constants;
 import org.dkpro.tc.features.entityrecognition.NEFeatureExtractor;
-import org.dkpro.tc.features.ngram.LuceneCharacterNGram;
 import org.dkpro.tc.features.ngram.LuceneNGram;
-import org.dkpro.tc.features.ngram.LuceneSkipNGram;
 import org.dkpro.tc.ml.ExperimentTrainTest;
 import org.dkpro.tc.ml.report.BatchTrainTestReport;
 import org.dkpro.tc.ml.weka.WekaClassificationAdapter;
@@ -88,7 +85,7 @@ public class TrainTestPipeline
         ParameterSpace pSpace = new ParameterSpace(dimReaders,
                 Dimension.create(DIM_LEARNING_MODE, LM_SINGLE_LABEL),
                 Dimension.create(DIM_FEATURE_MODE, FM_DOCUMENT), dimFeatureSets,
-                dimClassificationArgs, dimFeatureSelection);
+                dimClassificationArgs/*, dimFeatureSelection*/);
 
         return pSpace;
     }
@@ -108,33 +105,18 @@ public class TrainTestPipeline
     private static Dimension<TcFeatureSet> createFeatureExtractorsDimension()
     {
         return Dimension.create(DIM_FEATURE_SET, new TcFeatureSet(
-                TcFeatureFactory.create(LuceneNGram.class, LuceneNGram.PARAM_NGRAM_USE_TOP_K, 50,
+                TcFeatureFactory.create(LuceneNGram.class,
                         LuceneNGram.PARAM_NGRAM_MIN_N, 1, LuceneNGram.PARAM_NGRAM_MAX_N, 3),
                 TcFeatureFactory.create(LuceneLemmaNGram.class,
-                        LuceneLemmaNGram.PARAM_NGRAM_USE_TOP_K, 50,
-                        LuceneLemmaNGram.PARAM_NGRAM_MIN_N, 2, LuceneLemmaNGram.PARAM_NGRAM_MAX_N,
-                        3),
-//                TcFeatureFactory.create(LuceneCharacterNGram.class,
-//                        LuceneCharacterNGram.PARAM_NGRAM_USE_TOP_K, 50,
-//                        LuceneCharacterNGram.PARAM_NGRAM_MIN_N, 1,
-//                        LuceneCharacterNGram.PARAM_NGRAM_MAX_N, 3),
-                // TcFeatureFactory.create(LucenePhoneticNGram.class,
-                // LucenePhoneticNGram.PARAM_NGRAM_USE_TOP_K, 50,
-                // LucenePhoneticNGram.PARAM_NGRAM_MIN_N, 1,
-                // LucenePhoneticNGram.PARAM_NGRAM_MAX_N, 3),
-                TcFeatureFactory.create(LuceneSkipNGram.class,
-                        LuceneSkipNGram.PARAM_NGRAM_USE_TOP_K, 50,
-                        LuceneSkipNGram.PARAM_NGRAM_MIN_N, 2, LuceneSkipNGram.PARAM_NGRAM_MAX_N, 3),
+                        LuceneLemmaNGram.PARAM_NGRAM_MIN_N, 3, LuceneLemmaNGram.PARAM_NGRAM_MAX_N, 3),
                 TcFeatureFactory.create(NEFeatureExtractor.class),
                 TcFeatureFactory.create(WordnetFeatures.class, WordnetFeatures.PARAM_RESOURCE_NAME,
                         WordnetFeatures.WORDNET_FIELD, WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
                         WordnetFeatures.PARAM_NGRAM_MIN_N, 1,
                         WordnetFeatures.PARAM_NGRAM_MAX_N, 4,
-                        WordnetFeatures.PARAM_NGRAM_USE_TOP_K, Integer.MAX_VALUE,
-                        WordnetFeatures.PARAM_SYNONYM_FEATURE, true,
+                        WordnetFeatures.PARAM_SYNONYM_FEATURE, false,
                         WordnetFeatures.PARAM_HYPERNYM_FEATURE, false),
                 TcFeatureFactory.create(TheSozFeatures.class,
-                        TheSozFeatures.PARAM_RESOURCE_NAME, TheSozResource.NAME,
                         TheSozFeatures.PARAM_NGRAM_MIN_N, 1,
                         TheSozFeatures.PARAM_NGRAM_MAX_N, 3)));
     }
