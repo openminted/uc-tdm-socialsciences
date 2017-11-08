@@ -85,7 +85,7 @@ public class TheSozMetaCollector
     @Override
     protected String getFieldName()
     {
-        return "thesoz" + featureExtractorName;
+        return TheSozResource.NAME + featureExtractorName;
     }
 
     public static FrequencyDistribution<String> getDocumentNgrams(JCas jcas,

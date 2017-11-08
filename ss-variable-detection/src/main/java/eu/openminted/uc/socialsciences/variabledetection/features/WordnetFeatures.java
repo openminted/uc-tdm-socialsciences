@@ -106,32 +106,33 @@ public class WordnetFeatures
                 continue;
 
             try {
-                Set<Entity> foundEntities = lsr.getEntity(lexeme, pos);
-                for (Entity entity : foundEntities) {
-                    featureVector.inc(entity.getId());
+                Entity entity = lsr.getMostFrequentEntity(lexeme, pos);
+                if (entity == null) {
+                    continue;
+                }
+                featureVector.inc(entity.getId());
 
-                    //Synonyms
-                    if (synonymFeatures) {
-                        if (entity.getSense(lexeme) != null) {
-                            Set<String> synonyms = lsr.getRelatedLexemes(lexeme, pos,
-                                    entity.getSense(lexeme),
-                                    LexicalSemanticResource.LexicalRelation.synonymy);
-                            for (String synonym : synonyms) {
-                                Set<Entity> synonymEntities = lsr.getEntity(synonym, pos);
-                                for (Entity nEntity : synonymEntities) {
-                                    featureVector.inc(nEntity.getId());
-                                }
+                // Synonyms
+                if (synonymFeatures) {
+                    if (entity.getSense(lexeme) != null) {
+                        Set<String> synonyms = lsr.getRelatedLexemes(lexeme, pos,
+                                entity.getSense(lexeme),
+                                LexicalSemanticResource.LexicalRelation.synonymy);
+                        for (String synonym : synonyms) {
+                            Set<Entity> synonymEntities = lsr.getEntity(synonym, pos);
+                            for (Entity nEntity : synonymEntities) {
+                                featureVector.inc(nEntity.getId());
                             }
-                        }                        
-                    }
-
-                    //Hypernyms
-                    if (hypernymFeatures) {
-                        Set<Entity> hypernyms = lsr.getRelatedEntities(entity,
-                                SemanticRelation.hypernymy);
-                        for (Entity pEntity : hypernyms) {
-                            featureVector.inc(pEntity.getId());
                         }
+                    }
+                }
+
+                // Hypernyms
+                if (hypernymFeatures) {
+                    Set<Entity> hypernyms = lsr.getRelatedEntities(entity,
+                            SemanticRelation.hypernymy);
+                    for (Entity pEntity : hypernyms) {
+                        featureVector.inc(pEntity.getId());
                     }
                 }
             }
