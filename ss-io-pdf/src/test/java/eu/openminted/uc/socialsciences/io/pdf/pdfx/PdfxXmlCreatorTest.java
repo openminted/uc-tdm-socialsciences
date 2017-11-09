@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.io.pdfx;
+package eu.openminted.uc.socialsciences.io.pdf.pdfx;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +11,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlCreator;
 
 public class PdfxXmlCreatorTest {
 

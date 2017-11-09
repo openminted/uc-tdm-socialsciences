@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.io.pdfx;
+package eu.openminted.uc.socialsciences.io.pdf.pdfx;
 
 import org.apache.log4j.Logger;
 import org.apache.uima.UimaContext;

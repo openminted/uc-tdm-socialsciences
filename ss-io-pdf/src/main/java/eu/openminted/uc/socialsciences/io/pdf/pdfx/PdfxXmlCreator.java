@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.io.pdfx;
+package eu.openminted.uc.socialsciences.io.pdf.pdfx;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,9 @@ import java.util.List;
 
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import eu.openminted.uc.socialsciences.common.PDFChecker;
-import eu.openminted.uc.socialsciences.io.pdf.XmlCreator;
+import eu.openminted.uc.socialsciences.io.xml.AbstractXmlCreator;
+import eu.openminted.uc.socialsciences.io.xml.XmlCreator;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;

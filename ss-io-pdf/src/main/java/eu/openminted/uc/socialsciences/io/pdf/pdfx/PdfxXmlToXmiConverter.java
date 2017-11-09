@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.io.pdfx;
+package eu.openminted.uc.socialsciences.io.pdf.pdfx;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
@@ -8,13 +8,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
-import org.apache.commons.io.FilenameUtils;
+import eu.openminted.uc.socialsciences.io.cas.CasValidatorComponent;
+import eu.openminted.uc.socialsciences.io.cas.SentenceTrimmer;
+
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 

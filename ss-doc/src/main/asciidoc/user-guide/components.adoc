@@ -2,7 +2,7 @@
 
 === PDF processing
 
-//Components inside eu.openminted.uc.tdm.socialsciences.io.pdfx
+//Components inside eu.openminted.uc.tdm.socialsciences.io.pdf
 
 [[pdf-conversion]]
 ==== PDF to XMI conversion
@@ -13,7 +13,7 @@ This pipeline can be used via calling the main method, like the following:
 
 [source,text]
 ----
- $ java -jar /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
+ $ java -jar /PATH/TO/ss-io-pdf-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
 ----
 
 The following arguments have to be provided for the program:
@@ -34,7 +34,7 @@ Add the following dependency to your pom file:
 ----
 <dependency>
     <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-    <artifactId>ss-io-pdfx-xml</artifactId>
+    <artifactId>ss-io-pdf</artifactId>
 </dependency>
 ----
 
@@ -42,7 +42,7 @@ Create an example method like the following:
 
 [source,java]
 ----
-import eu.openminted.uc.socialsciences.io.pdfx.Pipeline;
+import eu.openminted.uc.socialsciences.io.pdf.Pipeline;
 
 public class PipelineTest
 {
@@ -64,7 +64,7 @@ NOTE: The `language` parameter is required to correctly post-process the convert
 words that are split into two lines). This attribute will also be stored in the output XMI files so it can be used
 in subsequent text analysis components (e.g. named entity recognition).
 
-NOTE: Currently PDF-to-XML converter can only convert files smaller than 5 MB and containing less than 100 pages. This
+NOTE: Currently *pdfx* PDF-to-XML converter can only convert files smaller than 5 MB and containing less than 100 pages. This
 limit is enforced by the PDFX service which is used internally to convert PDF documents to XML format.
 
 ==== PDF to PDFX-XML conversion
@@ -74,8 +74,8 @@ component. This component can be used via calling the main method, like the foll
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
-        eu.openminted.uc.socialsciences.io.pdfx.PdfxXmlCreator [args...]
+ $ java -cp /PATH/TO/ss-io-pdf-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
+        eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlCreator [args...]
 ----
 
 The following arguments have to be provided for the program:
@@ -92,8 +92,8 @@ following:
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-io-pdfx-xml-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
-        eu.openminted.uc.socialsciences.io.pdfx.PdfxXmlToXmiConverter [args...]
+ $ java -cp /PATH/TO/ss-io-pdf-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
+        eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlToXmiConverter [args...]
 ----
 
 The following arguments have to be provided for the program:

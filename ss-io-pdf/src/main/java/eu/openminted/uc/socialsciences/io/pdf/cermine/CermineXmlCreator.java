@@ -1,9 +1,10 @@
 package eu.openminted.uc.socialsciences.io.pdf.cermine;
 
-import eu.openminted.uc.socialsciences.io.pdfx.AbstractXmlCreator;
 import org.apache.log4j.Logger;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
+
+import eu.openminted.uc.socialsciences.io.xml.AbstractXmlCreator;
 import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 

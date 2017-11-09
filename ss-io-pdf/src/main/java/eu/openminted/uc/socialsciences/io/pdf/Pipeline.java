@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.io.pdfx;
+package eu.openminted.uc.socialsciences.io.pdf;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -6,6 +6,9 @@ import java.util.List;
 
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import eu.openminted.uc.socialsciences.io.pdf.cermine.CerminePdfToXmiConverter;
+import eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlCreator;
+import eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlToXmiConverter;
+
 import org.apache.uima.UIMAException;
 import org.kohsuke.args4j.Option;
 

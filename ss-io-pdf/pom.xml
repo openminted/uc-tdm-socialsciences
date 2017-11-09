@@ -147,7 +147,7 @@
 									</excludes>
 								</filter>
 								<filter>
-									<artifact>eu.openminted.uc-tdm-socialsciences:ss-io-pdfx-xml</artifact>
+									<artifact>eu.openminted.uc-tdm-socialsciences:ss-io-pdf</artifact>
 									<excludes>
 										<exclude>src/main/resources/*.dic</exclude>
 									</excludes>
@@ -156,7 +156,7 @@
 							<transformers>
 								<!-- Set the main class of the executable JAR -->
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>eu.openminted.uc.socialsciences.io.pdfx.Pipeline</mainClass>
+									<mainClass>eu.openminted.uc.socialsciences.io.pdf.Pipeline</mainClass>
 								</transformer>
 								<!-- Merge the uimaFIT configuration files -->
 								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">

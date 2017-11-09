@@ -1,7 +1,7 @@
-package eu.openminted.uc.socialsciences.io.pdfx;
+package eu.openminted.uc.socialsciences.io.xml;
 
 import eu.openminted.uc.socialsciences.common.PDFChecker;
-import eu.openminted.uc.socialsciences.io.pdf.XmlCreator;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.kohsuke.args4j.Option;

@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.io.pdfx;
+package eu.openminted.uc.socialsciences.io.cas;
 
 import static org.apache.uima.fit.util.JCasUtil.select;
 
