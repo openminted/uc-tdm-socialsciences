@@ -23,6 +23,11 @@ import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.MimeTypes;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Heading;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
+import eu.openminted.share.annotations.api.Component;
+import eu.openminted.share.annotations.api.DataFormat;
+import eu.openminted.share.annotations.api.ResourceInput;
+import eu.openminted.share.annotations.api.ResourceOutput;
+
 import org.apache.uima.UimaContext;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Type;
@@ -53,6 +58,10 @@ import static org.apache.commons.io.IOUtils.closeQuietly;
 @TypeCapability(outputs = { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
         "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Heading",
         "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph" })
+//OMTD-SHARE annotations
+@Component(value="reader")
+@ResourceInput(type="corpus", dataFormat= @DataFormat(fileExtension="pdf"), encoding="utf-8")
+@ResourceOutput(type="corpus", dataFormat= @DataFormat(fileExtension="xmi"), encoding="utf-8")
 public class CerminePdfReader
     extends ResourceCollectionReaderBase
 {

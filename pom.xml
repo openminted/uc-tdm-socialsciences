@@ -214,6 +214,11 @@
 			</dependency>
 			<!-- end submodules -->
 
+    <dependency>
+      <groupId>eu.openminted.share.annotations</groupId>
+      <artifactId>omtd-share-annotations-api</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
 			<!-- https://mvnrepository.com/artifact/args4j/args4j -->
 			<dependency>
 				<groupId>args4j</groupId>
