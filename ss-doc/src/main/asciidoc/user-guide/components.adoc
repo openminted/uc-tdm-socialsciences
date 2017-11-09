@@ -92,7 +92,7 @@ following:
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-io-pdf-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
+ $ java -cp /PATH/TO/ss-io-pdf-1.0.0-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
         eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlToXmiConverter [args...]
 ----
 
@@ -131,7 +131,7 @@ If your training data is in binary CAS format (e.g. exported from WebAnno), you 
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.util.BinaryCasToTsvConverter [args...]
 ----
 
@@ -202,7 +202,7 @@ number of different class labels in the training data.
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.train.StanfordNERTrainer [args...]
 ----
 
@@ -241,7 +241,7 @@ you expect).
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.main.Pipeline [args...]
 ----
 
@@ -267,7 +267,7 @@ Both have to be in XMI format again.
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-module-ner-0.0.1-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure [args...]
 ----
 
