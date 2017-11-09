@@ -28,10 +28,6 @@ import eu.openminted.uc.socialsciences.variabledetection.resource.TheSozResource
 public class TheSozMetaCollector
     extends LuceneBasedMetaCollector
 {
-    public static final String PARAM_RESOURCE_NAME = "knowledgeBaseName";
-    @ConfigurationParameter(name = PARAM_RESOURCE_NAME, mandatory = true)
-    protected String knowledgeBaseName;
-
     protected KnowledgeBaseResource kbr;
 
     public static final String PARAM_STOPWORDS_FILE = "stopwordsFile";
