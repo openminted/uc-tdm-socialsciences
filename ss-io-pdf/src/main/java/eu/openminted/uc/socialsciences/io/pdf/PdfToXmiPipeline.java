@@ -12,7 +12,7 @@ import eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlToXmiConverter;
 import org.apache.uima.UIMAException;
 import org.kohsuke.args4j.Option;
 
-public class Pipeline
+public class PdfToXmiPipeline
 {
 	@Option(name="-i", usage="Path to input PDF document(s) (file or directory)", required = true)
 	private String input = null;
@@ -45,7 +45,7 @@ public class Pipeline
 	 * @param args program arguments
 	 */
 	public static void main(String[] args) {
-		new Pipeline().run(args);
+		new PdfToXmiPipeline().run(args);
 	}
 
 	public void run()

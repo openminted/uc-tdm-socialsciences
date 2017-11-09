@@ -42,18 +42,18 @@ Create an example method like the following:
 
 [source,java]
 ----
-import eu.openminted.uc.socialsciences.io.pdf.Pipeline;
+import eu.openminted.uc.socialsciences.io.pdf.PdfToXmiPipeline;
 
 public class PipelineTest
 {
     public void runPipelineExample()
     {
-        Pipeline pipeline = new Pipeline();
+        PdfToXmiPipeline pipeline = new PdfToXmiPipeline();
         pipeline.setInput("my/input/directory");
         pipeline.setOutput("my/output/directory");
         pipeline.setLanguage(PdfxXmlToXmiConverter.LANGUAGE_CODE_EN);
         pipeline.setHomePath("my/dictionary/files/directory");
-        pipeline.setConverter(Pipeline.CONVERTER_CERMINE); //default is CERMINE
+        pipeline.setConverter(PdfToXmiPipeline.CONVERTER_CERMINE); //default is CERMINE
         pipeline.setOverwriteOutput(true); //default is false
         pipeline.run();
     }
