@@ -242,7 +242,7 @@ you expect).
 [source,text]
 ----
  $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
-        eu.openminted.uc.socialsciences.ner.main.Pipeline [args...]
+        eu.openminted.uc.socialsciences.ner.Pipeline [args...]
 ----
 
 The following arguments have to be provided for the program:
