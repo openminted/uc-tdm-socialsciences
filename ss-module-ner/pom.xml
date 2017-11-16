@@ -42,8 +42,13 @@
 			<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
 			<artifactId>ss-common</artifactId>
 		</dependency>
-		<!--  -->
+			<!--  -->
 
+		<!-- OMTD-SHARE annotations -->
+		<dependency>
+			<groupId>eu.openminted.share.annotations</groupId>
+			<artifactId>omtd-share-annotations-api</artifactId>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/it.unimi.dsi/fastutil -->
 		<dependency>
 			<groupId>it.unimi.dsi</groupId>
