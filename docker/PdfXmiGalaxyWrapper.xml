@@ -1,0 +1,22 @@
+<tool id="SS_XMI-NER" name="SS_XMI-NER" version="1.0">
+	<description>PDF to XMI conversion Component</description>
+	<requirements>
+		<container type="docker">omtd-ss-pdf-xmi-docker</container>
+	</requirements>
+	<command>
+		mkdir tmp;
+		#for $file in $pdf_files
+		  cp $file tmp/$file.element_identifier;
+		#end for
+		java -cp /opt/ss-io-pdf/ss-io-pdf-1.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar eu.openminted.uc.socialsciences.io.docker.PdfXmiPipeline tmp $output.job_working_directory/working/out/
+		rm -r tmp;
+	</command>
+	<inputs>
+		<param type="data_collection" collection_type="list" name="pdf_files" label="Input PDF files" format="pdf" />
+	</inputs>
+	<outputs>
+		<collection name="output" type="list" label="XMI files">
+			<discover_datasets pattern="__designation__" directory="out" format="xmi" visible="true" />
+		</collection>
+	</outputs>
+</tool>

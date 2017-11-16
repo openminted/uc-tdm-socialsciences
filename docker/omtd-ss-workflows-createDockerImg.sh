@@ -1,8 +1,4 @@
 #!/bin/bash
 
-Dockerfile="./omtd-ss-xmi-ner.dockerfile"
-DockerImg="omtd-ss-xmi-ner-docker"
-
-docker build -t $DockerImg -f $Dockerfile ..
-
-
+docker build -t "omtd-ss-xmi-ner-docker" -f "./omtd-ss-xmi-ner.dockerfile" ..
+docker build -t "omtd-ss-pdf-xmi-docker" -f "./omtd-ss-pdf-xmi.dockerfile" ..
