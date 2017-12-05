@@ -21,17 +21,25 @@ public class BinaryCasToTsvConverter {
 	private static final Logger logger = LogManager.getLogger(BinaryCasToTsvConverter.class);
 
 	private static final String DEFAULT_OUTPUT = "stanfordTrain.tsv";
+	private static final String DEFAULT_FILE_FORMAT = ".ser";
 
 	@Option(name = "-i", handler = StringOptionHandler.class,
 			usage = "input directory containing binary CAS files to be converted", required = true)
 	private String inputPath = null;
 
-	@Option(name = "-o", usage = "[optional] path to save the converted file to")
+    @Option(name = "-o", usage = "[optional] path to save the converted file to. Default values is '"
+            + DEFAULT_OUTPUT + "'")
 	private String outputPath = DEFAULT_OUTPUT;
 
 	@Option(name = "-subtypes", handler = BooleanOptionHandler.class,
-			usage = "[optional] useSubTypes flag. If set, value and modifier of an annotation will be merged to create more fine-grained classes.")
+			usage = "[optional] useSubTypes flag. If set, value and modifier of an annotation will "
+			        + "be attached to create more fine-grained classes. If not set, only the "
+			        + "coarse-grained annotation (e.g. LOC, PER, etc.) value will be exported.")
 	private boolean useSubTypes = false;
+	
+    @Option(name = "-f", usage = "[optional] specify the file extension of the input files. Default value is '"
+            + DEFAULT_FILE_FORMAT + "'")
+	private String fileFormat = DEFAULT_FILE_FORMAT;
 
 	public static void main(String[] args) {
 		new BinaryCasToTsvConverter().run(args);
@@ -68,7 +76,7 @@ public class BinaryCasToTsvConverter {
 			runPipeline(
 					createReaderDescription(BinaryCasReader.class,
 							BinaryCasReader.PARAM_SOURCE_LOCATION, inputPath,
-							BinaryCasReader.PARAM_PATTERNS, "/**/*.bin"),
+							BinaryCasReader.PARAM_PATTERNS, "/**/*" + fileFormat),
 					createEngineDescription(MyStanfordTsvWriter.class,
 							MyStanfordTsvWriter.PARAM_TARGET_LOCATION, outputPath,
 							MyStanfordTsvWriter.PARAM_USE_SUBTYPES, useSubTypes,
