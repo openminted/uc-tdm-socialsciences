@@ -6,18 +6,20 @@ import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 import java.io.IOException;
 
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
-import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
-
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.spi.BooleanOptionHandler;
+
+import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
+import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
+import de.tudarmstadt.ukp.dkpro.core.testing.validation.CasValidatorComponent;
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 
 public class Pipeline
 {
@@ -66,6 +68,14 @@ public class Pipeline
 			reader = createReaderDescription(XmiReader.class,
 					XmiReader.PARAM_SOURCE_LOCATION, input,
 					XmiReader.PARAM_LENIENT, true);
+			
+            AnalysisEngineDescription preprocessing = createEngineDescription(
+                    createEngineDescription(OpenNlpSegmenter.class,
+                            OpenNlpSegmenter.PARAM_WRITE_SENTENCE, true,
+                            OpenNlpSegmenter.PARAM_WRITE_TOKEN, true,
+                            OpenNlpSegmenter.PARAM_STRICT_ZONING, true),
+                    createEngineDescription(CasValidatorComponent.class,
+                            CasValidatorComponent.PARAM_STRICT_CHECK, true));
 
 			AnalysisEngineDescription ner = useStanfordModels ?
 					createEngineDescription(StanfordNamedEntityRecognizer.class)
@@ -81,7 +91,7 @@ public class Pipeline
 					XmiWriter.PARAM_OVERWRITE, true,
 					XmiWriter.PARAM_STRIP_EXTENSION, true,
 					XmiWriter.PARAM_USE_DOCUMENT_ID, true);
-			runPipeline(reader, ner, xmiWriter);
+			runPipeline(reader, preprocessing, ner, xmiWriter);
 		} catch (UIMAException | IOException e) {
 			logger.error("An error has occurred.", e);
 			throw new IllegalStateException(e);
