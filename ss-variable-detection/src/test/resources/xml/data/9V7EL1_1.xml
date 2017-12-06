@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testset>
+	<topic t_id="6" t_name="Anomia und Kriminalitätsfurcht">
+		<sample r_id="14">
+			<doc d_id="9V7EL1" lang="en">
+				<s id="505" correct="Yes"> The German General Social Survey in 2008 asked to its
+					respondents whether they agreed or disagreed with the idea that, given the
+					future, one can hardly take responsibility to bring children into the world. </s>
+				<s id="506" correct="No"> Estimates document that those more worried for the future
+					tend to report a 9.25% lower life satisfaction than the others.</s>
+
+			</doc>
+			<variable v_id="v685" correct="Yes">
+				<v_label> WITH SUCH A FUTURE, NO MORE CHILDREN </v_label>
+				<v_question>I'm going to read you some statements now. Please tell me after each one
+					whether you have the same or a different opinion. </v_question>
+				<v_subquestion>With the future looking as it does, it's almost irresponsible to
+					bring children into the world.</v_subquestion>
+				<v_answer a_id="1">I agree</v_answer>
+				<v_answer a_id="2"> I disagree</v_answer>
+				<v_answer a_id="3">Don't know</v_answer>
+				<v_answer a_id="4">No answer</v_answer>
+			</variable>
+
+			<variable v_id="v329" correct="No">
+				<v_label>REASON FOR MARRIAGE: CHILD</v_label>
+				<v_question> And what if there is a child? Do you think one should get married then? </v_question>
+				<v_subquestion/>
+				<v_answer a_id="1"> Not applicable</v_answer>
+				<v_answer a_id="2"> Yes</v_answer>
+				<v_answer a_id="3"> No</v_answer>
+				<v_answer a_id="4"> Undecided</v_answer>
+				<v_answer a_id="5"> Don't know</v_answer>
+				<v_answer a_id="4">No answer</v_answer>
+			</variable>
+
+			<variable v_id="v331" correct="No">
+				<v_label>WORKING WOMAN:WARM RELATION TO CHILD OK</v_label>
+				<v_question>People have different opinions about the role of women in the family and
+					in bringing up children. For each of the statements on the card, please tell me
+					whether you completely agree, tend to agree, tend to disagree, or completely
+					disagree. </v_question>
+				<v_subquestion>A working mother can establish just as loving and secure a
+					relationship with her children as a mother who doesn't work. </v_subquestion>
+				<v_answer a_id="1">Not available</v_answer>
+				<v_answer a_id="2">Completely agree</v_answer>
+				<v_answer a_id="3">Tend to agree</v_answer>
+				<v_answer a_id="4">Tend to disagree</v_answer>
+				<v_answer a_id="5">Completely disagree</v_answer>
+				<v_answer a_id="6">Don't know</v_answer>
+				<v_answer a_id="7">No answer</v_answer>
+			</variable>
+			<variable v_id="v334" correct="No">
+				<v_label>WIFE:BETTER STAY HOME+LOOK AFTER FAMILY</v_label>
+				<v_question> People have different opinions about the role of women in the family
+					and in bringing up children. For each of the statements on the card, please tell
+					me whether you completely agree, tend to agree, tend to disagree, or completely
+					disagree. </v_question>
+				<v_subquestion> It is much better for everyone concerned if the man goes out to work
+					and the woman stays at home and looks after the house and children. </v_subquestion>
+				<v_answer a_id="1">Not available</v_answer>
+				<v_answer a_id="2">Completely agree</v_answer>
+				<v_answer a_id="3">Tend to agree</v_answer>
+				<v_answer a_id="4">Tend to disagree</v_answer>
+				<v_answer a_id="5">Completely disagree</v_answer>
+				<v_answer a_id="6">Don't know</v_answer>
+				<v_answer a_id="7">No answer</v_answer>
+			</variable>
+
+		</sample>
+	</topic>
+</testset>

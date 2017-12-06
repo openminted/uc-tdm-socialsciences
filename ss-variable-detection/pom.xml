@@ -35,6 +35,11 @@
 	</dependencyManagement>
 
 	<dependencies>
+	<!-- OMTD-SHARE annotations -->
+		<dependency>
+			<groupId>eu.openminted.share.annotations</groupId>
+			<artifactId>omtd-share-annotations-api</artifactId>
+		</dependency>
 		<!-- DKPro Core -->
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
@@ -144,4 +149,65 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.uima</groupId>
+				<artifactId>uimafit-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>desc/type/**/*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>desc/type/**/*</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	<profiles>
+    <profile>
+      <id>run-jcasgen</id>
+      <activation>
+        <!-- <activeByDefault>true</activeByDefault> -->
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <!--generate types dynamically -->
+            <groupId>org.apache.uima</groupId>
+            <artifactId>jcasgen-maven-plugin</artifactId>
+            <version>${uima.version}</version>
+            <configuration>
+              <limitToProject>true</limitToProject>
+              <typeSystemIncludes>
+                <include>src/main/resources/desc/type/**/*.xml</include>
+              </typeSystemIncludes>
+              <typeSystemExcludes>
+                <exclude>src/main/resources/desc/type/**/*_customized.xml</exclude>
+              </typeSystemExcludes>
+            </configuration>
+            <executions>
+              <execution>
+                <!--call it in the generate-source phase -->
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
