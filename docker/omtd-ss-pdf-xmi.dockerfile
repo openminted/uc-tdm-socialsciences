@@ -17,5 +17,5 @@ ENV PATH $JAVA_HOME/bin:$PATH
 RUN apt-get -y install xmlstarlet
 
 RUN mkdir /opt/ss-module-ner/
-COPY ../ss-io-pdf/target/ss-io-pdf-1.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar /opt/ss-io-pdf/ss-io-pdf-1.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
+COPY ./ss-io-pdf/target/ss-io-pdf-1.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar /opt/ss-io-pdf/ss-io-pdf-1.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
 # -- -- --- - -- -- -- --- - -- 

@@ -17,5 +17,5 @@ ENV PATH $JAVA_HOME/bin:$PATH
 RUN apt-get -y install xmlstarlet
 
 RUN mkdir /opt/ss-module-ner/
-COPY ../ss-module-ner/target/ss-module-ner-1.0.1-SNAPSHOT-ss-ner-standalone.jar /opt/ss-module-ner/ss-module-ner-1.0.1-SNAPSHOT-ss-ner-standalone.jar
+COPY ./ss-module-ner/target/ss-module-ner-1.0.1-SNAPSHOT-ss-ner-standalone.jar /opt/ss-module-ner/ss-module-ner-1.0.1-SNAPSHOT-ss-ner-standalone.jar
 # -- -- --- - -- -- -- --- - -- 
