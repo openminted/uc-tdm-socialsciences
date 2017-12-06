@@ -61,9 +61,8 @@ import static org.apache.commons.io.IOUtils.closeQuietly;
         "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph" })
 //OMTD-SHARE annotations
 @Component(value = ComponentConstants.ComponentTypeConstants.reader)
-@ResourceInput(type = "corpus", dataFormat = @DataFormat(dataFormat = "pdf", fileExtension = ".pdf"
-, mimeType = "application/pdf"), encoding = "UTF-8", keyword = "pdf")
-@ResourceOutput(type = "corpus", dataFormat = @DataFormat(fileExtension = ".xmi"), encoding = "UTF-8", keyword = "xmi")
+@ResourceInput(type = "corpus", dataFormat = @DataFormat(dataFormat = "pdf", mimeType = "application/pdf")
+, encoding = "UTF-8", keyword = "pdf")
 public class CerminePdfReader
     extends ResourceCollectionReaderBase
 {

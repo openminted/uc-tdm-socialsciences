@@ -21,9 +21,9 @@ import eu.openminted.share.annotations.api.constants.ComponentConstants;
 import eu.openminted.uc.socialsciences.io.pdf.cermine.CerminePdfReader;
 
 @Component(value = ComponentConstants.ComponentTypeConstants.reader)
-@ResourceInput(type = "corpus", dataFormat = @DataFormat(dataFormat = "pdf", fileExtension = ".pdf"
+@ResourceInput(type = "corpus", dataFormat = @DataFormat(dataFormat = "pdf"
 , mimeType = "application/pdf"), encoding = "UTF-8", keyword = "pdf")
-@ResourceOutput(type = "corpus", dataFormat = @DataFormat(fileExtension = ".xmi"), encoding = "UTF-8", keyword = "xmi")
+@ResourceOutput(type = "corpus", dataFormat = @DataFormat(dataFormat = "xmi"), encoding = "UTF-8", keyword = "xmi")
 public class PdfXmiPipeline
 {
     public static void main(String args[]) throws Exception
