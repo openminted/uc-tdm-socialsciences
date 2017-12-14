@@ -1,10 +1,14 @@
-package eu.openminted.uc.socialsciences.variabledetection;
+package eu.openminted.uc.socialsciences.variabledetection.disambiguation;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Map;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -25,33 +29,15 @@ import weka.core.Instance;
 
 public class VariableDisambiguationPipeline
 {
-    public enum Mode
-    {
-        TRAIN, TEST, TEMP
-    }
-
-    public enum Dataset
-    {
-        ALL, MSRpar, MSRvid, SMTeuroparl, TEMP
-    }
-
-    public enum EvaluationMetric
-    {
-        PearsonAll, PearsonMean
-    }
-
+  //TODO DKPRO-HOME should be set
     public static final String DATASET_DIR = "classpath:/datasets/semeval-2012";
     public static final String GOLDSTANDARD_DIR = "classpath:/goldstandards/semeval-2012";
+    
     public static final String TESTDATA_DIR = "/home/local/UKP/kiaeeha/workspace/Datasets/openminted/uc-ss/variable-detection/06-1 VariableCorpus_FinalEnglish/";
     public static final String VARIABLE_LIST_FILE = "/home/local/UKP/kiaeeha/workspace/Datasets/openminted/uc-ss/variable-detection/Variables_english_NoIntend.xml";
     public static final String PREDICTION_DIR = "target/prediction";
+    public static final String OUTPUT_MODEL = "target/variable-disambiguation-model.ser";
 
-    public static final String FEATURES_DIR = "target/features";
-    public static final String MODELS_DIR = "target/models";
-    public static final String UTILS_DIR = "target/utils";
-    public static final String OUTPUT_DIR = "target/output";
-
-    public static final String[] variables = new String[] { "variable 1", "variable 2" };
     private LinearRegressionSimilarityMeasure classifier;
     private FeatureGeneration featureGeneration;
 
@@ -62,22 +48,7 @@ public class VariableDisambiguationPipeline
     
     public void run() throws Exception
     {
-        // Generate the features for training data
-        FeatureGeneration.generateFeatures(Dataset.MSRpar, Mode.TRAIN);
-        FeatureGeneration.generateFeatures(Dataset.MSRvid, Mode.TRAIN);
-        FeatureGeneration.generateFeatures(Dataset.SMTeuroparl, Mode.TRAIN);
-
-        // Generate the features for test data
-
-        // Concatenate all training data
-        FeatureGeneration.combineFeatureSets(Mode.TRAIN, Dataset.ALL, Dataset.MSRpar,
-                Dataset.MSRvid, Dataset.SMTeuroparl);
-
-        // Package features in arff files
-        Features2Arff.toArffFile(Mode.TRAIN, Dataset.ALL);
-
-        // Run the classifer
-        classifier = trainLinearRegression(Dataset.ALL);
+        classifier = loadClassifier(OUTPUT_MODEL);
         
         Map<String, String> variableMap = VariableFileReader.getVariables(VARIABLE_LIST_FILE);
         featureGeneration = new FeatureGeneration();
@@ -107,6 +78,16 @@ public class VariableDisambiguationPipeline
         }
     }
     
+    private LinearRegressionSimilarityMeasure loadClassifier(String aFilename)
+        throws FileNotFoundException, IOException, ClassNotFoundException
+    {
+        ObjectInputStream input = new ObjectInputStream(new FileInputStream(aFilename));
+        LinearRegressionSimilarityMeasure classifier = (LinearRegressionSimilarityMeasure) input
+                .readObject();
+        input.close();
+        return classifier;
+    }
+    
     private String findMatchingVariable(String aSentence, Map<String, String> aVariableMap) throws Exception
     {
         String result = "";
@@ -114,7 +95,7 @@ public class VariableDisambiguationPipeline
         
         for (String variableId : aVariableMap.keySet()) {
             featureGeneration.generateFeatures(aSentence, aVariableMap.get(variableId));
-            String fileName = Features2Arff.toArffFile(Mode.TEMP, Dataset.TEMP, null);
+            String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP, VariableDisambiguationConstants.Dataset.TEMP, null);
             Instance instance = classifier.getInstance(new File(fileName));
             double tempSimilarity = classifier.getSimilarity(instance);
             if (tempSimilarity > similarity) {
@@ -126,9 +107,9 @@ public class VariableDisambiguationPipeline
         return result;
     }
     
-    public static LinearRegressionSimilarityMeasure trainLinearRegression(Dataset train) throws Exception
+    public static LinearRegressionSimilarityMeasure trainLinearRegression(VariableDisambiguationConstants.Dataset train) throws Exception
     {
-        File trainingFile = new File(MODELS_DIR + "/train/" + train.toString() + ".arff");
+        File trainingFile = new File(VariableDisambiguationConstants.MODELS_DIR + "/train/" + train.toString() + ".arff");
         LinearRegressionSimilarityMeasure classifier = new LinearRegressionSimilarityMeasure(
                 trainingFile, true);
         return classifier;

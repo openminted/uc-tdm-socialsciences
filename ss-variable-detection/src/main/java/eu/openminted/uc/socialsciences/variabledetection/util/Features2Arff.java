@@ -10,9 +10,9 @@
  ******************************************************************************/
 package eu.openminted.uc.socialsciences.variabledetection.util;
 
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.FEATURES_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.GOLDSTANDARD_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.MODELS_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.FEATURES_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationPipeline.GOLDSTANDARD_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.MODELS_DIR;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,20 +27,22 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.Dataset;
-import eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.Mode;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
 
 
 public class Features2Arff
 {
 	public static final String LF = System.getProperty("line.separator");
 	
-	public static void toArffFile(Mode mode, Dataset... datasets)
+	public static void toArffFile(VariableDisambiguationConstants.Mode mode, VariableDisambiguationConstants.Dataset... datasets)
 		throws IOException
 	{
-		for (Dataset dataset : datasets)
+		for (VariableDisambiguationConstants.Dataset dataset : datasets)
 		{			
 			String path = GOLDSTANDARD_DIR + "/" + mode.toString().toLowerCase() + "/STS.gs." + dataset.toString() + ".txt";
 			
@@ -51,16 +53,16 @@ public class Features2Arff
 		}
 	}
 		
-	public static String toArffFile(Mode mode, Dataset dataset, InputStream goldStandardInputStream)
+	public static String toArffFile(VariableDisambiguationConstants.Mode mode, VariableDisambiguationConstants.Dataset dataset, InputStream goldStandardInputStream)
 		throws IOException
 	{
 //		System.out.println("Generating ARFF file");
-        String fileName = MODELS_DIR + "/" + mode.toString().toLowerCase() + "/" + dataset.toString() + ".arff";
+        String fileName = VariableDisambiguationConstants.MODELS_DIR + "/" + mode.toString().toLowerCase() + "/" + dataset.toString() + ".arff";
         File outFile = new File(fileName);
 //        System.out.println(outFile.getAbsolutePath());
 		
 		Collection<File> files = FileUtils.listFiles(
-				new File(FEATURES_DIR + "/" + mode.toString().toLowerCase() + "/" + dataset.toString()),
+				new File(VariableDisambiguationConstants.FEATURES_DIR + "/" + mode.toString().toLowerCase() + "/" + dataset.toString()),
 				new String[] { "txt" },
 				true); 
 		

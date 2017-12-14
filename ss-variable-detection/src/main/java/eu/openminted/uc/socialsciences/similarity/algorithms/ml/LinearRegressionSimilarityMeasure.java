@@ -19,7 +19,7 @@
 package eu.openminted.uc.socialsciences.similarity.algorithms.ml;
 
 import java.io.File;
-import java.util.List;
+import java.io.Serializable;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
@@ -52,11 +52,13 @@ import weka.filters.Filter;
  */
 public class LinearRegressionSimilarityMeasure
 	extends JCasTextSimilarityMeasureBase
+	implements Serializable
 {
-	public static final Classifier CLASSIFIER = new LinearRegression();
+    private static final long serialVersionUID = 1L;
+
+    public static final Classifier CLASSIFIER = new LinearRegression();
 	
 	Classifier filteredClassifier;
-	List<String> features;
 	boolean useLogFilter;
 	
 	public LinearRegressionSimilarityMeasure(File trainArff, boolean aUseLogFilter)

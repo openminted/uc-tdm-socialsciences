@@ -1,12 +1,10 @@
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationPipeline.DATASET_DIR;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReader;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.createExternalResourceDescription;
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.DATASET_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.UTILS_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.FEATURES_DIR;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -53,8 +51,9 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.Dataset;
-import eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.Mode;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
 import eu.openminted.uc.socialsciences.variabledetection.util.StopwordFilter;
 
 
@@ -73,8 +72,11 @@ public class FeatureGeneration
         for (FeatureConfig config : featureConfigList) {
             System.out.println(config.getMeasureName());
 
-            File outputFile = new File(FEATURES_DIR + "/" + Mode.TEMP.toString().toLowerCase() + "/" + Dataset.TEMP + "/"
+            File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/" + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/" + VariableDisambiguationConstants.Dataset.TEMP + "/"
                     + config.getTargetPath() + "/" + config.getMeasureName() + ".txt");
+            File featureDirectory = new File(VariableDisambiguationConstants.FEATURES_DIR + "/" + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/" + VariableDisambiguationConstants.Dataset.TEMP + "/"
+                    + config.getTargetPath() + "/");
+            featureDirectory.mkdirs();
 
             // Tokenization
             AnalysisEngineDescription seg = createEngineDescription(BreakIteratorSegmenter.class);
@@ -156,7 +158,7 @@ public class FeatureGeneration
             engine.process(jcas);
             
             TextSimilarityScore score = JCasUtil.selectSingle(jcas, ExperimentalTextSimilarityScore.class);
-            File outputFile = new File(FEATURES_DIR + "/" + Mode.TEMP.toString().toLowerCase() + "/" + Dataset.TEMP + "/"
+            File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/" + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/" + VariableDisambiguationConstants.Dataset.TEMP + "/"
                     + config.getTargetPath() + "/" + config.getMeasureName() + ".txt");
             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
             writer.write(Double.toString(score.getScore()));
@@ -164,7 +166,7 @@ public class FeatureGeneration
         }
     }
     
-	public static void generateFeatures(Dataset dataset, Mode mode)
+	public static void generateFeatures(VariableDisambiguationConstants.Dataset dataset, VariableDisambiguationConstants.Mode mode)
 		throws Exception
 	{
 		List<FeatureConfig> configs = getFeatureConfigs();
@@ -174,7 +176,7 @@ public class FeatureGeneration
 		{			
 			System.out.println(config.getMeasureName());
 			
-			File outputFile = new File(FEATURES_DIR + "/" + mode.toString().toLowerCase() + "/" + dataset.toString() + "/" + config.getTargetPath() + "/" + config.getMeasureName() + ".txt");
+			File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/" + mode.toString().toLowerCase() + "/" + dataset.toString() + "/" + config.getTargetPath() + "/" + config.getMeasureName() + ".txt");
 			
 			if (outputFile.exists())
 			{
@@ -445,7 +447,7 @@ public class FeatureGeneration
         return configs;
     }
 	
-	public static void combineFeatureSets(Mode mode, Dataset target, Dataset... sources)
+	public static void combineFeatureSets(VariableDisambiguationConstants.Mode mode, VariableDisambiguationConstants.Dataset target, VariableDisambiguationConstants.Dataset... sources)
 			throws IOException
 	{	
 		String outputFolderName = target.toString();
@@ -453,14 +455,14 @@ public class FeatureGeneration
 		System.out.println("Combining feature sets");
 		
 		// Check if target directory exists. If so, delete it.
-		File targetDir = new File(FEATURES_DIR + "/" + mode.toString().toLowerCase() + "/" + target.toString());
+		File targetDir = new File(VariableDisambiguationConstants.FEATURES_DIR + "/" + mode.toString().toLowerCase() + "/" + target.toString());
 		if (targetDir.exists())
 		{
 			System.out.println(" - cleaned target directory");
 			FileUtils.deleteDirectory(targetDir);
 		}
 		
-		String featurePathOfFirstSet = FEATURES_DIR + "/" + mode.toString().toLowerCase() + "/" + sources[0].toString();
+		String featurePathOfFirstSet = VariableDisambiguationConstants.FEATURES_DIR + "/" + mode.toString().toLowerCase() + "/" + sources[0].toString();
 		
 		Collection<File> features = FileUtils.listFiles(new File(featurePathOfFirstSet), new String[] { "txt" }, true);
 		

@@ -10,10 +10,8 @@
  ******************************************************************************/
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationPipeline.DATASET_DIR;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.DATASET_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.UTILS_DIR;
-
 
 import java.io.File;
 import java.net.URL;
@@ -38,15 +36,16 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.Dataset;
-import eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.Mode;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
 
 
 public class WordIdfValuesGenerator
 {
 	static final String LF = System.getProperty("line.separator");
 	
-	public static void computeIdfScores(Mode mode, Dataset dataset)
+	public static void computeIdfScores(VariableDisambiguationConstants.Mode mode, VariableDisambiguationConstants.Dataset dataset)
 		throws Exception
 	{	
 		URL inputUrl = ResourceUtils.resolveLocation(DATASET_DIR + "/" + mode.toString().toLowerCase() + "/STS.input." + dataset.toString() + ".txt");
@@ -54,7 +53,7 @@ public class WordIdfValuesGenerator
 		
 		Map<String,Double> idfValues = new HashMap<String,Double>();
 		
-		File outputFile = new File(UTILS_DIR + "/word-idf/" + mode.toString().toLowerCase() + "/" + dataset.toString() + ".txt");
+		File outputFile = new File(VariableDisambiguationConstants.UTILS_DIR + "/word-idf/" + mode.toString().toLowerCase() + "/" + dataset.toString() + ".txt");
 		
 		System.out.println("Computing word idf values");
 		

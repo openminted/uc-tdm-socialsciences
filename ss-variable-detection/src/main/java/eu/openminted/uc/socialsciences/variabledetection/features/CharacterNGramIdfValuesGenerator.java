@@ -10,8 +10,7 @@
  ******************************************************************************/
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.DATASET_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.UTILS_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationPipeline.DATASET_DIR;
 
 import java.io.File;
 import java.net.URL;
@@ -27,15 +26,16 @@ import org.apache.commons.io.IOUtils;
 import org.dkpro.similarity.algorithms.lexical.ngrams.CharacterNGramMeasure;
 
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
-import eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.Dataset;
-import eu.openminted.uc.socialsciences.variabledetection.VariableDisambiguationPipeline.Mode;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
 
 
 public class CharacterNGramIdfValuesGenerator
 {
 	static final String LF = System.getProperty("line.separator");
 	
-	public static void computeIdfScores(Mode mode, Dataset dataset, int n)
+	public static void computeIdfScores(VariableDisambiguationConstants.Mode mode, VariableDisambiguationConstants.Dataset dataset, int n)
 		throws Exception
 	{					
 		URL inputUrl = ResourceUtils.resolveLocation(DATASET_DIR + "/" + mode.toString().toLowerCase() + "/STS.input." + dataset.toString() + ".txt");
@@ -43,7 +43,7 @@ public class CharacterNGramIdfValuesGenerator
 
 		System.out.println("Computing character " + n + "-grams");
 			
-		File outputFile = new File(UTILS_DIR + "/character-ngrams-idf/" + mode.toString().toLowerCase() + "/" + n + "/" + dataset.toString() + ".txt");
+		File outputFile = new File(VariableDisambiguationConstants.UTILS_DIR + "/character-ngrams-idf/" + mode.toString().toLowerCase() + "/" + n + "/" + dataset.toString() + ".txt");
 		
 		if (outputFile.exists())
 		{
