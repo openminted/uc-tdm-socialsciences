@@ -7,7 +7,6 @@ import org.junit.Test;
 import java.util.Map;
 
 import static eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure.calculateAgreement;
-import static eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure.calculatePrecision;
 import static org.junit.Assert.*;
 
 public class PerformanceMeasureTest {
@@ -39,12 +38,13 @@ public class PerformanceMeasureTest {
 
         Map<String, JCas> goldJcasMap = PerformanceMeasure.getJcases(GOLD_DATA_PATTERN, false);
         Map<String, JCas> predictionJcasMap = PerformanceMeasure.getJcases(PREDICTION_DATA_PATTERN, false);
+        PerformanceMeasure measure = new PerformanceMeasure();
 
         for (String key : goldJcasMap.keySet())
         {
             if (predictionJcasMap.containsKey(key))
             {
-                calculatePrecision(goldJcasMap.get(key), predictionJcasMap.get(key), true);
+                measure.calculatePrecision(goldJcasMap.get(key), predictionJcasMap.get(key), true);
             }
         }
     }

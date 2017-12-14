@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.ner.eval;
+package eu.openminted.uc.socialsciences.common.evaluation;
 
 /*
  * Copyright 2016
