@@ -134,7 +134,7 @@ public class XmlCorpusReader
                 NamedNodeMap docAttributes = docNode.getAttributes();
                 language = docAttributes.getNamedItem("lang").getTextContent();
                 
-                Node titleNode = (Node) xpath.compile(".//doc_title").evaluate(docNode,
+                Node titleNode = (Node) xpath.compile("./doc_title").evaluate(docNode,
                         XPathConstants.NODE);
                 DocumentMetaData metadata = DocumentMetaData.get(aCAS.getJCas());
                 metadata.setDocumentTitle(titleNode.getTextContent());
