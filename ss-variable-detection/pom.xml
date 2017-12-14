@@ -15,6 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<lsr.version>0.8.1</lsr.version>
 		<jena.version>3.4.0</jena.version>
+		<dkpro.similarity.version>2.3.0-SNAPSHOT</dkpro.similarity.version>
 	</properties>
 
 	<dependencyManagement>
@@ -35,6 +36,11 @@
 	</dependencyManagement>
 
 	<dependencies>
+	 <dependency>
+	   <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+	   <artifactId>ss-common</artifactId>
+	 </dependency>
+	
 	<!-- OMTD-SHARE annotations -->
 		<dependency>
 			<groupId>eu.openminted.share.annotations</groupId>
@@ -136,6 +142,75 @@
       <groupId>org.apache.jena</groupId>
       <artifactId>jena-arq</artifactId>
       <version>${jena.version}</version>
+    </dependency>
+
+    <!-- DKPro Similarity -->
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+		<dependency>
+		  <groupId>org.dkpro.similarity</groupId>
+		  <artifactId>dkpro-similarity-ml-core-gpl</artifactId>
+		  <version>${dkpro.similarity.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.dkpro.similarity</groupId>
+		  <artifactId>dkpro-similarity-algorithms-lexical-asl</artifactId>
+		  <version>${dkpro.similarity.version}</version>
+		</dependency>
+		<dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-algorithms-lsr-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-algorithms-lexical-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>    
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-uima-data-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-uima-io-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-algorithms-vsm-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-uima-core-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-ml-io-gpl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-uima-core-gpl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-algorithms-api-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-uima-api-asl</artifactId>
+      <version>${dkpro.similarity.version}</version>
     </dependency>
 
 		<dependency>
