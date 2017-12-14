@@ -26,7 +26,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
 import eu.openminted.share.annotations.api.Component;
 import eu.openminted.share.annotations.api.DataFormat;
 import eu.openminted.share.annotations.api.ResourceInput;
-import eu.openminted.share.annotations.api.ResourceOutput;
 import eu.openminted.share.annotations.api.constants.ComponentConstants;
 
 import org.apache.uima.UimaContext;
