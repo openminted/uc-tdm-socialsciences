@@ -10,7 +10,7 @@
  ******************************************************************************/
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
-import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationPipeline.DATASET_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer.DATASET_DIR;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.io.File;
@@ -37,9 +37,6 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
-import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
-import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
-
 
 public class WordIdfValuesGenerator
 {

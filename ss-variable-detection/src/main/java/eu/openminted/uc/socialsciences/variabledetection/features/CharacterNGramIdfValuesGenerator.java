@@ -10,7 +10,7 @@
  ******************************************************************************/
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
-import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationPipeline.DATASET_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer.DATASET_DIR;
 
 import java.io.File;
 import java.net.URL;
@@ -27,9 +27,6 @@ import org.dkpro.similarity.algorithms.lexical.ngrams.CharacterNGramMeasure;
 
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
-import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
-import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
-
 
 public class CharacterNGramIdfValuesGenerator
 {

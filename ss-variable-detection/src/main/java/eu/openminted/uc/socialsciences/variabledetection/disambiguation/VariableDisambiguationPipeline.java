@@ -29,10 +29,8 @@ import weka.core.Instance;
 
 public class VariableDisambiguationPipeline
 {
-  //TODO DKPRO-HOME should be set
-    public static final String DATASET_DIR = "classpath:/datasets/semeval-2012";
-    public static final String GOLDSTANDARD_DIR = "classpath:/goldstandards/semeval-2012";
-    
+    // TODO DKPRO-HOME should be set
+
     public static final String TESTDATA_DIR = "/home/local/UKP/kiaeeha/workspace/Datasets/openminted/uc-ss/variable-detection/06-1 VariableCorpus_FinalEnglish/";
     public static final String VARIABLE_LIST_FILE = "/home/local/UKP/kiaeeha/workspace/Datasets/openminted/uc-ss/variable-detection/Variables_english_NoIntend.xml";
     public static final String PREDICTION_DIR = "target/prediction";
@@ -45,11 +43,11 @@ public class VariableDisambiguationPipeline
     {
         new VariableDisambiguationPipeline().run();
     }
-    
+
     public void run() throws Exception
     {
         classifier = loadClassifier(OUTPUT_MODEL);
-        
+
         Map<String, String> variableMap = VariableFileReader.getVariables(VARIABLE_LIST_FILE);
         featureGeneration = new FeatureGeneration();
 
@@ -69,7 +67,7 @@ public class VariableDisambiguationPipeline
                     found = true;
                 }
             }
-            
+
             AnalysisEngineDescription writer = createEngineDescription(XmiWriter.class,
                     XmiWriter.PARAM_TARGET_LOCATION, PREDICTION_DIR + "/",
                     XmiWriter.PARAM_OVERWRITE, true);
@@ -77,7 +75,7 @@ public class VariableDisambiguationPipeline
             engine.process(jcas);
         }
     }
-    
+
     private LinearRegressionSimilarityMeasure loadClassifier(String aFilename)
         throws FileNotFoundException, IOException, ClassNotFoundException
     {
@@ -87,15 +85,17 @@ public class VariableDisambiguationPipeline
         input.close();
         return classifier;
     }
-    
-    private String findMatchingVariable(String aSentence, Map<String, String> aVariableMap) throws Exception
+
+    private String findMatchingVariable(String aSentence, Map<String, String> aVariableMap)
+        throws Exception
     {
         String result = "";
         double similarity = 0;
-        
+
         for (String variableId : aVariableMap.keySet()) {
             featureGeneration.generateFeatures(aSentence, aVariableMap.get(variableId));
-            String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP, VariableDisambiguationConstants.Dataset.TEMP, null);
+            String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP,
+                    VariableDisambiguationConstants.Dataset.TEMP, null);
             Instance instance = classifier.getInstance(new File(fileName));
             double tempSimilarity = classifier.getSimilarity(instance);
             if (tempSimilarity > similarity) {
@@ -103,13 +103,16 @@ public class VariableDisambiguationPipeline
                 result = variableId;
             }
         }
-        
+
         return result;
     }
-    
-    public static LinearRegressionSimilarityMeasure trainLinearRegression(VariableDisambiguationConstants.Dataset train) throws Exception
+
+    public static LinearRegressionSimilarityMeasure trainLinearRegression(
+            VariableDisambiguationConstants.Dataset train)
+        throws Exception
     {
-        File trainingFile = new File(VariableDisambiguationConstants.MODELS_DIR + "/train/" + train.toString() + ".arff");
+        File trainingFile = new File(VariableDisambiguationConstants.MODELS_DIR + "/train/"
+                + train.toString() + ".arff");
         LinearRegressionSimilarityMeasure classifier = new LinearRegressionSimilarityMeasure(
                 trainingFile, true);
         return classifier;
