@@ -19,6 +19,7 @@
 package eu.openminted.uc.socialsciences.variabledetection.io;
 
 import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
+import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.MimeTypes;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import eu.openminted.share.annotations.api.Component;
@@ -58,10 +59,9 @@ import eu.openminted.uc.socialsciences.annotation.VariableMention;
 import static org.apache.commons.io.IOUtils.closeQuietly;
 
 /**
- * Collection reader for PDF files using CERMINE
- * <a href="https://github.com/CeON/CERMINE">https://github.com/CeON/CERMINE</a>.
+ * Collection reader for Variable mention XML corpus
  */
-@ResourceMetaData(name = "CERMINE PDF Reader")
+@ResourceMetaData(name = "Variable Mention Corpus Reader")
 @MimeTypeCapability({ MimeTypes.APPLICATION_PDF })
 @TypeCapability(outputs = { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
         "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Heading",
@@ -123,12 +123,21 @@ public class XmlCorpusReader
         if (document != null) {
             try {
                 XPath xpath = XPathFactory.newInstance().newXPath();
-                Node sampleNode = (Node) xpath.compile("//testset/topic/sample").evaluate(document,
+                Node sampleNode = (Node) xpath.compile("//testset/sample").evaluate(document,
                         XPathConstants.NODE);
+                if (sampleNode == null) {
+                    sampleNode = (Node) xpath.compile("//testset/topic/sample").evaluate(document,
+                            XPathConstants.NODE);
+                }
 
                 Node docNode = (Node) xpath.compile("./doc").evaluate(sampleNode, XPathConstants.NODE);
                 NamedNodeMap docAttributes = docNode.getAttributes();
                 language = docAttributes.getNamedItem("lang").getTextContent();
+                
+                Node titleNode = (Node) xpath.compile(".//doc_title").evaluate(docNode,
+                        XPathConstants.NODE);
+                DocumentMetaData metadata = DocumentMetaData.get(aCAS.getJCas());
+                metadata.setDocumentTitle(titleNode.getTextContent());
                 
                 NodeList sentenceNodes = (NodeList) xpath.compile(".//s").evaluate(docNode,
                         XPathConstants.NODESET);
@@ -171,7 +180,10 @@ public class XmlCorpusReader
                         String question = normalizeWhitespaces(questionNode.getTextContent().trim());
                         Node subQuestionNode = (Node) xpath.compile("./v_subquestion")
                                 .evaluate(variableNode, XPathConstants.NODE);
-                        String subQuestion = normalizeWhitespaces(subQuestionNode.getTextContent().trim());
+                        String subQuestion = "";
+                        if (subQuestionNode != null) {
+                            subQuestion = normalizeWhitespaces(subQuestionNode.getTextContent().trim());
+                        }
                         // TODO implement answer extraction
                         String answer = "";
 
