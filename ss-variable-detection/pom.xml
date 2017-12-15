@@ -231,6 +231,51 @@
 				<groupId>org.apache.uima</groupId>
 				<artifactId>uimafit-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.1</version>
+        <executions>
+          <execution>
+            <id>ss-ner</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <filters>
+                <!-- exclude manifest signature files -->
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <!-- Set the main class of the executable JAR -->
+                <!-- <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer</mainClass>
+                </transformer> -->
+                <!-- Merge the uimaFIT configuration files -->
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/org.apache.uima.fit/fsindexes.txt</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/org.apache.uima.fit/types.txt</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/org.apache.uima.fit/typepriorities.txt</resource>
+                </transformer>
+              </transformers>
+              <!-- Prevent huge shaded artifacts from being deployed to Artifactory -->
+              <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-ss-variabledetection-standalone.jar</outputFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
 		</plugins>
 		<resources>
 			<resource>

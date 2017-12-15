@@ -30,29 +30,32 @@ import weka.core.Instance;
 public class VariableDisambiguationPipeline
 {
     // TODO DKPRO-HOME should be set
-
-    public static final String TESTDATA_DIR = "/home/local/UKP/kiaeeha/workspace/Datasets/openminted/uc-ss/variable-detection/06-1 VariableCorpus_FinalEnglish/";
-    public static final String VARIABLE_LIST_FILE = "/home/local/UKP/kiaeeha/workspace/Datasets/openminted/uc-ss/variable-detection/Variables_english_NoIntend.xml";
-    public static final String PREDICTION_DIR = "target/prediction";
-    public static final String OUTPUT_MODEL = "target/variable-disambiguation-model.ser";
-
     private LinearRegressionSimilarityMeasure classifier;
     private FeatureGeneration featureGeneration;
+    private String modelPath;
+    private String predictionDirectory;
+    private String inputDirectory;
+    private String variableFilePath;
 
     public static void main(String[] args) throws Exception
     {
-        new VariableDisambiguationPipeline().run();
+        VariableDisambiguationPipeline pipeline = new VariableDisambiguationPipeline();
+        pipeline.setModelPath(args[0]);
+        pipeline.setPredictionDirectory(args[1]);
+        pipeline.setInputDirectory(args[2]);
+        pipeline.setVariableFilePath(args[3]);
+        pipeline.run();
     }
 
     public void run() throws Exception
     {
-        classifier = loadClassifier(OUTPUT_MODEL);
+        classifier = loadClassifier(modelPath);
 
-        Map<String, String> variableMap = VariableFileReader.getVariables(VARIABLE_LIST_FILE);
+        Map<String, String> variableMap = VariableFileReader.getVariables(variableFilePath);
         featureGeneration = new FeatureGeneration();
 
         CollectionReaderDescription reader = createReaderDescription(XmlCorpusReader.class,
-                XmlCorpusReader.PARAM_PATTERNS, TESTDATA_DIR + "**/*.xml");
+                XmlCorpusReader.PARAM_PATTERNS, inputDirectory + "**/*.xml");
         for (JCas jcas : SimplePipeline.iteratePipeline(reader)) {
             boolean found = false;
             for (VariableMention mention : JCasUtil.select(jcas, VariableMention.class)) {
@@ -69,7 +72,7 @@ public class VariableDisambiguationPipeline
             }
 
             AnalysisEngineDescription writer = createEngineDescription(XmiWriter.class,
-                    XmiWriter.PARAM_TARGET_LOCATION, PREDICTION_DIR + "/",
+                    XmiWriter.PARAM_TARGET_LOCATION, predictionDirectory + "/",
                     XmiWriter.PARAM_OVERWRITE, true);
             AnalysisEngine engine = createEngine(writer);
             engine.process(jcas);
@@ -116,5 +119,45 @@ public class VariableDisambiguationPipeline
         LinearRegressionSimilarityMeasure classifier = new LinearRegressionSimilarityMeasure(
                 trainingFile, true);
         return classifier;
+    }
+
+    public String getModelPath()
+    {
+        return modelPath;
+    }
+
+    public void setModelPath(String modelPath)
+    {
+        this.modelPath = modelPath;
+    }
+
+    public String getPredictionDirectory()
+    {
+        return predictionDirectory;
+    }
+
+    public void setPredictionDirectory(String predictionDirectory)
+    {
+        this.predictionDirectory = predictionDirectory;
+    }
+
+    public String getInputDirectory()
+    {
+        return inputDirectory;
+    }
+
+    public void setInputDirectory(String inputDirectory)
+    {
+        this.inputDirectory = inputDirectory;
+    }
+
+    public String getVariableFilePath()
+    {
+        return variableFilePath;
+    }
+
+    public void setVariableFilePath(String variableFilePath)
+    {
+        this.variableFilePath = variableFilePath;
     }
 }

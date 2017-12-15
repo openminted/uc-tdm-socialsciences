@@ -177,6 +177,7 @@
 		<dkpro.tc.version>0.9.0</dkpro.tc.version>
 		<dkpro.lab.version>0.14.0-SNAPSHOT</dkpro.lab.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<omtd.share.annotation.version>0.0.1-SNAPSHOT</omtd.share.annotation.version>
 	</properties>
 
 	<dependencyManagement>
@@ -217,7 +218,7 @@
     <dependency>
       <groupId>eu.openminted.share.annotations</groupId>
       <artifactId>omtd-share-annotations-api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>${omtd.share.annotation.version}</version>
     </dependency>
 			<!-- https://mvnrepository.com/artifact/args4j/args4j -->
 			<dependency>
@@ -435,7 +436,7 @@
 			<plugin>
          <groupId>eu.openminted.share.annotations</groupId>
          <artifactId>omtd-share-annotations-maven-plugin</artifactId>
-         <version>0.0.1-SNAPSHOT</version>
+         <version>${omtd.share.annotation.version}</version>
          <executions>
             <execution>
                <phase>process-classes</phase>
