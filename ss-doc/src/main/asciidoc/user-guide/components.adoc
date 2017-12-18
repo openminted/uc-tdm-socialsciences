@@ -308,6 +308,15 @@ FMeasure scores
 	Overall F-Measure: 0.742857
 ----
 
+For calculating the agreement between the predicted annotations and the gold annotations, DKPro Statistics
+(https://dkpro.github.io/dkpro-statistics/) library is used. For detailed information about computation of the agreement
+scores you can refer to the tutorial (https://dkpro.github.io/dkpro-statistics/inter-rater-agreement-tutorial.pdf)
+provided in the DKPro Statistics project.
+
+For calculating the precision and recall, the gold and predicted documents are converted to BIO format annotation.
+Each token slot with named entity annotation (either B or I) is used to count the number of true positive, false positive, and
+false negative instances.
+
 === Variable mention detection
 With this module, you can perform variable mention detection on your data. This module can be used to detect whether
  a sentence from an  article contains a mention of a variable from one of the social sciences studies. The input documents 
