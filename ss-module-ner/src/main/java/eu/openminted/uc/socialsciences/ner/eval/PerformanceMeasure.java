@@ -3,8 +3,10 @@ package eu.openminted.uc.socialsciences.ner.eval;
 import de.tudarmstadt.ukp.dkpro.core.api.io.IobEncoder;
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
+import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
+import eu.openminted.uc.socialsciences.common.evaluation.FMeasure;
 import eu.openminted.uc.socialsciences.ner.util.MyIobEncoder;
 
 import org.apache.log4j.LogManager;
@@ -58,6 +60,8 @@ public class PerformanceMeasure {
     @Option(name = "-v", usage = "[optional] verbose output flag. If this flag is set, output will " +
             "contain comprehensive information about tags found in gold and prediction sets.")
     private boolean verbose = false;
+    
+    private FMeasure fMeasure = new FMeasure();
 
     public static void main(String[] args)
             throws ResourceInitializationException
@@ -180,7 +184,7 @@ public class PerformanceMeasure {
         System.out.printf("\tOverall Alpha: %f %n", alpha.calculateAgreement());
     }
 
-    public static void calculatePrecision(JCas goldJcas, JCas predictionJcas, boolean verbose)
+    public void calculatePrecision(JCas goldJcas, JCas predictionJcas, boolean verbose)
     {
         List<MyAnnotation> goldAnnotations = new ArrayList<>();
         List<MyAnnotation> predictedAnnotations = new ArrayList<>();
@@ -190,6 +194,7 @@ public class PerformanceMeasure {
         Feature neModifier = neType.getFeatureByBaseName("modifier");
 
         MyIobEncoder myIobEncoder = new MyIobEncoder(goldJcas.getCas(), neType, neValue, neModifier, true);
+//        IobEncoder myIobEncoder = new IobEncoder(goldJcas.getCas(), neType, neValue); 
         for (Token token : JCasUtil.select(goldJcas, Token.class)) {
             MyAnnotation annotation = new MyAnnotation(myIobEncoder.encode(token), token.getBegin(), token.getEnd());
             if (!annotation.getType().equalsIgnoreCase("O"))
@@ -205,7 +210,6 @@ public class PerformanceMeasure {
                 predictedAnnotations.add(annotation);
         }
 
-        FMeasure fMeasure = new FMeasure();
         int hitCount = fMeasure.process(goldAnnotations, predictedAnnotations);
         if (verbose)
         {
@@ -222,9 +226,11 @@ public class PerformanceMeasure {
     public static Map<String, JCas> getJcases(String documentPathPattern, boolean strictId)
             throws ResourceInitializationException
     {
-        CollectionReaderDescription reader = createReaderDescription(XmiReader.class,
-                XmiReader.PARAM_SOURCE_LOCATION, documentPathPattern,
-                XmiReader.PARAM_LENIENT, true);
+        CollectionReaderDescription reader = createReaderDescription(BinaryCasReader.class,
+                BinaryCasReader.PARAM_SOURCE_LOCATION, documentPathPattern);
+//        CollectionReaderDescription reader = createReaderDescription(XmiReader.class,
+//                XmiReader.PARAM_SOURCE_LOCATION, documentPathPattern,
+//                XmiReader.PARAM_LENIENT, true);
 
         Map<String, JCas> result = new HashMap<>();
         int count = 0;
