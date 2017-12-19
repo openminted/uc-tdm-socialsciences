@@ -12,7 +12,6 @@ import eu.openminted.uc.socialsciences.variabledetection.util.Features2Arff;
 
 public class VariableDisambiguationModelTrainer
 {
-    // TODO DKPRO-HOME should be set
     public static final String DATASET_DIR = "classpath:/datasets/semeval-2012";
     public static final String GOLDSTANDARD_DIR = "classpath:/goldstandards/semeval-2012";
 
@@ -20,10 +19,6 @@ public class VariableDisambiguationModelTrainer
     {
         if (args.length < 1) {
             System.err.println("Provide path to save model as the first argument!");
-            System.exit(1);
-        }
-        if (System.getenv("DKPRO_HOME") == null) {
-            System.err.println("Set the envronment variable [DKPRO_HOME]!");
             System.exit(1);
         }
         

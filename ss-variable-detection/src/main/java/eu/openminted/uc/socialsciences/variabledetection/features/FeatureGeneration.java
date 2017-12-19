@@ -419,29 +419,30 @@ public class FeatureGeneration
 //				));
 //				
 //		// Explicit Semantic Analysis
-		configs.add(new FeatureConfig(
-				createExternalResourceDescription(
-				    	VectorIndexSourceRelatednessResource.class,
-                        VectorIndexSourceRelatednessResource.PARAM_MODEL_LOCATION,
-                        DkproContext.getContext().getWorkspace().getAbsolutePath()
-                                + "/ESA/VectorIndexes/wordnet"),
-				Lemma.class.getName() + "/value",
-				false,
-				"esa",
-				"ESA_WordNet"
-				));
-//		
-		configs.add(new FeatureConfig(
-				createExternalResourceDescription(
-				    	VectorIndexSourceRelatednessResource.class,
-                        VectorIndexSourceRelatednessResource.PARAM_MODEL_LOCATION,
-                        DkproContext.getContext().getWorkspace().getAbsolutePath()
-                                + "/ESA/VectorIndexes/wiktionary_en"),
-				Lemma.class.getName() + "/value",
-				false,
-				"esa",
-				"ESA_Wiktionary"
-				));
+//		configs.add(new FeatureConfig(
+//				createExternalResourceDescription(
+//				    	VectorIndexSourceRelatednessResource.class,
+//                        VectorIndexSourceRelatednessResource.PARAM_MODEL_LOCATION,
+//                        DkproContext.getContext().getWorkspace().getAbsolutePath()
+//                                + "/ESA/VectorIndexes/wordnet"),
+//				Lemma.class.getName() + "/value",
+//				false,
+//				"esa",
+//				"ESA_WordNet"
+//				));
+////		
+//		configs.add(new FeatureConfig(
+//				createExternalResourceDescription(
+//				    	VectorIndexSourceRelatednessResource.class,
+//                        VectorIndexSourceRelatednessResource.PARAM_MODEL_LOCATION,
+//                        DkproContext.getContext().getWorkspace().getAbsolutePath()
+//                                + "/ESA/VectorIndexes/wiktionary_en"),
+//				Lemma.class.getName() + "/value",
+//				false,
+//				"esa",
+//				"ESA_Wiktionary"
+//				)
+//		        );
         return configs;
     }
 	
