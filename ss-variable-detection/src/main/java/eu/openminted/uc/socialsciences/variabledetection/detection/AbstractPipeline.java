@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection;
+package eu.openminted.uc.socialsciences.variabledetection.detection;
 
 import java.util.Map;
 

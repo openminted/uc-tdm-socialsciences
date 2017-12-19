@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection;
+package eu.openminted.uc.socialsciences.variabledetection.detection;
 
 import static java.util.Arrays.asList;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
@@ -32,8 +32,7 @@ import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram;
 import eu.openminted.uc.socialsciences.variabledetection.features.TheSozFeatures;
 import eu.openminted.uc.socialsciences.variabledetection.features.WordnetFeatures;
-import eu.openminted.uc.socialsciences.variabledetection.io.TextDatasetReader;
-import eu.openminted.uc.socialsciences.variabledetection.resource.TheSozResource;
+import eu.openminted.uc.socialsciences.variabledetection.io.XmlCorpusAllDocsReader;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
 import weka.classifiers.bayes.NaiveBayes;
@@ -51,10 +50,10 @@ public class TrainTestPipeline
     extends AbstractPipeline
     implements Constants
 {
-    private static final String CORPUS_FILEPATH_TRAIN = "/home/local/UKP/kiaeeha/workspace/Datasets/"
-            + "openminted/uc-ss/variable-detection/2017-08-22-SurveyVariables_E/train";
-    private static final String COPRUS_FILEPATH_TEST = "/home/local/UKP/kiaeeha/workspace/Datasets/"
-            + "openminted/uc-ss/variable-detection/2017-08-22-SurveyVariables_E/test";
+    private static final String CORPUS_FILEPATH_TRAIN = "/home/local/UKP/kiaeeha/workspace/Datasets"
+            + "/openminted/uc-ss/variable-detection/detection/Full_ALLDOCS-train.xml";
+    private static final String COPRUS_FILEPATH_TEST = "/home/local/UKP/kiaeeha/workspace/Datasets"
+            + "/openminted/uc-ss/variable-detection/detection/Full_ALLDOCS-test.xml";
     private static final String LANGUAGE_CODE = "en";
     private static final String EXPERIMENT_NAME = "AllbusVariableDetection";
 
@@ -108,17 +107,18 @@ public class TrainTestPipeline
                 TcFeatureFactory.create(LuceneNGram.class,
                         LuceneNGram.PARAM_NGRAM_MIN_N, 1, LuceneNGram.PARAM_NGRAM_MAX_N, 3),
                 TcFeatureFactory.create(LuceneLemmaNGram.class,
-                        LuceneLemmaNGram.PARAM_NGRAM_MIN_N, 3, LuceneLemmaNGram.PARAM_NGRAM_MAX_N, 3),
-                TcFeatureFactory.create(NEFeatureExtractor.class),
-                TcFeatureFactory.create(WordnetFeatures.class, WordnetFeatures.PARAM_RESOURCE_NAME,
-                        WordnetFeatures.WORDNET_FIELD, WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
-                        WordnetFeatures.PARAM_NGRAM_MIN_N, 1,
-                        WordnetFeatures.PARAM_NGRAM_MAX_N, 4,
-                        WordnetFeatures.PARAM_SYNONYM_FEATURE, false,
-                        WordnetFeatures.PARAM_HYPERNYM_FEATURE, false),
-                TcFeatureFactory.create(TheSozFeatures.class,
-                        TheSozFeatures.PARAM_NGRAM_MIN_N, 1,
-                        TheSozFeatures.PARAM_NGRAM_MAX_N, 3)));
+                        LuceneLemmaNGram.PARAM_NGRAM_MIN_N, 3, LuceneLemmaNGram.PARAM_NGRAM_MAX_N, 3)
+//                TcFeatureFactory.create(NEFeatureExtractor.class),
+//                TcFeatureFactory.create(WordnetFeatures.class, WordnetFeatures.PARAM_RESOURCE_NAME,
+//                        WordnetFeatures.WORDNET_FIELD, WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
+//                        WordnetFeatures.PARAM_NGRAM_MIN_N, 1,
+//                        WordnetFeatures.PARAM_NGRAM_MAX_N, 4,
+//                        WordnetFeatures.PARAM_SYNONYM_FEATURE, false,
+//                        WordnetFeatures.PARAM_HYPERNYM_FEATURE, false),
+//                TcFeatureFactory.create(TheSozFeatures.class,
+//                        TheSozFeatures.PARAM_NGRAM_MIN_N, 1,
+//                        TheSozFeatures.PARAM_NGRAM_MAX_N, 3)
+                ));
     }
 
     @SuppressWarnings("unchecked")
@@ -143,17 +143,13 @@ public class TrainTestPipeline
         Map<String, Object> dimReaders = new HashMap<String, Object>();
 
         CollectionReaderDescription readerTrain = CollectionReaderFactory.createReaderDescription(
-                TextDatasetReader.class, TextDatasetReader.PARAM_SOURCE_LOCATION,
-                CORPUS_FILEPATH_TRAIN, TextDatasetReader.PARAM_LANGUAGE, LANGUAGE_CODE,
-                TextDatasetReader.PARAM_PATTERNS,
-                Arrays.asList(TextDatasetReader.INCLUDE_PREFIX + "**/*.txt"));
+                XmlCorpusAllDocsReader.class, XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION,
+                CORPUS_FILEPATH_TRAIN, XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         dimReaders.put(DIM_READER_TRAIN, readerTrain);
 
         CollectionReaderDescription readerTest = CollectionReaderFactory.createReaderDescription(
-                TextDatasetReader.class, TextDatasetReader.PARAM_SOURCE_LOCATION,
-                COPRUS_FILEPATH_TEST, TextDatasetReader.PARAM_LANGUAGE, LANGUAGE_CODE,
-                TextDatasetReader.PARAM_PATTERNS,
-                Arrays.asList(TextDatasetReader.INCLUDE_PREFIX + "**/*.txt"));
+                XmlCorpusAllDocsReader.class, XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION,
+                COPRUS_FILEPATH_TEST, XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         dimReaders.put(DIM_READER_TEST, readerTest);
         return Dimension.createBundle("readers", dimReaders);
     }

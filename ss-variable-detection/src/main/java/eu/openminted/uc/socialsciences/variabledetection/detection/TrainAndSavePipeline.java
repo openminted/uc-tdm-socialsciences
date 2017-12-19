@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection;
+package eu.openminted.uc.socialsciences.variabledetection.detection;
 
 import static java.util.Arrays.asList;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
@@ -35,27 +35,25 @@ import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram;
 import eu.openminted.uc.socialsciences.variabledetection.features.TheSozFeatures;
 import eu.openminted.uc.socialsciences.variabledetection.features.WordnetFeatures;
-import eu.openminted.uc.socialsciences.variabledetection.io.TextDatasetReader;
+import eu.openminted.uc.socialsciences.variabledetection.io.XmlCorpusAllDocsReader;
 import eu.openminted.uc.socialsciences.variabledetection.resource.TheSozResource;
 import weka.classifiers.bayes.NaiveBayes;
-import weka.classifiers.functions.SMO;
-import weka.classifiers.functions.supportVector.PolyKernel;
-import weka.classifiers.meta.Bagging;
-import weka.classifiers.trees.J48;
 
 /**
  * Pipeline for training a machine learning model using the training data and saving the model.
  * The pipeline uses several textual features to train a model using
  * <a href="https://github.com/dkpro/dkpro-tc">DKPro-TC</a>.
  */
+//OMTD-SHARE annotations
+//@Component(value="mlTrainer", application=true)
+//@ResourceInput(type="corpus", dataFormat= @DataFormat(fileExtension="txt"), encoding="utf-8")
+//@ResourceOutput(type="languageDescription", dataFormat= @DataFormat(dataFormat="binary"))
 public class TrainAndSavePipeline
     extends AbstractPipeline
     implements Constants
 {
-    private static final String CORPUS_FILEPATH_TRAIN = "/home/local/UKP/kiaeeha/workspace/Datasets/"
-            + "openminted/uc-ss/variable-detection/2017-08-22-SurveyVariables_E/train";
-    private static final String COPRUS_FILEPATH_TEST = "/home/local/UKP/kiaeeha/workspace/Datasets/"
-            + "openminted/uc-ss/variable-detection/2017-08-22-SurveyVariables_E/test";
+    private static final String CORPUS_FILEPATH_TRAIN = "/home/local/UKP/kiaeeha/workspace/Datasets"
+            + "/openminted/uc-ss/variable-detection/detection/Full_ALLDOCS-train.xml";
     private static final String LANGUAGE_CODE = "en";
     private static final String EXPERIMENT_NAME = "AllbusVariableDetection";
     public static final File modelPath = new File("target/model");
@@ -111,17 +109,19 @@ public class TrainAndSavePipeline
                 TcFeatureFactory.create(LuceneSkipNGram.class,
                         LuceneSkipNGram.PARAM_NGRAM_USE_TOP_K, 50,
                         LuceneSkipNGram.PARAM_NGRAM_MIN_N, 2, LuceneSkipNGram.PARAM_NGRAM_MAX_N, 3),
-                TcFeatureFactory.create(NEFeatureExtractor.class),
-                TcFeatureFactory.create(WordnetFeatures.class, WordnetFeatures.PARAM_RESOURCE_NAME,
-                        WordnetFeatures.WORDNET_FIELD, WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
-                        WordnetFeatures.PARAM_NGRAM_MIN_N, 1,
-                        WordnetFeatures.PARAM_NGRAM_MAX_N, 4,
-                        WordnetFeatures.PARAM_NGRAM_USE_TOP_K, Integer.MAX_VALUE,
-                        WordnetFeatures.PARAM_SYNONYM_FEATURE, true,
-                        WordnetFeatures.PARAM_HYPERNYM_FEATURE, false),
-                TcFeatureFactory.create(TheSozFeatures.class,
-                        TheSozFeatures.PARAM_NGRAM_MIN_N, 1,
-                        TheSozFeatures.PARAM_NGRAM_MAX_N, 3)));
+                TcFeatureFactory.create(NEFeatureExtractor.class)
+                //TODO wordnet feature cannot be included in a standalone component since absolute path to wordnet files should be inserted to the wordnet properties file
+//                TcFeatureFactory.create(WordnetFeatures.class, WordnetFeatures.PARAM_RESOURCE_NAME,
+//                        WordnetFeatures.WORDNET_FIELD, WordnetFeatures.PARAM_RESOURCE_LANGUAGE, "en",
+//                        WordnetFeatures.PARAM_NGRAM_MIN_N, 1,
+//                        WordnetFeatures.PARAM_NGRAM_MAX_N, 4,
+//                        WordnetFeatures.PARAM_NGRAM_USE_TOP_K, Integer.MAX_VALUE,
+//                        WordnetFeatures.PARAM_SYNONYM_FEATURE, true,
+//                        WordnetFeatures.PARAM_HYPERNYM_FEATURE, false),
+//                TcFeatureFactory.create(TheSozFeatures.class,
+//                        TheSozFeatures.PARAM_NGRAM_MIN_N, 1,
+//                        TheSozFeatures.PARAM_NGRAM_MAX_N, 3)
+                ));
     }
 
     @SuppressWarnings("unchecked")
@@ -130,13 +130,7 @@ public class TrainAndSavePipeline
         // We configure 3 different classifiers, which will be swept, each with a special
         // configuration.
         return Dimension.create(DIM_CLASSIFICATION_ARGS,
-                // "-C": complexity, "-K": kernel
-                asList(new String[] { SMO.class.getName(), "-C", "1.0", "-K",
-                        PolyKernel.class.getName() + " " + "-C -1 -E 2" }),
-                asList(new String[] { NaiveBayes.class.getName(), "-K" }),
-                // "W": base classifier
-                asList(new String[] { Bagging.class.getName(), "-I", "2", "-W", J48.class.getName(),
-                        "--", "-C", "0.5", "-M", "2" }));
+                asList(new String[] { NaiveBayes.class.getName(), "-K" }));
     }
 
     private static Dimension<Map<String, Object>> createReadersDimension()
@@ -146,18 +140,10 @@ public class TrainAndSavePipeline
         Map<String, Object> dimReaders = new HashMap<String, Object>();
 
         CollectionReaderDescription readerTrain = CollectionReaderFactory.createReaderDescription(
-                TextDatasetReader.class, TextDatasetReader.PARAM_SOURCE_LOCATION,
-                CORPUS_FILEPATH_TRAIN, TextDatasetReader.PARAM_LANGUAGE, LANGUAGE_CODE,
-                TextDatasetReader.PARAM_PATTERNS,
-                Arrays.asList(TextDatasetReader.INCLUDE_PREFIX + "**/*.txt"));
+                XmlCorpusAllDocsReader.class, XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION,
+                CORPUS_FILEPATH_TRAIN, XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         dimReaders.put(DIM_READER_TRAIN, readerTrain);
 
-        CollectionReaderDescription readerTest = CollectionReaderFactory.createReaderDescription(
-                TextDatasetReader.class, TextDatasetReader.PARAM_SOURCE_LOCATION,
-                COPRUS_FILEPATH_TEST, TextDatasetReader.PARAM_LANGUAGE, LANGUAGE_CODE,
-                TextDatasetReader.PARAM_PATTERNS,
-                Arrays.asList(TextDatasetReader.INCLUDE_PREFIX + "**/*.txt"));
-        dimReaders.put(DIM_READER_TEST, readerTest);
         return Dimension.createBundle("readers", dimReaders);
     }
 
