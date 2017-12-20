@@ -32,13 +32,8 @@ public class LoadAndApplyPipeline
     private static final String COPRUS_FILEPATH_TEST = "/home/local/UKP/kiaeeha/workspace/Datasets"
             + "/openminted/uc-ss/variable-detection/detection/Full_ALLDOCS.xml";
     private static final String LANGUAGE_CODE = "en";
-//    public static final File modelPath = new File("/home/local/UKP/kiaeeha/workspace/Datasets"
-//            + "/openminted/uc-ss/variable-detection/detection/model");
     public static final File PREDICTION_PATH = new File("target/prediction");
 
-    /**
-     * Starts the experiment.
-     */
     public static void main(String[] args) throws Exception
     {
 //        assertDkproHomeVariableIsSet();

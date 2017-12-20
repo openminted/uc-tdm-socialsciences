@@ -57,8 +57,7 @@ public class VariableMentionDetector
     extends JCasAnnotator_ImplBase
 {
     public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION;
-    @ConfigurationParameter(name = PARAM_MODEL_LOCATION, mandatory = false, defaultValue = "/home/local/UKP/kiaeeha/workspace/Datasets"
-            + "/openminted/uc-ss/variable-detection/detection/model")
+    @ConfigurationParameter(name = PARAM_MODEL_LOCATION, mandatory = false, defaultValue = "../models/variable-detection/")
     private String modelLocation;
 
     private AnalysisEngine taggerEngine = null;
