@@ -317,39 +317,21 @@ For calculating the precision and recall, the gold and predicted documents are c
 Each token slot with named entity annotation (either B or I) is used to count the number of true positive, false positive, and
 false negative instances.
 
-=== Variable mention detection
+=== Variable mention detection and dismbiguation
 With this module, you can perform variable mention detection on your data. This module can be used to detect whether
  a sentence from an  article contains a mention of a variable from one of the social sciences studies. The input documents 
  to this module contain one or more sentences from an article and the module output indicates whether a variable is 
- mentioned in the given sentences, and if so  the output also contains the id of the mentioned variable.
+ mentioned in the given sentences, and if so the output also contains the id of the mentioned variable.
  
-==== Train and Test pipeline
-This pipeline can be used for benchmarking various classifiers on a specific dataset. The pipeline requires the training
- and test document files be in the following directory structure
+==== Detection and disambiguation pipeline
+The class `eu.openminted.uc.socialsciences.variabledetection.DetectionDisambiguationPipeline` can be used to detect
+sentences containing variable mentions and link them to the corresponding variable mention. The pipeline can work with
+corpus in XML format. If the input documents are in a different format, a different reader should replace the default
+`XmlCorpusAllDocsReader` used in this pipeline. The variable mentions detected inside the text will be annotated with the
+UIMA type `VariableMention` which is defined in `eu.openminted.uc.socialsciences.annotation.VariableMention`.
 
-.Example of the dataset structure
-[source,text]
-----
- train/
- ├────variable-id-1/
- ├────────doc1.txt
- ├────────doc2.txt
- ├────────...
- ├────variable-id-2/
- ├────────doc1.txt
- ├────────...
- test/
- ├────variable-id-1/
- ├────────doc1.txt
- ├────────doc2.txt
- ├────────...
- ├────variable-id-2/
- ├────────doc1.txt
- └────────...
-----
-
-The pipeline uses several different lexical features along with features extracted using external resources such as
- WordNet. Read the following instructions to correctly configure these resources.
+The pipeline uses several different lexical features. If you want to enable the features that use external resources
+such as WordNet or TheSoz, then please read the following instructions to correctly configure these resources.
 
 ===== DKPRO_HOME environment variable
 Before continuing, please make sure that you have set up an environment variable `DKPRO_HOME` either system-wide or
@@ -385,3 +367,26 @@ Download TheSoz files from http://lod.gesis.org/download-thesoz.html[here]
 
 After the download has finished, unzip the package and copy the content files to
 `$DKPRO_HOME/LexSemResources/TheSoz/`.
+
+==== Detection pipeline
+The class `eu.openminted.uc.socialsciences.variabledetection.detection.LoadAndApplyPipeline` can be used to only detect
+sentences containing variable mentions. The pipeline can work with corpus in XML format. If the input documents are in
+a different format, a different reader should replace the default `XmlCorpusAllDocsReader` used in this pipeline.
+
+This pipeline internally uses the `VariableMentionDetector` component to sentences containing a variable mention. This
+component uses a DKPro-TC model to classify sentences. The default model for this component can be found under `/data/models/variable-detection`.
+If you wish to train your own sentence classifier model you can
+use the `eu.openminted.uc.socialsciences.variabledetection.detection.TrainAndSavePipeline` to do so.
+
+==== Disambiguation pipeline
+The class `eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationPipeline` can be used
+to link a sentence containing variable mention to its corresponding variable id. The pipeline can work with corpus in
+XML format. If the input documents are in a different format, a different reader should replace the default
+`XmlCorpusAllDocsReader` used in this pipeline.
+
+This pipeline internally uses the `VariableMentionDetector` component to sentences containing a variable mention. This
+component uses a DKPro-TC model to classify sentences. The default model for this component can be found under `/data/models/variable-detection`.
+This component also requires a file containing a complete list of variables which can be custom-defined using the
+configuration parameter `PARAM_VARIABLE_FILE_LOCATION`.
+If you wish to train your own sentence classifier model you can
+use the `eu.openminted.uc.socialsciences.variabledetection.detection.TrainAndSavePipeline` to do so.
