@@ -1,0 +1,4 @@
+org.dkpro.tc.features.ngram.LuceneNGram	ngramMinN=1	uniqueFeatureExtractorName=LuceneNGram8801365502936	ngramUseTopK=50	ngramMaxN=3
+eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram	ngramMinN=2	uniqueFeatureExtractorName=LuceneLemmaNGram8801365738531	ngramUseTopK=50	ngramMaxN=3
+org.dkpro.tc.features.ngram.LuceneSkipNGram	ngramMinN=2	uniqueFeatureExtractorName=LuceneSkipNGram8801365971564	ngramUseTopK=50	ngramMaxN=3
+org.dkpro.tc.features.entityrecognition.NEFeatureExtractor	uniqueFeatureExtractorName=NEFeatureExtractor8801366308006
