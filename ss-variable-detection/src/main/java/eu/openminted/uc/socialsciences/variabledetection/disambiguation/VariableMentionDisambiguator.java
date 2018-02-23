@@ -27,11 +27,12 @@ public class VariableMentionDisambiguator
     extends JCasAnnotator_ImplBase
 {
     public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION;
-    @ConfigurationParameter(name = PARAM_MODEL_LOCATION, mandatory = false, defaultValue = "../models/variable-disambiguation/variable-disambiguation-model.ser")
+    @ConfigurationParameter(name = PARAM_MODEL_LOCATION, 
+            defaultValue = "../models/variable-disambiguation/variable-disambiguation-model.ser")
     private String modelLocation;
 
     public static final String PARAM_VARIABLE_FILE_LOCATION = "variableFileLocation";
-    @ConfigurationParameter(name = PARAM_VARIABLE_FILE_LOCATION, mandatory = false, defaultValue = "/home/local/UKP/kiaeeha/workspace/Datasets/openminted/uc-ss/variable-detection/Variables_english_NoIntend.xml")
+    @ConfigurationParameter(name = PARAM_VARIABLE_FILE_LOCATION)
     private String variableFilePath;
 
     private LinearRegressionSimilarityMeasure classifier;
