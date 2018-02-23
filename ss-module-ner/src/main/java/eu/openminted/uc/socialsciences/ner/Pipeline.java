@@ -18,7 +18,6 @@ import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordNamedEntityRecognizer;
-import de.tudarmstadt.ukp.dkpro.core.testing.validation.CasValidatorComponent;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 
 public class Pipeline
@@ -55,10 +54,12 @@ public class Pipeline
 	}
 
 	private void assertFields() {
-		if(input == null)
-			throw new IllegalArgumentException("input can not be empty!");
-		if(output == null)
-			throw new IllegalArgumentException("output can not be empty!");
+		if(input == null) {
+            throw new IllegalArgumentException("input can not be empty!");
+        }
+		if(output == null) {
+            throw new IllegalArgumentException("output can not be empty!");
+        }
 	}
 
 	private void runInternal() {
@@ -73,9 +74,7 @@ public class Pipeline
                     createEngineDescription(OpenNlpSegmenter.class,
                             OpenNlpSegmenter.PARAM_WRITE_SENTENCE, true,
                             OpenNlpSegmenter.PARAM_WRITE_TOKEN, true,
-                            OpenNlpSegmenter.PARAM_STRICT_ZONING, true),
-                    createEngineDescription(CasValidatorComponent.class,
-                            CasValidatorComponent.PARAM_STRICT_CHECK, true));
+                            OpenNlpSegmenter.PARAM_STRICT_ZONING, true));
 
 			AnalysisEngineDescription ner = useStanfordModels ?
 					createEngineDescription(StanfordNamedEntityRecognizer.class)
