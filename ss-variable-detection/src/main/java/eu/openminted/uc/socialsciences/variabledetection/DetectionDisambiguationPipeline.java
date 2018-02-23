@@ -31,6 +31,9 @@ public class DetectionDisambiguationPipeline
 
     public static void main(String[] args) throws Exception
     {
+        // Route logging through log4j
+        System.setProperty("org.apache.uima.logger.class", "org.apache.uima.util.impl.Log4jLogger_impl");
+        
         DetectionDisambiguationPipeline experiment = new DetectionDisambiguationPipeline();
         experiment.run();
     }
