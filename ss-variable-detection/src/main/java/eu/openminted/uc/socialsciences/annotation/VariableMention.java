@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Thu Nov 30 11:52:53 CET 2017
- * XML source: /home/local/UKP/kiaeeha/git/uc-tdm-socialsciences/ss-variable-detection/target/jcasgen/typesystem.xml
+ * Updated by JCasGen Wed Feb 14 11:27:57 CET 2018
+ * XML source: /Users/bluefire/git/uc-tdm-socialsciences/ss-variable-detection/src/main/resources/desc/type/variable-type.xml
  * @generated */
 public class VariableMention extends Annotation {
   /** @generated
@@ -206,6 +206,28 @@ public class VariableMention extends Annotation {
     if (VariableMention_Type.featOkTst && ((VariableMention_Type)jcasType).casFeat_answers == null)
       jcasType.jcas.throwFeatMissing("answers", "eu.openminted.uc.socialsciences.annotation.VariableMention");
     jcasType.ll_cas.ll_setStringValue(addr, ((VariableMention_Type)jcasType).casFeatCode_answers, v);}    
+   
+    
+  //*--------------*
+  //* Feature: score
+
+  /** getter for score - gets 
+   * @generated
+   * @return value of the feature 
+   */
+  public double getScore() {
+    if (VariableMention_Type.featOkTst && ((VariableMention_Type)jcasType).casFeat_score == null)
+      jcasType.jcas.throwFeatMissing("score", "eu.openminted.uc.socialsciences.annotation.VariableMention");
+    return jcasType.ll_cas.ll_getDoubleValue(addr, ((VariableMention_Type)jcasType).casFeatCode_score);}
+    
+  /** setter for score - sets  
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setScore(double v) {
+    if (VariableMention_Type.featOkTst && ((VariableMention_Type)jcasType).casFeat_score == null)
+      jcasType.jcas.throwFeatMissing("score", "eu.openminted.uc.socialsciences.annotation.VariableMention");
+    jcasType.ll_cas.ll_setDoubleValue(addr, ((VariableMention_Type)jcasType).casFeatCode_score, v);}    
   }
 
     

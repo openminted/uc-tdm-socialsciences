@@ -11,7 +11,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Thu Nov 30 11:52:53 CET 2017
+ * Updated by JCasGen Wed Feb 14 11:27:57 CET 2018
  * @generated */
 public class VariableMention_Type extends Annotation_Type {
   /** @generated */
@@ -165,6 +165,30 @@ public class VariableMention_Type extends Annotation_Type {
     ll_cas.ll_setStringValue(addr, casFeatCode_answers, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_score;
+  /** @generated */
+  final int     casFeatCode_score;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public double getScore(int addr) {
+        if (featOkTst && casFeat_score == null)
+      jcas.throwFeatMissing("score", "eu.openminted.uc.socialsciences.annotation.VariableMention");
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setScore(int addr, double v) {
+        if (featOkTst && casFeat_score == null)
+      jcas.throwFeatMissing("score", "eu.openminted.uc.socialsciences.annotation.VariableMention");
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_score, v);}
+    
+  
 
 
 
@@ -200,6 +224,10 @@ public class VariableMention_Type extends Annotation_Type {
  
     casFeat_answers = jcas.getRequiredFeatureDE(casType, "answers", "uima.cas.String", featOkTst);
     casFeatCode_answers  = (null == casFeat_answers) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_answers).getCode();
+
+ 
+    casFeat_score = jcas.getRequiredFeatureDE(casType, "score", "uima.cas.Double", featOkTst);
+    casFeatCode_score  = (null == casFeat_score) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_score).getCode();
 
   }
 }

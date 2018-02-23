@@ -64,14 +64,16 @@ public class VariableMentionDisambiguator
             }
             if (mention.getCorrect().equals("Yes")) {
                 String sentence = mention.getCoveredText();
-                String matchId;
+                Match match;
                 try {
-                    matchId = findMatchingVariable(sentence, variableMap);
+                    match = findMatchingVariable(sentence, variableMap);
                 }
                 catch (Exception e) {
+                    getLogger().error("Disambiguation failed: " + e.getMessage());
                     throw new AnalysisEngineProcessException(e);
                 }
-                mention.setVariableId(matchId);
+                mention.setVariableId(match.id);
+                mention.setScore(match.score);
                 found = true;
             }
         }
@@ -87,7 +89,7 @@ public class VariableMentionDisambiguator
         return classifier;
     }
 
-    private String findMatchingVariable(String aSentence, Map<String, String> aVariableMap)
+    private Match findMatchingVariable(String aSentence, Map<String, String> aVariableMap)
         throws Exception
     {
         String result = "";
@@ -105,6 +107,31 @@ public class VariableMentionDisambiguator
             }
         }
 
-        return result;
+        return new Match(result, similarity);
+    }
+    
+    private static class Match
+    {
+        final String id;
+        final double score;
+        
+        public Match(String aId, double aScore)
+        {
+            super();
+            id = aId;
+            score = aScore;
+        }
+
+        @Override
+        public String toString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.append("Match [id=");
+            builder.append(id);
+            builder.append(", score=");
+            builder.append(score);
+            builder.append("]");
+            return builder.toString();
+        }
     }
 }
