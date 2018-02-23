@@ -83,7 +83,9 @@ public class VariableFileReader
                         sb.append(questionNode.getTextContent().trim()).append(" ");
                         
                         Node subquestionNode = (Node) xpath.compile("./v_subquestion").evaluate(variableNode, XPathConstants.NODE);
-                        sb.append(subquestionNode.getTextContent().trim()).append(" ");
+                        if (subquestionNode != null) {
+                            sb.append(subquestionNode.getTextContent().trim()).append(" ");
+                        }
                         
                         NodeList answerNodes = (NodeList) xpath.compile("./v_answer").evaluate(variableNode, XPathConstants.NODESET);
                         Node answerNode = answerNodes.item(0);
