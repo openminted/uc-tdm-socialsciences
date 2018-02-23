@@ -7,10 +7,6 @@
 	</parent>
 	<artifactId>ss-module-ner</artifactId>
 
-	<properties>
-		<dkpro.statistics.version>2.1.0</dkpro.statistics.version>
-	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -68,6 +64,7 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 		</dependency>
+    
 		<!-- TEST scope -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -88,7 +85,6 @@
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
-			<version>${dkpro.core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
@@ -97,24 +93,16 @@
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.bincas-asl</artifactId>
-			<version>${dkpro.core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
 			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.conll-asl</artifactId>
-			<version>${dkpro.core.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.dkpro.statistics</groupId>
 			<artifactId>dkpro-statistics-agreement</artifactId>
 			<version>${dkpro.statistics.version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/edu.stanford.nlp/stanford-corenlp -->
-		<dependency>
-			<groupId>edu.stanford.nlp</groupId>
-			<artifactId>stanford-corenlp</artifactId>
-			<version>3.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>args4j</groupId>

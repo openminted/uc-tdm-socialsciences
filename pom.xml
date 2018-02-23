@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-	<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<name>Social sciences literature Text Mining software collection</name>
-	<description>This software package contains components for text mining in scientific publications.</description>
-	<url>https://github.com/openminted/uc-tdm-socialsciences</url>
-	<organization>
-		<name>OpenMinTeD</name>
-		<url>http://openminted.eu/</url>
-	</organization>
-	<inceptionYear>2016</inceptionYear>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+  <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Social sciences literature Text Mining software collection</name>
+  <description>This software package contains components for text mining in scientific publications.</description>
+  <url>https://github.com/openminted/uc-tdm-socialsciences</url>
+  <organization>
+    <name>OpenMinTeD</name>
+    <url>http://openminted.eu/</url>
+  </organization>
+  <inceptionYear>2016</inceptionYear>
 
-	<modules>
-		<module>ss-tools-experiments</module>
-		<module>ss-kb-preparation</module>
-		<module>ss-io-pdf</module>
-		<module>ss-module-ner</module>
-		<module>ss-doc</module>
-		<module>ss-common</module>
+  <modules>
+    <module>ss-tools-experiments</module>
+    <module>ss-kb-preparation</module>
+    <module>ss-io-pdf</module>
+    <module>ss-module-ner</module>
+    <module>ss-doc</module>
+    <module>ss-common</module>
     <module>ss-variable-detection</module>
   </modules>
 
-	<repositories>
-		<!-- For UIMA/uimaFIT SNAPSHOT -->
-		<repository>
-			<id>apache.snapshots</id>
-			<name>Apache Snapshot Repository</name>
-			<url>http://repository.apache.org/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<!-- Required for DKPro-LSR https://github.com/dkpro/dkpro-lsr -->
-		<repository>
+  <repositories>
+    <!-- Required for DKPro-LSR https://github.com/dkpro/dkpro-lsr -->
+    <repository>
       <id>ukp-oss-releases</id>
       <url>https://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-ukp-releases-local</url>
       <releases>
@@ -48,42 +37,42 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-		<!-- For SNAPSHOTs from the DKPro family -->
-		<repository>
-			<id>ukp-oss-snapshots</id>
-			<url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<!-- UKP public model releases -->
-		<repository>
-			<id>ukp-oss-model-releases</id>
-			<url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-model-releases-local</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
+    <!-- For SNAPSHOTs from the DKPro family -->
+    <repository>
+      <id>ukp-oss-snapshots</id>
+      <url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <!-- UKP public model releases -->
+    <repository>
+      <id>ukp-oss-model-releases</id>
+      <url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-model-releases-local</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
 
-		<!-- ICM repository required for CERMINE library -->
-		<repository>
-			<id>icm</id>
-			<name>ICM repository</name>
-			<url>http://maven.icm.edu.pl/artifactory/repo</url>
-			<releases>
-				<enabled>true</enabled>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<!-- OpenMinTeD repository -->
-		<repository>
-		  <id>omtd-releases</id>
+    <!-- ICM repository required for CERMINE library -->
+    <repository>
+      <id>icm</id>
+      <name>ICM repository</name>
+      <url>http://maven.icm.edu.pl/artifactory/repo</url>
+      <releases>
+        <enabled>true</enabled>
+        <checksumPolicy>warn</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <!-- OpenMinTeD repository -->
+    <repository>
+      <id>omtd-releases</id>
       <name>OpenMinTeD releases repository</name>
       <url>https://repo.openminted.eu/content/repositories/releases</url>
       <releases>
@@ -93,8 +82,8 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-		</repository>
-		<repository>
+    </repository>
+    <repository>
       <id>omtd-snapshot</id>
       <name>OpenMinTeD snapshots repository</name>
       <url>https://repo.openminted.eu/content/repositories/snapshots</url>
@@ -105,23 +94,11 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-	</repositories>
+  </repositories>
 
-	<pluginRepositories>
-		<!-- For UIMA/uimaFIT SNAPSHOT maven plugin -->
-		<pluginRepository>
-			<id>apache.snapshots</id>
-			<name>Apache Snapshot Repository</name>
-			<url>http://repository.apache.org/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-		  <id>omtd-snapshots</id>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>omtd-snapshots</id>
       <name>OpenMinTeD snapshots repository</name>
       <url>https://repo.openminted.eu/content/repositories/snapshots</url>
       <releases>
@@ -130,226 +107,202 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-		</pluginRepository>
-	</pluginRepositories>
+    </pluginRepository>
+  </pluginRepositories>
 
-	<mailingLists>
-		<mailingList>
-			<name>SS TDM Software Collection developers mailing list</name>
-			<archive>https://groups.google.com/forum/#!forum/uc-tdm-socialsciences-developers</archive>
-			<post>uc-tdm-socialsciences-developers@googlegroups.com</post>
-			<subscribe>uc-tdm-socialsciences-developers+subscribe@googlegroups.com</subscribe>
-			<unsubscribe>uc-tdm-socialsciences-developers+unsubscribe@googlegroups.com</unsubscribe>
-		</mailingList>
-	</mailingLists>
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>https://builds.openminted.eu/</url>
-	</ciManagement>
-	<issueManagement>
-		<system>GitHub Issues</system>
-		<url>https://github.com/openminted/uc-tdm-socialsciences/issues</url>
-	</issueManagement>
-	<scm>
-		<connection>scm:git:git://github.com/openminted/uc-tdm-socialsciences</connection>
-		<developerConnection>scm:git:git@github.com:openminted/uc-tdm-socialsciences.git</developerConnection>
-		<url>https://github.com/openminted/uc-tdm-socialsciences</url>
-	  <tag>HEAD</tag>
+  <mailingLists>
+    <mailingList>
+      <name>SS TDM Software Collection developers mailing list</name>
+      <archive>https://groups.google.com/forum/#!forum/uc-tdm-socialsciences-developers</archive>
+      <post>uc-tdm-socialsciences-developers@googlegroups.com</post>
+      <subscribe>uc-tdm-socialsciences-developers+subscribe@googlegroups.com</subscribe>
+      <unsubscribe>uc-tdm-socialsciences-developers+unsubscribe@googlegroups.com</unsubscribe>
+    </mailingList>
+  </mailingLists>
+  <ciManagement>
+    <system>Jenkins</system>
+    <url>https://builds.openminted.eu/</url>
+  </ciManagement>
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/openminted/uc-tdm-socialsciences/issues</url>
+  </issueManagement>
+  <scm>
+    <connection>scm:git:git://github.com/openminted/uc-tdm-socialsciences</connection>
+    <developerConnection>scm:git:git@github.com:openminted/uc-tdm-socialsciences.git</developerConnection>
+    <url>https://github.com/openminted/uc-tdm-socialsciences</url>
+    <tag>HEAD</tag>
   </scm>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>omtd</id>
-			<url>https://repo.openminted.eu/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>omtd</id>
-			<url>https://repo.openminted.eu/content/repositories/releases</url>
-		</repository>
-	</distributionManagement>
-	<properties>
-		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-		<uima.version>2.10.0</uima.version>
-		<uimafit.version>2.3.0</uimafit.version>
-		<uimafit.plugin.version>2.3.0</uimafit.plugin.version>
-		<dkpro.core.version>1.9.0-SNAPSHOT</dkpro.core.version>
-		<log4j.version>2.7</log4j.version>
-		<dkpro.tc.version>0.9.0</dkpro.tc.version>
-		<dkpro.lab.version>0.14.0-SNAPSHOT</dkpro.lab.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<omtd.share.annotation.version>0.0.1-SNAPSHOT</omtd.share.annotation.version>
-	</properties>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>omtd</id>
+      <url>https://repo.openminted.eu/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>omtd</id>
+      <url>https://repo.openminted.eu/content/repositories/releases</url>
+    </repository>
+  </distributionManagement>
+  <properties>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+    <uima.version>2.10.2</uima.version>
+    <uimafit.version>2.4.0</uimafit.version>
+    <uimafit.plugin.version>2.4.0</uimafit.plugin.version>
+    <dkpro.core.version>1.9.0</dkpro.core.version>
+    <log4j.version>2.7</log4j.version>
+    <dkpro.tc.version>0.9.0</dkpro.tc.version>
+    <dkpro.lab.version>0.14.0</dkpro.lab.version>
+    <omtd.share.annotation.version>2.0.2.0-SNAPSHOT</omtd.share.annotation.version>
+    <dkpro.statistics.version>2.1.0</dkpro.statistics.version>
+    <lsr.version>0.8.1</lsr.version>
+    <jena.version>3.4.0</jena.version>
+    <dkpro.similarity.version>2.3.0-SNAPSHOT</dkpro.similarity.version>
+  </properties>
 
-	<dependencyManagement>
-		<dependencies>
-			<!-- submodules -->
-			<dependency>
-				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-				<artifactId>ss-kb-preparation</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-				<artifactId>ss-tools-experiments</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-				<artifactId>ss-io-pdf</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-				<artifactId>ss-module-ner</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-				<artifactId>ss-common</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-			 <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-			 <artifactId>ss-variable-detection</artifactId>
-			 <version>${project.version}</version>
-			</dependency>
-			<!-- end submodules -->
+  <dependencyManagement>
+    <dependencies>
+      <!-- submodules -->
+      <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>ss-kb-preparation</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>ss-tools-experiments</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>ss-io-pdf</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>ss-module-ner</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>ss-common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>ss-variable-detection</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- end submodules -->
 
-    <dependency>
-      <groupId>eu.openminted.share.annotations</groupId>
-      <artifactId>omtd-share-annotations-api</artifactId>
-      <version>${omtd.share.annotation.version}</version>
-    </dependency>
-			<!-- https://mvnrepository.com/artifact/args4j/args4j -->
-			<dependency>
-				<groupId>args4j</groupId>
-				<artifactId>args4j</artifactId>
-				<version>2.33</version>
-			</dependency>
+      <dependency>
+        <groupId>eu.openminted.share.annotations</groupId>
+        <artifactId>omtd-share-annotations-api</artifactId>
+        <version>${omtd.share.annotation.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/args4j/args4j -->
+      <dependency>
+        <groupId>args4j</groupId>
+        <artifactId>args4j</artifactId>
+        <version>2.33</version>
+      </dependency>
 
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-core</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-api</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<!-- DKPro Core -->
-			<dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+      
+      <!-- DKPro Core -->
+      <dependency>
         <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core</artifactId>
+        <artifactId>de.tudarmstadt.ukp.dkpro.core-asl</artifactId>
         <version>${dkpro.core.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+        <artifactId>de.tudarmstadt.ukp.dkpro.core-gpl</artifactId>
+        <version>${dkpro.core.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      
+      <!-- DKPro Similarity -->
+      <dependency>
+        <groupId>org.dkpro.similarity</groupId>
+        <artifactId>dkpro-similarity-asl</artifactId>
+        <version>${dkpro.similarity.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.dkpro.similarity</groupId>
+        <artifactId>dkpro-similarity-gpl</artifactId>
+        <version>${dkpro.similarity.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
       <!-- DKPro TC -->
       <dependency>
-				<groupId>org.dkpro.tc</groupId>
-				<artifactId>dkpro-tc</artifactId>
-				<version>${dkpro.tc.version}</version>
-				<type>pom</type>
+        <groupId>org.dkpro.tc</groupId>
+        <artifactId>dkpro-tc</artifactId>
+        <version>${dkpro.tc.version}</version>
+        <type>pom</type>
         <scope>import</scope>
-			</dependency>
-			<!-- DKPro Lab -->
-			<dependency>
+      </dependency>
+      
+      <!-- DKPro Lab -->
+      <dependency>
         <groupId>org.dkpro.lab</groupId>
         <artifactId>dkpro-lab</artifactId>
         <version>${dkpro.lab.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-			
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.api.io-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.api.lexmorph-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.api.metadata-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.api.parameter-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.api.resources-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.api.segmentation-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.io.xml-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<!-- END DKPro Core-->
-			<dependency>
-				<groupId>org.apache.uima</groupId>
-				<artifactId>uimaj-core</artifactId>
-				<version>${uima.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.uima</groupId>
-				<artifactId>uimafit-core</artifactId>
-				<version>${uimafit.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>2.6</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.io.xmi-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.textnormalizer-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-asl</artifactId>
-				<version>${dkpro.core.version}</version>
-			</dependency>
-			<!-- https://mvnrepository.com/artifact/junit/junit -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.12</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+      
+      <dependency>
+        <groupId>nz.ac.waikato.cms.weka</groupId>
+        <artifactId>weka-dev</artifactId>
+        <version>3.7.11</version>
+      </dependency>
 
-	<build>
-		<plugins>
-       <plugin>
+      <dependency>
+        <groupId>org.apache.uima</groupId>
+        <artifactId>uimaj-core</artifactId>
+        <version>${uima.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.uima</groupId>
+        <artifactId>uimafit-core</artifactId>
+        <version>${uimafit.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+        <version>2.6</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/junit/junit -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <version>3.0.0-M1</version>
@@ -364,147 +317,141 @@
                 <requireMavenVersion>
                   <version>3.0</version>
                 </requireMavenVersion>
-              </rules>    
+              </rules>
             </configuration>
           </execution>
         </executions>
       </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5.3</version>
-            </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
-				<configuration>
-					<notimestamp>true</notimestamp>
-					<groups>
-						<group>
-							<title>I/O Components</title>
-							<packages>eu.openminted.uc.socialsciences.io*</packages>
-						</group>
-						<group>
-							<title>Named Entity Recognition</title>
-							<packages>eu.openminted.uc.socialsciences.ner*</packages>
-						</group>
-					</groups>
-					<!--<sourceFileExcludes>
-						<exclude>**/*_Type.java</exclude>
-					</sourceFileExcludes>-->
-					<tags>
-						<tag>
-							<name>generated</name>
-							<placement>X</placement>
-						</tag>
-						<tag>
-							<name>ordered</name>
-							<placement>X</placement>
-						</tag>
-						<tag>
-							<name>modifiable</name>
-							<placement>X</placement>
-						</tag>
-					</tags>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.uima</groupId>
-				<artifactId>uimafit-maven-plugin</artifactId>
-				<version>${uimafit.plugin.version}</version>
-			</plugin>
-			<plugin>
-         <groupId>eu.openminted.share.annotations</groupId>
-         <artifactId>omtd-share-annotations-maven-plugin</artifactId>
-         <version>${omtd.share.annotation.version}</version>
-         <executions>
-            <execution>
-               <phase>process-classes</phase>
-               <goals>
-                  <goal>generate</goal>
-               </goals>
-            </execution>
-         </executions>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
       </plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
-					<executions>
-						<execution>
-							<id>default</id>
-							<phase>none</phase>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.3.2</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
-						<encoding>UTF-8</encoding>
-					</configuration>
-				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.uima
-										</groupId>
-										<artifactId>
-											uimafit-maven-plugin
-										</artifactId>
-										<versionRange>
-											[2.3.0-SNAPSHOT,)
-										</versionRange>
-										<goals>
-											<goal>generate</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute>
-											<runOnIncremental>false</runOnIncremental>
-										</execute>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.4</version>
+        <configuration>
+          <notimestamp>true</notimestamp>
+          <groups>
+            <group>
+              <title>I/O Components</title>
+              <packages>eu.openminted.uc.socialsciences.io*</packages>
+            </group>
+            <group>
+              <title>Named Entity Recognition</title>
+              <packages>eu.openminted.uc.socialsciences.ner*</packages>
+            </group>
+          </groups>
+          <!--<sourceFileExcludes>
+            <exclude>**/*_Type.java</exclude>
+            </sourceFileExcludes> -->
+          <tags>
+            <tag>
+              <name>generated</name>
+              <placement>X</placement>
+            </tag>
+            <tag>
+              <name>ordered</name>
+              <placement>X</placement>
+            </tag>
+            <tag>
+              <name>modifiable</name>
+              <placement>X</placement>
+            </tag>
+          </tags>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.uima</groupId>
+        <artifactId>uimafit-maven-plugin</artifactId>
+        <version>${uimafit.plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>eu.openminted.share.annotations</groupId>
+        <artifactId>omtd-share-annotations-maven-plugin</artifactId>
+        <version>${omtd.share.annotation.version}</version>
+        <executions>
+          <execution>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.4</version>
+          <executions>
+            <execution>
+              <id>default</id>
+              <phase>none</phase>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+        <!--This plugin's configuration is used to store Eclipse m2e settings
+          only. It has no influence on the Maven build itself. -->
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.uima</groupId>
+                    <artifactId>uimafit-maven-plugin</artifactId>
+                    <versionRange>[2.3.0-SNAPSHOT,)</versionRange>
+                    <goals>
+                      <goal>generate</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <execute>
+                      <runOnIncremental>false</runOnIncremental>
+                    </execute>
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>

@@ -1,144 +1,136 @@
 <?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>ss-variable-detection</artifactId>
-	<name>ss-variable-detection</name>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+    <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>ss-variable-detection</artifactId>
+  <name>ss-variable-detection</name>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<lsr.version>0.8.1</lsr.version>
-		<jena.version>3.4.0</jena.version>
-		<dkpro.similarity.version>2.3.0-SNAPSHOT</dkpro.similarity.version>
-	</properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+        <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource-asl</artifactId>
+        <version>${lsr.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+        <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.germanet-gpl</artifactId>
+        <version>${lsr.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource-asl</artifactId>
-				<version>${lsr.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.germanet-gpl</artifactId>
-				<version>${lsr.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+      <artifactId>ss-common</artifactId>
+    </dependency>
 
-	<dependencies>
-	 <dependency>
-	   <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-	   <artifactId>ss-common</artifactId>
-	 </dependency>
-	
-	<!-- OMTD-SHARE annotations -->
-		<dependency>
-			<groupId>eu.openminted.share.annotations</groupId>
-			<artifactId>omtd-share-annotations-api</artifactId>
-		</dependency>
-		<!-- DKPro Core -->
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.api.io-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
-		</dependency>
-		<dependency>
-		  <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-		  <artifactId>de.tudarmstadt.ukp.dkpro.core.stopwordremover-asl</artifactId>
-		</dependency>
-		<dependency>
+    <!-- OMTD-SHARE annotations -->
+    <dependency>
+      <groupId>eu.openminted.share.annotations</groupId>
+      <artifactId>omtd-share-annotations-api</artifactId>
+    </dependency>
+    <!-- DKPro Core -->
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.api.io-asl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.tokit-asl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-asl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.stopwordremover-asl</artifactId>
+    </dependency>
+    <dependency>
       <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
       <artifactId>de.tudarmstadt.ukp.dkpro.core.io.xmi-asl</artifactId>
     </dependency>
 
-		<dependency>
-			<groupId>org.dkpro.lab</groupId>
-			<artifactId>dkpro-lab-core</artifactId>
-			<!-- because of this issue https://github.com/dkpro/dkpro-lab/issues/102 
-				, should be removed after switching to the next version of dkpro-lab -->
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-asm</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+    <dependency>
+      <groupId>org.dkpro.lab</groupId>
+      <artifactId>dkpro-lab-core</artifactId>
+      <!-- because of this issue https://github.com/dkpro/dkpro-lab/issues/102
+        , should be removed after switching to the next version of dkpro-lab -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-asm</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-		<!-- DKPro TC -->
-		<dependency>
-			<groupId>org.dkpro.tc</groupId>
-			<artifactId>dkpro-tc-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.dkpro.tc</groupId>
-			<artifactId>dkpro-tc-features</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.dkpro.tc</groupId>
-			<artifactId>dkpro-tc-features-ngram</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.dkpro.tc</groupId>
-			<artifactId>dkpro-tc-ml</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.dkpro.tc</groupId>
-			<artifactId>dkpro-tc-ml-weka</artifactId>
-		</dependency>
+    <!-- DKPro TC -->
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-features</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-features-ngram</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-ml</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.tc</groupId>
+      <artifactId>dkpro-tc-ml-weka</artifactId>
+    </dependency>
 
-		<!-- DKPro LexSem -->
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.core-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.graph-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.wordnet-asl</artifactId>
-		</dependency>
+    <!-- DKPro LexSem -->
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.core-asl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.graph-asl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.wordnet-asl</artifactId>
+    </dependency>
 
-		<dependency>
-			<groupId>nz.ac.waikato.cms.weka</groupId>
-			<artifactId>weka-dev</artifactId>
-		</dependency>
+    <dependency>
+      <groupId>nz.ac.waikato.cms.weka</groupId>
+      <artifactId>weka-dev</artifactId>
+    </dependency>
 
-		<dependency>
-			<groupId>com.univocity</groupId>
-			<artifactId>univocity-parsers</artifactId>
-			<version>2.5.0</version>
-		</dependency>
+    <dependency>
+      <groupId>com.univocity</groupId>
+      <artifactId>univocity-parsers</artifactId>
+      <version>2.5.0</version>
+    </dependency>
 
-		<!-- Jena -->
-		<dependency>
-			<groupId>org.apache.jena</groupId>
-			<artifactId>jena-core</artifactId>
-			<version>${jena.version}</version>
-		</dependency>
-		<dependency>
+    <!-- Jena -->
+    <dependency>
+      <groupId>org.apache.jena</groupId>
+      <artifactId>jena-core</artifactId>
+      <version>${jena.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.jena</groupId>
       <artifactId>jena-arq</artifactId>
       <version>${jena.version}</version>
@@ -147,91 +139,68 @@
     <!-- DKPro Similarity -->
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
-      <artifactId>dkpro-similarity-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
-		<dependency>
-		  <groupId>org.dkpro.similarity</groupId>
-		  <artifactId>dkpro-similarity-ml-core-gpl</artifactId>
-		  <version>${dkpro.similarity.version}</version>
-		</dependency>
-		<dependency>
-		  <groupId>org.dkpro.similarity</groupId>
-		  <artifactId>dkpro-similarity-algorithms-lexical-asl</artifactId>
-		  <version>${dkpro.similarity.version}</version>
-		</dependency>
-		<dependency>
-      <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-algorithms-lsr-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
     </dependency>
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-algorithms-lexical-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
-    </dependency>    
+    </dependency>
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-uima-data-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
     </dependency>
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-uima-io-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
     </dependency>
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-algorithms-vsm-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
     </dependency>
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-uima-core-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.dkpro.similarity</groupId>
-      <artifactId>dkpro-similarity-ml-io-gpl</artifactId>
-      <version>${dkpro.similarity.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.dkpro.similarity</groupId>
-      <artifactId>dkpro-similarity-uima-core-gpl</artifactId>
-      <version>${dkpro.similarity.version}</version>
     </dependency>
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-algorithms-api-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
     </dependency>
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-uima-api-asl</artifactId>
-      <version>${dkpro.similarity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-ml-core-gpl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-ml-io-gpl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.dkpro.similarity</groupId>
+      <artifactId>dkpro-similarity-uima-core-gpl</artifactId>
     </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.uima</groupId>
-				<artifactId>uimafit-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.uima</groupId>
+        <artifactId>uimafit-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>2.4.1</version>
@@ -258,7 +227,7 @@
                 <!-- Set the main class of the executable JAR -->
                 <!-- <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <mainClass>eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer</mainClass>
-                </transformer> -->
+                  </transformer> -->
                 <!-- Merge the uimaFIT configuration files -->
                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                   <resource>META-INF/org.apache.uima.fit/fsindexes.txt</resource>
@@ -276,25 +245,25 @@
           </execution>
         </executions>
       </plugin>
-		</plugins>
-		<resources>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>desc/type/**/*</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<filtering>true</filtering>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>desc/type/**/*</include>
-				</includes>
-			</resource>
-		</resources>
-	</build>
-	<profiles>
+    </plugins>
+    <resources>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>desc/type/**/*</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>desc/type/**/*</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
+  <profiles>
     <profile>
       <id>run-jcasgen</id>
       <activation>
