@@ -1,271 +1,320 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>ss-module-ner</artifactId>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+    <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>ss-module-ner</artifactId>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-de-openminted_ss_model.crf</artifactId>
-				<version>20170125.1</version>
-			</dependency>
-			<dependency>
-				<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-				<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-en-openminted_ss_model.crf</artifactId>
-				<version>20170125.1</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+  <properties>
+    <docker.image.name>openminted/uc-ss-module-ner</docker.image.name>
+  </properties>
 
-	<dependencies>
-		<!-- Models -->
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-de-openminted_ss_model.crf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-en-openminted_ss_model.crf</artifactId>
-		</dependency>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+        <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-de-openminted_ss_model.crf</artifactId>
+        <version>20170125.1</version>
+      </dependency>
+      <dependency>
+        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+        <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-en-openminted_ss_model.crf</artifactId>
+        <version>20170125.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-		<!-- project modules -->
-		<dependency>
-			<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-			<artifactId>ss-common</artifactId>
-		</dependency>
-			<!--  -->
+  <dependencies>
+    <!-- Models -->
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-de-openminted_ss_model.crf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-ner-en-openminted_ss_model.crf</artifactId>
+    </dependency>
 
-		<!-- OMTD-SHARE annotations -->
-		<dependency>
-			<groupId>eu.openminted.share.annotations</groupId>
-			<artifactId>omtd-share-annotations-api</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/it.unimi.dsi/fastutil -->
-		<dependency>
-			<groupId>it.unimi.dsi</groupId>
-			<artifactId>fastutil</artifactId>
-			<version>7.0.13</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.uima</groupId>
-			<artifactId>uimaj-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.uima</groupId>
-			<artifactId>uimafit-core</artifactId>
-		</dependency>
+    <!-- project modules -->
+    <dependency>
+      <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+      <artifactId>ss-common</artifactId>
+    </dependency>
+    <!-- -->
 
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-		</dependency>
-    
-		<!-- TEST scope -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<!-- DKPRO -->
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.xmi-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.bincas-asl</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-			<artifactId>de.tudarmstadt.ukp.dkpro.core.io.conll-asl</artifactId>
-		</dependency>
+    <!-- OMTD-SHARE annotations -->
+    <dependency>
+      <groupId>eu.openminted.share.annotations</groupId>
+      <artifactId>omtd-share-annotations-api</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/it.unimi.dsi/fastutil -->
+    <dependency>
+      <groupId>it.unimi.dsi</groupId>
+      <artifactId>fastutil</artifactId>
+      <version>7.0.13</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimaj-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.uima</groupId>
+      <artifactId>uimafit-core</artifactId>
+    </dependency>
 
-		<dependency>
-			<groupId>org.dkpro.statistics</groupId>
-			<artifactId>dkpro-statistics-agreement</artifactId>
-			<version>${dkpro.statistics.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>args4j</groupId>
-			<artifactId>args4j</artifactId>
-		</dependency>
-	</dependencies>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+    </dependency>
 
-	<!-- -->
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.uima</groupId>
-				<artifactId>uimafit-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.4.1</version>
-				<executions>
-					<execution>
-						<id>ss-ner</id>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<filters>
-								<!-- exclude manifest signature files -->
-								<filter>
-									<artifact>*:*</artifact>
-									<excludes>
-										<exclude>META-INF/*.SF</exclude>
-										<exclude>META-INF/*.DSA</exclude>
-										<exclude>META-INF/*.RSA</exclude>
-									</excludes>
-								</filter>
-							</filters>
-							<transformers>
-								<!-- Set the main class of the executable JAR -->
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>eu.openminted.uc.socialsciences.ner.Pipeline</mainClass>
-								</transformer>
-								<!-- Merge the uimaFIT configuration files -->
-								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-									<resource>META-INF/org.apache.uima.fit/fsindexes.txt</resource>
-								</transformer>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-									<resource>META-INF/org.apache.uima.fit/types.txt</resource>
-								</transformer>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-									<resource>META-INF/org.apache.uima.fit/typepriorities.txt</resource>
-								</transformer>
-							</transformers>
-							<!-- Prevent huge shaded artifacts from being deployed to Artifactory -->
-							<outputFile>${project.build.directory}/${project.artifactId}-${project.version}-ss-ner-standalone.jar</outputFile>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.uima</groupId>
-					<artifactId>uimafit-maven-plugin</artifactId>
-					<version>${uimafit.plugin.version}</version>
-					<configuration>
-						<componentVendor>eu.openminted.uc-tdm-socialsciences</componentVendor>
-						<componentCopyright>
-							Copyright 2015-2016
-							OpenMinTeD Project
-							http://openminted.eu/
-						</componentCopyright>
-						<failOnMissingMetaData>false</failOnMissingMetaData>
-						<encoding>UTF-8</encoding>
-					</configuration>
-					<executions>
-						<execution>
-							<id>default</id>
-							<phase>process-classes</phase>
-							<goals>
-								<goal>enhance</goal>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<resources>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>desc/type/**/*</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<filtering>true</filtering>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>desc/type/**/*</include>
-				</includes>
-			</resource>
-		</resources>
-	</build>
-	<profiles>
-		<profile>
-			<id>run-jcasgen</id>
-			<activation>
-				<!--<file>
-					<exists>.activate-run-jcasgen</exists>
-				</file>-->
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<!--generate types dynamically -->
-						<groupId>org.apache.uima</groupId>
-						<artifactId>jcasgen-maven-plugin</artifactId>
-						<version>${uima.version}</version>
-						<configuration>
-							<limitToProject>true</limitToProject>
-							<typeSystemIncludes>
-								<include>src/main/resources/desc/type/**/*.xml</include>
-							</typeSystemIncludes>
-							<typeSystemExcludes>
-								<exclude>src/main/resources/desc/type/**/*_customized.xml</exclude>
-							</typeSystemExcludes>
-						</configuration>
-						<executions>
-							<execution>
-								<!--call it in the generate-source phase -->
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>generate</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>1.10</version>
-						<executions>
-							<execution>
-								<id>addToSourceFolder</id>
-								<goals>
-									<!--add the generated sources -->
-									<goal>add-source</goal>
-								</goals>
-								<phase>process-sources</phase>
-								<configuration>
-									<sources>
-										<!--default path to generated sources -->
-										<source>${project.build.directory}/generated-sources/jcasgen</source>
-									</sources>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+    <!-- TEST scope -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- DKPRO -->
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.io.xmi-asl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.io.text-asl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-asl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+      <artifactId>de.tudarmstadt.ukp.dkpro.core.io.bincas-asl</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.dkpro.statistics</groupId>
+      <artifactId>dkpro-statistics-agreement</artifactId>
+      <version>${dkpro.statistics.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>args4j</groupId>
+      <artifactId>args4j</artifactId>
+    </dependency>
+  </dependencies>
+
+  <!-- -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.uima</groupId>
+        <artifactId>uimafit-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.1</version>
+        <executions>
+          <execution>
+            <id>ss-ner</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <filters>
+                <!-- exclude manifest signature files -->
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+              <transformers>
+                <!-- Set the main class of the executable JAR -->
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>eu.openminted.uc.socialsciences.ner.Pipeline</mainClass>
+                </transformer>
+                <!-- Merge the uimaFIT configuration files -->
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/org.apache.uima.fit/fsindexes.txt</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/org.apache.uima.fit/types.txt</resource>
+                </transformer>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  <resource>META-INF/org.apache.uima.fit/typepriorities.txt</resource>
+                </transformer>
+              </transformers>
+              <!-- Prevent huge shaded artifacts from being deployed to Artifactory -->
+              <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-ss-ner-standalone.jar</outputFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>uimafit-maven-plugin</artifactId>
+          <version>${uimafit.plugin.version}</version>
+          <configuration>
+            <componentVendor>eu.openminted.uc-tdm-socialsciences</componentVendor>
+            <componentCopyright>
+              Copyright 2015-2016
+              OpenMinTeD Project
+              http://openminted.eu/
+            </componentCopyright>
+            <failOnMissingMetaData>false</failOnMissingMetaData>
+            <encoding>UTF-8</encoding>
+          </configuration>
+          <executions>
+            <execution>
+              <id>default</id>
+              <phase>process-classes</phase>
+              <goals>
+                <goal>enhance</goal>
+                <goal>generate</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <resources>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>desc/type/**/*</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>desc/type/**/*</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
+  <profiles>
+    <profile>
+      <id>run-jcasgen</id>
+      <activation>
+        <!--<file>
+          <exists>.activate-run-jcasgen</exists>
+          </file> -->
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <!--generate types dynamically -->
+            <groupId>org.apache.uima</groupId>
+            <artifactId>jcasgen-maven-plugin</artifactId>
+            <version>${uima.version}</version>
+            <configuration>
+              <limitToProject>true</limitToProject>
+              <typeSystemIncludes>
+                <include>src/main/resources/desc/type/**/*.xml</include>
+              </typeSystemIncludes>
+              <typeSystemExcludes>
+                <exclude>src/main/resources/desc/type/**/*_customized.xml</exclude>
+              </typeSystemExcludes>
+            </configuration>
+            <executions>
+              <execution>
+                <!--call it in the generate-source phase -->
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <version>1.10</version>
+            <executions>
+              <execution>
+                <id>addToSourceFolder</id>
+                <goals>
+                  <!--add the generated sources -->
+                  <goal>add-source</goal>
+                </goals>
+                <phase>process-sources</phase>
+                <configuration>
+                  <sources>
+                    <!--default path to generated sources -->
+                    <source>${project.build.directory}/generated-sources/jcasgen</source>
+                  </sources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>docker</id>
+      <activation>
+        <property>
+          <name>enable-docker</name>
+        </property>
+      </activation>
+      <properties>
+        <docker.jarfile>maven/ss-module-ner-${project.version}-ss-ner-standalone.jar</docker.jarfile>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <configuration>
+              <images>
+                <image>
+                  <name>${docker.image.name}</name>
+                  <build>
+                    <tags>
+                      <tag>latest</tag>
+                      <tag>${project.version}</tag>
+                    </tags>
+                    <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
+                    <filter>@</filter>
+                    <assembly>
+                      <descriptorRef>artifact</descriptorRef>
+                      <inline>
+                        <files>
+                          <file>
+                            <source>${project.build.directory}/ss-module-ner-${project.version}-ss-ner-standalone.jar</source>
+                          </file>
+                        </files>
+                      </inline>
+                    </assembly>
+                  </build>
+                </image>
+              </images>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

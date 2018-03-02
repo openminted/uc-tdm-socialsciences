@@ -1,0 +1,5 @@
+For a SNAPSHOT build:
+
+  mvn -Pdocker clean install docker:build
+  mvn -Pdocker clean install docker:push   (only if the build should be published)
+  
