@@ -27,6 +27,10 @@ import eu.openminted.uc.socialsciences.variabledetection.io.XmlCorpusReader;
 import eu.openminted.uc.socialsciences.variabledetection.util.Features2Arff;
 import weka.core.Instance;
 
+/**
+ * @deprecated use {@link VariableMentionDisambiguator} instead.
+ */
+@Deprecated
 public class VariableDisambiguationPipeline
 {
     // TODO DKPRO-HOME should be set
@@ -97,8 +101,10 @@ public class VariableDisambiguationPipeline
 
         for (String variableId : aVariableMap.keySet()) {
             featureGeneration.generateFeatures(aSentence, aVariableMap.get(variableId));
+
             String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP,
                     VariableDisambiguationConstants.Dataset.TEMP, null);
+            
             Instance instance = classifier.getInstance(new File(fileName));
             double tempSimilarity = classifier.getSimilarity(instance);
             if (tempSimilarity > similarity) {
