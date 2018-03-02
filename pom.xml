@@ -305,7 +305,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.0.0-M1</version>
         <executions>
           <execution>
             <id>enforce-maven</id>
@@ -324,11 +323,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <executions>
           <execution>
@@ -341,7 +335,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.4</version>
         <configuration>
           <notimestamp>true</notimestamp>
           <groups>
@@ -382,14 +375,8 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.uima</groupId>
-        <artifactId>uimafit-maven-plugin</artifactId>
-        <version>${uimafit.plugin.version}</version>
-      </plugin>
-      <plugin>
         <groupId>eu.openminted.share.annotations</groupId>
         <artifactId>omtd-share-annotations-maven-plugin</artifactId>
-        <version>${omtd.share.annotation.version}</version>
         <executions>
           <execution>
             <phase>process-classes</phase>
@@ -402,6 +389,36 @@
     </plugins>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.0.0-M1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.4</version>
+        </plugin>
+        <plugin>
+          <groupId>eu.openminted.share.annotations</groupId>
+          <artifactId>omtd-share-annotations-maven-plugin</artifactId>
+          <version>${omtd.share.annotation.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.uima</groupId>
+          <artifactId>uimafit-maven-plugin</artifactId>
+          <version>${uimafit.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.3</version>
+        </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>0.22.1</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
