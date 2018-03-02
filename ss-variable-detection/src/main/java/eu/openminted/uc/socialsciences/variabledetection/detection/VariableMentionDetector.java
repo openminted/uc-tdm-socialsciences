@@ -18,15 +18,12 @@
 package eu.openminted.uc.socialsciences.variabledetection.detection;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
-import org.apache.uima.cas.Type;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.descriptor.ResourceMetaData;
@@ -38,15 +35,8 @@ import org.dkpro.tc.api.type.TextClassificationOutcome;
 import org.dkpro.tc.api.type.TextClassificationTarget;
 import org.dkpro.tc.ml.uima.TcAnnotator;
 
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.pos.POSUtils;
-import de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
-import de.tudarmstadt.ukp.dkpro.core.api.resources.MappingProvider;
-import de.tudarmstadt.ukp.dkpro.core.api.resources.MappingProviderFactory;
-import de.tudarmstadt.ukp.dkpro.core.api.resources.ModelProviderBase;
-import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import eu.openminted.uc.socialsciences.annotation.VariableMention;
 
 /**
@@ -85,6 +75,8 @@ public class VariableMentionDetector
 
     private void annotateSentence(JCas aJCas)
     {
+        getLogger().info("Detecting variables in [" + aJCas.getDocumentText() + "]");
+        
         List<TextClassificationOutcome> outcomes = getPredictions(aJCas);
 
         TextClassificationTarget target = JCasUtil.select(aJCas, TextClassificationTarget.class).iterator().next();
@@ -94,6 +86,9 @@ public class VariableMentionDetector
             variableMention.setCorrect(outcome.getOutcome());
             variableMention.addToIndexes();
             outcome.removeFromIndexes();
+            
+            getLogger().info("Variable candidate outcome in [" + target.getCoveredText() + "]: "
+                    + outcome.getOutcome());
         }
     }
 

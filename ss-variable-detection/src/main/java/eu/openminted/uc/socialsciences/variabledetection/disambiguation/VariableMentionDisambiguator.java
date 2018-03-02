@@ -64,6 +64,9 @@ public class VariableMentionDisambiguator
                 continue;
             }
             if (mention.getCorrect().equals("Yes")) {
+                getLogger().info(
+                        "Disambiguating variable candidate in [" + mention.getCoveredText() + "]");
+
                 String sentence = mention.getCoveredText();
                 Match match;
                 try {
@@ -75,6 +78,8 @@ public class VariableMentionDisambiguator
                 }
                 mention.setVariableId(match.id);
                 mention.setScore(match.score);
+                
+                getLogger().info("Disambiguating suggests [" + match + "]");
                 found = true;
             }
         }
@@ -100,8 +105,13 @@ public class VariableMentionDisambiguator
             featureGeneration.generateFeatures(aSentence, aVariableMap.get(variableId));
             String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP,
                     VariableDisambiguationConstants.Dataset.TEMP, null);
+            
             Instance instance = classifier.getInstance(new File(fileName));
+            
             double tempSimilarity = classifier.getSimilarity(instance);
+
+            getLogger().info(new Match(variableId, tempSimilarity));
+            
             if (tempSimilarity > similarity) {
                 similarity = tempSimilarity;
                 result = variableId;

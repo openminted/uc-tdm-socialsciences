@@ -172,6 +172,8 @@ public class XmlCorpusAllDocsReader
     public boolean hasNext()
             throws IOException, CollectionException
     {
+        getLogger().info("Processed: " + count);
+        getLogger().info("Left to process: " + targetOutcomePairList.size());
         return super.hasNext() || !targetOutcomePairList.isEmpty();
     }
     
