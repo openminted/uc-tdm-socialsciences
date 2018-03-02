@@ -11,7 +11,6 @@ import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.ml.uima.TcAnnotator;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNamedEntityRecognizer;
@@ -46,8 +45,9 @@ public class LoadAndApplyPipeline
         throws ResourceInitializationException, UIMAException, IOException
     {
         CollectionReaderDescription readerTest = CollectionReaderFactory.createReaderDescription(
-                XmlCorpusAllDocsReader.class, XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION,
-                COPRUS_FILEPATH_TEST, XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
+                XmlCorpusAllDocsReader.class, 
+                XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION, COPRUS_FILEPATH_TEST, 
+                XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         
         SimplePipeline.runPipeline(
                 readerTest,
@@ -57,7 +57,8 @@ public class LoadAndApplyPipeline
                 createEngineDescription(StanfordLemmatizer.class),
                 createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
-                        StopWordRemover.PARAM_MODEL_LOCATION, getClass().getResource("/stopwords/english.txt").toString()),
+                        StopWordRemover.PARAM_MODEL_LOCATION, 
+                        getClass().getResource("/stopwords/english.txt").toString()),
                 createEngineDescription(VariableMentionDetector.class),
                 createEngineDescription(XmiWriter.class,
                         XmiWriter.PARAM_TARGET_LOCATION, PREDICTION_PATH,

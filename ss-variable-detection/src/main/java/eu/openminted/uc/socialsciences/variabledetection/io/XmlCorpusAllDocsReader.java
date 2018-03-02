@@ -100,8 +100,6 @@ public class XmlCorpusAllDocsReader
         catch (CASRuntimeException | CASException e) {
             throw new CollectionException(e);
         }
-        
-        
     }
 
     private void process(InputStream aInputStream) throws IOException

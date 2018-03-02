@@ -80,13 +80,13 @@ public class VariableMentionDisambiguator
         }
     }
 
-    private LinearRegressionSimilarityMeasure loadClassifier(String aFilename)
+    private static LinearRegressionSimilarityMeasure loadClassifier(String aFilename)
         throws FileNotFoundException, IOException, ClassNotFoundException
     {
-        ObjectInputStream input = new ObjectInputStream(new FileInputStream(aFilename));
-        LinearRegressionSimilarityMeasure classifier = (LinearRegressionSimilarityMeasure) input
-                .readObject();
-        input.close();
+        LinearRegressionSimilarityMeasure classifier;
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(aFilename))) {
+            classifier = (LinearRegressionSimilarityMeasure) input.readObject();
+        }
         return classifier;
     }
 

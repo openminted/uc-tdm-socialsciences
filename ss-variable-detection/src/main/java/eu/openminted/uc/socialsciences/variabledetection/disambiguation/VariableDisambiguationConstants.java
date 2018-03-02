@@ -8,7 +8,11 @@ public class VariableDisambiguationConstants
     }
     public enum Dataset
     {
-        ALL, MSRpar, MSRvid, SMTeuroparl, TEMP
+        ALL,
+        MSRpar,
+        MSRvid, 
+        SMTeuroparl,
+        TEMP;
     }
     public static final String FEATURES_DIR = "target/features";
     public static final String MODELS_DIR = "target/models";

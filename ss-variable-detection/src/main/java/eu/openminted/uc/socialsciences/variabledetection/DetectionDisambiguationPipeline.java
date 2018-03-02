@@ -42,8 +42,9 @@ public class DetectionDisambiguationPipeline
         throws ResourceInitializationException, UIMAException, IOException
     {
         CollectionReaderDescription reader = CollectionReaderFactory.createReaderDescription(
-                XmlCorpusAllDocsReader.class, XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION,
-                COPRUS_FILEPATH_TEST, XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
+                XmlCorpusAllDocsReader.class, 
+                XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION, COPRUS_FILEPATH_TEST, 
+                XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         
         SimplePipeline.runPipeline(
                 reader,
