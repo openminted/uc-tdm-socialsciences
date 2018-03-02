@@ -42,7 +42,7 @@ import eu.openminted.uc.socialsciences.annotation.VariableMention;
 /**
  * Variable detection component
  */
-@ResourceMetaData(name="Variable mention tagger")
+@ResourceMetaData(name = "Variable mention tagger")
 public class VariableMentionDetector
     extends JCasAnnotator_ImplBase
 {
@@ -53,21 +53,20 @@ public class VariableMentionDetector
     private AnalysisEngine taggerEngine = null;
 
     @Override
-    public void initialize(final UimaContext context)
-        throws ResourceInitializationException
+    public void initialize(final UimaContext context) throws ResourceInitializationException
     {
         super.initialize(context);
 
-        taggerEngine = AnalysisEngineFactory.createEngine(TcAnnotator.class,
+        taggerEngine = AnalysisEngineFactory.createEngine(
+                TcAnnotator.class,
                 TcAnnotator.PARAM_TC_MODEL_LOCATION, new File(modelLocation),
                 TcAnnotator.PARAM_NAME_SEQUENCE_ANNOTATION, Sentence.class.getName(),
                 TcAnnotator.PARAM_NAME_UNIT_ANNOTATION, Sentence.class.getName());
     }
 
     @Override
-    public void process(JCas aJCas)
-        throws AnalysisEngineProcessException
-    {   
+    public void process(JCas aJCas) throws AnalysisEngineProcessException
+    {
         taggerEngine.process(aJCas);
 
         annotateSentence(aJCas);
@@ -76,17 +75,19 @@ public class VariableMentionDetector
     private void annotateSentence(JCas aJCas)
     {
         getLogger().info("Detecting variables in [" + aJCas.getDocumentText() + "]");
-        
+
         List<TextClassificationOutcome> outcomes = getPredictions(aJCas);
 
-        TextClassificationTarget target = JCasUtil.select(aJCas, TextClassificationTarget.class).iterator().next();
+        TextClassificationTarget target = JCasUtil.select(aJCas, TextClassificationTarget.class)
+                .iterator().next();
         target.removeFromIndexes();
         for (TextClassificationOutcome outcome : outcomes) {
-            VariableMention variableMention = new VariableMention(aJCas, target.getBegin(), target.getEnd());
+            VariableMention variableMention = new VariableMention(aJCas, target.getBegin(),
+                    target.getEnd());
             variableMention.setCorrect(outcome.getOutcome());
             variableMention.addToIndexes();
             outcome.removeFromIndexes();
-            
+
             getLogger().info("Variable candidate outcome in [" + target.getCoveredText() + "]: "
                     + outcome.getOutcome());
         }
@@ -94,7 +95,7 @@ public class VariableMentionDetector
 
     private List<TextClassificationOutcome> getPredictions(JCas aJCas)
     {
-        return new ArrayList<TextClassificationOutcome>(JCasUtil.select(aJCas,
-                TextClassificationOutcome.class));
+        return new ArrayList<TextClassificationOutcome>(
+                JCasUtil.select(aJCas, TextClassificationOutcome.class));
     }
 }

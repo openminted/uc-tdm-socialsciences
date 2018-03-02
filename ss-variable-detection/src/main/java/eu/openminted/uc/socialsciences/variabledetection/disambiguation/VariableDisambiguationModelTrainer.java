@@ -35,9 +35,9 @@ public class VariableDisambiguationModelTrainer
     private void saveClassifier(LinearRegressionSimilarityMeasure classifier, String aFilename)
         throws Exception, IOException, FileNotFoundException
     {
-        ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(aFilename));
-        output.writeObject(classifier);
-        output.close();
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(aFilename))) {
+            output.writeObject(classifier);
+        }
     }
 
     private void generateFeaturesForTrainingData() throws Exception, IOException
