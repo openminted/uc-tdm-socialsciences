@@ -18,8 +18,10 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.cas.CAS;
 import org.apache.uima.collection.CollectionReader;
 import org.apache.uima.fit.factory.AggregateBuilder;
+import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -38,13 +40,13 @@ import org.dkpro.similarity.uima.io.CombinationReader.CombinationStrategy;
 import org.dkpro.similarity.uima.resource.SimpleTextSimilarityResource;
 
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Document;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
-import eu.openminted.uc.socialsciences.variabledetection.util.StopwordFilter;
+import weka.core.DenseInstance;
+import weka.core.Instance;
 
 /**
  * Pipeline for generating the text similarity features.
@@ -61,60 +63,62 @@ public class FeatureGeneration
         for (FeatureConfig config : featureConfigList) {
             System.out.println(config.getMeasureName());
 
-            File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
-                    + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/"
-                    + VariableDisambiguationConstants.Dataset.TEMP + "/" + config.getTargetPath()
-                    + "/" + config.getMeasureName() + ".txt");
-            File featureDirectory = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
-                    + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/"
-                    + VariableDisambiguationConstants.Dataset.TEMP + "/" + config.getTargetPath()
-                    + "/");
-            featureDirectory.mkdirs();
-
             // Tokenization
-            AnalysisEngineDescription seg = createEngineDescription(BreakIteratorSegmenter.class);
+            AnalysisEngineDescription seg = createEngineDescription(
+                    BreakIteratorSegmenter.class);
             AggregateBuilder builder = new AggregateBuilder();
-            builder.add(seg, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_1);
-            builder.add(seg, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_2);
+            builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+            builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
             AnalysisEngineDescription aggr_seg = builder.createAggregateDescription();
 
             // POS Tagging
-            AnalysisEngineDescription pos = createEngineDescription(OpenNlpPosTagger.class,
+            AnalysisEngineDescription pos = createEngineDescription(
+                    OpenNlpPosTagger.class,
                     OpenNlpPosTagger.PARAM_LANGUAGE, "en");
             builder = new AggregateBuilder();
-            builder.add(pos, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_1);
-            builder.add(pos, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_2);
+            builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+            builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
             AnalysisEngineDescription aggr_pos = builder.createAggregateDescription();
 
             // Lemmatization
-            AnalysisEngineDescription lem = createEngineDescription(StanfordLemmatizer.class);
+            AnalysisEngineDescription lem = createEngineDescription(
+                    StanfordLemmatizer.class);
             builder = new AggregateBuilder();
-            builder.add(lem, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_1);
-            builder.add(lem, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_2);
+            builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+            builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
             AnalysisEngineDescription aggr_lem = builder.createAggregateDescription();
 
             // Stopword Filter (if applicable)
-            AnalysisEngineDescription stopw = createEngineDescription(StopwordFilter.class,
-                    StopwordFilter.PARAM_STOPWORD_LIST,
-                    "classpath:/stopwords/stopwords_english_punctuation.txt",
-                    StopwordFilter.PARAM_ANNOTATION_TYPE_NAME, Lemma.class.getName(),
-                    StopwordFilter.PARAM_STRING_REPRESENTATION_METHOD_NAME, "getValue");
+//            AnalysisEngineDescription stopw = createEngineDescription(StopwordFilter.class,
+//                    StopwordFilter.PARAM_STOPWORD_LIST,
+//                    "classpath:/stopwords/stopwords_english_punctuation.txt",
+//                    StopwordFilter.PARAM_ANNOTATION_TYPE_NAME, Lemma.class.getName(),
+//                    StopwordFilter.PARAM_STRING_REPRESENTATION_METHOD_NAME, "getValue");
+            AnalysisEngineDescription stopw = createEngineDescription(
+                    StopWordRemover.class,
+                    StopWordRemover. PARAM_MODEL_LOCATION,
+                    "classpath:/stopwords/stopwords_english_punctuation.txt");
             builder = new AggregateBuilder();
-            builder.add(stopw, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_1);
-            builder.add(stopw, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_2);
+            builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+            builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
             AnalysisEngineDescription aggr_stopw = builder.createAggregateDescription();
 
             // Similarity Scorer
-            AnalysisEngineDescription scorer = createEngineDescription(SimilarityScorer.class,
+            AnalysisEngineDescription scorer = createEngineDescription(
+                    SimilarityScorer.class,
                     SimilarityScorer.PARAM_NAME_VIEW_1, CombinationReader.VIEW_1,
                     SimilarityScorer.PARAM_NAME_VIEW_2, CombinationReader.VIEW_2,
                     SimilarityScorer.PARAM_SEGMENT_FEATURE_PATH, config.getSegmentFeaturePath(),
                     SimilarityScorer.PARAM_TEXT_SIMILARITY_RESOURCE, config.getResource());
 
-            // Output Writer
-            AnalysisEngineDescription writer = createEngineDescription(SimilarityScoreWriter.class,
-                    SimilarityScoreWriter.PARAM_OUTPUT_FILE, outputFile.getAbsolutePath(),
-                    SimilarityScoreWriter.PARAM_OUTPUT_SCORES_ONLY, true);
+//            // Output Writer
+//          File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
+//          + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/"
+//          + VariableDisambiguationConstants.Dataset.TEMP + "/" + config.getTargetPath()
+//          + "/" + config.getMeasureName() + ".txt");
+//            AnalysisEngineDescription writer = createEngineDescription(SimilarityScoreWriter.class,
+//                    SimilarityScoreWriter.PARAM_OUTPUT_FILE, outputFile.getAbsolutePath(),
+//                    SimilarityScoreWriter.PARAM_OUTPUT_SCORES_ONLY, true);
 
             AnalysisEngine engine;
             if (config.filterStopwords()) {
@@ -130,13 +134,26 @@ public class FeatureGeneration
         }
     }
 
-    public void generateFeatures(String text1, String text2) throws Exception
+    private static JCas featureJCas;
+    
+    public synchronized Instance generateFeatures(String text1, String text2)
+        throws Exception
     {
+        Instance instance = new DenseInstance(featureConfigList.size() + 1);
+        // The last column is the gold value - we set this to 0 during classifciation.
+        instance.setValue(instance.numAttributes() - 1, 0.0);
+        
+        if (featureJCas == null) {
+            featureJCas = JCasFactory.createJCas();
+        }
+        
+        int i = 0;
         for (FeatureConfig config : featureConfigList) {
+            featureJCas.reset();
+            
             AnalysisEngine engine = engineMap.get(config);
-            JCas jcas = engine.newJCas();
-            JCas view1 = jcas.createView(CombinationReader.VIEW_1);
-            JCas view2 = jcas.createView(CombinationReader.VIEW_2);
+            JCas view1 = featureJCas.createView(CombinationReader.VIEW_1);
+            JCas view2 = featureJCas.createView(CombinationReader.VIEW_2);
 
             view1.setDocumentText(text1);
             view1.setDocumentLanguage("en");
@@ -148,14 +165,63 @@ public class FeatureGeneration
             metadata = DocumentMetaData.create(view2);
             metadata.setDocumentId("2");
 
-            engine.process(jcas);
+            engine.process(featureJCas);
 
-            TextSimilarityScore score = JCasUtil.selectSingle(jcas,
+            TextSimilarityScore score = JCasUtil.selectSingle(featureJCas,
                     ExperimentalTextSimilarityScore.class);
-            File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
+            
+            instance.setValue(i, score.getScore());
+            
+//            File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
+//                    + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/"
+//                    + VariableDisambiguationConstants.Dataset.TEMP + "/" + config.getTargetPath()
+//                    + "/" + config.getMeasureName() + ".txt");
+//
+//            try (FileWriter writer = new FileWriter(outputFile)) {
+//                writer.write(Double.toString(score.getScore()));
+//            }
+            
+            i++;
+        }
+        
+        return instance;
+    }
+
+    
+    public synchronized void generateFeaturesAsFiles(String text1, String text2) throws Exception
+    {
+        if (featureJCas == null) {
+            featureJCas = JCasFactory.createJCas();
+        }
+        
+        for (FeatureConfig config : featureConfigList) {
+            File featureDirectory = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
                     + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/"
                     + VariableDisambiguationConstants.Dataset.TEMP + "/" + config.getTargetPath()
-                    + "/" + config.getMeasureName() + ".txt");
+                    + "/");
+            featureDirectory.mkdirs();
+            
+            featureJCas.reset();
+            
+            AnalysisEngine engine = engineMap.get(config);
+            JCas view1 = featureJCas.createView(CombinationReader.VIEW_1);
+            JCas view2 = featureJCas.createView(CombinationReader.VIEW_2);
+
+            view1.setDocumentText(text1);
+            view1.setDocumentLanguage("en");
+            DocumentMetaData metadata = DocumentMetaData.create(view1);
+            metadata.setDocumentId("1");
+
+            view2.setDocumentText(text2);
+            view2.setDocumentLanguage("en");
+            metadata = DocumentMetaData.create(view2);
+            metadata.setDocumentId("2");
+
+            engine.process(featureJCas);
+
+            TextSimilarityScore score = JCasUtil.selectSingle(featureJCas,
+                    ExperimentalTextSimilarityScore.class);
+            File outputFile = new File(featureDirectory, config.getMeasureName() + ".txt");
 
             try (FileWriter writer = new FileWriter(outputFile)) {
                 writer.write(Double.toString(score.getScore()));
@@ -181,7 +247,8 @@ public class FeatureGeneration
                 System.out.println(" - skipped, feature already generated");
             }
             else {
-                CollectionReader reader = createReader(SemEvalCorpusReader.class,
+                CollectionReader reader = createReader(
+                        SemEvalCorpusReader.class,
                         SemEvalCorpusReader.PARAM_INPUT_FILE,
                         DATASET_DIR + "/" + mode.toString().toLowerCase() + "/STS.input."
                                 + dataset.toString() + ".txt",
@@ -193,45 +260,53 @@ public class FeatureGeneration
                 AnalysisEngineDescription seg = createEngineDescription(
                         BreakIteratorSegmenter.class);
                 AggregateBuilder builder = new AggregateBuilder();
-                builder.add(seg, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_1);
-                builder.add(seg, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_2);
+                builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+                builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
                 AnalysisEngine aggr_seg = builder.createAggregate();
 
                 // POS Tagging
-                AnalysisEngineDescription pos = createEngineDescription(OpenNlpPosTagger.class,
+                AnalysisEngineDescription pos = createEngineDescription(
+                        OpenNlpPosTagger.class,
                         OpenNlpPosTagger.PARAM_LANGUAGE, "en");
                 builder = new AggregateBuilder();
-                builder.add(pos, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_1);
-                builder.add(pos, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_2);
+                builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+                builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
                 AnalysisEngine aggr_pos = builder.createAggregate();
 
                 // Lemmatization
                 AnalysisEngineDescription lem = createEngineDescription(StanfordLemmatizer.class);
                 builder = new AggregateBuilder();
-                builder.add(lem, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_1);
-                builder.add(lem, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_2);
+                builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+                builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
                 AnalysisEngine aggr_lem = builder.createAggregate();
 
                 // Stopword Filter (if applicable)
-                AnalysisEngineDescription stopw = createEngineDescription(StopwordFilter.class,
-                        StopwordFilter.PARAM_STOPWORD_LIST,
-                        "classpath:/stopwords/stopwords_english_punctuation.txt",
-                        StopwordFilter.PARAM_ANNOTATION_TYPE_NAME, Lemma.class.getName(),
-                        StopwordFilter.PARAM_STRING_REPRESENTATION_METHOD_NAME, "getValue");
+//                AnalysisEngineDescription stopw = createEngineDescription(
+//                        StopwordFilter.class,
+//                        StopwordFilter.PARAM_STOPWORD_LIST,
+//                        "classpath:/stopwords/stopwords_english_punctuation.txt",
+//                        StopwordFilter.PARAM_ANNOTATION_TYPE_NAME, Lemma.class.getName(),
+//                        StopwordFilter.PARAM_STRING_REPRESENTATION_METHOD_NAME, "getValue");
+                AnalysisEngineDescription stopw = createEngineDescription(
+                        StopWordRemover.class,
+                        StopWordRemover. PARAM_MODEL_LOCATION,
+                        "classpath:/stopwords/stopwords_english_punctuation.txt");
                 builder = new AggregateBuilder();
-                builder.add(stopw, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_1);
-                builder.add(stopw, CombinationReader.INITIAL_VIEW, CombinationReader.VIEW_2);
+                builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+                builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
                 AnalysisEngine aggr_stopw = builder.createAggregate();
 
                 // Similarity Scorer
-                AnalysisEngine scorer = createEngine(SimilarityScorer.class,
+                AnalysisEngine scorer = createEngine(
+                        SimilarityScorer.class,
                         SimilarityScorer.PARAM_NAME_VIEW_1, CombinationReader.VIEW_1,
                         SimilarityScorer.PARAM_NAME_VIEW_2, CombinationReader.VIEW_2,
                         SimilarityScorer.PARAM_SEGMENT_FEATURE_PATH, config.getSegmentFeaturePath(),
                         SimilarityScorer.PARAM_TEXT_SIMILARITY_RESOURCE, config.getResource());
 
                 // Output Writer
-                AnalysisEngine writer = createEngine(SimilarityScoreWriter.class,
+                AnalysisEngine writer = createEngine(
+                        SimilarityScoreWriter.class,
                         SimilarityScoreWriter.PARAM_OUTPUT_FILE, outputFile.getAbsolutePath(),
                         SimilarityScoreWriter.PARAM_OUTPUT_SCORES_ONLY, true);
 

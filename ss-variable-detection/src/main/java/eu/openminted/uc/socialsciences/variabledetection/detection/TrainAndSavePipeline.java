@@ -131,6 +131,7 @@ public class TrainAndSavePipeline
 
         CollectionReaderDescription readerTrain = CollectionReaderFactory.createReaderDescription(
                 XmlCorpusAllDocsReader.class, 
+                XmlCorpusAllDocsReader.PARAM_INCLUDE_TARGET_AND_OUTCOME, true,
                 XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION, CORPUS_FILEPATH_TRAIN, 
                 XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         dimReaders.put(DIM_READER_TRAIN, readerTrain);

@@ -100,7 +100,7 @@ public class VariableDisambiguationPipeline
         double similarity = 0;
 
         for (String variableId : aVariableMap.keySet()) {
-            featureGeneration.generateFeatures(aSentence, aVariableMap.get(variableId));
+            featureGeneration.generateFeaturesAsFiles(aSentence, aVariableMap.get(variableId));
 
             String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP,
                     VariableDisambiguationConstants.Dataset.TEMP, null);
