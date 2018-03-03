@@ -18,12 +18,11 @@
  */
 package eu.openminted.uc.socialsciences.variabledetection.io;
 
-import static org.apache.commons.io.IOUtils.closeQuietly;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Objects;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,14 +32,12 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.uima.cas.CAS;
-import org.apache.uima.cas.CASException;
 import org.apache.uima.cas.CASRuntimeException;
 import org.apache.uima.collection.CollectionException;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.dkpro.tc.api.type.TextClassificationOutcome;
 import org.dkpro.tc.api.type.TextClassificationTarget;
-import org.dkpro.tc.core.io.SingleLabelReaderBase;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -48,138 +45,147 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import de.tudarmstadt.ukp.dkpro.core.api.io.JCasResourceCollectionReader_ImplBase;
+
 /**
  * Collection reader for Variable mention XML file containing sentences from several documents
  */
 public class XmlCorpusAllDocsReader
-    extends SingleLabelReaderBase
+    extends JCasResourceCollectionReader_ImplBase
 {
-    private List<TargetOutcomePair> targetOutcomePairList = new ArrayList<>();
-    private String language = "";
+    public static final String PARAM_INCLUDE_TARGET_AND_OUTCOME = "includeTargetAndOutcome";
+    @ConfigurationParameter(name = PARAM_INCLUDE_TARGET_AND_OUTCOME, defaultValue = "false")
+    private boolean includeTargetAndOutcome;
+    
+    private Deque<TargetOutcomePair> dataQueue = new LinkedList<>();
     private Resource res;
     private int count = 0;
     
     @Override
-    public void getNext(CAS aCAS) throws IOException, CollectionException
+    public void getNext(JCas aJCas) throws IOException, CollectionException
     {
-        if (targetOutcomePairList.isEmpty()) {
+        if (dataQueue.isEmpty()) {
             res = nextFile();
-            InputStream is = null;
-
-            try {
-                is = res.getInputStream();
-                process(is);
-            }
-            finally {
-                closeQuietly(is);
+            try (InputStream is = res.getInputStream()) {
+                fillDataQueue(is);
             }
             count = 0;
         }
 
-        initCas(aCAS, res, Integer.toString(count));
+        initCas(aJCas, res, Integer.toString(count));
         
         try {
-            TargetOutcomePair pair = targetOutcomePairList.get(0);
-            targetOutcomePairList.remove(0);
-            JCas jcas = aCAS.getJCas();
-            aCAS.getJCas().setDocumentText(pair.target);
-
-            aCAS.setDocumentLanguage(language);
-            // Set up language
-            if (getConfigParameterValue(PARAM_LANGUAGE) != null) {
-                aCAS.setDocumentLanguage((String) getConfigParameterValue(PARAM_LANGUAGE));
-            }
-            TextClassificationOutcome outcome = new TextClassificationOutcome(jcas);
-            outcome.setOutcome(pair.outcome);
-            outcome.setWeight(getTextClassificationOutcomeWeight(jcas));
-            outcome.addToIndexes();
+            TargetOutcomePair pair = dataQueue.pop();
             
-            new TextClassificationTarget(jcas, 0, jcas.getDocumentText().length()).addToIndexes();
+            aJCas.setDocumentText(pair.target);
+
+            if (includeTargetAndOutcome) {
+                // Add the gold label
+                TextClassificationOutcome outcome = new TextClassificationOutcome(aJCas);
+                outcome.setOutcome(pair.outcome);
+                outcome.setWeight(1.0);
+                outcome.addToIndexes();
+
+                // Mark the entire document as "this is what we want to classify"
+                new TextClassificationTarget(aJCas, 0, aJCas.getDocumentText().length())
+                        .addToIndexes();
+            }
+            
             ++count;
         }
-        catch (CASRuntimeException | CASException e) {
+        catch (CASRuntimeException e) {
             throw new CollectionException(e);
         }
     }
 
-    private void process(InputStream aInputStream) throws IOException
+    private void fillDataQueue(InputStream aInputStream) throws IOException
     {
-        DocumentBuilder xmlDocumentBuilder;
-        DocumentBuilderFactory xmlDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
-        Document document = null;
+        Document document;
         try {
-            xmlDocumentBuilder = xmlDocumentBuilderFactory.newDocumentBuilder();
+            DocumentBuilderFactory xmlDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder xmlDocumentBuilder = xmlDocumentBuilderFactory.newDocumentBuilder();
             document = xmlDocumentBuilder.parse(new InputSource(aInputStream));
         }
         catch (ParserConfigurationException | SAXException e) {
             throw new IOException(e);
         }
 
-        if (document != null) {
-            try {
-                XPath xpath = XPathFactory.newInstance().newXPath();
-                NodeList docNodes = (NodeList) xpath.compile("/docs//doc").evaluate(document,
-                        XPathConstants.NODESET);
-                Node docNode = docNodes.item(0);
-                while (docNode != null) {
-                    if (language.equals("")) {
-                        NamedNodeMap docAttributes = docNode.getAttributes();
-                        language = docAttributes.getNamedItem("lang").getTextContent();
-                    }
-                    
-                    NodeList sentenceNodes = (NodeList) xpath.compile(".//s").evaluate(docNode, XPathConstants.NODESET);
-                    Node sentenceNode = sentenceNodes.item(0);
-                    while (sentenceNode != null) {
-                        if (!sentenceNode.getTextContent().trim().isEmpty()) {
-                            NamedNodeMap sentenceAttributes = sentenceNode.getAttributes();
-                            String correct = sentenceAttributes.getNamedItem("correct").getTextContent();
-                            if (!correct.equals("NoSkip")) {
-                                if (!correct.equals("No")) {
-                                    correct = "Yes";
-                                }
-                                TargetOutcomePair pair = new TargetOutcomePair();
-                                pair.target = normalizeWhitespaces(sentenceNode.getTextContent());
-                                pair.outcome = correct;
-                                targetOutcomePairList.add(pair);
-                            }
-                        }
-                        
-                        sentenceNode = sentenceNode.getNextSibling();
-                    }
-                    
-                    docNode = docNode.getNextSibling();
+        try {
+            XPath xpath = XPathFactory.newInstance().newXPath();
+            NodeList docNodes = (NodeList) xpath.compile("/docs//doc").evaluate(document,
+                    XPathConstants.NODESET);
+
+            // Read all the sentences from all the documents and create target/outcome pairs
+            // for them.
+            Node docNode = docNodes.item(0);
+            while (docNode != null) {
+                // Check if the language configuration matches the data
+                NamedNodeMap docAttributes = docNode.getAttributes();
+                if (docAttributes != null && docAttributes.getNamedItem("lang") != null
+                        && !Objects.equals(getLanguage(),
+                                docAttributes.getNamedItem("lang").getTextContent())) {
+                    getLogger().warn("Component language [" + getLanguage()
+                            + "] does not match sentence language ["
+                            + docAttributes.getNamedItem("lang").getTextContent() + "].");
                 }
+                
+                NodeList sentenceNodes = (NodeList) xpath.compile(".//s").evaluate(docNode,
+                        XPathConstants.NODESET);
+                Node sentenceNode = sentenceNodes.item(0);
+                while (sentenceNode != null) {
+                    if (!sentenceNode.getTextContent().trim().isEmpty()) {
+                        NamedNodeMap sentenceAttributes = sentenceNode.getAttributes();
+                        String correct = sentenceAttributes.getNamedItem("correct")
+                                .getTextContent();
+                        if (!correct.equals("NoSkip")) {
+                            // Here we are only interested in whether there is a variable or
+                            // not. So if there is at least one gold match, then we consider
+                            // the sentence to contain a variable mention. Thus e.g.
+                            // correct="[290-Yes,295-No,251-No]" gets interpreted as "Yes".
+                            if (!correct.equals("No")) {
+                                correct = "Yes";
+                            }
+                            
+                            TargetOutcomePair pair = new TargetOutcomePair();
+                            pair.target = normalizeWhitespaces(sentenceNode.getTextContent());
+                            pair.outcome = correct;
+                            dataQueue.addLast(pair);
+                        }
+                    }
+                    
+                    sentenceNode = sentenceNode.getNextSibling();
+                }
+                
+                docNode = docNode.getNextSibling();
             }
-            catch (XPathExpressionException e) {
-                throw new IOException(
-                        "Problem with parsing the expression: " + e.getLocalizedMessage(), e);
-            }
+        }
+        catch (XPathExpressionException e) {
+            throw new IOException(
+                    "Problem with parsing the expression: " + e.getLocalizedMessage(), e);
         }
     }
     
     private String normalizeWhitespaces(String input)
     {
-        return input.replaceAll("\\s+", " ");
+        return input.replaceAll("\\s+", " ").trim();
     }
 
-    @Override
-    public String getTextClassificationOutcome(JCas jcas) throws CollectionException
-    {
-        return null;
-    }
-    
     @Override
     public boolean hasNext()
             throws IOException, CollectionException
     {
+        if (count >= 20) {
+            return false;
+        }
+        
         getLogger().info("Processed: " + count);
-        getLogger().info("Left to process: " + targetOutcomePairList.size());
-        return super.hasNext() || !targetOutcomePairList.isEmpty();
+        getLogger().info("Left to process: " + dataQueue.size());
+        return super.hasNext() || !dataQueue.isEmpty();
     }
     
-    private class TargetOutcomePair
+    private static class TargetOutcomePair
     {
-        public String target;
-        public String outcome;
+        String target;
+        String outcome;
     }
 }
