@@ -47,5 +47,17 @@
         </featureDescription>
       </features>
         </typeDescription>
-    </types>
+    <typeDescription>
+      <name>eu.openminted.uc.socialsciences.annotation.GoldVariableMention</name>
+      <description/>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>variableId</name>
+          <description/>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
 </typeSystemDescription>

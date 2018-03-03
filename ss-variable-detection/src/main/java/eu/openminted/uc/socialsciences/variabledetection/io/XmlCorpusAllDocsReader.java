@@ -20,8 +20,10 @@ package eu.openminted.uc.socialsciences.variabledetection.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -32,6 +34,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.CASRuntimeException;
 import org.apache.uima.collection.CollectionException;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
@@ -46,6 +49,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.io.JCasResourceCollectionReader_ImplBase;
+import eu.openminted.uc.socialsciences.annotation.GoldVariableMention;
 
 /**
  * Collection reader for Variable mention XML file containing sentences from several documents
@@ -56,8 +60,12 @@ public class XmlCorpusAllDocsReader
     public static final String PARAM_INCLUDE_TARGET_AND_OUTCOME = "includeTargetAndOutcome";
     @ConfigurationParameter(name = PARAM_INCLUDE_TARGET_AND_OUTCOME, defaultValue = "false")
     private boolean includeTargetAndOutcome;
-    
-    private Deque<TargetOutcomePair> dataQueue = new LinkedList<>();
+
+    public static final String PARAM_INCLUDE_GOLD = "includeGold";
+    @ConfigurationParameter(name = PARAM_INCLUDE_GOLD, defaultValue = "false")
+    private boolean includeGold;
+
+    private Deque<DataRecord> dataQueue = new LinkedList<>();
     private Resource res;
     private int count = 0;
     
@@ -75,14 +83,14 @@ public class XmlCorpusAllDocsReader
         initCas(aJCas, res, Integer.toString(count));
         
         try {
-            TargetOutcomePair pair = dataQueue.pop();
+            DataRecord data = dataQueue.pop();
             
-            aJCas.setDocumentText(pair.target);
+            aJCas.setDocumentText(data.text);
 
             if (includeTargetAndOutcome) {
                 // Add the gold label
                 TextClassificationOutcome outcome = new TextClassificationOutcome(aJCas);
-                outcome.setOutcome(pair.outcome);
+                outcome.setOutcome(data.variablePresent ? "Yes" : "No");
                 outcome.setWeight(1.0);
                 outcome.addToIndexes();
 
@@ -91,11 +99,35 @@ public class XmlCorpusAllDocsReader
                         .addToIndexes();
             }
             
+            if (includeGold && data.variablePresent) {
+                for (String varId : getMatchingVariableIds(data.originalLabel)) {
+                    GoldVariableMention gold = new GoldVariableMention(aJCas, 0,
+                            aJCas.getDocumentText().length());
+                    gold.setVariableId(varId);
+                    gold.addToIndexes();
+                }
+            }
+            
             ++count;
         }
         catch (CASRuntimeException e) {
             throw new CollectionException(e);
         }
+    }
+
+    private List<String> getMatchingVariableIds(String aOriginalLabel)
+    {
+        List<String> variableIDs = new ArrayList<>();
+        String labels = StringUtils.substring(aOriginalLabel, 1, -1);
+        String[] individualLabels = labels.split(",");
+        for (String l : individualLabels) {
+            String[] pair = l.split("-");
+            if ("Yes".equals(pair[1])) {
+                variableIDs.add(pair[0]);
+            }
+        }
+        
+        return variableIDs;
     }
 
     private void fillDataQueue(InputStream aInputStream) throws IOException
@@ -136,20 +168,20 @@ public class XmlCorpusAllDocsReader
                     if (!sentenceNode.getTextContent().trim().isEmpty()) {
                         NamedNodeMap sentenceAttributes = sentenceNode.getAttributes();
                         String correct = sentenceAttributes.getNamedItem("correct")
-                                .getTextContent();
+                                .getTextContent().trim();
+                        
                         if (!correct.equals("NoSkip")) {
                             // Here we are only interested in whether there is a variable or
                             // not. So if there is at least one gold match, then we consider
                             // the sentence to contain a variable mention. Thus e.g.
                             // correct="[290-Yes,295-No,251-No]" gets interpreted as "Yes".
-                            if (!correct.equals("No")) {
-                                correct = "Yes";
-                            }
+                            boolean variablePresent = !correct.equals("No");
                             
-                            TargetOutcomePair pair = new TargetOutcomePair();
-                            pair.target = normalizeWhitespaces(sentenceNode.getTextContent());
-                            pair.outcome = correct;
-                            dataQueue.addLast(pair);
+                            DataRecord data = new DataRecord();
+                            data.text = normalizeWhitespaces(sentenceNode.getTextContent());
+                            data.variablePresent = variablePresent;
+                            data.originalLabel = correct;
+                            dataQueue.addLast(data);
                         }
                     }
                     
@@ -174,18 +206,19 @@ public class XmlCorpusAllDocsReader
     public boolean hasNext()
             throws IOException, CollectionException
     {
-        if (count >= 20) {
-            return false;
-        }
+//        if (count >= 20) {
+//            return false;
+//        }
         
         getLogger().info("Processed: " + count);
         getLogger().info("Left to process: " + dataQueue.size());
         return super.hasNext() || !dataQueue.isEmpty();
     }
     
-    private static class TargetOutcomePair
+    private static class DataRecord
     {
-        String target;
-        String outcome;
+        String text;
+        boolean variablePresent;
+        String originalLabel;
     }
 }
