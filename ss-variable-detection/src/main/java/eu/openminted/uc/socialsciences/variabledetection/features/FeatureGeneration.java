@@ -3,7 +3,7 @@ package eu.openminted.uc.socialsciences.variabledetection.features;
 import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer.DATASET_DIR;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
-import static org.apache.uima.fit.factory.CollectionReaderFactory.createReader;
+import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.createExternalResourceDescription;
 
 import java.io.File;
@@ -19,12 +19,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
-import org.apache.uima.collection.CollectionReader;
+import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.AggregateBuilder;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.resource.ResourceInitializationException;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceComparator;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceNormComparator;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubstringComparator;
@@ -63,45 +64,7 @@ public class FeatureGeneration
         for (FeatureConfig config : featureConfigList) {
             System.out.println(config.getMeasureName());
 
-            // Tokenization
-            AnalysisEngineDescription seg = createEngineDescription(
-                    BreakIteratorSegmenter.class);
-            AggregateBuilder builder = new AggregateBuilder();
-            builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
-            builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
-            AnalysisEngineDescription aggr_seg = builder.createAggregateDescription();
-
-            // POS Tagging
-            AnalysisEngineDescription pos = createEngineDescription(
-                    OpenNlpPosTagger.class,
-                    OpenNlpPosTagger.PARAM_LANGUAGE, "en");
-            builder = new AggregateBuilder();
-            builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
-            builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
-            AnalysisEngineDescription aggr_pos = builder.createAggregateDescription();
-
-            // Lemmatization
-            AnalysisEngineDescription lem = createEngineDescription(
-                    StanfordLemmatizer.class);
-            builder = new AggregateBuilder();
-            builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
-            builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
-            AnalysisEngineDescription aggr_lem = builder.createAggregateDescription();
-
-            // Stopword Filter (if applicable)
-//            AnalysisEngineDescription stopw = createEngineDescription(StopwordFilter.class,
-//                    StopwordFilter.PARAM_STOPWORD_LIST,
-//                    "classpath:/stopwords/stopwords_english_punctuation.txt",
-//                    StopwordFilter.PARAM_ANNOTATION_TYPE_NAME, Lemma.class.getName(),
-//                    StopwordFilter.PARAM_STRING_REPRESENTATION_METHOD_NAME, "getValue");
-            AnalysisEngineDescription stopw = createEngineDescription(
-                    StopWordRemover.class,
-                    StopWordRemover. PARAM_MODEL_LOCATION,
-                    "classpath:/stopwords/stopwords_english_punctuation.txt");
-            builder = new AggregateBuilder();
-            builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
-            builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
-            AnalysisEngineDescription aggr_stopw = builder.createAggregateDescription();
+            AnalysisEngineDescription preprocessing = preprocessors(config.filterStopwords());
 
             // Similarity Scorer
             AnalysisEngineDescription scorer = createEngineDescription(
@@ -120,15 +83,7 @@ public class FeatureGeneration
 //                    SimilarityScoreWriter.PARAM_OUTPUT_FILE, outputFile.getAbsolutePath(),
 //                    SimilarityScoreWriter.PARAM_OUTPUT_SCORES_ONLY, true);
 
-            AnalysisEngine engine;
-            if (config.filterStopwords()) {
-                engine = createEngine(
-                        createEngineDescription(aggr_seg, aggr_pos, aggr_lem, aggr_stopw, scorer));
-            }
-            else {
-                engine = createEngine(
-                        createEngineDescription(aggr_seg, aggr_pos, aggr_lem, scorer));
-            }
+            AnalysisEngine engine = createEngine(createEngineDescription(preprocessing, scorer));
 
             engineMap.put(config, engine);
         }
@@ -143,6 +98,8 @@ public class FeatureGeneration
         // The last column is the gold value - we set this to 0 during classifciation.
         instance.setValue(instance.numAttributes() - 1, 0.0);
         
+        // We assume that we run single-threaded and re-use a single JCas all the time to avoid
+        // the significant initialization overhead for creating a new JCas.
         if (featureJCas == null) {
             featureJCas = JCasFactory.createJCas();
         }
@@ -229,6 +186,48 @@ public class FeatureGeneration
         }
     }
 
+    private static AnalysisEngineDescription preprocessors(boolean aFilterStopwords)
+        throws ResourceInitializationException
+    {
+        final AggregateBuilder builder = new AggregateBuilder();
+        
+        // Tokenization
+        AnalysisEngineDescription seg = createEngineDescription(
+                BreakIteratorSegmenter.class);
+        builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+        builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
+
+        // POS Tagging
+        AnalysisEngineDescription pos = createEngineDescription(
+                OpenNlpPosTagger.class,
+                OpenNlpPosTagger.PARAM_LANGUAGE, "en");
+        builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+        builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
+
+        // Lemmatization
+        AnalysisEngineDescription lem = createEngineDescription(StanfordLemmatizer.class);
+        builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+        builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
+
+        // Stopword Filter (if applicable)
+        if (aFilterStopwords) {
+//        AnalysisEngineDescription stopw = createEngineDescription(
+//                StopwordFilter.class,
+//                StopwordFilter.PARAM_STOPWORD_LIST,
+//                "classpath:/stopwords/stopwords_english_punctuation.txt",
+//                StopwordFilter.PARAM_ANNOTATION_TYPE_NAME, Lemma.class.getName(),
+//                StopwordFilter.PARAM_STRING_REPRESENTATION_METHOD_NAME, "getValue");
+            AnalysisEngineDescription stopw = createEngineDescription(
+                    StopWordRemover.class,
+                    StopWordRemover. PARAM_MODEL_LOCATION,
+                    "classpath:/stopwords/stopwords_english_punctuation.txt");
+            builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
+            builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
+        }
+        
+        return builder.createAggregateDescription();
+    }
+    
     public static void generateFeatures(VariableDisambiguationConstants.Dataset dataset,
             VariableDisambiguationConstants.Mode mode)
         throws Exception
@@ -247,7 +246,7 @@ public class FeatureGeneration
                 System.out.println(" - skipped, feature already generated");
             }
             else {
-                CollectionReader reader = createReader(
+                CollectionReaderDescription reader = createReaderDescription(
                         SemEvalCorpusReader.class,
                         SemEvalCorpusReader.PARAM_INPUT_FILE,
                         DATASET_DIR + "/" + mode.toString().toLowerCase() + "/STS.input."
@@ -256,48 +255,10 @@ public class FeatureGeneration
                         CombinationStrategy.SAME_ROW_ONLY.toString(),
                         SemEvalCorpusReader.PARAM_LANGUAGE, "en");
 
-                // Tokenization
-                AnalysisEngineDescription seg = createEngineDescription(
-                        BreakIteratorSegmenter.class);
-                AggregateBuilder builder = new AggregateBuilder();
-                builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
-                builder.add(seg, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
-                AnalysisEngine aggr_seg = builder.createAggregate();
-
-                // POS Tagging
-                AnalysisEngineDescription pos = createEngineDescription(
-                        OpenNlpPosTagger.class,
-                        OpenNlpPosTagger.PARAM_LANGUAGE, "en");
-                builder = new AggregateBuilder();
-                builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
-                builder.add(pos, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
-                AnalysisEngine aggr_pos = builder.createAggregate();
-
-                // Lemmatization
-                AnalysisEngineDescription lem = createEngineDescription(StanfordLemmatizer.class);
-                builder = new AggregateBuilder();
-                builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
-                builder.add(lem, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
-                AnalysisEngine aggr_lem = builder.createAggregate();
-
-                // Stopword Filter (if applicable)
-//                AnalysisEngineDescription stopw = createEngineDescription(
-//                        StopwordFilter.class,
-//                        StopwordFilter.PARAM_STOPWORD_LIST,
-//                        "classpath:/stopwords/stopwords_english_punctuation.txt",
-//                        StopwordFilter.PARAM_ANNOTATION_TYPE_NAME, Lemma.class.getName(),
-//                        StopwordFilter.PARAM_STRING_REPRESENTATION_METHOD_NAME, "getValue");
-                AnalysisEngineDescription stopw = createEngineDescription(
-                        StopWordRemover.class,
-                        StopWordRemover. PARAM_MODEL_LOCATION,
-                        "classpath:/stopwords/stopwords_english_punctuation.txt");
-                builder = new AggregateBuilder();
-                builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_1);
-                builder.add(stopw, CAS.NAME_DEFAULT_SOFA, CombinationReader.VIEW_2);
-                AnalysisEngine aggr_stopw = builder.createAggregate();
+                AnalysisEngineDescription preprocessing = preprocessors(config.filterStopwords());
 
                 // Similarity Scorer
-                AnalysisEngine scorer = createEngine(
+                AnalysisEngineDescription scorer = createEngineDescription(
                         SimilarityScorer.class,
                         SimilarityScorer.PARAM_NAME_VIEW_1, CombinationReader.VIEW_1,
                         SimilarityScorer.PARAM_NAME_VIEW_2, CombinationReader.VIEW_2,
@@ -305,19 +266,12 @@ public class FeatureGeneration
                         SimilarityScorer.PARAM_TEXT_SIMILARITY_RESOURCE, config.getResource());
 
                 // Output Writer
-                AnalysisEngine writer = createEngine(
+                AnalysisEngineDescription writer = createEngineDescription(
                         SimilarityScoreWriter.class,
                         SimilarityScoreWriter.PARAM_OUTPUT_FILE, outputFile.getAbsolutePath(),
                         SimilarityScoreWriter.PARAM_OUTPUT_SCORES_ONLY, true);
 
-                if (config.filterStopwords()) {
-                    SimplePipeline.runPipeline(reader, aggr_seg, aggr_pos, aggr_lem, aggr_stopw,
-                            scorer, writer);
-                }
-                else {
-                    SimplePipeline.runPipeline(reader, aggr_seg, aggr_pos, aggr_lem, scorer,
-                            writer);
-                }
+                SimplePipeline.runPipeline(reader, preprocessing, scorer, writer);
 
                 System.out.println(" - done");
             }
