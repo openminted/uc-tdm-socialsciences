@@ -3,7 +3,6 @@ package eu.openminted.uc.socialsciences.variabledetection.detection;
 import static java.util.Arrays.asList;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import org.dkpro.lab.task.ParameterSpace;
 import org.dkpro.tc.api.features.TcFeatureFactory;
 import org.dkpro.tc.api.features.TcFeatureSet;
 import org.dkpro.tc.core.Constants;
-import org.dkpro.tc.features.entityrecognition.NEFeatureExtractor;
 import org.dkpro.tc.features.ngram.LuceneNGram;
 import org.dkpro.tc.ml.ExperimentTrainTest;
 import org.dkpro.tc.ml.report.BatchTrainTestReport;
@@ -30,8 +28,6 @@ import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram;
-import eu.openminted.uc.socialsciences.variabledetection.features.TheSozFeatures;
-import eu.openminted.uc.socialsciences.variabledetection.features.WordnetFeatures;
 import eu.openminted.uc.socialsciences.variabledetection.io.XmlCorpusAllDocsReader;
 import weka.attributeSelection.InfoGainAttributeEval;
 import weka.attributeSelection.Ranker;
@@ -50,10 +46,8 @@ public class TrainTestPipeline
     extends AbstractPipeline
     implements Constants
 {
-    private static final String CORPUS_FILEPATH_TRAIN = "/home/local/UKP/kiaeeha/workspace/Datasets"
-            + "/openminted/uc-ss/variable-detection/detection/Full_ALLDOCS-train.xml";
-    private static final String COPRUS_FILEPATH_TEST = "/home/local/UKP/kiaeeha/workspace/Datasets"
-            + "/openminted/uc-ss/variable-detection/detection/Full_ALLDOCS-test.xml";
+    private static final String CORPUS_FILEPATH_TRAIN = "../data/datasets/Full_ALLDOCS_English-train.xml";
+    private static final String COPRUS_FILEPATH_TEST = "../data/datasets/Full_ALLDOCS_English-test.xml";
     private static final String LANGUAGE_CODE = "en";
     private static final String EXPERIMENT_NAME = "AllbusVariableDetection";
 
@@ -71,22 +65,19 @@ public class TrainTestPipeline
 
     /**
      * Creates the the parameter space ({@link ParameterSpace}) for the experiment. The parameter
-     * space describes the experiment input(s), classifier(s), feature extractor(s), and feature selector(s).
+     * space describes the experiment input(s), classifier(s), feature extractor(s), and feature
+     * selector(s).
      */
     public static ParameterSpace getParameterSpace() throws ResourceInitializationException
     {
-        
-        Dimension<Map<String, Object>> dimReaders = createReadersDimension();
-        Dimension<List<String>> dimClassificationArgs = createClassifiersDimension();
-        Dimension<TcFeatureSet> dimFeatureSets = createFeatureExtractorsDimension();
-        Dimension<Map<String, Object>> dimFeatureSelection = createFeatureSelectionDimension();
-
-        ParameterSpace pSpace = new ParameterSpace(dimReaders,
+        return new ParameterSpace(
+                createReadersDimension(),
                 Dimension.create(DIM_LEARNING_MODE, LM_SINGLE_LABEL),
-                Dimension.create(DIM_FEATURE_MODE, FM_DOCUMENT), dimFeatureSets,
-                dimClassificationArgs/*, dimFeatureSelection*/);
-
-        return pSpace;
+                Dimension.create(DIM_FEATURE_MODE, FM_DOCUMENT), 
+                createFeatureExtractorsDimension(),
+                createClassifiersDimension()
+                // createFeatureSelectionDimension()
+                );
     }
 
     private static Dimension<Map<String, Object>> createFeatureSelectionDimension()
@@ -143,13 +134,17 @@ public class TrainTestPipeline
         Map<String, Object> dimReaders = new HashMap<String, Object>();
 
         CollectionReaderDescription readerTrain = CollectionReaderFactory.createReaderDescription(
-                XmlCorpusAllDocsReader.class, XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION,
-                CORPUS_FILEPATH_TRAIN, XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
+                XmlCorpusAllDocsReader.class, 
+                XmlCorpusAllDocsReader.PARAM_INCLUDE_TARGET_AND_OUTCOME, true,
+                XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION, CORPUS_FILEPATH_TRAIN, 
+                XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         dimReaders.put(DIM_READER_TRAIN, readerTrain);
 
         CollectionReaderDescription readerTest = CollectionReaderFactory.createReaderDescription(
-                XmlCorpusAllDocsReader.class, XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION,
-                COPRUS_FILEPATH_TEST, XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
+                XmlCorpusAllDocsReader.class, 
+                XmlCorpusAllDocsReader.PARAM_INCLUDE_TARGET_AND_OUTCOME, true,
+                XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION, COPRUS_FILEPATH_TEST, 
+                XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         dimReaders.put(DIM_READER_TEST, readerTest);
         return Dimension.createBundle("readers", dimReaders);
     }
@@ -175,6 +170,6 @@ public class TrainTestPipeline
                 createEngineDescription(StanfordLemmatizer.class),
                 createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
-                        StopWordRemover.PARAM_MODEL_LOCATION, getClass().getResource("/stopwords/english.txt").toString()));
+                        StopWordRemover.PARAM_MODEL_LOCATION, "classpath:/stopwords/english.txt"));
     }
 }

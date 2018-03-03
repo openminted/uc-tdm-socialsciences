@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.File;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -47,9 +48,9 @@ public class VariableMentionDetector
     extends JCasAnnotator_ImplBase
 {
     public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION;
-    @ConfigurationParameter(name = PARAM_MODEL_LOCATION, mandatory = false, defaultValue = "../models/variable-detection/")
-    private String modelLocation;
-
+    @ConfigurationParameter(name = PARAM_MODEL_LOCATION)
+    private File modelLocation;
+    
     private AnalysisEngine taggerEngine = null;
 
     @Override
@@ -75,7 +76,7 @@ public class VariableMentionDetector
     private void annotateSentence(JCas aJCas)
     {
         getLogger().info("Detecting variables in [" + aJCas.getDocumentText() + "]");
-
+        
         List<TextClassificationOutcome> outcomes = getPredictions(aJCas);
 
         TextClassificationTarget target = JCasUtil.select(aJCas, TextClassificationTarget.class)
@@ -87,12 +88,12 @@ public class VariableMentionDetector
             variableMention.setCorrect(outcome.getOutcome());
             variableMention.addToIndexes();
             outcome.removeFromIndexes();
-
+    
             getLogger().info("Variable candidate outcome in [" + target.getCoveredText() + "]: "
                     + outcome.getOutcome());
         }
     }
-
+    
     private List<TextClassificationOutcome> getPredictions(JCas aJCas)
     {
         return new ArrayList<TextClassificationOutcome>(

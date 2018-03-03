@@ -25,18 +25,16 @@ import eu.openminted.uc.socialsciences.variabledetection.io.XmlCorpusAllDocsRead
  * it to input data. 
  */
 public class LoadAndApplyPipeline
-    extends AbstractPipeline
     implements Constants
 {
     private static final String COPRUS_FILEPATH_TEST = "/home/local/UKP/kiaeeha/workspace/Datasets"
             + "/openminted/uc-ss/variable-detection/detection/Full_ALLDOCS.xml";
+    private static final String DETECTION_MODEL_LOCATION = "../data/models/variable-detection/";
     private static final String LANGUAGE_CODE = "en";
     public static final File PREDICTION_PATH = new File("target/prediction");
 
     public static void main(String[] args) throws Exception
     {
-//        assertDkproHomeVariableIsSet();
-
         LoadAndApplyPipeline experiment = new LoadAndApplyPipeline();
         experiment.applyStoredModel();
     }
@@ -57,9 +55,9 @@ public class LoadAndApplyPipeline
                 createEngineDescription(StanfordLemmatizer.class),
                 createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
-                        StopWordRemover.PARAM_MODEL_LOCATION, 
-                        getClass().getResource("/stopwords/english.txt").toString()),
-                createEngineDescription(VariableMentionDetector.class),
+                        StopWordRemover.PARAM_MODEL_LOCATION, "classpath:/stopwords/english.txt"),
+                createEngineDescription(VariableMentionDetector.class,
+                        VariableMentionDetector.PARAM_MODEL_LOCATION, DETECTION_MODEL_LOCATION),
                 createEngineDescription(XmiWriter.class,
                         XmiWriter.PARAM_TARGET_LOCATION, PREDICTION_PATH,
                         XmiWriter.PARAM_OVERWRITE, true));
