@@ -34,6 +34,14 @@ public class VariableMentionDisambiguator
     @ConfigurationParameter(name = PARAM_VARIABLE_FILE_LOCATION)
     private String variableFilePath;
 
+    /**
+     * If set to {@code false}, only {@code correct="Yes"} mentions are disambiguated, otherwise
+     * all mentions are disambiguated.
+     */
+    public static final String PARAM_DISAMBIGUATE_ALL_MENTIONS = "disambiguateAllMentions";
+    @ConfigurationParameter(name = PARAM_DISAMBIGUATE_ALL_MENTIONS, defaultValue = "false")
+    private boolean disambiguateAllMentions;
+    
     private LinearRegressionSimilarityMeasure classifier;
     private FeatureGeneration featureGeneration;
     private Map<String, String> variableMap;
@@ -56,20 +64,14 @@ public class VariableMentionDisambiguator
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException
     {
-        boolean found = false;
         for (VariableMention mention : JCasUtil.select(aJCas, VariableMention.class)) {
-            if (found) {
-                mention.setCorrect("No");
-                continue;
-            }
-            if (mention.getCorrect().equals("Yes")) {
+            if (mention.getCorrect().equals("Yes") || disambiguateAllMentions) {
                 getLogger().info(
                         "Disambiguating variable candidate in [" + mention.getCoveredText() + "]");
 
-                String sentence = mention.getCoveredText();
                 Match match;
                 try {
-                    match = findMatchingVariable(sentence, variableMap);
+                    match = findMatchingVariable(mention.getCoveredText(), variableMap);
                 }
                 catch (Exception e) {
                     getLogger().error("Disambiguation failed: " + e.getMessage());
@@ -79,7 +81,6 @@ public class VariableMentionDisambiguator
                 mention.setScore(match.score);
                 
                 getLogger().info("Disambiguating suggests [" + match + "]");
-                found = true;
             }
         }
     }
@@ -94,30 +95,33 @@ public class VariableMentionDisambiguator
         return classifier;
     }
 
+    /**
+     * Finds the matching variable with the highest score.
+     */
     private Match findMatchingVariable(String aSentence, Map<String, String> aVariableMap)
         throws Exception
     {
-        String result = "";
+        String matchingVarId = "";
         double similarity = 0;
 
-        for (String variableId : aVariableMap.keySet()) {
-            featureGeneration.generateFeatures(aSentence, aVariableMap.get(variableId));
+        for (String varId : aVariableMap.keySet()) {
+            featureGeneration.generateFeatures(aSentence, aVariableMap.get(varId));
             String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP,
                     VariableDisambiguationConstants.Dataset.TEMP, null);
-            
+
             Instance instance = classifier.getInstance(new File(fileName));
-            
+
             double tempSimilarity = classifier.getSimilarity(instance);
 
-            getLogger().info(new Match(variableId, tempSimilarity));
+            getLogger().info(new Match(varId, tempSimilarity));
             
             if (tempSimilarity > similarity) {
                 similarity = tempSimilarity;
-                result = variableId;
+                matchingVarId = varId;
             }
         }
 
-        return new Match(result, similarity);
+        return new Match(matchingVarId, similarity);
     }
     
     private static class Match
