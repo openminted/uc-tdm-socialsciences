@@ -4,7 +4,6 @@ import static java.util.Arrays.asList;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,6 @@ import org.dkpro.tc.api.features.TcFeatureFactory;
 import org.dkpro.tc.api.features.TcFeatureSet;
 import org.dkpro.tc.core.Constants;
 import org.dkpro.tc.features.entityrecognition.NEFeatureExtractor;
-import org.dkpro.tc.features.ngram.LuceneCharacterNGram;
 import org.dkpro.tc.features.ngram.LuceneNGram;
 import org.dkpro.tc.features.ngram.LuceneSkipNGram;
 import org.dkpro.tc.ml.ExperimentSaveModel;
@@ -33,10 +31,7 @@ import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.features.LuceneLemmaNGram;
-import eu.openminted.uc.socialsciences.variabledetection.features.TheSozFeatures;
-import eu.openminted.uc.socialsciences.variabledetection.features.WordnetFeatures;
 import eu.openminted.uc.socialsciences.variabledetection.io.XmlCorpusAllDocsReader;
-import eu.openminted.uc.socialsciences.variabledetection.resource.TheSozResource;
 import weka.classifiers.bayes.NaiveBayes;
 
 /**
@@ -44,10 +39,6 @@ import weka.classifiers.bayes.NaiveBayes;
  * The pipeline uses several textual features to train a model using
  * <a href="https://github.com/dkpro/dkpro-tc">DKPro-TC</a>.
  */
-//OMTD-SHARE annotations
-//@Component(value="mlTrainer", application=true)
-//@ResourceInput(type="corpus", dataFormat= @DataFormat(fileExtension="txt"), encoding="utf-8")
-//@ResourceOutput(type="languageDescription", dataFormat= @DataFormat(dataFormat="binary"))
 public class TrainAndSavePipeline
     extends AbstractPipeline
     implements Constants
@@ -76,7 +67,6 @@ public class TrainAndSavePipeline
      */
     public static ParameterSpace getParameterSpace() throws ResourceInitializationException
     {
-        
         Dimension<Map<String, Object>> dimReaders = createReadersDimension();
         Dimension<List<String>> dimClassificationArgs = createClassifiersDimension();
         Dimension<TcFeatureSet> dimFeatureSets = createFeatureExtractorsDimension();
@@ -140,8 +130,9 @@ public class TrainAndSavePipeline
         Map<String, Object> dimReaders = new HashMap<String, Object>();
 
         CollectionReaderDescription readerTrain = CollectionReaderFactory.createReaderDescription(
-                XmlCorpusAllDocsReader.class, XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION,
-                CORPUS_FILEPATH_TRAIN, XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
+                XmlCorpusAllDocsReader.class, 
+                XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION, CORPUS_FILEPATH_TRAIN, 
+                XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE);
         dimReaders.put(DIM_READER_TRAIN, readerTrain);
 
         return Dimension.createBundle("readers", dimReaders);
@@ -168,6 +159,6 @@ public class TrainAndSavePipeline
                 createEngineDescription(StanfordLemmatizer.class),
                 createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
-                        StopWordRemover.PARAM_MODEL_LOCATION, getClass().getResource("/stopwords/english.txt").toString()));
+                        StopWordRemover.PARAM_MODEL_LOCATION, "classpath:/stopwords/english.txt"));
     }
 }
