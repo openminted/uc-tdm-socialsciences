@@ -18,5 +18,5 @@ public class VariableDisambiguationConstants
     
     public static final String FEATURES_DIR = "target/features";
     public static final String MODELS_DIR = "target/models";
-    public static final String UTILS_DIR = "target/utils";
+    public static final String UTILS_DIR = "../data/utils";
 }
