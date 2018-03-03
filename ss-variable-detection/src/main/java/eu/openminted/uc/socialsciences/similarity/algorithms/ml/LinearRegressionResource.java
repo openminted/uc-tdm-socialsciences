@@ -34,17 +34,17 @@ import eu.openminted.uc.socialsciences.similarity.algorithms.ml.LinearRegression
  * Original class org.dkpro.similarity.uima.resource.ml.LinearRegressionResource
  */
 public class LinearRegressionResource
-	extends JCasTextSimilarityResourceBase
+    extends JCasTextSimilarityResourceBase
 {
-	public static final String PARAM_LOG_FILTER = "LogFilter";
-	@ConfigurationParameter(name=PARAM_LOG_FILTER, mandatory=true, defaultValue="true")
-	private boolean logFilter;
-	
-	public static final String PARAM_TRAIN_ARFF = "TRAIN_ARFF";
-	@ConfigurationParameter(name=PARAM_TRAIN_ARFF, mandatory=true)
-	private File trainArff;
-	
-	@SuppressWarnings("unchecked")
+    public static final String PARAM_LOG_FILTER = "LogFilter";
+    @ConfigurationParameter(name = PARAM_LOG_FILTER, mandatory = true, defaultValue = "true")
+    private boolean logFilter;
+
+    public static final String PARAM_TRAIN_ARFF = "TRAIN_ARFF";
+    @ConfigurationParameter(name = PARAM_TRAIN_ARFF, mandatory = true)
+    private File trainArff;
+
+    @SuppressWarnings("unchecked")
     @Override
     public boolean initialize(ResourceSpecifier aSpecifier, Map aAdditionalParams)
         throws ResourceInitializationException
@@ -52,15 +52,15 @@ public class LinearRegressionResource
         if (!super.initialize(aSpecifier, aAdditionalParams)) {
             return false;
         }
-        
+
         try {
-        	this.setMode(TextSimilarityResourceMode.jcas);
+            setMode(TextSimilarityResourceMode.jcas);
             measure = new LinearRegressionSimilarityMeasure(trainArff, logFilter);
         }
         catch (Exception e) {
             throw new ResourceInitializationException(e);
         }
-        
+
         return true;
     }
 }
