@@ -160,7 +160,17 @@ public class VariableMentionDisambiguator
 
             Instance instance = classifier.getInstance(new File(fileName));
 
+//            Instance instance2 = featureGeneration.generateFeatures(aSentence,
+//                    aVariableMap.get(varId));
+//            if (classifier.isUseLogFilter()) {
+//                Filter logFilter = new LogFilter();
+//                logFilter.input(instance2);
+//                logFilter.batchFinished();
+//                instance = logFilter.output();
+//            }
             
+            //System.out.println("Masoud: " + instance);
+//            System.out.println("REC:    " + instance2);
             if (i % 25 == 0) {
                 System.out.print(".");
             }

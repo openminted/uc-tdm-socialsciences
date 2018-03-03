@@ -11,6 +11,7 @@
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
 import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer.DATASET_DIR;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
 import java.io.File;
@@ -26,8 +27,7 @@ import java.util.Set;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.analysis_engine.AnalysisEngine;
-import org.apache.uima.analysis_engine.AnalysisEngineDescription;
-import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 
@@ -37,116 +37,114 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
 
 public class WordIdfValuesGenerator
 {
-	static final String LF = System.getProperty("line.separator");
-	
-	public static void computeIdfScores(VariableDisambiguationConstants.Mode mode, VariableDisambiguationConstants.Dataset dataset)
-		throws Exception
-	{	
-		URL inputUrl = ResourceUtils.resolveLocation(DATASET_DIR + "/" + mode.toString().toLowerCase() + "/STS.input." + dataset.toString() + ".txt");
-		List<String> lines = IOUtils.readLines(inputUrl.openStream(), "utf-8");
-		
-		Map<String,Double> idfValues = new HashMap<String,Double>();
-		
-		File outputFile = new File(VariableDisambiguationConstants.UTILS_DIR + "/word-idf/" + mode.toString().toLowerCase() + "/" + dataset.toString() + ".txt");
-		
-		System.out.println("Computing word idf values");
-		
-		if (outputFile.exists())
-		{
-			System.out.println(" - skipping, already exists");
-		}
-		else
-		{	
-			System.out.println(" - this may take a while...");
-			
-			// Build up token representations of texts
-			Set<List<String>> docs = new HashSet<List<String>>();
-		
-			for (String line : lines)
-			{
-				List<String> doc = new ArrayList<String>();
-				
-				Collection<Lemma> lemmas = getLemmas(line);
-				
-				for (Lemma lemma : lemmas)
-				{
-					try
-					{
-						String token = lemma.getValue().toLowerCase();			
-						doc.add(token);
-					}
-					catch (NullPointerException e)
-					{
-						System.err.println(" - unparsable token: " + lemma.getCoveredText());
-					}
-				}
-				
-				docs.add(doc);
-			}
-			
-			// Get the shared token list
-			Set<String> tokens = new HashSet<String>();
-			for (List<String> doc : docs) {
+    static final String LF = System.getProperty("line.separator");
+
+    public static void computeIdfScores(Dataset aTarget, Mode mode, List<Dataset> datasets)
+        throws Exception
+    {
+        List<String> lines = new ArrayList<>();
+        for (Dataset dataset : datasets) {
+            URL inputUrl = ResourceUtils.resolveLocation(DATASET_DIR + "/"
+                    + mode.toString().toLowerCase() + "/STS.input." + dataset.toString() + ".txt");
+            lines.addAll(IOUtils.readLines(inputUrl.openStream(), "utf-8"));
+        }
+
+        Map<String, Double> idfValues = new HashMap<String, Double>();
+
+        File outputFile = new File(VariableDisambiguationConstants.UTILS_DIR + "/word-idf/"
+                + mode.toString().toLowerCase() + "/" + aTarget + ".txt");
+
+        System.out.println("Computing word idf values");
+
+        if (outputFile.exists()) {
+            System.out.println(" - skipping, already exists");
+        }
+        else {
+            System.out.println(" - this may take a while...");
+
+            // Build up token representations of texts
+            Set<List<String>> docs = new HashSet<>();
+
+            for (String line : lines) {
+                List<String> doc = new ArrayList<String>();
+
+                for (Lemma lemma : getLemmas(line)) {
+                    try {
+                        String token = lemma.getValue().toLowerCase();
+                        doc.add(token);
+                    }
+                    catch (NullPointerException e) {
+                        System.err.println(" - unparsable token: " + lemma.getCoveredText());
+                    }
+                }
+
+                docs.add(doc);
+            }
+
+            // Get the shared token list
+            Set<String> tokens = new HashSet<String>();
+            for (List<String> doc : docs) {
                 tokens.addAll(doc);
             }
-			
-			// Get the idf numbers
-			for (String token : tokens)
-			{
-				double count = 0;
-				for (List<String> doc : docs)
-				{
-					if (doc.contains(token)) {
+
+            // Get the idf numbers
+            for (String token : tokens) {
+                double count = 0;
+                for (List<String> doc : docs) {
+                    if (doc.contains(token)) {
                         count++;
                     }
-				}
-				idfValues.put(token, count);
-			}
-			
-			// Compute the idf
-			for (String lemma : idfValues.keySet())
-			{
-				double idf = Math.log10(lines.size() / idfValues.get(lemma));
-				idfValues.put(lemma, idf);
-			}
-			
-			 // Store persistently
-			StringBuilder sb = new StringBuilder();
-			for (String key : idfValues.keySet())
-			{
-				sb.append(key + "\t" + idfValues.get(key) + LF);
-			}
-			FileUtils.writeStringToFile(outputFile, sb.toString());
-			
-			System.out.println(" - done");
-		}
-	}
-	
-	private static Collection<Lemma> getLemmas(String fileContents)
-		throws Exception
-	{
-		AnalysisEngineDescription aed = createEngineDescription(
-				createEngineDescription(
-						BreakIteratorSegmenter.class),
-				createEngineDescription(
-						OpenNlpPosTagger.class,
-						OpenNlpPosTagger.PARAM_LANGUAGE, "en"),
-				createEngineDescription(
-						StanfordLemmatizer.class)
-				);    	
-		AnalysisEngine ae = AnalysisEngineFactory.createEngine(aed);
-		
-		JCas jcas = ae.newJCas();
-		jcas.setDocumentLanguage("en");
-		jcas.setDocumentText(fileContents);
-		
-		ae.process(jcas);
-		
-		Collection<Lemma> lemmas = JCasUtil.select(jcas, Lemma.class);
-		
-		return lemmas;
-	}
+                }
+                idfValues.put(token, count);
+            }
+
+            // Compute the idf
+            for (String lemma : idfValues.keySet()) {
+                double idf = Math.log10(lines.size() / idfValues.get(lemma));
+                idfValues.put(lemma, idf);
+            }
+
+            // Store persistently
+            StringBuilder sb = new StringBuilder();
+            for (String key : idfValues.keySet()) {
+                sb.append(key + "\t" + idfValues.get(key) + LF);
+            }
+            FileUtils.writeStringToFile(outputFile, sb.toString());
+
+            System.out.println(" - done");
+        }
+    }
+
+    private static AnalysisEngine lemmaEngine;
+    private static JCas lemmaJCas;
+    
+    private static Collection<Lemma> getLemmas(String fileContents) throws Exception
+    {
+        if (lemmaEngine == null) {
+            lemmaEngine = createEngine(createEngineDescription(
+                    createEngineDescription(
+                            BreakIteratorSegmenter.class),
+                    createEngineDescription(
+                            OpenNlpPosTagger.class, 
+                            OpenNlpPosTagger.PARAM_LANGUAGE, "en"),
+                    createEngineDescription(
+                            StanfordLemmatizer.class)));
+            lemmaJCas = JCasFactory.createJCas();
+        }
+
+        lemmaJCas.reset();
+        lemmaJCas.setDocumentLanguage("en");
+        lemmaJCas.setDocumentText(fileContents);
+
+        lemmaEngine.process(lemmaJCas);
+
+        Collection<Lemma> lemmas = JCasUtil.select(lemmaJCas, Lemma.class);
+
+        return lemmas;
+    }
 }

@@ -27,76 +27,78 @@ import org.dkpro.similarity.algorithms.lexical.ngrams.CharacterNGramMeasure;
 
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
 
 public class CharacterNGramIdfValuesGenerator
 {
-	static final String LF = System.getProperty("line.separator");
-	
-	public static void computeIdfScores(VariableDisambiguationConstants.Mode mode, VariableDisambiguationConstants.Dataset dataset, int n)
-		throws Exception
-	{					
-		URL inputUrl = ResourceUtils.resolveLocation(DATASET_DIR + "/" + mode.toString().toLowerCase() + "/STS.input." + dataset.toString() + ".txt");
-		List<String> lines = IOUtils.readLines(inputUrl.openStream(), "utf-8"); 
+    static final String LF = System.getProperty("line.separator");
 
-		System.out.println("Computing character " + n + "-grams");
-			
-		File outputFile = new File(VariableDisambiguationConstants.UTILS_DIR + "/character-ngrams-idf/" + mode.toString().toLowerCase() + "/" + n + "/" + dataset.toString() + ".txt");
-		
-		if (outputFile.exists())
-		{
-			System.out.println(" - skipping, already exists");
-		}
-		else
-		{			
-			Map<String, Double> idfValues = new HashMap<String, Double>();
-			
-			CharacterNGramMeasure measure = new CharacterNGramMeasure(n, new HashMap<String, Double>());
-			
-			// Get n-gram representations of texts
-			List<Set<String>> docs = new ArrayList<Set<String>>();
-			
-			for (String line : lines)
-			{			
-				Set<String> ngrams = measure.getNGrams(line);
-				
-				docs.add(ngrams);
-			}
-			
-			// Get all ngrams
-			Set<String> allNGrams = new HashSet<String>();
-			for (Set<String> doc : docs) {
+    public static void computeIdfScores(Dataset aTarget, Mode mode, List<Dataset> datasets, int n)
+        throws Exception
+    {
+        List<String> lines = new ArrayList<>();
+        for (Dataset dataset : datasets) {
+            URL inputUrl = ResourceUtils.resolveLocation(DATASET_DIR + "/"
+                    + mode.toString().toLowerCase() + "/STS.input." + dataset.toString() + ".txt");
+            lines.addAll(IOUtils.readLines(inputUrl.openStream(), "utf-8"));
+        }
+
+        System.out.println("Computing character " + n + "-grams");
+
+        File outputFile = new File(
+                VariableDisambiguationConstants.UTILS_DIR + "/character-ngrams-idf/"
+                        + mode.toString().toLowerCase() + "/" + n + "/" + aTarget + ".txt");
+
+        if (outputFile.exists()) {
+            System.out.println(" - skipping, already exists");
+        }
+        else {
+            Map<String, Double> idfValues = new HashMap<String, Double>();
+
+            CharacterNGramMeasure measure = new CharacterNGramMeasure(n,
+                    new HashMap<String, Double>());
+
+            // Get n-gram representations of texts
+            List<Set<String>> docs = new ArrayList<Set<String>>();
+
+            for (String line : lines) {
+                Set<String> ngrams = measure.getNGrams(line);
+
+                docs.add(ngrams);
+            }
+
+            // Get all ngrams
+            Set<String> allNGrams = new HashSet<String>();
+            for (Set<String> doc : docs) {
                 allNGrams.addAll(doc);
             }
-			
-			// Compute idf values			
-			for (String ngram : allNGrams)
-			{
-				double count = 0;
-				for (Set<String> doc : docs)
-				{					
-					if (doc.contains(ngram)) {
+
+            // Compute idf values
+            for (String ngram : allNGrams) {
+                double count = 0;
+                for (Set<String> doc : docs) {
+                    if (doc.contains(ngram)) {
                         count++;
                     }
-				}
-				idfValues.put(ngram, count);
-			}
-			
-			// Compute the idf
-			for (String lemma : idfValues.keySet())
-			{
-				double idf = Math.log10(lines.size() / idfValues.get(lemma));
-				idfValues.put(lemma, idf);
-			}
-			
-			// Store persistently
-			StringBuilder sb = new StringBuilder();
-			for (String key : idfValues.keySet())
-			{
-				sb.append(key + "\t" + idfValues.get(key) + LF);
-			}
-			FileUtils.writeStringToFile(outputFile, sb.toString());
-			
-			System.out.println(" - done");
-		}
-	}
+                }
+                idfValues.put(ngram, count);
+            }
+
+            // Compute the idf
+            for (String lemma : idfValues.keySet()) {
+                double idf = Math.log10(lines.size() / idfValues.get(lemma));
+                idfValues.put(lemma, idf);
+            }
+
+            // Store persistently
+            StringBuilder sb = new StringBuilder();
+            for (String key : idfValues.keySet()) {
+                sb.append(key + "\t" + idfValues.get(key) + LF);
+            }
+            FileUtils.writeStringToFile(outputFile, sb.toString());
+
+            System.out.println(" - done");
+        }
+    }
 }

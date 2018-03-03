@@ -5,17 +5,15 @@ import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 import static org.apache.uima.fit.factory.ExternalResourceFactory.createExternalResourceDescription;
+import static org.apache.uima.fit.util.JCasUtil.selectSingle;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.cas.CAS;
@@ -36,7 +34,6 @@ import org.dkpro.similarity.uima.annotator.SimilarityScorer;
 import org.dkpro.similarity.uima.api.type.ExperimentalTextSimilarityScore;
 import org.dkpro.similarity.uima.api.type.TextSimilarityScore;
 import org.dkpro.similarity.uima.io.CombinationReader;
-import org.dkpro.similarity.uima.io.SemEvalCorpusReader;
 import org.dkpro.similarity.uima.io.CombinationReader.CombinationStrategy;
 import org.dkpro.similarity.uima.resource.SimpleTextSimilarityResource;
 
@@ -46,6 +43,9 @@ import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
+import eu.openminted.uc.socialsciences.variabledetection.io.SemEvalCorpusReader;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 
@@ -58,9 +58,11 @@ public class FeatureGeneration
     private final Map<FeatureConfig, AnalysisEngine> engineMap = new HashMap<>();
     private final List<FeatureConfig> featureConfigList;
 
+    public static final int[] CHAR_NGRAMS_N = new int[] { 2, 3, 4 };
+    
     public FeatureGeneration() throws Exception
     {
-        featureConfigList = getFeatureConfigs();
+        featureConfigList = getFeatureConfigs(Dataset.TEMP, Mode.TEMP);
         for (FeatureConfig config : featureConfigList) {
             System.out.println(config.getMeasureName());
 
@@ -73,15 +75,6 @@ public class FeatureGeneration
                     SimilarityScorer.PARAM_NAME_VIEW_2, CombinationReader.VIEW_2,
                     SimilarityScorer.PARAM_SEGMENT_FEATURE_PATH, config.getSegmentFeaturePath(),
                     SimilarityScorer.PARAM_TEXT_SIMILARITY_RESOURCE, config.getResource());
-
-//            // Output Writer
-//          File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
-//          + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/"
-//          + VariableDisambiguationConstants.Dataset.TEMP + "/" + config.getTargetPath()
-//          + "/" + config.getMeasureName() + ".txt");
-//            AnalysisEngineDescription writer = createEngineDescription(SimilarityScoreWriter.class,
-//                    SimilarityScoreWriter.PARAM_OUTPUT_FILE, outputFile.getAbsolutePath(),
-//                    SimilarityScoreWriter.PARAM_OUTPUT_SCORES_ONLY, true);
 
             AnalysisEngine engine = createEngine(createEngineDescription(preprocessing, scorer));
 
@@ -128,16 +121,7 @@ public class FeatureGeneration
                     ExperimentalTextSimilarityScore.class);
             
             instance.setValue(i, score.getScore());
-            
-//            File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
-//                    + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/"
-//                    + VariableDisambiguationConstants.Dataset.TEMP + "/" + config.getTargetPath()
-//                    + "/" + config.getMeasureName() + ".txt");
-//
-//            try (FileWriter writer = new FileWriter(outputFile)) {
-//                writer.write(Double.toString(score.getScore()));
-//            }
-            
+
             i++;
         }
         
@@ -153,9 +137,8 @@ public class FeatureGeneration
         
         for (FeatureConfig config : featureConfigList) {
             File featureDirectory = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
-                    + VariableDisambiguationConstants.Mode.TEMP.toString().toLowerCase() + "/"
-                    + VariableDisambiguationConstants.Dataset.TEMP + "/" + config.getTargetPath()
-                    + "/");
+                    + Mode.TEMP.toString().toLowerCase() + "/" + Dataset.TEMP + "/"
+                    + config.getTargetPath() + "/");
             featureDirectory.mkdirs();
             
             featureJCas.reset();
@@ -176,7 +159,7 @@ public class FeatureGeneration
 
             engine.process(featureJCas);
 
-            TextSimilarityScore score = JCasUtil.selectSingle(featureJCas,
+            TextSimilarityScore score = selectSingle(featureJCas,
                     ExperimentalTextSimilarityScore.class);
             File outputFile = new File(featureDirectory, config.getMeasureName() + ".txt");
 
@@ -211,12 +194,6 @@ public class FeatureGeneration
 
         // Stopword Filter (if applicable)
         if (aFilterStopwords) {
-//        AnalysisEngineDescription stopw = createEngineDescription(
-//                StopwordFilter.class,
-//                StopwordFilter.PARAM_STOPWORD_LIST,
-//                "classpath:/stopwords/stopwords_english_punctuation.txt",
-//                StopwordFilter.PARAM_ANNOTATION_TYPE_NAME, Lemma.class.getName(),
-//                StopwordFilter.PARAM_STRING_REPRESENTATION_METHOD_NAME, "getValue");
             AnalysisEngineDescription stopw = createEngineDescription(
                     StopWordRemover.class,
                     StopWordRemover. PARAM_MODEL_LOCATION,
@@ -228,31 +205,33 @@ public class FeatureGeneration
         return builder.createAggregateDescription();
     }
     
-    public static void generateFeatures(VariableDisambiguationConstants.Dataset dataset,
-            VariableDisambiguationConstants.Mode mode)
-        throws Exception
+    public static void generateFeatures(Dataset target, List<Dataset> datasets, Mode mode) throws Exception
     {
-        List<FeatureConfig> configs = getFeatureConfigs();
+        List<FeatureConfig> configs = getFeatureConfigs(target, mode);
 
         // Run the pipeline
         for (FeatureConfig config : configs) {
             System.out.println(config.getMeasureName());
 
             File outputFile = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
-                    + mode.toString().toLowerCase() + "/" + dataset.toString() + "/"
-                    + config.getTargetPath() + "/" + config.getMeasureName() + ".txt");
+                    + mode.toString().toLowerCase() + "/" + target + "/" + config.getTargetPath()
+                    + "/" + config.getMeasureName() + ".txt");
 
             if (outputFile.exists()) {
                 System.out.println(" - skipped, feature already generated");
             }
             else {
+                List<String> datasetLocations = new ArrayList<>();
+                for (Dataset dataset : datasets) {
+                    datasetLocations.add(DATASET_DIR + "/" + mode.toString().toLowerCase()
+                            + "/STS.input." + dataset.toString() + ".txt");
+                }                
+                
                 CollectionReaderDescription reader = createReaderDescription(
                         SemEvalCorpusReader.class,
-                        SemEvalCorpusReader.PARAM_INPUT_FILE,
-                        DATASET_DIR + "/" + mode.toString().toLowerCase() + "/STS.input."
-                                + dataset.toString() + ".txt",
+                        SemEvalCorpusReader.PARAM_INPUT_FILES, datasetLocations,
                         SemEvalCorpusReader.PARAM_COMBINATION_STRATEGY,
-                        CombinationStrategy.SAME_ROW_ONLY.toString(),
+                                CombinationStrategy.SAME_ROW_ONLY.toString(),
                         SemEvalCorpusReader.PARAM_LANGUAGE, "en");
 
                 AnalysisEngineDescription preprocessing = preprocessors(config.filterStopwords());
@@ -280,18 +259,11 @@ public class FeatureGeneration
         System.out.println("Successful.");
     }
 
-    private static List<FeatureConfig> getFeatureConfigs() throws IOException
+    private static List<FeatureConfig> getFeatureConfigs(Dataset dataset, Mode mode)
+        throws Exception
     {
         // Define the features
         List<FeatureConfig> configs = new ArrayList<FeatureConfig>();
-
-        // [Prerequisites]
-        // int[] ngrams_n = new int[] { 2, 3, 4 };
-        // for (int n : ngrams_n) {
-        // CharacterNGramIdfValuesGenerator.computeIdfScores(mode, dataset, n);
-        // }
-        //
-        // WordIdfValuesGenerator.computeIdfScores(mode, dataset);
 
         /*
          * TODO: YOUR CUSTOM MEASURE GOES HERE The example code snippet instantiates
@@ -352,21 +324,19 @@ public class FeatureGeneration
                 "string", 
                 "LongestCommonSubstringComparator"));
 
-        // ngrams_n = new int[] { 2, 3, 4 };
-        // for (int n : ngrams_n)
-        // {
-        // configs.add(new FeatureConfig(
-        // createExternalResourceDescription(
-        // CharacterNGramResource.class,
-        // CharacterNGramResource.PARAM_N, new Integer(n).toString(),
-        // CharacterNGramResource.PARAM_IDF_VALUES_FILE, UTILS_DIR + "/character-ngrams-idf/" +
-        // mode.toString().toLowerCase() + "/" + n + "/" + dataset.toString() + ".txt"),
-        // Document.class.getName(),
-        // false,
-        // "n-grams",
-        // "CharacterNGramMeasure_" + n
-        // ));
-        // }
+//        for (int n : char_ngrams_n) {
+//            configs.add(new FeatureConfig(
+//                    createExternalResourceDescription(
+//                            CharacterNGramResource.class,
+//                            CharacterNGramResource.PARAM_N, Integer.toString(n),
+//                            CharacterNGramResource.PARAM_IDF_VALUES_FILE,
+//                            UTILS_DIR + "/character-ngrams-idf/" + mode.toString().toLowerCase()
+//                                    + "/" + n + "/" + dataset.toString() + ".txt"),
+//                    null, // not relevant in "text" and "jcas" modes
+//                    false, 
+//                    "n-grams", 
+//                    "CharacterNGramMeasure_" + n));
+//        }
 
         // ngrams_n = new int[] { 1, 2 };
         // for (int n : ngrams_n)
@@ -478,63 +448,5 @@ public class FeatureGeneration
         // )
         // );
         return configs;
-    }
-
-    public static void combineFeatureSets(VariableDisambiguationConstants.Mode mode,
-            VariableDisambiguationConstants.Dataset target,
-            VariableDisambiguationConstants.Dataset... sources)
-        throws IOException
-    {
-        String outputFolderName = target.toString();
-
-        System.out.println("Combining feature sets");
-
-        // Check if target directory exists. If so, delete it.
-        File targetDir = new File(VariableDisambiguationConstants.FEATURES_DIR + "/"
-                + mode.toString().toLowerCase() + "/" + target.toString());
-        if (targetDir.exists()) {
-            System.out.println(" - cleaned target directory");
-            FileUtils.deleteDirectory(targetDir);
-        }
-
-        String featurePathOfFirstSet = VariableDisambiguationConstants.FEATURES_DIR + "/"
-                + mode.toString().toLowerCase() + "/" + sources[0].toString();
-
-        Collection<File> features = FileUtils.listFiles(new File(featurePathOfFirstSet),
-                new String[] { "txt" }, true);
-
-        for (File feature : features) {
-            if (!feature.isDirectory()) {
-                // Check that feature exists for all
-                boolean shared = true;
-
-                for (int i = 1; i < sources.length; i++) {
-                    if (!new File(feature.getAbsolutePath().replace(sources[0].toString(),
-                            sources[i].toString())).exists()) {
-                        shared = false;
-                    }
-                }
-
-                if (shared) {
-                    System.out.println(" - processing " + feature.getName());
-
-                    String concat = FileUtils.readFileToString(feature);
-
-                    for (int i = 1; i < sources.length; i++) {
-                        File nextFile = new File(feature.getAbsolutePath()
-                                .replaceAll(sources[0].toString(), sources[i].toString()));
-
-                        concat += FileUtils.readFileToString(nextFile);
-                    }
-
-                    File outputFile = new File(feature.getAbsolutePath()
-                            .replace(sources[0].toString(), outputFolderName));
-
-                    FileUtils.writeStringToFile(outputFile, concat);
-                }
-            }
-        }
-
-        System.out.println(" - done");
     }
 }
