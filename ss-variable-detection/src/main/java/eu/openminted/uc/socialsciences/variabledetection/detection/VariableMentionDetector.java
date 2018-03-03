@@ -17,9 +17,8 @@
  */
 package eu.openminted.uc.socialsciences.variabledetection.detection;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import static org.apache.uima.fit.util.JCasUtil.select;
+import static org.apache.uima.fit.util.JCasUtil.selectSingle;
 
 import java.io.File;
 import org.apache.uima.UimaContext;
@@ -29,7 +28,6 @@ import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.descriptor.ResourceMetaData;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
-import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.dkpro.tc.api.type.TextClassificationOutcome;
@@ -60,43 +58,63 @@ public class VariableMentionDetector
 
         taggerEngine = AnalysisEngineFactory.createEngine(
                 TcAnnotator.class,
-                TcAnnotator.PARAM_TC_MODEL_LOCATION, new File(modelLocation),
-                TcAnnotator.PARAM_NAME_SEQUENCE_ANNOTATION, Sentence.class.getName(),
-                TcAnnotator.PARAM_NAME_UNIT_ANNOTATION, Sentence.class.getName());
+                TcAnnotator.PARAM_TC_MODEL_LOCATION, modelLocation,
+                TcAnnotator.PARAM_NAME_UNIT_ANNOTATION, Sentence.class);
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException
     {
-        taggerEngine.process(aJCas);
-
-        annotateSentence(aJCas);
-    }
-
-    private void annotateSentence(JCas aJCas)
-    {
         getLogger().info("Detecting variables in [" + aJCas.getDocumentText() + "]");
         
-        List<TextClassificationOutcome> outcomes = getPredictions(aJCas);
+        taggerEngine.process(aJCas);
 
-        TextClassificationTarget target = JCasUtil.select(aJCas, TextClassificationTarget.class)
-                .iterator().next();
+        // Remove the classification target that was created by the TcAnnotator
+        TextClassificationTarget target = selectSingle(aJCas, TextClassificationTarget.class);
         target.removeFromIndexes();
-        for (TextClassificationOutcome outcome : outcomes) {
+
+        // Convert all TextClassificationOutcomes to VariableMentions (actually, there will only
+        // be a single one)
+        for (TextClassificationOutcome outcome : select(aJCas, TextClassificationOutcome.class)) {
             VariableMention variableMention = new VariableMention(aJCas, target.getBegin(),
                     target.getEnd());
             variableMention.setCorrect(outcome.getOutcome());
             variableMention.addToIndexes();
+            
+            getLogger().info("Variable candidate outcome in [" + variableMention.getCoveredText()
+                    + "]: " + variableMention.getCorrect());
+            
             outcome.removeFromIndexes();
-    
-            getLogger().info("Variable candidate outcome in [" + target.getCoveredText() + "]: "
-                    + outcome.getOutcome());
         }
     }
     
-    private List<TextClassificationOutcome> getPredictions(JCas aJCas)
+    @Override
+    public void collectionProcessComplete() throws AnalysisEngineProcessException
     {
-        return new ArrayList<TextClassificationOutcome>(
-                JCasUtil.select(aJCas, TextClassificationOutcome.class));
+        super.collectionProcessComplete();
+        
+        if (taggerEngine != null) {
+            taggerEngine.collectionProcessComplete();
+        }
+    }
+    
+    @Override
+    public void batchProcessComplete() throws AnalysisEngineProcessException
+    {
+        super.batchProcessComplete();
+        
+        if (taggerEngine != null) {
+            taggerEngine.batchProcessComplete();
+        }
+    }
+    
+    @Override
+    public void destroy()
+    {
+        super.destroy();
+        
+        if (taggerEngine != null) {
+            taggerEngine.destroy();
+        }
     }
 }
