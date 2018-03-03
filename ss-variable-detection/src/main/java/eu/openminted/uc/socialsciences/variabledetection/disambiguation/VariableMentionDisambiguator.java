@@ -102,7 +102,7 @@ public class VariableMentionDisambiguator
                         matchAtRank[rank] ++;
                     }
                     
-                    getLogger().info("Gold " + gold.getVariableId() + "  at rank " + rank
+                    getLogger().info("Gold " + gold.getVariableId() + "  at rank " + (rank + 1)
                             + " with score " + match.score);
                     
                     for (int i = 0; i < cumulativeMatchAtRank.length; i++) {
@@ -117,7 +117,7 @@ public class VariableMentionDisambiguator
                 mention.setVariableId(matches.get(0).id);
                 mention.setScore(matches.get(0).score);
                 
-                getLogger().info("Disambiguating suggests [" + matches.get(0) + "]");
+                getLogger().info("Best match [" + matches.get(0) + "]");
             }
         }
     }

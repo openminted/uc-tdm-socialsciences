@@ -17,6 +17,7 @@
  */
 package eu.openminted.uc.socialsciences.variabledetection.detection;
 
+import static org.apache.uima.fit.util.JCasUtil.exists;
 import static org.apache.uima.fit.util.JCasUtil.select;
 import static org.apache.uima.fit.util.JCasUtil.selectSingle;
 
@@ -36,6 +37,7 @@ import org.dkpro.tc.ml.uima.TcAnnotator;
 
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
+import eu.openminted.uc.socialsciences.annotation.GoldVariableMention;
 import eu.openminted.uc.socialsciences.annotation.VariableMention;
 
 /**
@@ -81,11 +83,12 @@ public class VariableMentionDetector
             variableMention.setCorrect(outcome.getOutcome());
             variableMention.addToIndexes();
             
-            getLogger().info("Variable candidate outcome in [" + variableMention.getCoveredText()
-                    + "]: " + variableMention.getCorrect());
+            getLogger().info("Detected variable mention: " + variableMention.getCorrect());
             
             outcome.removeFromIndexes();
         }
+        
+        getLogger().info("Gold variable mention: " + exists(aJCas, GoldVariableMention.class));
     }
     
     @Override
