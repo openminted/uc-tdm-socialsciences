@@ -35,7 +35,6 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 
-
 /**
  *
  * Copied from dkpro-similarity project https://github.com/dkpro/dkpro-similarity
@@ -43,95 +42,105 @@ import weka.filters.Filter;
  * Original class org.dkpro.similarity.algorithms.ml.LinearRegressionSimilarityMeasure
  *
  * 
- * Runs a linear regression classifier on the provided test data on a model
- * that is trained on the given training data. Mind that the
- * {@link #getSimilarity(JCas,JCas) getSimilarity} method
+ * Runs a linear regression classifier on the provided test data on a model that is trained on the
+ * given training data. Mind that the {@link #getSimilarity(JCas,JCas) getSimilarity} method
  * classifies the input texts by their ID, not their textual contents. The
- * <pre>DocumentID</pre> of the <pre>DocumentMetaData</pre> is expected to denote
- * the corresponding input line in the test data.
+ * 
+ * <pre>
+ * DocumentID
+ * </pre>
+ * 
+ * of the
+ * 
+ * <pre>
+ * DocumentMetaData
+ * </pre>
+ * 
+ * is expected to denote the corresponding input line in the test data.
  */
 public class LinearRegressionSimilarityMeasure
-	extends JCasTextSimilarityMeasureBase
-	implements Serializable
+    extends JCasTextSimilarityMeasureBase
+    implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
     public static final Classifier CLASSIFIER = new LinearRegression();
-	
-	Classifier filteredClassifier;
-	boolean useLogFilter;
-	
-	public LinearRegressionSimilarityMeasure(File trainArff, boolean aUseLogFilter)
-		throws Exception
-	{
-		// Get all instances
-		Instances train = getTrainInstances(trainArff);	
-		useLogFilter = aUseLogFilter;
-		
-		// Apply log filter
-		if (useLogFilter)
-		{
-			Filter logFilter = new LogFilter();
-			logFilter.setInputFormat(train);
-			train = Filter.useFilter(train, logFilter);
-		}
-        
+
+    private Classifier filteredClassifier;
+    private boolean useLogFilter;
+
+    public LinearRegressionSimilarityMeasure(File trainArff, boolean aUseLogFilter) throws Exception
+    {
+        // Get all instances
+        Instances train = getTrainInstances(trainArff);
+        useLogFilter = aUseLogFilter;
+
+        // Apply log filter
+        if (useLogFilter) {
+            Filter logFilter = new LogFilter();
+            logFilter.setInputFormat(train);
+            train = Filter.useFilter(train, logFilter);
+        }
+
         Classifier clsCopy;
-		try {
-			// Copy the classifier
-			clsCopy = AbstractClassifier.makeCopy(CLASSIFIER);
-			
-			// Build the classifier
-			filteredClassifier = clsCopy;
-			filteredClassifier.buildClassifier(train);
-	        
-	        System.out.println(filteredClassifier.toString());
-		}
-		catch (Exception e) {
-			throw new SimilarityException(e);
-		}
-	}
-	
-	private Instances getTrainInstances(File trainArff)
-		throws SimilarityException
-	{					
-		// Read with Weka
-		Instances data;
-		try {
-			data = DataSource.read(trainArff.getAbsolutePath());
-		}
-		catch (Exception e) {
-			throw new SimilarityException(e);
-		}
-		
-		// Set the index of the class attribute
-		data.setClassIndex(data.numAttributes() - 1);
-		
-		return data;
-	}
-	
-	public Instance getInstance(File arff) throws Exception
-	{
-	    Instances instances = getTrainInstances(arff);
-	    if (useLogFilter)
-        {
+        try {
+            // Copy the classifier
+            clsCopy = AbstractClassifier.makeCopy(CLASSIFIER);
+
+            // Build the classifier
+            filteredClassifier = clsCopy;
+            filteredClassifier.buildClassifier(train);
+
+            System.out.println(filteredClassifier.toString());
+        }
+        catch (Exception e) {
+            throw new SimilarityException(e);
+        }
+    }
+
+    private Instances getTrainInstances(File trainArff) throws SimilarityException
+    {
+        // Read with Weka
+        Instances data;
+        try {
+            data = DataSource.read(trainArff.getAbsolutePath());
+        }
+        catch (Exception e) {
+            throw new SimilarityException(e);
+        }
+
+        // Set the index of the class attribute
+        data.setClassIndex(data.numAttributes() - 1);
+
+        return data;
+    }
+
+    public Instance getInstance(File arff) throws Exception
+    {
+        Instances instances = getTrainInstances(arff);
+        if (useLogFilter) {
             Filter logFilter = new LogFilter();
             logFilter.setInputFormat(instances);
             instances = Filter.useFilter(instances, logFilter);
         }
-	    return instances.get(0);
-	}
-	
-	public double getSimilarity(Instance instance) throws Exception
-	{
-	    return filteredClassifier.classifyInstance(instance);
-	}
-	
-	@Override
-	public double getSimilarity(JCas jcas1, JCas jcas2, Annotation coveringAnnotation1,
+        return instances.get(0);
+    }
+    
+    public boolean isUseLogFilter()
+    {
+        return useLogFilter;
+    }
+
+    public double getSimilarity(Instance instance) throws Exception
+    {
+        return filteredClassifier.classifyInstance(instance);
+    }
+
+    @Override
+    public double getSimilarity(JCas jcas1, JCas jcas2, Annotation coveringAnnotation1,
             Annotation coveringAnnotation2)
-		throws SimilarityException
-	{
-		throw new UnsupportedOperationException();
-	}
+        throws SimilarityException
+    {
+        throw new UnsupportedOperationException();
+    }
 }
