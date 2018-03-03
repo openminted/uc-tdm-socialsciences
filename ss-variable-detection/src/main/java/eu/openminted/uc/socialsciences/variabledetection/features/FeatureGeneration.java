@@ -357,31 +357,46 @@ public class FeatureGeneration
 
         // String features
         configs.add(new FeatureConfig(
-                createExternalResourceDescription(GreedyStringTilingMeasureResource.class,
+                createExternalResourceDescription(
+                        GreedyStringTilingMeasureResource.class,
                         GreedyStringTilingMeasureResource.PARAM_MIN_MATCH_LENGTH, "3"),
-                Document.class.getName(), false, "string", "GreedyStringTiling_3"));
+                null, // not relevant in "text" and "jcas" modes
+                false, 
+                "string", 
+                "GreedyStringTiling_3"));
 
         configs.add(new FeatureConfig(
-                createExternalResourceDescription(SimpleTextSimilarityResource.class,
+                createExternalResourceDescription(
+                        SimpleTextSimilarityResource.class,
                         SimpleTextSimilarityResource.PARAM_MODE, "text",
                         SimpleTextSimilarityResource.PARAM_TEXT_SIMILARITY_MEASURE,
                         LongestCommonSubsequenceComparator.class.getName()),
-                Document.class.getName(), false, "string", "LongestCommonSubsequenceComparator"));
+                null, // not relevant in "text" and "jcas" modes
+                false, 
+                "string", 
+                "LongestCommonSubsequenceComparator"));
 
         configs.add(new FeatureConfig(
-                createExternalResourceDescription(SimpleTextSimilarityResource.class,
+                createExternalResourceDescription(
+                        SimpleTextSimilarityResource.class,
                         SimpleTextSimilarityResource.PARAM_MODE, "text",
                         SimpleTextSimilarityResource.PARAM_TEXT_SIMILARITY_MEASURE,
                         LongestCommonSubsequenceNormComparator.class.getName()),
-                Document.class.getName(), false, "string",
+                null, // not relevant in "text" and "jcas" modes
+                false, 
+                "string",
                 "LongestCommonSubsequenceNormComparator"));
 
         configs.add(new FeatureConfig(
-                createExternalResourceDescription(SimpleTextSimilarityResource.class,
+                createExternalResourceDescription(
+                        SimpleTextSimilarityResource.class,
                         SimpleTextSimilarityResource.PARAM_MODE, "text",
                         SimpleTextSimilarityResource.PARAM_TEXT_SIMILARITY_MEASURE,
                         LongestCommonSubstringComparator.class.getName()),
-                Document.class.getName(), false, "string", "LongestCommonSubstringComparator"));
+                null, // not relevant in "text" and "jcas" modes
+                false, 
+                "string", 
+                "LongestCommonSubstringComparator"));
 
         // ngrams_n = new int[] { 2, 3, 4 };
         // for (int n : ngrams_n)
