@@ -210,8 +210,7 @@ public class XmlCorpusAllDocsReader
 //            return false;
 //        }
         
-        getLogger().info("Processed: " + count);
-        getLogger().info("Left to process: " + dataQueue.size());
+        getLogger().info("Processed: " + count + " / " + (dataQueue.size() + count));
         return super.hasNext() || !dataQueue.isEmpty();
     }
     

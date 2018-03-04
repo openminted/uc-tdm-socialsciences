@@ -5,18 +5,25 @@ import static org.apache.uima.fit.util.JCasUtil.select;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+
+import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import eu.openminted.uc.socialsciences.annotation.GoldVariableMention;
 import eu.openminted.uc.socialsciences.annotation.VariableMention;
@@ -53,6 +60,8 @@ public class VariableMentionDisambiguator
     private int[] matchAtRank = new int[100];
     private int[] cumulativeMatchAtRank = new int[100];
 
+    private PrintWriter logwriter;
+    
     @Override
     public void initialize(final UimaContext context) throws ResourceInitializationException
     {
@@ -66,11 +75,20 @@ public class VariableMentionDisambiguator
         catch (Exception e) {
             throw new ResourceInitializationException(e);
         }
+        
+        try {
+            logwriter = new PrintWriter(new FileWriter("target/log.csv"));
+        }
+        catch (IOException e) {
+            throw new ResourceInitializationException(e);
+        }
     }
 
     @Override
     public void process(JCas aJCas) throws AnalysisEngineProcessException
     {
+        DocumentMetaData meta = DocumentMetaData.get(aJCas);
+        
         for (VariableMention mention : select(aJCas, VariableMention.class)) {
             if (mention.getCorrect().equals("Yes") || disambiguateAllMentions) {
                 getLogger().info(
@@ -88,7 +106,10 @@ public class VariableMentionDisambiguator
                     throw new AnalysisEngineProcessException(e);
                 }
                 
+                Set<String> goldVariables = new HashSet<>();
                 for (GoldVariableMention gold : select(aJCas, GoldVariableMention.class)) {
+                    goldVariables.add(gold.getVariableId());
+                    
                     Match match = matches.stream().filter(m -> gold.getVariableId().equals(m.id))
                             .findFirst().orElse(null);
                     if (match == null) {
@@ -102,7 +123,7 @@ public class VariableMentionDisambiguator
                         matchAtRank[rank] ++;
                     }
                     
-                    getLogger().info("Gold " + gold.getVariableId() + "  at rank " + (rank + 1)
+                    getLogger().info("Gold " + gold.getVariableId() + " at rank " + (rank + 1)
                             + " with score " + match.score);
                     
                     for (int i = 0; i < cumulativeMatchAtRank.length; i++) {
@@ -116,6 +137,16 @@ public class VariableMentionDisambiguator
                 
                 mention.setVariableId(matches.get(0).id);
                 mention.setScore(matches.get(0).score);
+                
+                int r = 1;
+                for (Match m : matches) {
+                    logwriter.printf("%s;%d;%d;%s;%d;%f;%d%n", meta.getDocumentId(),
+                            "Yes".equals(mention.getCorrect()) ? 1 : 0,
+                            goldVariables.isEmpty() ? 0 : 1, m.id, r, m.score,
+                            goldVariables.contains(m.id) ? 1 : 0);
+                    r++;
+                }
+                logwriter.flush();
                 
                 getLogger().info("Best match [" + matches.get(0) + "]");
             }
@@ -131,6 +162,8 @@ public class VariableMentionDisambiguator
             getLogger().info("Matches at " + (i + 1) + ": " + matchAtRank[i] + " - "
                     + cumulativeMatchAtRank[i]);
         }
+        
+        logwriter.close();
     }
 
     private static LinearRegressionSimilarityMeasure loadClassifier(String aFilename)
@@ -182,7 +215,7 @@ public class VariableMentionDisambiguator
 
         return matches;
     }
-    
+        
     private static class Match
     {
         final String id;

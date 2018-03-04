@@ -88,7 +88,8 @@ public class VariableMentionDetector
             outcome.removeFromIndexes();
         }
         
-        getLogger().info("Gold variable mention: " + exists(aJCas, GoldVariableMention.class));
+        getLogger().info("Gold variable mention    : "
+                + (exists(aJCas, GoldVariableMention.class) ? "Yes" : "No"));
     }
     
     @Override
