@@ -1,5 +1,6 @@
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
+import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.UTILS_DIR;
 import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer.DATASET_DIR;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
@@ -27,6 +28,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceComparator;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceNormComparator;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubstringComparator;
+import org.dkpro.similarity.algorithms.lexical.uima.ngrams.CharacterNGramResource;
+import org.dkpro.similarity.algorithms.lexical.uima.ngrams.WordNGramContainmentResource;
+import org.dkpro.similarity.algorithms.lexical.uima.ngrams.WordNGramJaccardResource;
 import org.dkpro.similarity.algorithms.lexical.uima.string.GreedyStringTilingMeasureResource;
 import org.dkpro.similarity.ml.FeatureConfig;
 import org.dkpro.similarity.ml.io.SimilarityScoreWriter;
@@ -38,6 +42,7 @@ import org.dkpro.similarity.uima.io.CombinationReader.CombinationStrategy;
 import org.dkpro.similarity.uima.resource.SimpleTextSimilarityResource;
 
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
@@ -62,7 +67,10 @@ public class FeatureGeneration
     
     public FeatureGeneration() throws Exception
     {
-        featureConfigList = getFeatureConfigs(Dataset.TEMP, Mode.TEMP);
+        // Dataset and mode resemble the place where we stored the data *NOT* the semantics of
+        // how that data is used here!
+        featureConfigList = getFeatureConfigs(Dataset.ALL, Mode.TRAIN);
+        
         for (FeatureConfig config : featureConfigList) {
             System.out.println(config.getMeasureName());
 
@@ -324,61 +332,52 @@ public class FeatureGeneration
                 "string", 
                 "LongestCommonSubstringComparator"));
 
-//        for (int n : char_ngrams_n) {
-//            configs.add(new FeatureConfig(
-//                    createExternalResourceDescription(
-//                            CharacterNGramResource.class,
-//                            CharacterNGramResource.PARAM_N, Integer.toString(n),
-//                            CharacterNGramResource.PARAM_IDF_VALUES_FILE,
-//                            UTILS_DIR + "/character-ngrams-idf/" + mode.toString().toLowerCase()
-//                                    + "/" + n + "/" + dataset.toString() + ".txt"),
-//                    null, // not relevant in "text" and "jcas" modes
-//                    false, 
-//                    "n-grams", 
-//                    "CharacterNGramMeasure_" + n));
-//        }
+        for (int n : CHAR_NGRAMS_N) {
+            configs.add(new FeatureConfig(
+                    createExternalResourceDescription(
+                            CharacterNGramResource.class,
+                            CharacterNGramResource.PARAM_N, Integer.toString(n),
+                            CharacterNGramResource.PARAM_IDF_VALUES_FILE,
+                            UTILS_DIR + "/character-ngrams-idf/" + mode.toString().toLowerCase()
+                                    + "/" + n + "/" + dataset.toString() + ".txt"),
+                    null, // not relevant in "text" and "jcas" modes
+                    false, 
+                    "n-grams", 
+                    "CharacterNGramMeasure_" + n));
+        }
 
-        // ngrams_n = new int[] { 1, 2 };
-        // for (int n : ngrams_n)
-        // {
-        // configs.add(new FeatureConfig(
-        // createExternalResourceDescription(
-        // WordNGramContainmentResource.class,
-        // WordNGramContainmentResource.PARAM_N, new Integer(n).toString()),
-        // Token.class.getName(),
-        // true,
-        // "n-grams",
-        // "WordNGramContainmentMeasure_" + n + "_stopword-filtered"
-        // ));
-        // }
+        for (int n : new int[] { 1, 2 }) {
+            configs.add(new FeatureConfig(
+                    createExternalResourceDescription(
+                            WordNGramContainmentResource.class,
+                            WordNGramContainmentResource.PARAM_N, Integer.toString(n)),
+                    Token.class.getName(), 
+                    true, 
+                    "n-grams",
+                    "WordNGramContainmentMeasure_" + n + "_stopword-filtered"));
+        }
 
-        // ngrams_n = new int[] { 1, 3, 4 };
-        // for (int n : ngrams_n)
-        // {
-        // configs.add(new FeatureConfig(
-        // createExternalResourceDescription(
-        // WordNGramJaccardResource.class,
-        // WordNGramJaccardResource.PARAM_N, new Integer(n).toString()),
-        // Token.class.getName(),
-        // false,
-        // "n-grams",
-        // "WordNGramJaccardMeasure_" + n
-        // ));
-        // }
+        for (int n : new int[] { 1, 3, 4 }) {
+            configs.add(new FeatureConfig(
+                    createExternalResourceDescription(
+                            WordNGramJaccardResource.class,
+                            WordNGramJaccardResource.PARAM_N, Integer.toString(n)),
+                    Token.class.getName(), 
+                    false, 
+                    "n-grams", 
+                    "WordNGramJaccardMeasure_" + n));
+        }
 
-        // ngrams_n = new int[] { 2, 4 };
-        // for (int n : ngrams_n)
-        // {
-        // configs.add(new FeatureConfig(
-        // createExternalResourceDescription(
-        // WordNGramJaccardResource.class,
-        // WordNGramJaccardResource.PARAM_N, new Integer(n).toString()),
-        // Token.class.getName(),
-        // true,
-        // "n-grams",
-        // "WordNGramJaccardMeasure_" + n + "_stopword-filtered"
-        // ));
-        // }
+        for (int n : new int[] { 2, 4 }) {
+            configs.add(new FeatureConfig(
+                    createExternalResourceDescription(
+                            WordNGramJaccardResource.class,
+                            WordNGramJaccardResource.PARAM_N, Integer.toString(n)),
+                    Token.class.getName(), 
+                    true, 
+                    "n-grams",
+                    "WordNGramJaccardMeasure_" + n + "_stopword-filtered"));
+        }
 
         /*
          * TODO: If you plan to use the following measures, make sure that you have the necessary
@@ -386,23 +385,25 @@ public class FeatureGeneration
          * https://dkpro.github.io/dkpro-similarity/settinguptheresources/
          */
         // Needs [Prerequisites]
-        // // Resnik word similarity measure, aggregated according to Mihalcea et al. (2006)
-        // configs.add(new FeatureConfig(
-        // createExternalResourceDescription(
-        // MCS06AggregateResource.class,
-        // MCS06AggregateResource.PARAM_TERM_SIMILARITY_RESOURCE, createExternalResourceDescription(
-        // ResnikRelatednessResource.class,
-        // ResnikRelatednessResource.PARAM_RESOURCE_NAME, "wordnet",
-        // ResnikRelatednessResource.PARAM_RESOURCE_LANGUAGE, "en"
-        // ),
-        // MCS06AggregateResource.PARAM_IDF_VALUES_FILE, UTILS_DIR + "/word-idf/" +
-        // mode.toString().toLowerCase() + "/" + dataset.toString() + ".txt"),
-        // Lemma.class.getName() + "/value",
-        // false,
-        // "word-sim",
-        // "MCS06_Resnik_WordNet"
-        // ));
-        //
+        // Resnik word similarity measure, aggregated according to Mihalcea et al. (2006)
+        /*
+        configs.add(new FeatureConfig(
+                createExternalResourceDescription(
+                        MCS06AggregateResource.class,
+                        MCS06AggregateResource.PARAM_TERM_SIMILARITY_RESOURCE,
+                                createExternalResourceDescription(
+                                        ResnikRelatednessResource.class,
+                                        ResnikRelatednessResource.PARAM_RESOURCE_NAME, "wordnet",
+                                        ResnikRelatednessResource.PARAM_RESOURCE_LANGUAGE, "en"),
+                        MCS06AggregateResource.PARAM_IDF_VALUES_FILE,
+                        UTILS_DIR + "/word-idf/" + mode.toString().toLowerCase() + "/"
+                                + dataset.toString() + ".txt"),
+                Lemma.class.getName() + "/value", 
+                false, 
+                "word-sim", 
+                "MCS06_Resnik_WordNet"));
+        */
+        
         // // Lexical Substitution System wrapper for
         // // Resnik word similarity measure, aggregated according to Mihalcea et al. (2006)
         // configs.add(new FeatureConfig(
