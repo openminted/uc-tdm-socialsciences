@@ -36,19 +36,32 @@ public class DetectionDisambiguationPipeline
                         XmlCorpusAllDocsReader.PARAM_SOURCE_LOCATION, COPRUS_FILEPATH_TEST, 
                         XmlCorpusAllDocsReader.PARAM_LANGUAGE, LANGUAGE_CODE),
                 //Preprocessing should be the same as the one used for model training
-                createEngineDescription(BreakIteratorSegmenter.class),
-                createEngineDescription(OpenNlpPosTagger.class),
-                createEngineDescription(StanfordLemmatizer.class),
-                createEngineDescription(OpenNlpNamedEntityRecognizer.class),
-                createEngineDescription(StopWordRemover.class,
-                        StopWordRemover.PARAM_MODEL_LOCATION, "classpath:/stopwords/english.txt"),
-                createEngineDescription(VariableMentionDetector.class,
+                createEngineDescription(
+                        BreakIteratorSegmenter.class),
+                createEngineDescription(
+                        OpenNlpPosTagger.class),
+                createEngineDescription(
+                        StanfordLemmatizer.class),
+                createEngineDescription(
+                        OpenNlpNamedEntityRecognizer.class),
+                createEngineDescription(
+                        StopWordRemover.class,
+                        StopWordRemover.PARAM_MODEL_LOCATION, 
+                                "classpath:/stopwords/stopwords_english_punctuation.txt"),
+                createEngineDescription(
+                        VariableMentionDetector.class,
                         VariableMentionDetector.PARAM_MODEL_LOCATION, DETECTION_MODEL_LOCATION),
-                createEngineDescription(VariableMentionDisambiguator.class,
+                /*
+                createEngineDescription(
+                        GoldVariableMentionDetector.class),
+                */
+                createEngineDescription(
+                        VariableMentionDisambiguator.class,
                         VariableMentionDisambiguator.PARAM_DISAMBIGUATE_ALL_MENTIONS, true,
                         VariableMentionDisambiguator.PARAM_MODEL_LOCATION, DISAMBIGUATION_MODEL_LOCATION,
                         VariableMentionDisambiguator.PARAM_VARIABLE_FILE_LOCATION, "../data/datasets/Variables_English.xml"),
-                createEngineDescription(XmiWriter.class,
+                createEngineDescription(
+                        XmiWriter.class,
                         XmiWriter.PARAM_TARGET_LOCATION, PREDICTION_PATH,
                         XmiWriter.PARAM_OVERWRITE, true));
     }
