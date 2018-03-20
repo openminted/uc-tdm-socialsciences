@@ -267,7 +267,9 @@
     <profile>
       <id>run-jcasgen</id>
       <activation>
-        <!-- <activeByDefault>true</activeByDefault> -->
+        <file>
+          <exists>.activate-run-jcasgen</exists>
+        </file>
       </activation>
       <build>
         <plugins>

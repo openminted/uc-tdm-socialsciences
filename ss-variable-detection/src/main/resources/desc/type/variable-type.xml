@@ -6,7 +6,7 @@
     <vendor>OpenMinTeD</vendor>
     <types>
         <typeDescription>
-            <name>eu.openminted.uc.socialsciences.annotation.VariableMention</name>
+            <name>eu.openminted.uc.socialsciences.variabledetection.type.VariableMention</name>
             <description/>
             <supertypeName>uima.tcas.Annotation</supertypeName>
             <features>
@@ -48,7 +48,7 @@
       </features>
         </typeDescription>
     <typeDescription>
-      <name>eu.openminted.uc.socialsciences.annotation.GoldVariableMention</name>
+      <name>eu.openminted.uc.socialsciences.variabledetection.type.GoldVariableMention</name>
       <description/>
       <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
