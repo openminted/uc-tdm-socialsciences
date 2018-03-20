@@ -30,6 +30,7 @@ VariableMention
    question: "I'm going to read you some statements now. Please tell me after each one whether you have the same or a different opinion."
    subQuestion: "With the future looking as it does, it's almost irresponsible to bring children into the world."
    answers: ""
+   score: 0.0
 [The German General Social Survey in 2008 asked to its respondents whether they agreed or disagreed with the idea that, given the future, one can hardly take responsibility to bring children into the world.]
 VariableMention
    sofa: _InitialView
@@ -41,6 +42,7 @@ VariableMention
    question: "And what if there is a child? Do you think one should get married then?"
    subQuestion: ""
    answers: ""
+   score: 0.0
 [The German General Social Survey in 2008 asked to its respondents whether they agreed or disagreed with the idea that, given the future, one can hardly take responsibility to bring children into the world.]
 VariableMention
    sofa: _InitialView
@@ -52,6 +54,7 @@ VariableMention
    question: "People have different opinions about the role of women in the family and in bringing up children. For each of the statements on the card, please tell me whether you completely agree, tend to agree, tend to disagree, or completely disagree."
    subQuestion: "A working mother can establish just as loving and secure a relationship with her children as a mother who doesn't work."
    answers: ""
+   score: 0.0
 [The German General Social Survey in 2008 asked to its respondents whether they agreed or disagreed with the idea that, given the future, one can hardly take responsibility to bring children into the world.]
 VariableMention
    sofa: _InitialView
@@ -63,6 +66,7 @@ VariableMention
    question: "People have different opinions about the role of women in the family and in bringing up children. For each of the statements on the card, please tell me whether you completely agree, tend to agree, tend to disagree, or completely disagree."
    subQuestion: "It is much better for everyone concerned if the man goes out to work and the woman stays at home and looks after the house and children."
    answers: ""
+   score: 0.0
 [Estimates document that those more worried for the future tend to report a 9.25% lower life satisfaction than the others.]
 Sentence
    sofa: _InitialView
