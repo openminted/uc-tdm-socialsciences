@@ -26,6 +26,7 @@ import eu.openminted.share.annotations.api.Component;
 import eu.openminted.share.annotations.api.DataFormat;
 import eu.openminted.share.annotations.api.ResourceInput;
 import eu.openminted.share.annotations.api.constants.ComponentConstants;
+import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.cas.CAS;
@@ -52,8 +53,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import eu.openminted.uc.socialsciences.annotation.VariableMention;
 
 import static org.apache.commons.io.IOUtils.closeQuietly;
 

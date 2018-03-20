@@ -49,7 +49,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.io.JCasResourceCollectionReader_ImplBase;
-import eu.openminted.uc.socialsciences.annotation.GoldVariableMention;
+import eu.openminted.uc.socialsciences.variabledetection.type.GoldVariableMention;
 
 /**
  * Collection reader for Variable mention XML file containing sentences from several documents

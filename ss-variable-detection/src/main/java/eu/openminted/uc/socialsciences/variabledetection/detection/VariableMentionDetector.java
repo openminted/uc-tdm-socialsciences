@@ -37,8 +37,8 @@ import org.dkpro.tc.ml.uima.TcAnnotator;
 
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import eu.openminted.uc.socialsciences.annotation.GoldVariableMention;
-import eu.openminted.uc.socialsciences.annotation.VariableMention;
+import eu.openminted.uc.socialsciences.variabledetection.type.GoldVariableMention;
+import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
 
 /**
  * Variable detection component

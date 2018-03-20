@@ -21,8 +21,9 @@ import static org.apache.uima.fit.util.JCasUtil.exists;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.jcas.JCas;
-import eu.openminted.uc.socialsciences.annotation.GoldVariableMention;
-import eu.openminted.uc.socialsciences.annotation.VariableMention;
+
+import eu.openminted.uc.socialsciences.variabledetection.type.GoldVariableMention;
+import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
 
 /**
  * Variable detection component which creates a mention based on gold data. This is used to
