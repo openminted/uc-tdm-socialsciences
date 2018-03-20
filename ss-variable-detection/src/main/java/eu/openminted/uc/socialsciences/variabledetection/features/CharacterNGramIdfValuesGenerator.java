@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.dkpro.similarity.algorithms.lexical.ngrams.CharacterNGramMeasure;
+import dkpro.similarity.algorithms.lexical.ngrams.CharacterNGramMeasure;
 
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants;

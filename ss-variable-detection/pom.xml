@@ -10,6 +10,7 @@
   <artifactId>ss-variable-detection</artifactId>
   <name>ss-variable-detection</name>
 
+<!--  
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -26,6 +27,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+-->
 
   <dependencies>
     <dependency>
@@ -100,6 +102,7 @@
     </dependency>
 
     <!-- DKPro LexSem -->
+    <!--  
     <dependency>
       <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
       <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.core-asl</artifactId>
@@ -112,6 +115,7 @@
       <groupId>de.tudarmstadt.ukp.dkpro.lexsemresource</groupId>
       <artifactId>de.tudarmstadt.ukp.dkpro.lexsemresource.wordnet-asl</artifactId>
     </dependency>
+    -->
 
     <dependency>
       <groupId>nz.ac.waikato.cms.weka</groupId>
@@ -137,10 +141,12 @@
     </dependency>
 
     <!-- DKPro Similarity -->
+    <!--  
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-algorithms-lsr-asl</artifactId>
     </dependency>
+    -->
     <dependency>
       <groupId>org.dkpro.similarity</groupId>
       <artifactId>dkpro-similarity-algorithms-lexical-asl</artifactId>
@@ -197,6 +203,23 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+        <!-- 
+          - These are excluded because they depend on DKPro Similarity 2.3.0 including the
+          - LSR module which are both presently not available from Maven Central.
+          -->
+        <excludes>
+          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/TheSozFeatures.java</exclude>
+          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/TheSozMetaCollector.java</exclude>
+          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/WordnetFeatures.java</exclude>
+          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/WordnetMetaCollector.java</exclude>
+          <exclude>eu/openminted/uc/socialsciences/variabledetection/resource/KnowledgeBaseFactory.java</exclude>
+        </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.uima</groupId>
         <artifactId>uimafit-maven-plugin</artifactId>
       </plugin>
@@ -226,7 +249,7 @@
               <transformers>
                 <!-- Set the main class of the executable JAR -->
                 <!-- <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer</mainClass>
+                  <mainClass>eu.openminted.uc.socialsciences.variabledetection.disambiguation.DisambiguationOnlyTrainingPipeline</mainClass>
                   </transformer> -->
                 <!-- Merge the uimaFIT configuration files -->
                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
@@ -240,7 +263,7 @@
                 </transformer>
               </transformers>
               <!-- Prevent huge shaded artifacts from being deployed to Artifactory -->
-              <outputFile>${project.build.directory}/${project.artifactId}-${project.version}-ss-variabledetection-standalone.jar</outputFile>
+              <outputFile>${project.build.directory}/${project.artifactId}-standalone-${project.version}.jar</outputFile>
             </configuration>
           </execution>
         </executions>
@@ -296,6 +319,50 @@
                 </goals>
               </execution>
             </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>docker</id>
+      <activation>
+        <property>
+          <name>enable-docker</name>
+        </property>
+      </activation>
+      <properties>
+        <docker.jarfile>maven/${project.artifactId}-standalone-${project.version}.jar</docker.jarfile>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <configuration>
+              <images>
+                <image>
+                  <name>${docker.image.name}</name>
+                  <build>
+                    <tags>
+                      <tag>latest</tag>
+                      <tag>${project.version}</tag>
+                    </tags>
+                    <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
+                    <filter>@</filter>
+                    <assembly>
+                      <descriptorRef>artifact</descriptorRef>
+                      <inline>
+                        <files>
+                          <file>
+                            <source>${project.build.directory}/${project.artifactId}-standalone-${project.version}.jar</source>
+                          </file>
+                        </files>
+                      </inline>
+                    </assembly>
+                  </build>
+                </image>
+              </images>
+            </configuration>
           </plugin>
         </plugins>
       </build>

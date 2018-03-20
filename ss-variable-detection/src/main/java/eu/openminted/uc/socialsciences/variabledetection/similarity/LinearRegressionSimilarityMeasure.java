@@ -23,9 +23,9 @@ import java.io.Serializable;
 
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.tcas.Annotation;
-import org.dkpro.similarity.algorithms.api.JCasTextSimilarityMeasureBase;
-import org.dkpro.similarity.algorithms.api.SimilarityException;
-import org.dkpro.similarity.ml.filters.LogFilter;
+import dkpro.similarity.algorithms.api.JCasTextSimilarityMeasureBase;
+import dkpro.similarity.algorithms.api.SimilarityException;
+import dkpro.similarity.ml.filters.LogFilter;
 
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;

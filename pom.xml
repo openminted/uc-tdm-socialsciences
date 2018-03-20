@@ -159,7 +159,7 @@
     <dkpro.statistics.version>2.1.0</dkpro.statistics.version>
     <lsr.version>0.8.1</lsr.version>
     <jena.version>3.4.0</jena.version>
-    <dkpro.similarity.version>2.3.0-SNAPSHOT</dkpro.similarity.version>
+    <dkpro.similarity.version>2.2.0</dkpro.similarity.version>
   </properties>
 
   <dependencyManagement>
