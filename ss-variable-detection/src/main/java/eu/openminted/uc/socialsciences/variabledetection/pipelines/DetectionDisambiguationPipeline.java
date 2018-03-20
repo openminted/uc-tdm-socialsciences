@@ -18,8 +18,8 @@ import eu.openminted.uc.socialsciences.variabledetection.uima.io.XmlCorpusAllDoc
 
 public class DetectionDisambiguationPipeline
 {
-    private static final String DETECTION_MODEL_LOCATION = "../data/models/variable-detection/";
-    private static final String DISAMBIGUATION_MODEL_LOCATION = "../data/models/variable-disambiguation/variable-disambiguation-model.ser";
+    private static final String DETECTION_MODEL_LOCATION = "classpath:/models/variable-detection/";
+    private static final String DISAMBIGUATION_MODEL_LOCATION = "classpath:/models/variable-disambiguation/variable-disambiguation-model.ser";
     private static final String COPRUS_FILEPATH_TEST = "../data/datasets/Full_ALLDOCS_English.xml";
     private static final String LANGUAGE_CODE = "en";
     private static final File PREDICTION_PATH = new File("target/prediction");

@@ -1,7 +1,6 @@
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
 import static eu.openminted.uc.socialsciences.variabledetection.pipelines.DisambiguationOnlyTrainingPipeline.DATASET_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.UTILS_DIR;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
@@ -338,7 +337,7 @@ public class FeatureGeneration
                             CharacterNGramResource.class,
                             CharacterNGramResource.PARAM_N, Integer.toString(n),
                             CharacterNGramResource.PARAM_IDF_VALUES_FILE,
-                            UTILS_DIR + "/character-ngrams-idf/" + mode.toString().toLowerCase()
+                            "classpath:/models/character-ngrams-idf/" + mode.toString().toLowerCase()
                                     + "/" + n + "/" + dataset.toString() + ".txt"),
                     null, // not relevant in "text" and "jcas" modes
                     false, 

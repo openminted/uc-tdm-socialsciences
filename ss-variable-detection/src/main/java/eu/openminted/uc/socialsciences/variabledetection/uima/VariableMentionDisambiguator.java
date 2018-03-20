@@ -3,7 +3,6 @@ package eu.openminted.uc.socialsciences.variabledetection.uima;
 import static org.apache.uima.fit.util.JCasUtil.select;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,6 +24,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
+import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants;
 import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
@@ -171,7 +171,8 @@ public class VariableMentionDisambiguator
         throws FileNotFoundException, IOException, ClassNotFoundException
     {
         LinearRegressionSimilarityMeasure classifier;
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(aFilename))) {
+        try (ObjectInputStream input = new ObjectInputStream(
+                ResourceUtils.resolveLocation(aFilename).openStream())) {
             classifier = (LinearRegressionSimilarityMeasure) input.readObject();
         }
         return classifier;
