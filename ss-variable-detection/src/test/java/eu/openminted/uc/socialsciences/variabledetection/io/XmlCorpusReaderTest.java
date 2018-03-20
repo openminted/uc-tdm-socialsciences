@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.testing.DkproTestContext;
 import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
+import eu.openminted.uc.socialsciences.variabledetection.uima.io.XmlCorpusReader;
 
 public class XmlCorpusReaderTest
 {

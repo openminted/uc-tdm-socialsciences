@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see http://www.gnu.org/licenses/ .
  */
-package eu.openminted.uc.socialsciences.variabledetection.io;
+package eu.openminted.uc.socialsciences.variabledetection.uima.io;
 
 import java.io.FileInputStream;
 import java.io.IOException;

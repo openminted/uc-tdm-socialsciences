@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.io;
+package eu.openminted.uc.socialsciences.variabledetection.uima.io;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReader;

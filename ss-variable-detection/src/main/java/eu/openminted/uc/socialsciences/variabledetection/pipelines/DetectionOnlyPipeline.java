@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.detection;
+package eu.openminted.uc.socialsciences.variabledetection.pipelines;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
@@ -18,13 +18,14 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import eu.openminted.uc.socialsciences.variabledetection.io.XmlCorpusAllDocsReader;
+import eu.openminted.uc.socialsciences.variabledetection.uima.VariableMentionDetector;
+import eu.openminted.uc.socialsciences.variabledetection.uima.io.XmlCorpusAllDocsReader;
 
 /**
  * Pipeline for loading a <a href="https://github.com/dkpro/dkpro-tc">DKPro-TC</a> model and applying
  * it to input data. 
  */
-public class LoadAndApplyPipeline
+public class DetectionOnlyPipeline
     implements Constants
 {
     private static final String COPRUS_FILEPATH_TEST = "/home/local/UKP/kiaeeha/workspace/Datasets"
@@ -35,7 +36,7 @@ public class LoadAndApplyPipeline
 
     public static void main(String[] args) throws Exception
     {
-        LoadAndApplyPipeline experiment = new LoadAndApplyPipeline();
+        DetectionOnlyPipeline experiment = new DetectionOnlyPipeline();
         experiment.applyStoredModel();
     }
 

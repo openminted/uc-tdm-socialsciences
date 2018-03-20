@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.detection;
+package eu.openminted.uc.socialsciences.variabledetection.pipelines;
 
 import java.util.Map;
 

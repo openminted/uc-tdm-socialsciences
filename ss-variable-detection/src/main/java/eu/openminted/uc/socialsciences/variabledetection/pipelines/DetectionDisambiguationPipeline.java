@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection;
+package eu.openminted.uc.socialsciences.variabledetection.pipelines;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
@@ -12,9 +12,9 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import eu.openminted.uc.socialsciences.variabledetection.detection.VariableMentionDetector;
-import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableMentionDisambiguator;
-import eu.openminted.uc.socialsciences.variabledetection.io.XmlCorpusAllDocsReader;
+import eu.openminted.uc.socialsciences.variabledetection.uima.VariableMentionDetector;
+import eu.openminted.uc.socialsciences.variabledetection.uima.VariableMentionDisambiguator;
+import eu.openminted.uc.socialsciences.variabledetection.uima.io.XmlCorpusAllDocsReader;
 
 public class DetectionDisambiguationPipeline
 {

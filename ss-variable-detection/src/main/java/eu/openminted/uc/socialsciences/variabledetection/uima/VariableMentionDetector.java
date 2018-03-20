@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package eu.openminted.uc.socialsciences.variabledetection.detection;
+package eu.openminted.uc.socialsciences.variabledetection.uima;
 
 import static org.apache.uima.fit.util.JCasUtil.exists;
 import static org.apache.uima.fit.util.JCasUtil.select;

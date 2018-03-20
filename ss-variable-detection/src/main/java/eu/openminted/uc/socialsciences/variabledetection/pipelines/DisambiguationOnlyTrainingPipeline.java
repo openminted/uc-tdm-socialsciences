@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.disambiguation;
+package eu.openminted.uc.socialsciences.variabledetection.pipelines;
 
 import static java.util.Arrays.asList;
 
@@ -9,15 +9,19 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
-import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
 import eu.openminted.uc.socialsciences.variabledetection.features.CharacterNGramIdfValuesGenerator;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
 import eu.openminted.uc.socialsciences.variabledetection.features.WordIdfValuesGenerator;
+import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Mode;
 import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
 import eu.openminted.uc.socialsciences.variabledetection.util.Features2Arff;
 
-public class VariableDisambiguationModelTrainer
+/**
+ * Trains a text similarity model using the SemEval 2012 Datasets included in DKPro Similarity
+ * and writes the results to the target folder specified on the command line.
+ */
+public class DisambiguationOnlyTrainingPipeline
 {
     public static final String DATASET_DIR = "classpath:/datasets/semeval-2012";
     public static final String GOLDSTANDARD_DIR = "classpath:/goldstandards/semeval-2012";
@@ -29,7 +33,7 @@ public class VariableDisambiguationModelTrainer
             System.exit(1);
         }
         
-        new VariableDisambiguationModelTrainer().run(args[0]);
+        new DisambiguationOnlyTrainingPipeline().run(args[0]);
     }
 
     public void run(String modelFileName) throws Exception
@@ -60,10 +64,6 @@ public class VariableDisambiguationModelTrainer
         
         // Generate the features for training data
         FeatureGeneration.generateFeatures(Dataset.ALL, datasets, mode);
-
-//        // Concatenate all training data
-//        FeatureGeneration.combineFeatureSets(Mode.TRAIN,
-//                Dataset.ALL, Dataset.MSRpar, Dataset.MSRvid, Dataset.SMTeuroparl);
 
         // Package features in arff files
         Features2Arff.toArffFile(Mode.TRAIN, Dataset.ALL);

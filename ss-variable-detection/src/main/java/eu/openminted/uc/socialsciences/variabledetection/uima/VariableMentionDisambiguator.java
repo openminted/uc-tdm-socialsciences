@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.disambiguation;
+package eu.openminted.uc.socialsciences.variabledetection.uima;
 
 import static org.apache.uima.fit.util.JCasUtil.select;
 
@@ -26,10 +26,11 @@ import org.apache.uima.resource.ResourceInitializationException;
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
-import eu.openminted.uc.socialsciences.variabledetection.io.VariableFileReader;
+import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants;
 import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
 import eu.openminted.uc.socialsciences.variabledetection.type.GoldVariableMention;
 import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
+import eu.openminted.uc.socialsciences.variabledetection.uima.io.VariableFileReader;
 import eu.openminted.uc.socialsciences.variabledetection.util.Features2Arff;
 import weka.core.Instance;
 

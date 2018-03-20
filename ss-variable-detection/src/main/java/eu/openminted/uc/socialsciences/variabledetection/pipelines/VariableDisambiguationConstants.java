@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.disambiguation;
+package eu.openminted.uc.socialsciences.variabledetection.pipelines;
 
 public class VariableDisambiguationConstants
 {

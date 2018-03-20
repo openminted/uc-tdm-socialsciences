@@ -10,11 +10,11 @@
  ******************************************************************************/
 package eu.openminted.uc.socialsciences.variabledetection.util;
 
-import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.FEATURES_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationModelTrainer.GOLDSTANDARD_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.MODELS_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
-import static eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
+import static eu.openminted.uc.socialsciences.variabledetection.pipelines.DisambiguationOnlyTrainingPipeline.GOLDSTANDARD_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Dataset;
+import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.FEATURES_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.MODELS_DIR;
+import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Mode;
 
 import java.io.BufferedReader;
 import java.io.File;

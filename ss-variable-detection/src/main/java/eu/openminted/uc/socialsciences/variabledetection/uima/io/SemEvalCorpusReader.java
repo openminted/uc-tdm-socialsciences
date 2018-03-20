@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.io;
+package eu.openminted.uc.socialsciences.variabledetection.uima.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
