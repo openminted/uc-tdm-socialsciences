@@ -25,9 +25,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
-import eu.openminted.uc.socialsciences.similarity.algorithms.ml.LinearRegressionSimilarityMeasure;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
 import eu.openminted.uc.socialsciences.variabledetection.io.VariableFileReader;
+import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
 import eu.openminted.uc.socialsciences.variabledetection.type.GoldVariableMention;
 import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
 import eu.openminted.uc.socialsciences.variabledetection.util.Features2Arff;

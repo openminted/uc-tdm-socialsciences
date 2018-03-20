@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-import eu.openminted.uc.socialsciences.similarity.algorithms.ml.LinearRegressionSimilarityMeasure;
 import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Dataset;
 import eu.openminted.uc.socialsciences.variabledetection.disambiguation.VariableDisambiguationConstants.Mode;
 import eu.openminted.uc.socialsciences.variabledetection.features.CharacterNGramIdfValuesGenerator;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
 import eu.openminted.uc.socialsciences.variabledetection.features.WordIdfValuesGenerator;
+import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
 import eu.openminted.uc.socialsciences.variabledetection.util.Features2Arff;
 
 public class VariableDisambiguationModelTrainer
