@@ -13,7 +13,6 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.dkpro.tc.core.Constants;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
-import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
@@ -54,7 +53,7 @@ public class DetectionOnlyPipeline
                 createEngineDescription(BreakIteratorSegmenter.class),
                 createEngineDescription(OpenNlpPosTagger.class),
                 createEngineDescription(StanfordLemmatizer.class),
-                createEngineDescription(OpenNlpNamedEntityRecognizer.class),
+//                createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
                         StopWordRemover.PARAM_MODEL_LOCATION, "classpath:/stopwords/english.txt"),
                 createEngineDescription(VariableMentionDetector.class,

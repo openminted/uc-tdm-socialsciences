@@ -53,6 +53,10 @@ public class VariableMentionDisambiguator
     @ConfigurationParameter(name = PARAM_DISAMBIGUATE_ALL_MENTIONS, defaultValue = "false")
     private boolean disambiguateAllMentions;
     
+    public static final String PARAM_WRITE_LOG = "writeLog";
+    @ConfigurationParameter(name = PARAM_WRITE_LOG, defaultValue = "false")
+    private boolean writeLog;
+    
     private LinearRegressionSimilarityMeasure classifier;
     private FeatureGeneration featureGeneration;
     private Map<String, String> variableMap;
@@ -77,11 +81,13 @@ public class VariableMentionDisambiguator
             throw new ResourceInitializationException(e);
         }
         
-        try {
-            logwriter = new PrintWriter(new FileWriter("target/log.csv"));
-        }
-        catch (IOException e) {
-            throw new ResourceInitializationException(e);
+        if (writeLog) {
+            try {
+                logwriter = new PrintWriter(new FileWriter("target/log.csv"));
+            }
+            catch (IOException e) {
+                throw new ResourceInitializationException(e);
+            }
         }
     }
 
@@ -139,15 +145,17 @@ public class VariableMentionDisambiguator
                 mention.setVariableId(matches.get(0).id);
                 mention.setScore(matches.get(0).score);
                 
-                int r = 1;
-                for (Match m : matches) {
-                    logwriter.printf("%s;%d;%d;%s;%d;%f;%d%n", meta.getDocumentId(),
-                            "Yes".equals(mention.getCorrect()) ? 1 : 0,
-                            goldVariables.isEmpty() ? 0 : 1, m.id, r, m.score,
-                            goldVariables.contains(m.id) ? 1 : 0);
-                    r++;
+                if (writeLog) {
+                    int r = 1;
+                    for (Match m : matches) {
+                        logwriter.printf("%s;%d;%d;%s;%d;%f;%d%n", meta.getDocumentId(),
+                                "Yes".equals(mention.getCorrect()) ? 1 : 0,
+                                goldVariables.isEmpty() ? 0 : 1, m.id, r, m.score,
+                                goldVariables.contains(m.id) ? 1 : 0);
+                        r++;
+                    }
+                    logwriter.flush();
                 }
-                logwriter.flush();
                 
                 getLogger().info("Best match [" + matches.get(0) + "]");
             }
@@ -164,7 +172,9 @@ public class VariableMentionDisambiguator
                     + cumulativeMatchAtRank[i]);
         }
         
-        logwriter.close();
+        if (logwriter != null) {
+            logwriter.close();
+        }
     }
 
     private static LinearRegressionSimilarityMeasure loadClassifier(String aFilename)

@@ -7,16 +7,14 @@ import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 import java.io.File;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
-import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import eu.openminted.uc.socialsciences.variabledetection.uima.VariableMentionDetector;
 import eu.openminted.uc.socialsciences.variabledetection.uima.VariableMentionDisambiguator;
 import eu.openminted.uc.socialsciences.variabledetection.uima.io.XmlCorpusAllDocsReader;
 
-public class DetectionDisambiguationPipeline
+public class DetectionDisambiguationExperiment
 {
     private static final String DETECTION_MODEL_LOCATION = "classpath:/models/variable-detection/";
     private static final String DISAMBIGUATION_MODEL_LOCATION = "classpath:/models/variable-disambiguation/variable-disambiguation-model.ser";
@@ -42,21 +40,25 @@ public class DetectionDisambiguationPipeline
                         OpenNlpPosTagger.class),
                 createEngineDescription(
                         StanfordLemmatizer.class),
-                createEngineDescription(
-                        OpenNlpNamedEntityRecognizer.class),
+//                createEngineDescription(
+//                        OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(
                         StopWordRemover.class,
                         StopWordRemover.PARAM_MODEL_LOCATION, 
                                 "classpath:/stopwords/stopwords_english_punctuation.txt"),
-                createEngineDescription(
-                        VariableMentionDetector.class,
-                        VariableMentionDetector.PARAM_MODEL_LOCATION, DETECTION_MODEL_LOCATION),
+                // The variable mention detection doesn't work well so we only run the
+                // disambiguator and use a threshold to determine which variables will be
+                // recorded
+//                createEngineDescription(
+//                        VariableMentionDetector.class,
+//                        VariableMentionDetector.PARAM_MODEL_LOCATION, DETECTION_MODEL_LOCATION),
                 /*
                 createEngineDescription(
                         GoldVariableMentionDetector.class),
                 */
                 createEngineDescription(
                         VariableMentionDisambiguator.class,
+                        VariableMentionDisambiguator.PARAM_WRITE_LOG, true,
                         VariableMentionDisambiguator.PARAM_DISAMBIGUATE_ALL_MENTIONS, true,
                         VariableMentionDisambiguator.PARAM_MODEL_LOCATION, DISAMBIGUATION_MODEL_LOCATION,
                         VariableMentionDisambiguator.PARAM_VARIABLE_FILE_LOCATION, "../data/datasets/Variables_English.xml"),

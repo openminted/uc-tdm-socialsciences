@@ -22,7 +22,6 @@ import org.dkpro.tc.ml.ExperimentTrainTest;
 import org.dkpro.tc.ml.report.BatchTrainTestReport;
 import org.dkpro.tc.ml.weka.WekaClassificationAdapter;
 
-import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
@@ -168,7 +167,7 @@ public class DetectionOnlyTrainAndTestPipeline
                         BreakIteratorSegmenter.PARAM_LANGUAGE, LANGUAGE_CODE),
                 createEngineDescription(OpenNlpPosTagger.class),
                 createEngineDescription(StanfordLemmatizer.class),
-                createEngineDescription(OpenNlpNamedEntityRecognizer.class),
+//                createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
                         StopWordRemover.PARAM_MODEL_LOCATION, "classpath:/stopwords/english.txt"));
     }

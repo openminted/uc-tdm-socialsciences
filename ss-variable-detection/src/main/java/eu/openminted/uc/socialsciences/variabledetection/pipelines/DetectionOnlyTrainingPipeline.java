@@ -13,9 +13,9 @@ import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.dkpro.lab.Lab;
+import org.dkpro.lab.task.BatchTask.ExecutionPolicy;
 import org.dkpro.lab.task.Dimension;
 import org.dkpro.lab.task.ParameterSpace;
-import org.dkpro.lab.task.BatchTask.ExecutionPolicy;
 import org.dkpro.tc.api.features.TcFeatureFactory;
 import org.dkpro.tc.api.features.TcFeatureSet;
 import org.dkpro.tc.core.Constants;
@@ -25,7 +25,6 @@ import org.dkpro.tc.features.ngram.LuceneSkipNGram;
 import org.dkpro.tc.ml.ExperimentSaveModel;
 import org.dkpro.tc.ml.weka.WekaClassificationAdapter;
 
-import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpNamedEntityRecognizer;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
@@ -158,7 +157,7 @@ public class DetectionOnlyTrainingPipeline
                         BreakIteratorSegmenter.PARAM_LANGUAGE, LANGUAGE_CODE),
                 createEngineDescription(OpenNlpPosTagger.class),
                 createEngineDescription(StanfordLemmatizer.class),
-                createEngineDescription(OpenNlpNamedEntityRecognizer.class),
+//                createEngineDescription(OpenNlpNamedEntityRecognizer.class),
                 createEngineDescription(StopWordRemover.class,
                         StopWordRemover.PARAM_MODEL_LOCATION, "classpath:/stopwords/english.txt"));
     }
