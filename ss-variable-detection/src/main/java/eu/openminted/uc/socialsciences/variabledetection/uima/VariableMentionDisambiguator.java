@@ -1,6 +1,7 @@
 package eu.openminted.uc.socialsciences.variabledetection.uima;
 
 import static org.apache.uima.fit.util.JCasUtil.select;
+import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,6 +26,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants;
 import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
@@ -50,18 +52,33 @@ public class VariableMentionDisambiguator
      * all mentions are disambiguated.
      */
     public static final String PARAM_DISAMBIGUATE_ALL_MENTIONS = "disambiguateAllMentions";
-    @ConfigurationParameter(name = PARAM_DISAMBIGUATE_ALL_MENTIONS, defaultValue = "false")
+    @ConfigurationParameter(name = PARAM_DISAMBIGUATE_ALL_MENTIONS, defaultValue = "true")
     private boolean disambiguateAllMentions;
     
     public static final String PARAM_WRITE_LOG = "writeLog";
     @ConfigurationParameter(name = PARAM_WRITE_LOG, defaultValue = "false")
     private boolean writeLog;
     
+    // The scores returned from the model trained on the SemEval data should be in the range
+    // between 0 and 5 - so 2.5 is in the middle.
+    /**
+     * Minimum similarity score to a variable require to count as a match (0-5).
+     */
+    public static final String PARAM_SCORE_THRESHOLD = "scoreThreshold";
+    @ConfigurationParameter(name = PARAM_SCORE_THRESHOLD, defaultValue = "2.5")
+    private double scoreThreshold;
+
+    /**
+     * Maximum number of variables linked.
+     */
+    public static final String PARAM_MAX_MENTIONS = "maxMentions";
+    @ConfigurationParameter(name = PARAM_MAX_MENTIONS, defaultValue = "3")
+    private int maxMentions;
+
     private LinearRegressionSimilarityMeasure classifier;
     private FeatureGeneration featureGeneration;
     private Map<String, String> variableMap;
     
-    private int total = 0;
     private int[] matchAtRank = new int[100];
     private int[] cumulativeMatchAtRank = new int[100];
 
@@ -96,68 +113,93 @@ public class VariableMentionDisambiguator
     {
         DocumentMetaData meta = DocumentMetaData.get(aJCas);
         
-        for (VariableMention mention : select(aJCas, VariableMention.class)) {
-            if (mention.getCorrect().equals("Yes") || disambiguateAllMentions) {
-                getLogger().info(
-                        "Disambiguating variable candidate in [" + mention.getCoveredText() + "]");
+        for (Sentence sentence : select(aJCas, Sentence.class)) {
+            List<VariableMention> mentions = selectCovered(VariableMention.class, sentence);
+            VariableMention mention = mentions.isEmpty() ? null : mentions.get(0);
+            
+            // Check if we should disambiguate here
+            if (!disambiguateAllMentions
+                    || (mention != null && !"Yes".equals(mention.getCorrect()))) {
+                continue;
+            }
+            
+            getLogger().info(
+                    "Disambiguating variable candidate in [" + sentence.getCoveredText() + "]");
 
-                List<Match> matches;
-                try {
-                    matches = getMatches(mention.getCoveredText(), variableMap);
-                    Collections.sort(matches, (a, b) -> {
-                        return Double.compare(b.score, a.score);
-                    });
-                }
-                catch (Exception e) {
-                    getLogger().error("Disambiguation failed: " + e.getMessage());
-                    throw new AnalysisEngineProcessException(e);
-                }
-                
-                Set<String> goldVariables = new HashSet<>();
-                for (GoldVariableMention gold : select(aJCas, GoldVariableMention.class)) {
-                    goldVariables.add(gold.getVariableId());
-                    
-                    Match match = matches.stream().filter(m -> gold.getVariableId().equals(m.id))
-                            .findFirst().orElse(null);
-                    if (match == null) {
-                        getLogger().warn("Variable ID not found in list [" + gold.getVariableId()
-                                + "] - SKIPPING");
-                        continue;
-                    }
-                    
-                    int rank = matches.indexOf(match);
-                    if (rank < matchAtRank.length) {
-                        matchAtRank[rank] ++;
-                    }
-                    
-                    getLogger().info("Gold " + gold.getVariableId() + " at rank " + (rank + 1)
-                            + " with score " + match.score);
-                    
-                    for (int i = 0; i < cumulativeMatchAtRank.length; i++) {
-                        if (rank <= i) {
-                            cumulativeMatchAtRank[i] ++;
-                        }
-                    }
+            List<Match> matches;
+            try {
+                matches = getMatches(sentence.getCoveredText(), variableMap);
+                Collections.sort(matches, (a, b) -> {
+                    return Double.compare(b.score, a.score);
+                });
+            }
+            catch (Exception e) {
+                getLogger().error("Disambiguation failed: " + e.getMessage());
+                throw new AnalysisEngineProcessException(e);
+            }
+            
+            // Add disambiguated mentions to the CAS
+            int matchCount = 0;
+            for (Match m : matches) {
+                if (matchCount >= maxMentions) {
+                    break;
                 }
                 
-                total++;
-                
-                mention.setVariableId(matches.get(0).id);
-                mention.setScore(matches.get(0).score);
-                
-                if (writeLog) {
-                    int r = 1;
-                    for (Match m : matches) {
-                        logwriter.printf("%s;%d;%d;%s;%d;%f;%d%n", meta.getDocumentId(),
-                                "Yes".equals(mention.getCorrect()) ? 1 : 0,
-                                goldVariables.isEmpty() ? 0 : 1, m.id, r, m.score,
-                                goldVariables.contains(m.id) ? 1 : 0);
-                        r++;
-                    }
-                    logwriter.flush();
+                if (m.score < scoreThreshold) {
+                    continue;
                 }
                 
-                getLogger().info("Best match [" + matches.get(0) + "]");
+                if (mention == null) {
+                    mention = new VariableMention(aJCas, sentence.getBegin(), sentence.getEnd());
+                    mention.addToIndexes();
+                }
+                
+                mention.setVariableId(m.id);
+                mention.setScore(m.score);
+                
+                matchCount++;
+                
+                mention = null;
+            }
+            
+            
+            // If the CAS contains GoldVariableMentions, then log matches.
+            Set<String> goldVariables = new HashSet<>();
+            for (GoldVariableMention gold : select(aJCas, GoldVariableMention.class)) {
+                goldVariables.add(gold.getVariableId());
+                
+                Match match = matches.stream().filter(m -> gold.getVariableId().equals(m.id))
+                        .findFirst().orElse(null);
+                if (match == null) {
+                    getLogger().warn("Variable ID not found in list [" + gold.getVariableId()
+                            + "] - SKIPPING");
+                    continue;
+                }
+                
+                int rank = matches.indexOf(match);
+                if (rank < matchAtRank.length) {
+                    matchAtRank[rank] ++;
+                }
+                
+                getLogger().info("Gold " + gold.getVariableId() + " at rank " + (rank + 1)
+                        + " with score " + match.score);
+                
+                for (int i = 0; i < cumulativeMatchAtRank.length; i++) {
+                    if (rank <= i) {
+                        cumulativeMatchAtRank[i] ++;
+                    }
+                }
+            }
+            
+            if (writeLog) {
+                int r = 1;
+                for (Match m : matches) {
+                    logwriter.printf("%s;%d;%s;%d;%f;%d%n", meta.getDocumentId(),
+                            goldVariables.isEmpty() ? 0 : 1, m.id, r, m.score,
+                            goldVariables.contains(m.id) ? 1 : 0);
+                    r++;
+                }
+                logwriter.flush();
             }
         }
     }
