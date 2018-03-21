@@ -3,7 +3,6 @@ package eu.openminted.uc.socialsciences.variabledetection.uima;
 import static org.apache.uima.fit.util.JCasUtil.select;
 import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,12 +27,10 @@ import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
-import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants;
 import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
 import eu.openminted.uc.socialsciences.variabledetection.type.GoldVariableMention;
 import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
 import eu.openminted.uc.socialsciences.variabledetection.uima.io.VariableFileReader;
-import eu.openminted.uc.socialsciences.variabledetection.util.Features2Arff;
 import weka.core.Instance;
 
 public class VariableMentionDisambiguator
@@ -238,34 +235,28 @@ public class VariableMentionDisambiguator
     {
         List<Match> matches = new ArrayList<>();
         
+        long t = System.currentTimeMillis();
         int i = 0;
         for (String varId : aVariableMap.keySet()) {
-            featureGeneration.generateFeaturesAsFiles(aSentence, aVariableMap.get(varId));
+//            featureGeneration.generateFeaturesAsFiles(aSentence, aVariableMap.get(varId));
+//            String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP,
+//                    VariableDisambiguationConstants.Dataset.TEMP, null);
+//            Instance instance = classifier.getInstance(new File(fileName));
 
-            String fileName = Features2Arff.toArffFile(VariableDisambiguationConstants.Mode.TEMP,
-                    VariableDisambiguationConstants.Dataset.TEMP, null);
-
-            Instance instance = classifier.getInstance(new File(fileName));
-
-//            Instance instance2 = featureGeneration.generateFeatures(aSentence,
-//                    aVariableMap.get(varId));
-//            if (classifier.isUseLogFilter()) {
-//                Filter logFilter = new LogFilter();
-//                logFilter.input(instance2);
-//                logFilter.batchFinished();
-//                instance = logFilter.output();
-//            }
+            Instance instance = featureGeneration.generateFeatures(aSentence,
+                    aVariableMap.get(varId), classifier.isUseLogFilter());
             
-            //System.out.println("Masoud: " + instance);
-//            System.out.println("REC:    " + instance2);
             if (i % 25 == 0) {
                 System.out.print(".");
             }
             
-            matches.add(new Match(varId, classifier.getSimilarity(instance)));
+            double similarity = classifier.getSimilarity(instance);
+            
+            matches.add(new Match(varId, similarity));
             i++;
-         }
-        System.out.println();
+        }
+        t = System.currentTimeMillis() - t;
+        System.out.printf(" %d (%d avg per item)%n", t, t / aVariableMap.size());
 
         return matches;
     }
