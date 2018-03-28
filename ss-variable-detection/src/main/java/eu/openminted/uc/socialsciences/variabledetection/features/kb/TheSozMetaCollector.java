@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.features;
+package eu.openminted.uc.socialsciences.variabledetection.features.kb;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,9 +21,9 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.core.ngrams.util.NGramStringListIterable;
 import de.tudarmstadt.ukp.dkpro.lexsemresource.exception.ResourceLoaderException;
-import eu.openminted.uc.socialsciences.variabledetection.resource.KnowledgeBaseFactory;
 import eu.openminted.uc.socialsciences.variabledetection.resource.KnowledgeBaseResource;
 import eu.openminted.uc.socialsciences.variabledetection.resource.TheSozResource;
+import eu.openminted.uc.socialsciences.variabledetection.similarity.kb.KnowledgeBaseFactory;
 
 public class TheSozMetaCollector
     extends LuceneBasedMetaCollector

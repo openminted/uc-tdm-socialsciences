@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.features;
+package eu.openminted.uc.socialsciences.variabledetection.features.kb;
 
 import java.io.IOException;
 import java.util.Collection;

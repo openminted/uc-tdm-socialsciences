@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.features;
+package eu.openminted.uc.socialsciences.variabledetection.features.kb;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -20,9 +20,9 @@ import org.dkpro.tc.features.ngram.base.LuceneFeatureExtractorBase;
 import de.tudarmstadt.ukp.dkpro.core.api.frequency.util.FrequencyDistribution;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
 import de.tudarmstadt.ukp.dkpro.lexsemresource.exception.ResourceLoaderException;
-import eu.openminted.uc.socialsciences.variabledetection.resource.KnowledgeBaseFactory;
 import eu.openminted.uc.socialsciences.variabledetection.resource.KnowledgeBaseResource;
 import eu.openminted.uc.socialsciences.variabledetection.resource.TheSozResource;
+import eu.openminted.uc.socialsciences.variabledetection.similarity.kb.KnowledgeBaseFactory;
 
 /**
  * Extracts features using TheSoz knowledge base

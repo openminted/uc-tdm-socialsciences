@@ -211,12 +211,23 @@
           - LSR module which are both presently not available from Maven Central.
           -->
         <excludes>
-          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/TheSozFeatures.java</exclude>
-          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/TheSozMetaCollector.java</exclude>
-          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/WordnetFeatures.java</exclude>
-          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/WordnetMetaCollector.java</exclude>
-          <exclude>eu/openminted/uc/socialsciences/variabledetection/resource/KnowledgeBaseFactory.java</exclude>
+          <exclude>eu/openminted/uc/socialsciences/variabledetection/features/kb/*.java</exclude>
+          <exclude>eu/openminted/uc/socialsciences/variabledetection/similarity/kb/*.java</exclude>
         </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <!-- 
+            - These are excluded because they depend on DKPro Similarity 2.3.0 including the
+            - LSR module which are both presently not available from Maven Central.
+            -->
+          <sourceFileExcludes>
+            <exclude>eu/openminted/uc/socialsciences/variabledetection/features/kb/*.java</exclude>
+            <exclude>eu/openminted/uc/socialsciences/variabledetection/similarity/kb/*.java</exclude>
+          </sourceFileExcludes>
         </configuration>
       </plugin>
       <plugin>
@@ -229,7 +240,7 @@
         <version>2.4.1</version>
         <executions>
           <execution>
-            <id>ss-ner</id>
+            <id>default</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>

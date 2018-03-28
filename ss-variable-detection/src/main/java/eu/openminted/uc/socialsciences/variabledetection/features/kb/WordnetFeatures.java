@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.features;
+package eu.openminted.uc.socialsciences.variabledetection.features.kb;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package eu.openminted.uc.socialsciences.variabledetection.resource;
+package eu.openminted.uc.socialsciences.variabledetection.similarity.kb;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import de.tudarmstadt.ukp.dkpro.lexsemresource.core.ResourceFactory;
 import de.tudarmstadt.ukp.dkpro.lexsemresource.exception.ResourceLoaderException;
+import eu.openminted.uc.socialsciences.variabledetection.resource.KnowledgeBaseResource;
 
 /**
  * Copied from {@link ResourceFactory}

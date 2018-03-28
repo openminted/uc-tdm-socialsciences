@@ -127,8 +127,11 @@
     </repository>
   </distributionManagement>
   <properties>
-    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <gpg.useagent>true</gpg.useagent>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     
     <uima.version>2.10.2</uima.version>
     <uimafit.version>2.4.0</uimafit.version>
@@ -328,10 +331,15 @@
               <title>Named Entity Recognition</title>
               <packages>eu.openminted.uc.socialsciences.ner*</packages>
             </group>
+            <group>
+              <title>Variable Detection</title>
+              <packages>eu.openminted.uc.socialsciences.variabledetection*</packages>
+            </group>
+            <group>
+              <title>Keyword Assignment</title>
+              <packages>eu.openminted.uc.socialsciences.keywords*</packages>
+            </group>
           </groups>
-          <!--<sourceFileExcludes>
-            <exclude>**/*_Type.java</exclude>
-            </sourceFileExcludes> -->
           <tags>
             <tag>
               <name>generated</name>
@@ -374,12 +382,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.0.0-M1</version>
+          <version>1.4.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.10.4</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>eu.openminted.share.annotations</groupId>
@@ -404,7 +412,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
-          <version>2.4</version>
+          <version>3.0.1</version>
           <executions>
             <execution>
               <id>default</id>
@@ -415,12 +423,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.3.2</version>
-          <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-            <encoding>UTF-8</encoding>
-          </configuration>
+          <version>3.7.0</version>
         </plugin>
         <!--This plugin's configuration is used to store Eclipse m2e settings
           only. It has no influence on the Maven build itself. -->
@@ -435,7 +438,7 @@
                   <pluginExecutionFilter>
                     <groupId>org.apache.uima</groupId>
                     <artifactId>uimafit-maven-plugin</artifactId>
-                    <versionRange>[2.3.0-SNAPSHOT,)</versionRange>
+                    <versionRange>[2.3.0,)</versionRange>
                     <goals>
                       <goal>generate</goal>
                     </goals>
