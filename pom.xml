@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * Licensed to the OpenMinTeD Consortium under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The OpenMinTeD Consortium 
+ * licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.
+ *  
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -23,10 +40,12 @@
     <module>ss-doc</module>
     <module>ss-common</module>
     <module>ss-variable-detection</module>
+    <module>ss-keywords</module>
   </modules>
 
   <repositories>
     <!-- Required for DKPro-LSR https://github.com/dkpro/dkpro-lsr -->
+    <!--  
     <repository>
       <id>ukp-oss-releases</id>
       <url>https://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-ukp-releases-local</url>
@@ -37,17 +56,7 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-    <!-- For SNAPSHOTs from the DKPro family -->
-    <repository>
-      <id>ukp-oss-snapshots</id>
-      <url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
+    -->
     <!-- UKP public model releases -->
     <repository>
       <id>ukp-oss-model-releases</id>
@@ -56,7 +65,6 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-
     <!-- ICM repository required for CERMINE library -->
     <repository>
       <id>icm</id>
@@ -70,7 +78,7 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-    <!-- OpenMinTeD repository -->
+    <!-- OpenMinTeD repository for models -->
     <repository>
       <id>omtd-releases</id>
       <name>OpenMinTeD releases repository</name>
@@ -83,33 +91,7 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
-    <repository>
-      <id>omtd-snapshot</id>
-      <name>OpenMinTeD snapshots repository</name>
-      <url>https://repo.openminted.eu/content/repositories/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
   </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>omtd-snapshots</id>
-      <name>OpenMinTeD snapshots repository</name>
-      <url>https://repo.openminted.eu/content/repositories/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
-
   <mailingLists>
     <mailingList>
       <name>SS TDM Software Collection developers mailing list</name>
@@ -155,7 +137,7 @@
     <log4j.version>2.7</log4j.version>
     <dkpro.tc.version>0.9.0</dkpro.tc.version>
     <dkpro.lab.version>0.14.0</dkpro.lab.version>
-    <omtd.share.annotation.version>3.0.2.0-SNAPSHOT</omtd.share.annotation.version>
+    <omtd.share.annotation.version>3.0.2.0</omtd.share.annotation.version>
     <dkpro.statistics.version>2.1.0</dkpro.statistics.version>
     <lsr.version>0.8.1</lsr.version>
     <jena.version>3.4.0</jena.version>

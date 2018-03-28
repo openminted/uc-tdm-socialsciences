@@ -1,0 +1,90 @@
+<!-- 
+ * Licensed to the OpenMinTeD Consortium under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The OpenMinTeD Consortium 
+ * licenses this file to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.
+ *  
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+<project basedir="../.." default="separate-jars">
+    <import>
+        <url url="https://raw.githubusercontent.com/dkpro/resource-packager/0.8.0/ant-macros.xml"/>
+    </import>
+
+    <!--
+      - Output package configuration
+      -->
+    <property name="outputPackage" value="eu/openminted/uc/socialsciences/keywords/lib"/>
+
+    <target name="local-maven">
+        <property name="install-artifact-mode" value="local"/>
+        <antcall target="separate-jars"/>
+    </target>
+
+    <target name="remote-maven">
+        <property name="install-artifact-mode" value="remote"/>
+        <antcall target="separate-jars"/>
+    </target>
+
+    <target name="separate-jars" depends="en">
+    </target>
+
+    <target name="newmodels">
+        <property name="install-artifact-mode" value="remote"/>
+
+      <antcall target="en-keywords-ss-thesoz"/>
+    </target>
+
+    <target name="en">
+        <antcall target="en-keywords-ss-thesoz"/>
+    </target>
+
+    <target name="en-keywords-ss-thesoz">        
+        <mkdir dir="target/download"/>
+        <get
+                src="https://public.ukp.informatik.tu-darmstadt.de/openminted/maui-keywords-socialscience-thesoz-20180326.ser.gz"
+                dest="target/download/maui-keywords-socialscience-thesoz-20180326.ser.gz"
+                skipexisting="true"/>
+        <get 
+                src="https://public.ukp.informatik.tu-darmstadt.de/openminted/thesoz-complete-20180326.rdf.gz"
+                dest="target/download/thesoz-complete-20180326.rdf.gz"
+                skipexisting="true"/>
+        <install-stub-and-upstream-file
+                file="target/download/maui-keywords-socialscience-thesoz-20180326.ser.gz"
+                md5="141832a2fb0e8596d960e26f60ea3bfb"
+                groupId="eu.openminted.uc-tdm-socialsciences"
+                artifactIdBase="eu.openminted.uc.socialsciences.keywords"
+                upstreamVersion="20180326"
+                metaDataVersion="1"
+                tool="keywords"
+                language="en"
+                variant="socialscience_thesoz"
+                extension="ser.gz">
+            <metadata>
+                <entry key="DC.title" value="maui-keywords-socialscience-thesoz-20180326.ser.gz"/>
+                <entry key="DC.creator" value="OpenMinTeD project"/>
+                <!-- This license is because of the packaged TheSoz RDF. Not clear if the 
+                trained model can actually be copyright protected. -->
+                <entry key="DC.rights" value="https://creativecommons.org/licenses/by-nc-nd/3.0/de/legalcode"/>
+                <entry key="vocabulary.format" value="skos"/>
+            </metadata>
+            <additionalUpstreamContent>
+                <copy 
+                        file="src/scripts/LICENSE_thesoz_CC-BY-NC-ND-3.0.txt"
+                        todir="target/model-staging/${outputPackage}"/>
+                <copy 
+                        file="target/download/thesoz-complete-20180326.rdf.gz"
+                        tofile="target/model-staging/${outputPackage}/keywords-en-socialscience_thesoz.rdf.gz"/>
+            </additionalUpstreamContent>
+        </install-stub-and-upstream-file>
+    </target>
+</project>
