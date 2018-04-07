@@ -23,7 +23,7 @@
     <!--
       - Output package configuration
       -->
-    <property name="outputPackage" value="de/tudarmstadt/ukp/dkpro/core/stanfordnlp/lib"/>
+    <property name="outputPackage" value="eu/openminted/uc/socialsciences/variabledetection/lib"/>
 
     <target name="local-maven">
         <property name="install-artifact-mode" value="local"/>
@@ -35,75 +35,36 @@
         <antcall target="separate-jars"/>
     </target>
 
-    <target name="separate-jars" depends="de, en">
+    <target name="separate-jars" depends="en">
         <antcall target="jar-notice"/>
     </target>
 
     <target name="newmodels">
         <property name="install-artifact-mode" value="remote"/>
 
-        <antcall target="omtd-ner-model-de"/>
-        <antcall target="omtd-ner-model-en"/>
-    </target>
-
-    <target name="de">
-        <antcall target="omtd-ner-model-de"/>
-    </target>
-
-    <target name="omtd-ner-model-de">        
-        <mkdir dir="target/download"/>
-        <get
-                src="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/de/omtd-ner-model-de-20170125.ser.gz"
-                dest="target/download/omtd-ner-model-de-20170125.ser.gz"
-                skipexisting="true"/>
-        <install-stub-and-upstream-file
-                file="target/download/omtd-ner-model-de-20170125.ser.gz"
-                md5="6450ec8c83037bf9aacd6b1a97ff7559"
-                groupId="de.tudarmstadt.ukp.dkpro.core"
-                artifactIdBase="de.tudarmstadt.ukp.dkpro.core.stanfordnlp"
-                upstreamVersion="20170125"
-                metaDataVersion="1"
-                tool="ner"
-                language="de"
-                variant="openminted_ss_model.crf"
-                extension="ser.gz">
-            <metadata>
-                <entry key="DC.title" value="omtd-ner-model-de-20170125.ser.gz"/>
-                <entry key="DC.creator" value="OpenMinTeD project"/>
-                <entry key="DC.identifier" value="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/de/omtd-ner-model-de-20170125.ser.gz"/>
-                <entry key="DC.rights" value="https://creativecommons.org/licenses/by-nc-sa/3.0/"/>
-            </metadata>
-        </install-stub-and-upstream-file>
+        <antcall target="variable-disambiguaton-social-sciences-en"/>
     </target>
 
     <target name="en">
-        <antcall target="omtd-ner-model-en"/>
+        <antcall target="variable-disambiguaton-social-sciences-en"/>
     </target>
 
-    <target name="omtd-ner-model-en">
-        <mkdir dir="target/download"/>
-        <get
-                src="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/en/omtd-ner-model-en-20170125.ser.gz"
-                dest="target/download/omtd-ner-model-en-20170125.ser.gz"
-                skipexisting="true"/>
-        <install-stub-and-upstream-file
-                file="target/download/omtd-ner-model-en-20170125.ser.gz"
-                md5="0aa00a619902ff4329851a5a61ad548b"
-                groupId="de.tudarmstadt.ukp.dkpro.core"
-                artifactIdBase="de.tudarmstadt.ukp.dkpro.core.stanfordnlp"
-                upstreamVersion="20170125"
-                metaDataVersion="1"
-                tool="ner"
-                language="en"
-                variant="openminted_ss_model.crf"
-                extension="ser.gz">
+    <target name="variable-disambiguaton-social-sciences-en">        
+        <install-stub-and-upstream-folder 
+            folder="src/models/variable-disambiguaton-social-sciences-en" 
+            groupId="eu.openminted.uc-tdm-socialsciences" 
+            artifactIdBase="ss-variable-detection"
+            upstreamVersion="20180406"
+            metaDataVersion="1"
+            tool="disambiguation"
+            language="en"
+            variant="ss">
             <metadata>
-                <entry key="DC.title" value="omtd-ner-model-en-20170125.ser.gz"/>
+                <entry key="DC.title" value="Example Social Sciences Variable Disambiguation Model"/>
                 <entry key="DC.creator" value="OpenMinTeD project"/>
-                <entry key="DC.identifier" value="https://public.ukp.informatik.tu-darmstadt.de/kiaeeha/omtd-ner-model/en/omtd-ner-model-en-20170125.ser.gz"/>
-                <entry key="DC.rights" value="https://creativecommons.org/licenses/by-nc-sa/3.0/"/>
+                <entry key="DC.identifier" value="eu.openminted.uc-tdm-socialsciences:ss-variable-detection-upstream-disambiguation-en-ss:20180406"/>
             </metadata>
-        </install-stub-and-upstream-file>
+        </install-stub-and-upstream-folder>
     </target>
 
     <!--

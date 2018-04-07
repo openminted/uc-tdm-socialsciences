@@ -9,12 +9,8 @@ import eu.openminted.share.annotations.api.Component;
 import eu.openminted.share.annotations.api.DataFormat;
 import eu.openminted.share.annotations.api.ResourceInput;
 import eu.openminted.share.annotations.api.ResourceOutput;
-import eu.openminted.share.annotations.api.constants.ComponentConstants;
 import eu.openminted.uc.socialsciences.ner.Pipeline;
 
-@Component(value = ComponentConstants.ComponentTypeConstants.namedEntityRecognizer)
-@ResourceInput(type = "corpus", dataFormat = @DataFormat(dataFormat = "xmi"), encoding = "UTF-8", keyword = "xmi")
-@ResourceOutput(type = "corpus", dataFormat = @DataFormat(dataFormat = "xmi"), encoding = "UTF-8", keyword = "xmi, ner, named entity annotation")
 public class XmiNerPipeline
 {
     private static final Logger logger = LogManager.getLogger(XmiNerPipeline.class);

@@ -20,7 +20,6 @@ package eu.openminted.uc.socialsciences.variabledetection.features;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.uima.fit.descriptor.TypeCapability;
 import org.apache.uima.jcas.JCas;
 import org.dkpro.tc.api.exception.TextClassificationException;
 import org.dkpro.tc.api.features.Feature;
@@ -35,8 +34,6 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma;
 /**
  * Extracts token n-grams within the given text classification unit
  */
-@TypeCapability(inputs = { "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence",
-        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Lemma" })
 public class LuceneLemmaNGram
     extends LuceneNGram
     implements FeatureExtractor

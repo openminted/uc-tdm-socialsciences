@@ -18,30 +18,7 @@
  */
 package eu.openminted.uc.socialsciences.variabledetection.uima.io;
 
-import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
-import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
-import de.tudarmstadt.ukp.dkpro.core.api.parameter.MimeTypes;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
-import eu.openminted.share.annotations.api.Component;
-import eu.openminted.share.annotations.api.DataFormat;
-import eu.openminted.share.annotations.api.ResourceInput;
-import eu.openminted.share.annotations.api.constants.ComponentConstants;
-import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
-
-import org.apache.uima.UimaContext;
-import org.apache.uima.cas.CAS;
-import org.apache.uima.cas.CASException;
-import org.apache.uima.collection.CollectionException;
-import org.apache.uima.fit.descriptor.MimeTypeCapability;
-import org.apache.uima.fit.descriptor.ResourceMetaData;
-import org.apache.uima.fit.descriptor.TypeCapability;
-import org.apache.uima.resource.ResourceInitializationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import static org.apache.commons.io.IOUtils.closeQuietly;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +31,22 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import static org.apache.commons.io.IOUtils.closeQuietly;
+import org.apache.uima.UimaContext;
+import org.apache.uima.cas.CAS;
+import org.apache.uima.cas.CASException;
+import org.apache.uima.collection.CollectionException;
+import org.apache.uima.resource.ResourceInitializationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
+import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
+import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
 
 /**
  * Collection reader for Variable mention XML corpus

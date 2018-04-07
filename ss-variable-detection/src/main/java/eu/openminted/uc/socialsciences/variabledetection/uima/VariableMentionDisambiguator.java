@@ -87,9 +87,10 @@ public class VariableMentionDisambiguator
         super.initialize(context);
 
         try {
-            classifier = loadClassifier(modelLocation);
+            classifier = loadClassifier(
+                    modelLocation + "/variable-disambiguation/variable-disambiguation-model.ser");
             variableMap = VariableFileReader.getVariables(variableFilePath);
-            featureGeneration = new FeatureGeneration();
+            featureGeneration = new FeatureGeneration(modelLocation);
         }
         catch (Exception e) {
             throw new ResourceInitializationException(e);

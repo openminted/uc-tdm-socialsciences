@@ -26,7 +26,8 @@ import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
 import eu.openminted.share.annotations.api.Component;
 import eu.openminted.share.annotations.api.DataFormat;
 import eu.openminted.share.annotations.api.ResourceInput;
-import eu.openminted.share.annotations.api.constants.ComponentConstants;
+import eu.openminted.share.annotations.api.constants.DataFormatType;
+import eu.openminted.share.annotations.api.constants.OperationType;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.cas.CAS;
@@ -55,13 +56,15 @@ import static org.apache.commons.io.IOUtils.closeQuietly;
  */
 @ResourceMetaData(name = "CERMINE PDF Reader")
 @MimeTypeCapability({ MimeTypes.APPLICATION_PDF })
-@TypeCapability(outputs = { "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
-        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Heading",
-        "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph" })
+@TypeCapability(
+        outputs = { 
+                "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData",
+                "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Heading",
+                "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph" })
 //OMTD-SHARE annotations
-@Component(value = ComponentConstants.ComponentTypeConstants.reader)
-@ResourceInput(type = "corpus", dataFormat = @DataFormat(dataFormat = "pdf", mimeType = "application/pdf")
-, encoding = "UTF-8", keyword = "pdf")
+@Component(value = OperationType.READER)
+@ResourceInput(type = "corpus", 
+    dataFormat = @DataFormat(dataFormat = DataFormatType.PDF), encoding = "UTF-8")
 public class CerminePdfReader
     extends ResourceCollectionReaderBase
 {
@@ -407,10 +410,12 @@ public class CerminePdfReader
 
         protected String normalizeString(String input)
         {
-            if (normalizeText)
+            if (normalizeText) {
                 return input.replaceAll("\\s+", " ");
-            else
+            }
+            else {
                 return input;
+            }
         }
     }
 }

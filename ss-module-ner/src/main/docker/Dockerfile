@@ -1,6 +1,6 @@
 ############################################################
 #
-# Dockerfile to build webanno container images
+# Dockerfile to build OMTD SSH Use-Case NER Docker Image
 #
 ############################################################
 

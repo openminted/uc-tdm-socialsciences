@@ -33,22 +33,22 @@ import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
-import dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceComparator;
-import dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceNormComparator;
-import dkpro.similarity.algorithms.lexical.string.LongestCommonSubstringComparator;
-import dkpro.similarity.algorithms.lexical.uima.ngrams.CharacterNGramResource;
-import dkpro.similarity.algorithms.lexical.uima.ngrams.WordNGramContainmentResource;
-import dkpro.similarity.algorithms.lexical.uima.ngrams.WordNGramJaccardResource;
-import dkpro.similarity.algorithms.lexical.uima.string.GreedyStringTilingMeasureResource;
-import dkpro.similarity.ml.FeatureConfig;
-import dkpro.similarity.ml.filters.LogFilter;
-import dkpro.similarity.ml.io.SimilarityScoreWriter;
-import dkpro.similarity.uima.annotator.SimilarityScorer;
-import dkpro.similarity.uima.api.type.ExperimentalTextSimilarityScore;
-import dkpro.similarity.uima.api.type.TextSimilarityScore;
-import dkpro.similarity.uima.io.CombinationReader;
-import dkpro.similarity.uima.io.CombinationReader.CombinationStrategy;
-import dkpro.similarity.uima.resource.SimpleTextSimilarityResource;
+import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceComparator;
+import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceNormComparator;
+import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubstringComparator;
+import org.dkpro.similarity.algorithms.lexical.uima.ngrams.CharacterNGramResource;
+import org.dkpro.similarity.algorithms.lexical.uima.ngrams.WordNGramContainmentResource;
+import org.dkpro.similarity.algorithms.lexical.uima.ngrams.WordNGramJaccardResource;
+import org.dkpro.similarity.algorithms.lexical.uima.string.GreedyStringTilingMeasureResource;
+import org.dkpro.similarity.ml.FeatureConfig;
+import org.dkpro.similarity.ml.filters.LogFilter;
+import org.dkpro.similarity.ml.io.SimilarityScoreWriter;
+import org.dkpro.similarity.uima.annotator.SimilarityScorer;
+import org.dkpro.similarity.uima.api.type.ExperimentalTextSimilarityScore;
+import org.dkpro.similarity.uima.api.type.TextSimilarityScore;
+import org.dkpro.similarity.uima.io.CombinationReader;
+import org.dkpro.similarity.uima.io.CombinationReader.CombinationStrategy;
+import org.dkpro.similarity.uima.resource.SimpleTextSimilarityResource;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Dataset;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Mode;
@@ -72,11 +72,11 @@ public class FeatureGeneration
 
     public static final int[] CHAR_NGRAMS_N = new int[] { 2, 3, 4 };
     
-    public FeatureGeneration() throws Exception
+    public FeatureGeneration(String aModelBase) throws Exception
     {
         // Dataset and mode resemble the place where we stored the data *NOT* the semantics of
         // how that data is used here!
-        featureConfigList = getFeatureConfigs(Dataset.ALL, Mode.TRAIN);
+        featureConfigList = getFeatureConfigs(aModelBase, Dataset.ALL, Mode.TRAIN);
         
         preprocessingStopwordFiltering = createEngine(preprocessors(true));
         preprocessing = createEngine(preprocessors(false));
@@ -254,9 +254,11 @@ public class FeatureGeneration
         return builder.createAggregateDescription();
     }
     
-    public static void generateFeatures(Dataset target, List<Dataset> datasets, Mode mode) throws Exception
+    public static void generateFeatures(String aModelBase, Dataset target, List<Dataset> datasets,
+            Mode mode)
+        throws Exception
     {
-        List<FeatureConfig> configs = getFeatureConfigs(target, mode);
+        List<FeatureConfig> configs = getFeatureConfigs(aModelBase, target, mode);
 
         // Run the pipeline
         for (FeatureConfig config : configs) {
@@ -308,7 +310,7 @@ public class FeatureGeneration
         System.out.println("Successful.");
     }
 
-    private static List<FeatureConfig> getFeatureConfigs(Dataset dataset, Mode mode)
+    private static List<FeatureConfig> getFeatureConfigs(String aModelBase, Dataset dataset, Mode mode)
         throws Exception
     {
         // Define the features
@@ -379,7 +381,7 @@ public class FeatureGeneration
                             CharacterNGramResource.class,
                             CharacterNGramResource.PARAM_N, Integer.toString(n),
                             CharacterNGramResource.PARAM_IDF_VALUES_FILE,
-                            "classpath:/models/character-ngrams-idf/" + mode.toString().toLowerCase()
+                            aModelBase + "/character-ngrams-idf/" + mode.toString().toLowerCase()
                                     + "/" + n + "/" + dataset.toString() + ".txt"),
                     null, // not relevant in "text" and "jcas" modes
                     false, 

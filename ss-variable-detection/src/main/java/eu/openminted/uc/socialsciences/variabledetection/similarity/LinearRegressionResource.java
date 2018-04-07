@@ -24,7 +24,7 @@ import java.util.Map;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
-import dkpro.similarity.uima.resource.JCasTextSimilarityResourceBase;
+import org.dkpro.similarity.uima.resource.JCasTextSimilarityResourceBase;
 
 import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
 

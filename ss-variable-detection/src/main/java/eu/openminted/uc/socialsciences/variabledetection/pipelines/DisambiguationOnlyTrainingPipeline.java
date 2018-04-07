@@ -63,7 +63,8 @@ public class DisambiguationOnlyTrainingPipeline
         WordIdfValuesGenerator.computeIdfScores(Dataset.ALL, mode, datasets);
         
         // Generate the features for training data
-        FeatureGeneration.generateFeatures(Dataset.ALL, datasets, mode);
+        FeatureGeneration.generateFeatures(VariableDisambiguationConstants.MODELS_DIR, Dataset.ALL,
+                datasets, mode);
 
         // Package features in arff files
         Features2Arff.toArffFile(Mode.TRAIN, Dataset.ALL);

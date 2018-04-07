@@ -36,7 +36,7 @@ public class DetectionDisambiguationPipeline
     private String varFile;
 
     private static final String DETECTION_MODEL_LOCATION = "classpath:/models/variable-detection/";
-    private static final String DISAMBIGUATION_MODEL_LOCATION = "classpath:/models/variable-disambiguation/variable-disambiguation-model.ser";
+    private static final String DISAMBIGUATION_MODEL_LOCATION = "classpath:/eu/openminted/uc/socialsciences/variabledetection/lib/disambiguation/en/ss";
     private static final String LANGUAGE_CODE = "en";
 
     public static void main(String[] args) throws Exception

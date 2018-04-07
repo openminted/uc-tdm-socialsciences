@@ -13,17 +13,8 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
-import eu.openminted.share.annotations.api.Component;
-import eu.openminted.share.annotations.api.DataFormat;
-import eu.openminted.share.annotations.api.ResourceInput;
-import eu.openminted.share.annotations.api.ResourceOutput;
-import eu.openminted.share.annotations.api.constants.ComponentConstants;
 import eu.openminted.uc.socialsciences.io.pdf.cermine.CerminePdfReader;
 
-@Component(value = ComponentConstants.ComponentTypeConstants.reader)
-@ResourceInput(type = "corpus", dataFormat = @DataFormat(dataFormat = "pdf"
-, mimeType = "application/pdf"), encoding = "UTF-8", keyword = "pdf")
-@ResourceOutput(type = "corpus", dataFormat = @DataFormat(dataFormat = "xmi"), encoding = "UTF-8", keyword = "xmi")
 public class PdfXmiPipeline
 {
     public static void main(String args[]) throws Exception

@@ -10,8 +10,8 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.resource.ResourceInitializationException;
-import dkpro.similarity.uima.io.CombinationReader;
-import dkpro.similarity.uima.io.util.CombinationPair;
+import org.dkpro.similarity.uima.io.CombinationReader;
+import org.dkpro.similarity.uima.io.util.CombinationPair;
 
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 

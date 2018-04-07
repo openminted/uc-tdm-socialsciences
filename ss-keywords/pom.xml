@@ -10,6 +10,14 @@
   <artifactId>ss-keywords</artifactId>
   <name>ss-keywords</name>
 
+  <licenses>
+    <license>
+      <name>GNU General Public License Version 3.0</name>
+      <url>http://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <dependencies>
     <dependency>
       <groupId>com.entopix</groupId>
