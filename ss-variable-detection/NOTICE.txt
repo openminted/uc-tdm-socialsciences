@@ -3,6 +3,6 @@ Copyright 2016
     GESIS – Leibniz-Institute for the Social Sciences
     Ubiquitous Knowledge Processing (UKP) Lab at Technische Universität Darmstadt
 
-Following classes contain code backported from DKPro Core 1.8.0+
-    eu.openminted.uc.socialsciences.ner.eval.FMeasure
-    eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder
+Following classes contain code adapted from DKPro Similarity 2.2.0+
+    LinearRegressionResource.java
+    LinearRegressionSimilarityMeasure.java

@@ -2,7 +2,3 @@ Copyright 2016
     OpenMinTeD - Open Mining of Text and Data Project http://openminted.eu/
     GESIS – Leibniz-Institute for the Social Sciences
     Ubiquitous Knowledge Processing (UKP) Lab at Technische Universität Darmstadt
-
-Following classes contain code backported from DKPro Core 1.8.0+
-    eu.openminted.uc.socialsciences.ner.eval.FMeasure
-    eu.openminted.uc.socialsciences.ner.helper.util.MyIobEncoder
