@@ -211,6 +211,19 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>eu.openminted.share.annotations</groupId>
+        <artifactId>omtd-share-annotations-maven-plugin</artifactId>
+        <configuration>
+          <!-- 
+            Only expose the variable mention detector component to OpenMinTeD. The others are
+            not suitable for inclusion on the platform.
+           -->
+          <uimaDescriptorIncludes>
+            <uimaDescriptorInclude>**/VariableMentionDetector.xml</uimaDescriptorInclude>
+          </uimaDescriptorIncludes>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
@@ -306,42 +319,6 @@
     </resources>
   </build>
   <profiles>
-    <profile>
-      <id>run-jcasgen</id>
-      <activation>
-        <file>
-          <exists>.activate-run-jcasgen</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <!--generate types dynamically -->
-            <groupId>org.apache.uima</groupId>
-            <artifactId>jcasgen-maven-plugin</artifactId>
-            <version>${uima.version}</version>
-            <configuration>
-              <limitToProject>true</limitToProject>
-              <typeSystemIncludes>
-                <include>src/main/resources/desc/type/**/*.xml</include>
-              </typeSystemIncludes>
-              <typeSystemExcludes>
-                <exclude>src/main/resources/desc/type/**/*_customized.xml</exclude>
-              </typeSystemExcludes>
-            </configuration>
-            <executions>
-              <execution>
-                <!--call it in the generate-source phase -->
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>generate</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <profile>
       <id>docker</id>
       <activation>

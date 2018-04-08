@@ -342,29 +342,6 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.uima</groupId>
-        <artifactId>uimafit-maven-plugin</artifactId>
-        <configuration>
-          <componentVendor>DKPro Core Project</componentVendor>
-          <componentCopyright>
-            Copyright ${project.inceptionYear}-${currentYear}
-            Ubiquitous Knowledge Processing (UKP) Lab
-            Technische Universität Darmstadt
-          </componentCopyright>
-          <failOnMissingMetaData>false</failOnMissingMetaData>
-        </configuration>
-        <executions>
-          <execution>
-            <id>default</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>enhance</goal>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
         <executions>
@@ -441,29 +418,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>eu.openminted.share.annotations</groupId>
-        <artifactId>omtd-share-annotations-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <descriptorLocation>withClasses</descriptorLocation>
-          <fileExtension>.omtds.xml</fileExtension>
-          <uimaTypeMappings>
-            <uimaTypeMapping>META-INF/eu.openminted.share/uimaTypeMapping.map</uimaTypeMapping>
-          </uimaTypeMappings>
-          <mimeTypeMappings>
-            <mimeTypeMapping>META-INF/eu.openminted.share/mimeTypeMapping.map</mimeTypeMapping>
-          </mimeTypeMappings>
-        </configuration>
-      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
@@ -526,6 +480,103 @@
     </pluginManagement>
   </build>
   <profiles>
+    <profile>
+      <id>uima-module</id>
+      <activation>
+        <file><exists>marker-uima-module</exists></file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.uima</groupId>
+            <artifactId>uimafit-maven-plugin</artifactId>
+            <configuration>
+              <componentVendor>OpenMinTeD Project</componentVendor>
+              <componentCopyright>
+                Copyright ${project.inceptionYear}-${currentYear}
+                
+                Ubiquitous Knowledge Processing (UKP) Lab
+                Technische Universität Darmstadt
+                
+                GESIS – Leibniz-Institute for the Social Sciences
+                
+                OpenMinTeD - Open Mining of Text and Data Project http://openminted.eu/
+              </componentCopyright>
+              <failOnMissingMetaData>false</failOnMissingMetaData>
+            </configuration>
+            <executions>
+              <execution>
+                <id>default</id>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>enhance</goal>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>eu.openminted.share.annotations</groupId>
+            <artifactId>omtd-share-annotations-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default</id>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <descriptorLocation>withClasses</descriptorLocation>
+              <fileExtension>.omtds.xml</fileExtension>
+              <uimaTypeMappings>
+                <uimaTypeMapping>META-INF/eu.openminted.share/uimaTypeMapping.map</uimaTypeMapping>
+              </uimaTypeMappings>
+              <mimeTypeMappings>
+                <mimeTypeMapping>META-INF/eu.openminted.share/mimeTypeMapping.map</mimeTypeMapping>
+              </mimeTypeMappings>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>run-jcasgen</id>
+      <activation>
+        <file>
+          <exists>marker-jcasgen-module</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <!--generate types dynamically -->
+            <groupId>org.apache.uima</groupId>
+            <artifactId>jcasgen-maven-plugin</artifactId>
+            <version>${uima.version}</version>
+            <configuration>
+              <limitToProject>true</limitToProject>
+              <typeSystemIncludes>
+                <include>src/main/resources/desc/type/**/*.xml</include>
+              </typeSystemIncludes>
+              <typeSystemExcludes>
+                <exclude>src/main/resources/desc/type/**/*_customized.xml</exclude>
+              </typeSystemExcludes>
+            </configuration>
+            <executions>
+              <execution>
+                <!--call it in the generate-source phase -->
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>release</id>
       <build>
