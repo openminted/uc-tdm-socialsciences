@@ -46,7 +46,11 @@
     <dependency>
       <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
       <artifactId>eu.openminted.uc.socialsciences.keywords-model-keywords-en-socialscience_thesoz</artifactId>
-      <scope>test</scope>
+      <scope>compile</scope>
+      <!-- 
+        Have the model as a compile dependency instead of relying on auto-download since the
+        model resides on the OMTD Maven repo and not in the DKPro Core repo.
+      -->
     </dependency>
 
     <dependency>
