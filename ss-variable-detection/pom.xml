@@ -238,7 +238,7 @@
             not suitable for inclusion on the platform.
            -->
           <uimaDescriptorIncludes>
-            <uimaDescriptorInclude>**/VariableMentionDetector.xml</uimaDescriptorInclude>
+            <uimaDescriptorInclude>**/VariableMentionDisambiguator.xml</uimaDescriptorInclude>
           </uimaDescriptorIncludes>
         </configuration>
       </plugin>
