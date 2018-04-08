@@ -46,7 +46,7 @@
     <dependency>
       <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
       <artifactId>eu.openminted.uc.socialsciences.keywords-model-keywords-en-socialscience_thesoz</artifactId>
-      <version>20180326.1</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
@@ -70,4 +70,14 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>eu.openminted.uc.socialsciences.keywords-model-keywords-en-socialscience_thesoz</artifactId>
+        <version>20180326.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>

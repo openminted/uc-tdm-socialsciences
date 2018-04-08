@@ -206,8 +206,23 @@
       <artifactId>de.tudarmstadt.ukp.dkpro.core.testing-asl</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+      <artifactId>ss-variable-detection-model-disambiguation-en-ss</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+        <artifactId>ss-variable-detection-model-disambiguation-en-ss</artifactId>
+        <version>20180406.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  
   <build>
     <plugins>
       <plugin>

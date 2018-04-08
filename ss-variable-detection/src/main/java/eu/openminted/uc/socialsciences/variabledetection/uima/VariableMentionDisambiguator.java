@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -24,6 +25,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
+import de.tudarmstadt.ukp.dkpro.core.api.resources.ModelProviderBase;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
@@ -36,13 +38,28 @@ import weka.core.Instance;
 public class VariableMentionDisambiguator
     extends JCasAnnotator_ImplBase
 {
+    /**
+     * Use this language instead of the document language to resolve the model.
+     */
+    public static final String PARAM_LANGUAGE = ComponentParameters.PARAM_LANGUAGE;
+    @ConfigurationParameter(name = PARAM_LANGUAGE, mandatory = false)
+    private String language;
+
+    /**
+     * Override the default variant used to locate the model.
+     */
+    public static final String PARAM_VARIANT = ComponentParameters.PARAM_VARIANT;
+    @ConfigurationParameter(name = PARAM_VARIANT, mandatory = false)
+    private String variant;
+    
     public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION;
-    @ConfigurationParameter(name = PARAM_MODEL_LOCATION)
+    @ConfigurationParameter(name = PARAM_MODEL_LOCATION, mandatory = false)
     private String modelLocation;
 
     public static final String PARAM_VARIABLE_FILE_LOCATION = "variableFileLocation";
     @ConfigurationParameter(name = PARAM_VARIABLE_FILE_LOCATION)
     private String variableFilePath;
+    private Map<String, String> variableMap;
 
     /**
      * If set to {@code false}, only {@code correct="Yes"} mentions are disambiguated, otherwise
@@ -71,28 +88,55 @@ public class VariableMentionDisambiguator
     public static final String PARAM_MAX_MENTIONS = "maxMentions";
     @ConfigurationParameter(name = PARAM_MAX_MENTIONS, defaultValue = "3")
     private int maxMentions;
-
-    private LinearRegressionSimilarityMeasure classifier;
-    private FeatureGeneration featureGeneration;
-    private Map<String, String> variableMap;
     
     private int[] matchAtRank = new int[100];
     private int[] cumulativeMatchAtRank = new int[100];
 
     private PrintWriter logwriter;
     
+    private ModelProviderBase<Model> modelProvider;
+    
     @Override
     public void initialize(final UimaContext context) throws ResourceInitializationException
     {
         super.initialize(context);
 
+        modelProvider = new ModelProviderBase<Model>(this, "variable-detection", "disambiguation")
+        {
+//            {
+//                setContextObject(FlexTagPosTagger.this);
+//
+//                setDefault(ARTIFACT_ID, "${groupId}.flextag-model-${language}-${variant}");
+//                setDefault(LOCATION,
+//                        "classpath:/${package}/lib/tagger-${language}-${variant}.properties");
+//
+//                setOverride(LOCATION, modelLocation);
+//                setOverride(LANGUAGE, language);
+//                setOverride(VARIANT, variant);
+//            }
+
+            @Override
+            protected Model produceResource(URL aUrl)
+                throws IOException
+            {
+                try {
+                    Model model = new Model();
+                    model.classifier = loadClassifier(aUrl.toString()
+                            + "/variable-disambiguation/variable-disambiguation-model.ser");
+                    model.featureGeneration = new FeatureGeneration(aUrl.toString());
+
+                    return model;
+                }
+                catch (Exception e) {
+                    throw new IOException(e);
+                }
+            }
+        };        
+        
         try {
-            classifier = loadClassifier(
-                    modelLocation + "/variable-disambiguation/variable-disambiguation-model.ser");
             variableMap = VariableFileReader.getVariables(variableFilePath);
-            featureGeneration = new FeatureGeneration(modelLocation);
         }
-        catch (Exception e) {
+        catch (IOException e) {
             throw new ResourceInitializationException(e);
         }
         
@@ -110,6 +154,8 @@ public class VariableMentionDisambiguator
     public void process(JCas aJCas) throws AnalysisEngineProcessException
     {
         DocumentMetaData meta = DocumentMetaData.get(aJCas);
+        
+        modelProvider.configure(aJCas.getCas());
         
         for (Sentence sentence : select(aJCas, Sentence.class)) {
             List<VariableMention> mentions = selectCovered(VariableMention.class, sentence);
@@ -207,12 +253,12 @@ public class VariableMentionDisambiguator
     {
         super.collectionProcessComplete();
         
-        for (int i = 0; i < matchAtRank.length; i++) {
-            getLogger().info("Matches at " + (i + 1) + ": " + matchAtRank[i] + " - "
-                    + cumulativeMatchAtRank[i]);
-        }
-        
         if (logwriter != null) {
+            for (int i = 0; i < matchAtRank.length; i++) {
+                getLogger().info("Matches at " + (i + 1) + ": " + matchAtRank[i] + " - "
+                        + cumulativeMatchAtRank[i]);
+            }
+            
             logwriter.close();
         }
     }
@@ -236,6 +282,8 @@ public class VariableMentionDisambiguator
     {
         List<Match> matches = new ArrayList<>();
         
+        Model model = modelProvider.getResource();
+        
         long t = System.currentTimeMillis();
         int i = 0;
         for (String varId : aVariableMap.keySet()) {
@@ -244,24 +292,30 @@ public class VariableMentionDisambiguator
 //                    VariableDisambiguationConstants.Dataset.TEMP, null);
 //            Instance instance = classifier.getInstance(new File(fileName));
 
-            Instance instance = featureGeneration.generateFeatures(aSentence,
-                    aVariableMap.get(varId), classifier.isUseLogFilter());
+            Instance instance = model.featureGeneration.generateFeatures(aSentence,
+                    aVariableMap.get(varId), model.classifier.isUseLogFilter());
             
-            if (i % 25 == 0) {
-                System.out.print(".");
-            }
+//            if (i % 25 == 0) {
+//                System.out.print(".");
+//            }
             
-            double similarity = classifier.getSimilarity(instance);
+            double similarity = model.classifier.getSimilarity(instance);
             
             matches.add(new Match(varId, similarity));
             i++;
         }
         t = System.currentTimeMillis() - t;
-        System.out.printf(" %d (%d avg per item)%n", t, t / aVariableMap.size());
+        getLogger().debug(String.format(" %d (%d avg per item)%n", t, t / aVariableMap.size()));
 
         return matches;
     }
-        
+    
+    private static class Model
+    {
+        private LinearRegressionSimilarityMeasure classifier;
+        private FeatureGeneration featureGeneration;
+    }
+    
     private static class Match
     {
         final String id;

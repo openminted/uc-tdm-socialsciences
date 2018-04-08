@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<variables>
+    <variable v_id="1" correct="YesNo">
+        <v_label>REGION OF INTERVIEW: WEST - EAST </v_label>
+        <v_topic>Identifikationsvariablen</v_topic>
+        <v_question> Does this interview take place on the territory of the old Federal Republic (incl. West Berlin) or on the territory of the former GDR (incl. East Berlin)? </v_question>
+        <!--  
+        <v_answer a_id="1"> Respondents from the old federal states / interview on the territory of the old Federal Republic (incl. West Berlin) </v_answer>
+        <v_answer a_id="2"> Respondents from the new federal states / interview on the territory of the former GDR (incl. East Berlin) </v_answer>
+        -->
+    </variable>
+
+
+    <variable v_id="2" correct="YesNo">
+        <v_label>SATISFACTION WITH PERFORMANCE OF FED.GOV</v_label>
+        <v_topic>Politische Einstellungen und Partizipation</v_topic>
+        <v_question>How satisfied are you - on the whole - with the current performance of the German government? </v_question>
+        <!--  
+        <v_subquestion> </v_subquestion>
+        <v_answer a_id="1">Not available</v_answer>
+        <v_answer a_id="2">Very satisfied</v_answer>
+        <v_answer a_id="3">Fairly satisfied</v_answer>
+        <v_answer a_id="4">Somewhat satisfied</v_answer>
+        <v_answer a_id="5">Somewhat dissatisfied</v_answer>
+        <v_answer a_id="6">Fairly dissatisfied</v_answer>
+        <v_answer a_id="7">Very dissatisfied</v_answer>
+        <v_answer a_id="8">Don't know</v_answer>
+        <v_answer a_id="99">No answer</v_answer>
+        -->
+    </variable>
+</variables>

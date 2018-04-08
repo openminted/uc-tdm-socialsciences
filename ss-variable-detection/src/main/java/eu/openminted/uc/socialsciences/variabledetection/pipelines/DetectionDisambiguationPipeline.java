@@ -32,12 +32,21 @@ public class DetectionDisambiguationPipeline
     @Option(name = "--max-var", usage = "maximum variable count", required = false)
     private int maxVars = 3;
 
+    @Option(name = "--model", usage = "model location", required = false)
+    private String modelPath;
+
+    @Option(name = "--variant", usage = "model variant", required = false)
+    private String modelVariant;
+
+    @Option(name = "--language", usage = "model location", required = false)
+    private String language = "en";
+
     @Option(name = "--var-file", usage = "variable specification", required = true)
     private String varFile;
 
-    private static final String DETECTION_MODEL_LOCATION = "classpath:/models/variable-detection/";
-    private static final String DISAMBIGUATION_MODEL_LOCATION = "classpath:/eu/openminted/uc/socialsciences/variabledetection/lib/disambiguation/en/ss";
-    private static final String LANGUAGE_CODE = "en";
+    // private static final String DETECTION_MODEL_LOCATION = "classpath:/models/variable-detection/";
+    // private static final String DISAMBIGUATION_MODEL_LOCATION = "classpath:/eu/openminted/uc/socialsciences/variabledetection/uima/lib/disambiguation-en-ss.properties";
+    // private static final String LANGUAGE_CODE = "en";
 
     public static void main(String[] args) throws Exception
     {
@@ -56,7 +65,7 @@ public class DetectionDisambiguationPipeline
                         XmiReader.class,
                         XmiReader.PARAM_OVERRIDE_DOCUMENT_METADATA, true,
                         XmiReader.PARAM_SOURCE_LOCATION, input, 
-                        XmiReader.PARAM_LANGUAGE, LANGUAGE_CODE),
+                        XmiReader.PARAM_LANGUAGE, language),
                 //Preprocessing should be the same as the one used for model training
                 createEngineDescription(
                         BreakIteratorSegmenter.class),
@@ -82,7 +91,8 @@ public class DetectionDisambiguationPipeline
                         VariableMentionDisambiguator.PARAM_SCORE_THRESHOLD, minScore,
                         VariableMentionDisambiguator.PARAM_MAX_MENTIONS, maxVars,
                         VariableMentionDisambiguator.PARAM_DISAMBIGUATE_ALL_MENTIONS, true,
-                        VariableMentionDisambiguator.PARAM_MODEL_LOCATION, DISAMBIGUATION_MODEL_LOCATION,
+                        VariableMentionDisambiguator.PARAM_MODEL_LOCATION, modelPath,
+                        VariableMentionDisambiguator.PARAM_VARIANT, modelVariant,
                         VariableMentionDisambiguator.PARAM_VARIABLE_FILE_LOCATION, varFile),
                 createEngineDescription(
                         XmiWriter.class,

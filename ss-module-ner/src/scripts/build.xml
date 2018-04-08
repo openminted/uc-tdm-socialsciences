@@ -15,6 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
+<!--
+  NOTE: This to deploy, make sure you point to the right repository, e.g. by passing
+        the following parameters to the build.
+        
+        -Dalt.maven.repo.url=https://repo.openminted.eu/content/repositories/releases/ -Dalt.maven.repo.id=omtd
+        
+        The alt.maven.repo.id property must match a server declaration from your Maven 
+        settings.xml file if credentials are required for deployment.
+-->
 <project basedir="../.." default="separate-jars">
     <import>
         <url url="https://raw.githubusercontent.com/dkpro/resource-packager/0.8.0/ant-macros.xml"/>
