@@ -16,6 +16,8 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.descriptor.ResourceMetaData;
+import org.apache.uima.fit.descriptor.TypeCapability;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
@@ -33,7 +35,18 @@ import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.MetaDataStringField;
 import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ModelProviderBase;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
+import eu.openminted.share.annotations.api.Component;
+import eu.openminted.share.annotations.api.constants.OperationType;
 
+/**
+ * Keyword assignment component based on Maui. The keywords are stored in DKPro Core 
+ * {@link MetaDataStringField} annotations with the key {@code http://purl.org/dc/terms/subject}.
+ */
+@Component(OperationType.DOCUMENT_CLASSIFIER)
+@ResourceMetaData(name = "Maui Keyword Annotator")
+@TypeCapability(
+        outputs = { 
+            "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.MetaDataStringField" })
 public class MauiKeywordAnnotator
     extends JCasAnnotator_ImplBase
 {
@@ -58,14 +71,27 @@ public class MauiKeywordAnnotator
     @ConfigurationParameter(name = PARAM_MODEL_LOCATION, mandatory = false)
     private String modelLocation;
 
+    /**
+     * Location of the vocabulary file. Normally, this location is derived from the model
+     * location by replacing the model extension {@code .ser} with {@code .rdf.gz.}
+     */
     public static final String PARAM_VOCABULARY_LOCATION = "vocabularyLocation";
     @ConfigurationParameter(name = PARAM_VOCABULARY_LOCATION, mandatory = false)
     private String vocabularyLocation;
 
+    /**
+     * Format of the vocabulary file. Normally, this information is obtained from the key
+     * {@code vocabulary.format} in the model metadata. Only {@code skos} and leaving the
+     * parameter unset (i.e. no vocabulary) are currently supported.
+     */
     public static final String PARAM_VOCABULARY_FORMAT = "vocabularyFormat";
     @ConfigurationParameter(name = PARAM_VOCABULARY_FORMAT, mandatory = false)
     private String vocabularyFormat;
 
+    /**
+     * Encoding of the vocabulary file. Normally, this information is obtained from the key
+     * {@code vocabulary.encoding} in the model metadata.
+     */
     public static final String PARAM_VOCABULARY_ENCODING = "vocabularyEncoding";
     @ConfigurationParameter(name = PARAM_VOCABULARY_ENCODING, mandatory = false, 
             defaultValue = ComponentParameters.DEFAULT_ENCODING)
@@ -78,6 +104,9 @@ public class MauiKeywordAnnotator
     @ConfigurationParameter(name = PARAM_SCORE_THRESHOLD, defaultValue = "0.5")
     private double scoreThreshold;
 
+    /**
+     * Maximum number of keywords to assign to a document.
+     */
     public static final String PARAM_MAX_TOPICS = "maxTopics";
     @ConfigurationParameter(name = PARAM_MAX_TOPICS, defaultValue = "10")
     private int maxTopics;

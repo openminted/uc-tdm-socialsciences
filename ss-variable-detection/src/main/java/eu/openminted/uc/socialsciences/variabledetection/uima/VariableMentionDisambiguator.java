@@ -1,11 +1,15 @@
 package eu.openminted.uc.socialsciences.variabledetection.uima;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.uima.fit.util.JCasUtil.select;
 import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -20,6 +24,8 @@ import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.descriptor.ResourceMetaData;
+import org.apache.uima.fit.descriptor.TypeCapability;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 
@@ -28,6 +34,8 @@ import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ModelProviderBase;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence;
+import eu.openminted.share.annotations.api.Component;
+import eu.openminted.share.annotations.api.constants.OperationType;
 import eu.openminted.uc.socialsciences.variabledetection.features.FeatureGeneration;
 import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
 import eu.openminted.uc.socialsciences.variabledetection.type.GoldVariableMention;
@@ -35,6 +43,18 @@ import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
 import eu.openminted.uc.socialsciences.variabledetection.uima.io.VariableFileReader;
 import weka.core.Instance;
 
+/**
+ * Assign variable IDs to sentences based on calculating the similarity between the sentence
+ * text and the description of the variable.
+ */
+@Component(OperationType.VARIABLES_DECTECTOR)
+@ResourceMetaData(name = "Variable Disambiguator")
+@TypeCapability(
+        inputs = { 
+            "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token",
+            "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Sentence" }, 
+        outputs = { 
+            "eu.openminted.uc.socialsciences.variabledetection.type.VariableMention.VariableMention" })
 public class VariableMentionDisambiguator
     extends JCasAnnotator_ImplBase
 {
@@ -52,12 +72,25 @@ public class VariableMentionDisambiguator
     @ConfigurationParameter(name = PARAM_VARIANT, mandatory = false)
     private String variant;
     
+    /**
+     * Location of the similarity model.
+     */
     public static final String PARAM_MODEL_LOCATION = ComponentParameters.PARAM_MODEL_LOCATION;
     @ConfigurationParameter(name = PARAM_MODEL_LOCATION, mandatory = false)
     private String modelLocation;
 
+    /**
+     * This parameter accepts an XML string containing the specification of the variables.
+     */
+    public static final String PARAM_VARIABLE_SPECIFICATION = "variableSpecification";
+    @ConfigurationParameter(name = PARAM_VARIABLE_SPECIFICATION, mandatory = false)
+    private String variableSpecification;
+
+    /**
+     * This parameter accepts a path to an XML file containing the specification of the variables.
+     */
     public static final String PARAM_VARIABLE_FILE_LOCATION = "variableFileLocation";
-    @ConfigurationParameter(name = PARAM_VARIABLE_FILE_LOCATION)
+    @ConfigurationParameter(name = PARAM_VARIABLE_FILE_LOCATION, mandatory = false)
     private String variableFilePath;
     private Map<String, String> variableMap;
 
@@ -69,6 +102,10 @@ public class VariableMentionDisambiguator
     @ConfigurationParameter(name = PARAM_DISAMBIGUATE_ALL_MENTIONS, defaultValue = "true")
     private boolean disambiguateAllMentions;
     
+    /**
+     * Whether to write a detailed log of the results. This is mainly useful if gold-data is
+     * provided to the component.
+     */
     public static final String PARAM_WRITE_LOG = "writeLog";
     @ConfigurationParameter(name = PARAM_WRITE_LOG, defaultValue = "false")
     private boolean writeLog;
@@ -100,6 +137,11 @@ public class VariableMentionDisambiguator
     public void initialize(final UimaContext context) throws ResourceInitializationException
     {
         super.initialize(context);
+        
+        if (variableSpecification == null && variableFilePath == null) {
+            throw new ResourceInitializationException(new IllegalArgumentException(
+                    "Either a variable specification or variable file location must be provided."));
+        }
 
         modelProvider = new ModelProviderBase<Model>(this, "variable-detection", "disambiguation")
         {
@@ -134,7 +176,17 @@ public class VariableMentionDisambiguator
         };        
         
         try {
-            variableMap = VariableFileReader.getVariables(variableFilePath);
+            if (variableFilePath != null) {
+                try (InputStream is = new FileInputStream(variableFilePath)) {
+                    variableMap = VariableFileReader.getVariables(is);
+                }
+            }
+            else if (variableSpecification != null) {
+                try (InputStream is = new ByteArrayInputStream(
+                        variableSpecification.getBytes(UTF_8))) {
+                    variableMap = VariableFileReader.getVariables(is);
+                }
+            }
         }
         catch (IOException e) {
             throw new ResourceInitializationException(e);

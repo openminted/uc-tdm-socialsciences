@@ -18,7 +18,6 @@
  */
 package eu.openminted.uc.socialsciences.variabledetection.uima.io;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -41,17 +40,16 @@ import org.xml.sax.SAXException;
 
 public class VariableFileReader
 {
-    public static Map<String, String> getVariables(String file) throws IOException
+    public static Map<String, String> getVariables(InputStream aInputStream) throws IOException
     {
         Map<String, String> variableMap = new HashMap<>();
 
-        InputStream inputStream = new FileInputStream(file);
         DocumentBuilder xmlDocumentBuilder;
         DocumentBuilderFactory xmlDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
         Document document = null;
         try {
             xmlDocumentBuilder = xmlDocumentBuilderFactory.newDocumentBuilder();
-            document = xmlDocumentBuilder.parse(new InputSource(inputStream));
+            document = xmlDocumentBuilder.parse(new InputSource(aInputStream));
         }
         catch (ParserConfigurationException | SAXException e) {
             throw new IOException(e);
