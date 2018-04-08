@@ -14,7 +14,6 @@ import org.apache.uima.jcas.JCas;
 import org.junit.Test;
 
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import eu.openminted.uc.socialsciences.ner.util.MyIobEncoder;
 import webanno.custom.NamedEntity;
 
 public class MyIobEncoderTest {

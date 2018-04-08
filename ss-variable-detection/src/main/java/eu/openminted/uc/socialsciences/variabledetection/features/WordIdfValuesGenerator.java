@@ -11,6 +11,7 @@
 package eu.openminted.uc.socialsciences.variabledetection.features;
 
 import static eu.openminted.uc.socialsciences.variabledetection.pipelines.DisambiguationOnlyTrainingPipeline.DATASET_DIR;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
@@ -114,7 +115,7 @@ public class WordIdfValuesGenerator
             for (String key : idfValues.keySet()) {
                 sb.append(key + "\t" + idfValues.get(key) + LF);
             }
-            FileUtils.writeStringToFile(outputFile, sb.toString());
+            FileUtils.writeStringToFile(outputFile, sb.toString(), UTF_8);
 
             System.out.println(" - done");
         }

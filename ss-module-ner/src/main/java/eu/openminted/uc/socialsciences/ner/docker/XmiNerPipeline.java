@@ -5,10 +5,6 @@ import java.io.File;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import eu.openminted.share.annotations.api.Component;
-import eu.openminted.share.annotations.api.DataFormat;
-import eu.openminted.share.annotations.api.ResourceInput;
-import eu.openminted.share.annotations.api.ResourceOutput;
 import eu.openminted.uc.socialsciences.ner.Pipeline;
 
 public class XmiNerPipeline

@@ -6,11 +6,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.openminted.uc.socialsciences.kb.preparation.util.output.DBManager;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import eu.openminted.uc.socialsciences.kb.preparation.util.output.DBManager;
 
 /**
  * Gold data is in xlsx format. This class reads the data from the tables and

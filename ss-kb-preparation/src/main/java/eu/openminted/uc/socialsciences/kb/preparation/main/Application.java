@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import eu.openminted.uc.socialsciences.kb.preparation.util.convert.Converter;
-import eu.openminted.uc.socialsciences.kb.preparation.util.convert.PDFConverter;
 import org.apache.log4j.Logger;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
@@ -27,6 +25,8 @@ import de.tudarmstadt.ukp.dkpro.core.textcat.LanguageIdentifier;
 import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRemover;
 import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.TokenCaseTransformer;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
+import eu.openminted.uc.socialsciences.kb.preparation.util.convert.Converter;
+import eu.openminted.uc.socialsciences.kb.preparation.util.convert.PDFConverter;
 
 public class Application {
 

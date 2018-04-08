@@ -18,16 +18,10 @@
  */
 package eu.openminted.uc.socialsciences.io.pdf.cermine;
 
-import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
-import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
-import de.tudarmstadt.ukp.dkpro.core.api.parameter.MimeTypes;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Heading;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
-import eu.openminted.share.annotations.api.Component;
-import eu.openminted.share.annotations.api.DataFormat;
-import eu.openminted.share.annotations.api.ResourceInput;
-import eu.openminted.share.annotations.api.constants.DataFormatType;
-import eu.openminted.share.annotations.api.constants.OperationType;
+import static org.apache.commons.io.IOUtils.closeQuietly;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.cas.CAS;
@@ -42,13 +36,18 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.jdom.Element;
 import org.jdom.Text;
 
+import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
+import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
+import de.tudarmstadt.ukp.dkpro.core.api.parameter.MimeTypes;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Heading;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Paragraph;
+import eu.openminted.share.annotations.api.Component;
+import eu.openminted.share.annotations.api.DataFormat;
+import eu.openminted.share.annotations.api.ResourceInput;
+import eu.openminted.share.annotations.api.constants.DataFormatType;
+import eu.openminted.share.annotations.api.constants.OperationType;
 import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import static org.apache.commons.io.IOUtils.closeQuietly;
 
 /**
  * Collection reader for PDF files using CERMINE

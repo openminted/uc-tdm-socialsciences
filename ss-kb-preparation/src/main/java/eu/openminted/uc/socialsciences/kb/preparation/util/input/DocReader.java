@@ -6,9 +6,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.openminted.uc.socialsciences.common.PDFChecker;
 import org.apache.log4j.Logger;
 
+import eu.openminted.uc.socialsciences.common.PDFChecker;
 import eu.openminted.uc.socialsciences.kb.preparation.util.convert.Converter;
 import eu.openminted.uc.socialsciences.kb.preparation.util.convert.PDFConverter;
 import eu.openminted.uc.socialsciences.kb.preparation.util.output.DBManager;

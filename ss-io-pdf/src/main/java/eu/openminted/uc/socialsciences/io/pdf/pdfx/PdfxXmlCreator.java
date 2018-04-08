@@ -3,16 +3,11 @@ package eu.openminted.uc.socialsciences.io.pdf.pdfx;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
-import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
-import eu.openminted.uc.socialsciences.common.PDFChecker;
-import eu.openminted.uc.socialsciences.io.xml.AbstractXmlCreator;
-import eu.openminted.uc.socialsciences.io.xml.XmlCreator;
-
-import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -22,9 +17,11 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-
 import org.apache.log4j.Logger;
 import org.kohsuke.args4j.Option;
+
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
+import eu.openminted.uc.socialsciences.io.xml.AbstractXmlCreator;
 
 /**
  * This class is responsible for PDF to XML conversion by invoking the web

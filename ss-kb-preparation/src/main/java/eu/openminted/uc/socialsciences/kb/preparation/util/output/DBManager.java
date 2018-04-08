@@ -8,10 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 import eu.openminted.uc.socialsciences.kb.preparation.datamodel.Dataset;
 import eu.openminted.uc.socialsciences.kb.preparation.datamodel.Variable;
 import eu.openminted.uc.socialsciences.kb.preparation.util.Property;
-import org.apache.log4j.Logger;
 
 public class DBManager {
 	private Connection conn;

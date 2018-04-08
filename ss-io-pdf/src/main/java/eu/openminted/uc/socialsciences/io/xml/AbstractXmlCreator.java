@@ -1,11 +1,5 @@
 package eu.openminted.uc.socialsciences.io.xml;
 
-import eu.openminted.uc.socialsciences.common.PDFChecker;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
-import org.kohsuke.args4j.Option;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
@@ -13,6 +7,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
+import org.kohsuke.args4j.Option;
+
+import eu.openminted.uc.socialsciences.common.PDFChecker;
 
 /**
  *

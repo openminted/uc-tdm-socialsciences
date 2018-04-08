@@ -1,13 +1,13 @@
 package eu.openminted.uc.socialsciences.ner.eval;
 
-import org.apache.uima.jcas.JCas;
-import org.junit.Before;
-import org.junit.Test;
+import static eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure.calculateAgreement;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
 
-import static eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure.calculateAgreement;
-import static org.junit.Assert.*;
+import org.apache.uima.jcas.JCas;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PerformanceMeasureTest {
     private static final String GOLD_DATA_PATTERN = "src/test/resources/evaluation/gold/**/*.xmi";

@@ -26,13 +26,6 @@ import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-
-import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
-import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
-import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
-import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceComparator;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubsequenceNormComparator;
 import org.dkpro.similarity.algorithms.lexical.string.LongestCommonSubstringComparator;
@@ -49,6 +42,13 @@ import org.dkpro.similarity.uima.api.type.TextSimilarityScore;
 import org.dkpro.similarity.uima.io.CombinationReader;
 import org.dkpro.similarity.uima.io.CombinationReader.CombinationStrategy;
 import org.dkpro.similarity.uima.resource.SimpleTextSimilarityResource;
+
+import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
+import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordLemmatizer;
+import de.tudarmstadt.ukp.dkpro.core.stopwordremover.StopWordRemover;
+import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Dataset;
 import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Mode;

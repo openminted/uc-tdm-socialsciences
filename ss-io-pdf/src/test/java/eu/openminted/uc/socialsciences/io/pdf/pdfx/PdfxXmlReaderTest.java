@@ -1,9 +1,7 @@
 package eu.openminted.uc.socialsciences.io.pdf.pdfx;
 
 import static de.tudarmstadt.ukp.dkpro.core.testing.IOTestRunner.testOneWay;
-import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
-import static org.apache.uima.fit.pipeline.SimplePipeline.runPipeline;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,12 +10,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
-import eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlReader;
-
 import org.apache.log4j.Logger;
 import org.junit.Ignore;
-import org.junit.Test;
 
 public class PdfxXmlReaderTest {
 	private static final Logger logger = Logger.getLogger(PdfxXmlReaderTest.class);

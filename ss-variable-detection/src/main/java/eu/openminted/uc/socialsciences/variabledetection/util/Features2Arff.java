@@ -11,10 +11,9 @@
 package eu.openminted.uc.socialsciences.variabledetection.util;
 
 import static eu.openminted.uc.socialsciences.variabledetection.pipelines.DisambiguationOnlyTrainingPipeline.GOLDSTANDARD_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Dataset;
 import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.FEATURES_DIR;
 import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.MODELS_DIR;
-import static eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Mode;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,6 +30,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Dataset;
+import eu.openminted.uc.socialsciences.variabledetection.pipelines.VariableDisambiguationConstants.Mode;
 
 public class Features2Arff
 {
@@ -64,7 +66,7 @@ public class Features2Arff
 
         String arffString = toArffString(files, goldStandardInputStream);
 
-        FileUtils.writeStringToFile(outFile, arffString);
+        FileUtils.writeStringToFile(outFile, arffString, UTF_8);
 
         // System.out.println(" - done");
         return fileName;
@@ -91,7 +93,7 @@ public class Features2Arff
             arff.append("@attribute " + feature + " numeric" + LF);
 
             // Read data
-            List<String> lines = FileUtils.readLines(file);
+            List<String> lines = FileUtils.readLines(file, UTF_8);
 
             if (lines.size() == 0) {
                 System.err.println(
@@ -145,7 +147,7 @@ public class Features2Arff
             }
         }
         else {
-            for (int i = 0; i < FileUtils.readLines(csvFiles.iterator().next()).size(); i++) {
+            for (int i = 0; i < FileUtils.readLines(csvFiles.iterator().next(), UTF_8).size(); i++) {
                 lines.add("0.0");
             }
         }

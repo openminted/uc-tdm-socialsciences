@@ -1,5 +1,13 @@
 package eu.openminted.uc.socialsciences.io.pdf.cermine;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.nio.file.Path;
+
 import org.apache.log4j.Logger;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
@@ -7,9 +15,6 @@ import org.jdom.output.XMLOutputter;
 import eu.openminted.uc.socialsciences.io.xml.AbstractXmlCreator;
 import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
-
-import java.io.*;
-import java.nio.file.Path;
 
 /**
  *

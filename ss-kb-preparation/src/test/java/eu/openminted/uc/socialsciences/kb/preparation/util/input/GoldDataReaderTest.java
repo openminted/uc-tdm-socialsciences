@@ -2,9 +2,10 @@ package eu.openminted.uc.socialsciences.kb.preparation.util.input;
 
 import java.io.File;
 
-import eu.openminted.uc.socialsciences.kb.preparation.util.output.DBManager;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import eu.openminted.uc.socialsciences.kb.preparation.util.output.DBManager;
 
 public class GoldDataReaderTest {
 

@@ -1,13 +1,14 @@
 package eu.openminted.uc.socialsciences.ner.eval;
 
-import de.tudarmstadt.ukp.dkpro.core.api.io.IobEncoder;
-import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
-import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
-import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
-import eu.openminted.uc.socialsciences.common.evaluation.FMeasure;
-import eu.openminted.uc.socialsciences.ner.util.MyIobEncoder;
+import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -24,11 +25,15 @@ import org.apache.uima.util.CasCopier;
 import org.dkpro.statistics.agreement.unitizing.KrippendorffAlphaUnitizingAgreement;
 import org.dkpro.statistics.agreement.unitizing.UnitizingAnnotationStudy;
 import org.kohsuke.args4j.Option;
+
+import de.tudarmstadt.ukp.dkpro.core.api.io.IobEncoder;
+import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
+import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
+import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasReader;
+import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
+import eu.openminted.uc.socialsciences.common.evaluation.FMeasure;
+import eu.openminted.uc.socialsciences.ner.util.MyIobEncoder;
 import webanno.custom.NamedEntity;
-
-import java.util.*;
-
-import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
 
 /**
  * Class for evaluating system performance

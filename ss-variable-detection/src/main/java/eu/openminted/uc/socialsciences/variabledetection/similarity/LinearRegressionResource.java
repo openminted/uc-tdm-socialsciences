@@ -26,8 +26,6 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.dkpro.similarity.uima.resource.JCasTextSimilarityResourceBase;
 
-import eu.openminted.uc.socialsciences.variabledetection.similarity.LinearRegressionSimilarityMeasure;
-
 /**
  * Copied from dkpro-similarity project https://github.com/dkpro/dkpro-similarity
  * 

@@ -1,14 +1,15 @@
 package eu.openminted.uc.socialsciences.io.cas;
 
-import de.tudarmstadt.ukp.dkpro.core.testing.validation.CasValidator;
-import de.tudarmstadt.ukp.dkpro.core.testing.validation.Message;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasConsumer_ImplBase;
 import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 
-import java.util.List;
+import de.tudarmstadt.ukp.dkpro.core.testing.validation.CasValidator;
+import de.tudarmstadt.ukp.dkpro.core.testing.validation.Message;
 
 public class CasValidatorComponent
         extends JCasConsumer_ImplBase

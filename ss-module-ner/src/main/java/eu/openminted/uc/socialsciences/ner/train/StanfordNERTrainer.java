@@ -2,14 +2,15 @@ package eu.openminted.uc.socialsciences.ner.train;
 
 import java.util.Properties;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.kohsuke.args4j.Option;
+
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.sequences.SeqClassifierFlags;
 import edu.stanford.nlp.util.StringUtils;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.kohsuke.args4j.Option;
 
 public class StanfordNERTrainer {
 	private static final Logger logger = LogManager.getLogger(StanfordNERTrainer.class);

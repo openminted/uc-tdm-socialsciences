@@ -11,18 +11,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.uima.UIMAException;
+import org.kohsuke.args4j.Option;
+
+import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
+import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
+import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRemover;
 import eu.openminted.uc.socialsciences.common.CommandLineArgumentHandler;
 import eu.openminted.uc.socialsciences.io.cas.CasValidatorComponent;
 import eu.openminted.uc.socialsciences.io.cas.SentenceTrimmer;
-
-import org.apache.log4j.Logger;
-import org.apache.uima.UIMAException;
-
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
-import de.tudarmstadt.ukp.dkpro.core.testing.dumper.CasDumpWriter;
-import de.tudarmstadt.ukp.dkpro.core.textnormalizer.transformation.HyphenationRemover;
-import org.kohsuke.args4j.Option;
 
 /**
  * This class is responsible for converting the output of pdfx, which is XML

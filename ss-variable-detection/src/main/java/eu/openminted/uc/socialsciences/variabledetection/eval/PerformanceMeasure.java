@@ -1,9 +1,12 @@
 package eu.openminted.uc.socialsciences.variabledetection.eval;
 
-import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
-import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
-import eu.openminted.uc.socialsciences.common.evaluation.FMeasure;
-import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
+import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -16,9 +19,10 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.CasCopier;
 
-import java.util.*;
-
-import static org.apache.uima.fit.factory.CollectionReaderFactory.createReaderDescription;
+import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;
+import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
+import eu.openminted.uc.socialsciences.common.evaluation.FMeasure;
+import eu.openminted.uc.socialsciences.variabledetection.type.VariableMention;
 
 /**
  * Class for evaluating system performance

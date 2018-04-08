@@ -5,9 +5,6 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-import eu.openminted.uc.socialsciences.kb.preparation.datamodel.Dataset;
-import eu.openminted.uc.socialsciences.kb.preparation.datamodel.Variable;
-import eu.openminted.uc.socialsciences.kb.preparation.util.output.DBManager;
 import org.apache.jena.rdf.model.Bag;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -18,6 +15,10 @@ import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.log4j.Logger;
 import org.unbescape.html.HtmlEscape;
+
+import eu.openminted.uc.socialsciences.kb.preparation.datamodel.Dataset;
+import eu.openminted.uc.socialsciences.kb.preparation.datamodel.Variable;
+import eu.openminted.uc.socialsciences.kb.preparation.util.output.DBManager;
 
 public class StudyReader {
 

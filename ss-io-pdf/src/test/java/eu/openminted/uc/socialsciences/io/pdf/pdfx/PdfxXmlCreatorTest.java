@@ -12,8 +12,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlCreator;
-
 public class PdfxXmlCreatorTest {
 
     private final static Logger logger = Logger.getLogger(PdfxXmlCreatorTest.class);

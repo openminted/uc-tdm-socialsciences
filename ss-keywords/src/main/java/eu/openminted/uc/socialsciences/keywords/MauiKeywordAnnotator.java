@@ -1,5 +1,8 @@
 package eu.openminted.uc.socialsciences.keywords;
 
+import static org.apache.commons.lang3.StringUtils.defaultString;
+import static org.apache.commons.lang3.StringUtils.substringBefore;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
 
-import static org.apache.commons.lang3.StringUtils.*;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
