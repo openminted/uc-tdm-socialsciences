@@ -73,7 +73,7 @@ public class MauiKeywordAnnotator
 
     /**
      * Location of the vocabulary file. Normally, this location is derived from the model
-     * location by replacing the model extension {@code .ser} with {@code .rdf.gz.}
+     * location by replacing the model extension {@code .ser} with {@code .rdf.gz.}
      */
     public static final String PARAM_VOCABULARY_LOCATION = "vocabularyLocation";
     @ConfigurationParameter(name = PARAM_VOCABULARY_LOCATION, mandatory = false)
