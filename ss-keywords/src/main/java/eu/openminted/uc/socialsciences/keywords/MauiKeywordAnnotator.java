@@ -214,8 +214,9 @@ public class MauiKeywordAnnotator
             MetaDataStringField mdf = new MetaDataStringField(aJCas);
             mdf.setKey("http://purl.org/dc/terms/subject");
             mdf.setValue(t.getTitle());
-            getLogger().info(String.format("[%s]\t[%s]\t[%f]%n", t.getId(), t.getTitle(),
-                    t.getProbability()));
+            mdf.addToIndexes();
+            //getLogger().info(String.format("[%s]\t[%s]\t[%f]%n", t.getId(), t.getTitle(),
+            //        t.getProbability()));
         }
     }
 }
