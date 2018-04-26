@@ -36,7 +36,11 @@ import de.tudarmstadt.ukp.dkpro.core.api.parameter.ComponentParameters;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ModelProviderBase;
 import de.tudarmstadt.ukp.dkpro.core.api.resources.ResourceUtils;
 import eu.openminted.share.annotations.api.Component;
+import eu.openminted.share.annotations.api.ResourceInput;
+import eu.openminted.share.annotations.api.ResourceOutput;
+import eu.openminted.share.annotations.api.constants.AnnotationType;
 import eu.openminted.share.annotations.api.constants.OperationType;
+import eu.openminted.share.annotations.api.constants.ProcessingResourceType;
 
 /**
  * Keyword assignment component based on Maui. The keywords are stored in DKPro Core 
@@ -44,6 +48,11 @@ import eu.openminted.share.annotations.api.constants.OperationType;
  */
 @Component(OperationType.DOCUMENT_CLASSIFIER)
 @ResourceMetaData(name = "Maui Keyword Annotator")
+@ResourceInput(
+        type = ProcessingResourceType.DOCUMENT)
+@ResourceOutput(
+        type = ProcessingResourceType.DOCUMENT,
+        annotationLevel = AnnotationType.KEYWORD)
 @TypeCapability(
         outputs = { 
             "de.tudarmstadt.ukp.dkpro.core.api.metadata.type.MetaDataStringField" })
