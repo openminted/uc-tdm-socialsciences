@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>eu.openminted.uc.socialsciences</groupId>
 		<artifactId>uc-tdm-ss</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>omtd-uc-ss-kb-preparation</artifactId>
 
