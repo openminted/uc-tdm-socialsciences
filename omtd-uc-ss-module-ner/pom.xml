@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-    <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+    <groupId>eu.openminted.uc.socialsciences</groupId>
+    <artifactId>uc-tdm-ss</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>ss-module-ner</artifactId>
+  <artifactId>omtd-uc-ss-module-ner</artifactId>
 
   <properties>
     <docker.image.name>openminted/uc-ss-module-ner</docker.image.name>
@@ -47,8 +47,8 @@
 
     <!-- project modules -->
     <dependency>
-      <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-      <artifactId>ss-common</artifactId>
+      <groupId>eu.openminted.uc.socialsciences</groupId>
+      <artifactId>omtd-uc-ss-common</artifactId>
     </dependency>
     <!-- -->
 
@@ -180,7 +180,7 @@
           <artifactId>uimafit-maven-plugin</artifactId>
           <version>${uimafit.plugin.version}</version>
           <configuration>
-            <componentVendor>eu.openminted.uc-tdm-socialsciences</componentVendor>
+            <componentVendor>eu.openminted.uc.socialsciences</componentVendor>
             <componentCopyright>
               Copyright 2015-2016
               OpenMinTeD Project

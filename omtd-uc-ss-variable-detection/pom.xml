@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-    <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+    <groupId>eu.openminted.uc.socialsciences</groupId>
+    <artifactId>uc-tdm-ss</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>ss-variable-detection</artifactId>
+  <artifactId>omtd-uc-ss-variable-detection</artifactId>
   <name>ss-variable-detection</name>
 
   <licenses>
@@ -38,8 +38,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-      <artifactId>ss-common</artifactId>
+      <groupId>eu.openminted.uc.socialsciences</groupId>
+      <artifactId>omtd-uc-ss-common</artifactId>
     </dependency>
 
     <!-- OMTD-SHARE annotations -->
@@ -206,8 +206,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-      <artifactId>ss-variable-detection-model-disambiguation-en-ss</artifactId>
+      <groupId>eu.openminted.uc.socialsciences</groupId>
+      <artifactId>omtd-uc-ss-variable-detection-model-disambiguation-en-ss</artifactId>
       <scope>compile</scope>
       <!-- 
         Have the model as a compile dependency instead of relying on auto-download since the
@@ -219,8 +219,8 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>ss-variable-detection-model-disambiguation-en-ss</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>omtd-uc-ss-variable-detection-model-disambiguation-en-ss</artifactId>
         <version>20180406.1</version>
       </dependency>
     </dependencies>

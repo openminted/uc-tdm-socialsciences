@@ -18,8 +18,8 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-  <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+  <groupId>eu.openminted.uc.socialsciences</groupId>
+  <artifactId>uc-tdm-ss</artifactId>
   <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Social sciences literature Text Mining software collection</name>
@@ -31,15 +31,23 @@
   </organization>
   <inceptionYear>2016</inceptionYear>
 
+  <licenses>
+    <license>
+      <name>GNU Affero General Public License v3.0 or later</name>
+      <url>https://www.gnu.org/licenses/agpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <modules>
-    <module>ss-tools-experiments</module>
-    <module>ss-kb-preparation</module>
-    <module>ss-io-pdf</module>
-    <module>ss-module-ner</module>
-    <module>ss-doc</module>
-    <module>ss-common</module>
-    <module>ss-variable-detection</module>
-    <module>ss-keywords</module>
+    <module>omtd-uc-ss-tools-experiments</module>
+    <module>omtd-uc-ss-kb-preparation</module>
+    <module>omtd-uc-ss-io-pdf</module>
+    <module>omtd-uc-ss-module-ner</module>
+    <module>omtd-uc-ss-doc</module>
+    <module>omtd-uc-ss-common</module>
+    <module>omtd-uc-ss-variable-detection</module>
+    <module>omtd-uc-ss-keywords</module>
   </modules>
 
   <repositories>
@@ -215,33 +223,33 @@
     <dependencies>
       <!-- submodules -->
       <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>ss-kb-preparation</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>omtd-uc-ss-kb-preparation</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>ss-tools-experiments</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>omtd-uc-ss-tools-experiments</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>ss-io-pdf</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>omtd-uc-ss-io-pdf</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>ss-module-ner</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>omtd-uc-ss-module-ner</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>ss-common</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>omtd-uc-ss-common</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>ss-variable-detection</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>omtd-uc-ss-variable-detection</artifactId>
         <version>${project.version}</version>
       </dependency>
       <!-- end submodules -->

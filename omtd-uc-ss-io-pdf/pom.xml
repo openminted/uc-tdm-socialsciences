@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
-    <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
+    <artifactId>uc-tdm-ss</artifactId>
+    <groupId>eu.openminted.uc.socialsciences</groupId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>ss-io-pdf</artifactId>
+  <artifactId>omtd-uc-ss-io-pdf</artifactId>
 
   <licenses>
     <license>
@@ -19,8 +19,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-      <artifactId>ss-common</artifactId>
+      <groupId>eu.openminted.uc.socialsciences</groupId>
+      <artifactId>omtd-uc-ss-common</artifactId>
     </dependency>
 
     <!-- OMTD-SHARE annotations -->
@@ -160,7 +160,7 @@
                   </excludes>
                 </filter>
                 <filter>
-                  <artifact>eu.openminted.uc-tdm-socialsciences:ss-io-pdf</artifact>
+                  <artifact>eu.openminted.uc.socialsciences:ss-io-pdf</artifact>
                   <excludes>
                     <exclude>src/main/resources/*.dic</exclude>
                   </excludes>
@@ -196,7 +196,7 @@
           <artifactId>uimafit-maven-plugin</artifactId>
           <version>${uimafit.plugin.version}</version>
           <configuration>
-            <componentVendor>eu.openminted.uc-tdm-socialsciences</componentVendor>
+            <componentVendor>eu.openminted.uc.socialsciences</componentVendor>
             <componentCopyright>
               Copyright 2016-2017
               OpenMinTeD Project

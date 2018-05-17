@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-		<artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+		<groupId>eu.openminted.uc.socialsciences</groupId>
+		<artifactId>uc-tdm-ss</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>ss-kb-preparation</artifactId>
+	<artifactId>omtd-uc-ss-kb-preparation</artifactId>
 
 	<properties>
 		<dkpro.core.version>1.8.0</dkpro.core.version>
@@ -26,8 +26,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-			<artifactId>ss-common</artifactId>
+			<groupId>eu.openminted.uc.socialsciences</groupId>
+			<artifactId>omtd-uc-ss-common</artifactId>
 		</dependency>
 
 		<dependency>
