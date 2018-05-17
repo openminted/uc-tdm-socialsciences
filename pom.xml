@@ -182,12 +182,12 @@
   </scm>
   <distributionManagement>
     <snapshotRepository>
-      <id>omtd</id>
-      <url>https://repo.openminted.eu/content/repositories/snapshots</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </snapshotRepository>
     <repository>
-      <id>omtd</id>
-      <url>https://repo.openminted.eu/content/repositories/releases</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
   <properties>
