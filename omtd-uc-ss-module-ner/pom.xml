@@ -3,7 +3,7 @@
   <parent>
     <groupId>eu.openminted.uc.socialsciences</groupId>
     <artifactId>omtd-uc-ss</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
   <artifactId>omtd-uc-ss-module-ner</artifactId>
 
