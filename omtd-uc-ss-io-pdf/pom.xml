@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>uc-tdm-ss</artifactId>
     <groupId>eu.openminted.uc.socialsciences</groupId>
-    <version>1.0.2-SNAPSHOT</version>
+    <artifactId>omtd-uc-ss</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -160,7 +160,7 @@
                   </excludes>
                 </filter>
                 <filter>
-                  <artifact>eu.openminted.uc.socialsciences:ss-io-pdf</artifact>
+                  <artifact>eu.openminted.uc.socialsciences:omtd-uc-ss-io-pdf</artifact>
                   <excludes>
                     <exclude>src/main/resources/*.dic</exclude>
                   </excludes>
@@ -169,7 +169,7 @@
               <transformers>
                 <!-- Set the main class of the executable JAR -->
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>eu.openminted.uc.socialsciences.io.pdf.Pipeline</mainClass>
+                  <mainClass>eu.openminted.uc.socialsciences.io.pdf.PdfToXmiPipeline</mainClass>
                 </transformer>
                 <!-- Merge the uimaFIT configuration files -->
                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">

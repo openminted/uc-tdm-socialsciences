@@ -12,64 +12,60 @@ To learn more about each component you can refer to its corresponding section in
  you can refer to the corresponding test classes for each component.
 
 === Useful links
-Get sources from GitHub:
-
-https://github.com/openminted/uc-tdm-socialsciences
+Get sources from GitHub: https://github.com/openminted/uc-tdm-socialsciences
 
 To use the latest release, please add the following piece to your pom file:
 
 --------------------------------------
-<repository>
-    <id>openminted.releases</id>
-    <name>OpenMinTeD Project Release Repository</name>
-    <url>https://repo.openminted.eu/content/repositories/releases</url>
-</repository>
-
-<dependencies>
+<dependencyManagement>
+  <dependencies>
     <dependency>
-        <groupId>eu.openminted.uc.socialsciences</groupId>
-        <artifactId>eu.openminted.uc.socialsciences</artifactId>
-        <version>1.0.0</version>
-        <type>pom</type>
+      <groupId>eu.openminted.uc.socialsciences</groupId>
+      <artifactId>omtd-uc-ss</artifactId>
+      <version>1.0.1</version>
+      <type>pom</type>
+      <scope>import</scope>
     </dependency>
-</dependencies>
+  </dependencies>
+</dependencyManagement>
 --------------------------------------
 
 To use the latest snapshot, please add the following piece to your pom file:
 
 --------------------------------------
 <repository>
-    <id>openminted.snapshots</id>
-    <name>OpenMinTeD Project Snapshot Repository</name>
-    <url>https://repo.openminted.eu/content/repositories/snapshots</url>
-    <releases>
-        <enabled>false</enabled>
-    </releases>
-    <snapshots>
-        <enabled>true</enabled>
-    </snapshots>
+  <id>openminted.snapshots</id>
+  <name>OpenMinTeD Project Snapshot Repository</name>
+  <url>https://repo.openminted.eu/content/repositories/snapshots</url>
+  <releases>
+    <enabled>false</enabled>
+  </releases>
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
 </repository>
 
-<dependencies>
+<dependencyManagement>
+  <dependencies>
     <dependency>
-        <groupId>eu.openminted.uc.socialsciences</groupId>
-        <artifactId>eu.openminted.uc.socialsciences</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-        <type>pom</type>
+      <groupId>eu.openminted.uc.socialsciences</groupId>
+      <artifactId>omtd-uc-ss</artifactId>
+      <version>1.0.1-SNAPSHOT</version>
+      <type>pom</type>
+      <scope>import</scope>
     </dependency>
-</dependencies>
+  </dependencies>
+</dependencyManagement>
 --------------------------------------
+
+Mind that individual modules need to be added separately as dependencies to your projects.
 
 Developers mailing list (request to join):
 
 https://groups.google.com/forum/#!forum/uc-tdm-socialsciences-developers
 
-//add [about us] page like https://dkpro.github.io/dkpro-core/info/
-//It would be helpful if answers for the following questions are provided:
-//- What can I do with this project?
-//- Where can I find examples for using these components?
-
 === Acknowledgment
+
 This work has received funding from the European Union's Horizon 2020 research and innovation program
 (H2020-EINFRA-2014-2) under grant agreement № 654021. This work has been produced as part of the 
 OpenMinTeD (http://openminted.eu/) project. It reflects only the authors’ work in the context of 

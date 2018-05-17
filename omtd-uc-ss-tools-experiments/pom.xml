@@ -2,8 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>eu.openminted.uc.socialsciences</groupId>
-    <artifactId>uc-tdm-ss</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <artifactId>omtd-uc-ss</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>omtd-uc-ss-tools-experiments</artifactId>
 

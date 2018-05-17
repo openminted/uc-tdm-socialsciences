@@ -13,7 +13,7 @@ This pipeline can be used via calling the main method, like the following:
 
 [source,text]
 ----
- $ java -jar /PATH/TO/ss-io-pdf-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar [args...]
+ $ java -jar /PATH/TO/omtd-uc-ss-io-pdf-1.0.1-pdf-xmi-pipeline-standalone.jar [args...]
 ----
 
 The following arguments have to be provided for the program:
@@ -74,7 +74,7 @@ component. This component can be used via calling the main method, like the foll
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-io-pdf-0.0.1-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
+ $ java -cp /PATH/TO/omtd-uc-ss-io-pdf-1.0.1-pdf-xmi-pipeline-standalone.jar
         eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlCreator [args...]
 ----
 
@@ -92,7 +92,7 @@ following:
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-io-pdf-1.0.0-SNAPSHOT-pdf-xmi-pipeline-standalone.jar
+ $ java -cp /PATH/TO/omtd-uc-ss-io-pdf-1.0.1-pdf-xmi-pipeline-standalone.jar
         eu.openminted.uc.socialsciences.io.pdf.pdfx.PdfxXmlToXmiConverter [args...]
 ----
 
@@ -131,7 +131,7 @@ If your training data is in binary CAS format (e.g. exported from WebAnno), you 
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/omtd-uc-ss-module-ner-1.0.1-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.util.BinaryCasToTsvConverter [args...]
 ----
 
@@ -202,7 +202,7 @@ number of different class labels in the training data.
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/omtd-uc-ss-module-ner-1.0.1-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.train.StanfordNERTrainer [args...]
 ----
 
@@ -241,7 +241,7 @@ you expect).
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/omtd-uc-ss-module-ner-1.0.1-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.Pipeline [args...]
 ----
 
@@ -267,7 +267,7 @@ Both have to be in XMI format again.
 
 [source,text]
 ----
- $ java -cp /PATH/TO/ss-module-ner-1.0.0-SNAPSHOT-ss-ner-standalone.jar
+ $ java -cp /PATH/TO/omtd-uc-ss-module-ner-1.0.1-ss-ner-standalone.jar
         eu.openminted.uc.socialsciences.ner.eval.PerformanceMeasure [args...]
 ----
 
@@ -316,6 +316,11 @@ provided in the DKPro Statistics project.
 For calculating the precision and recall, the gold and predicted documents are converted to BIO format annotation.
 Each token slot with named entity annotation (either B or I) is used to count the number of true positive, false positive, and
 false negative instances.
+
+
+////
+// The following documentation is largely outdated after the refactorings for 1.0.1 and is kept
+// here only for historic reference.
 
 === Variable mention detection and dismbiguation
 With this module, you can perform variable mention detection on your data. This module can be used to detect whether
@@ -390,3 +395,4 @@ This component also requires a file containing a complete list of variables whic
 configuration parameter `PARAM_VARIABLE_FILE_LOCATION`.
 If you wish to train your own sentence classifier model you can
 use the `eu.openminted.uc.socialsciences.variabledetection.detection.TrainAndSavePipeline` to do so.
+////
