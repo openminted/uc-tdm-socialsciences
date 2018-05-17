@@ -7,7 +7,6 @@
     <version>1.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>omtd-uc-ss-keywords</artifactId>
-  <name>ss-keywords</name>
 
   <licenses>
     <license>

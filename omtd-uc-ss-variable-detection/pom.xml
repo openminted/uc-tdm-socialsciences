@@ -7,7 +7,6 @@
     <version>1.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>omtd-uc-ss-variable-detection</artifactId>
-  <name>ss-variable-detection</name>
 
   <licenses>
     <license>
