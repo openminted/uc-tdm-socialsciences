@@ -133,7 +133,7 @@
         <version>2.4.1</version>
         <executions>
           <execution>
-            <id>ss-ner</id>
+            <id>omtd-uc-ss-ner</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>

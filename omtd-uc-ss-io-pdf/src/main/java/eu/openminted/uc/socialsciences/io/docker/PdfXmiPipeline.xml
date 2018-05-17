@@ -11,7 +11,7 @@
 &lt;a href="https://github.com/CeON/CERMINE"&gt;https://github.com/CeON/CERMINE&lt;/a&gt;.</ns1:description>
       </ns1:descriptions>
       <ns1:resourceIdentifiers>
-        <ns1:resourceIdentifier resourceIdentifierSchemeName="maven">mvn:eu.openminted.uc-tdm-socialsciences:ss-io-pdf:1.0.1-SNAPSHOT#eu.openminted.uc.socialsciences.io.docker.PdfXmiPipeline</ns1:resourceIdentifier>
+        <ns1:resourceIdentifier resourceIdentifierSchemeName="maven">mvn:eu.openminted.uc.socialsciences:ss-io-pdf:1.0.1-SNAPSHOT#eu.openminted.uc.socialsciences.io.docker.PdfXmiPipeline</ns1:resourceIdentifier>
       </ns1:resourceIdentifiers>
       <ns1:public>false</ns1:public>
     </ns1:identificationInfo>
@@ -24,7 +24,7 @@
       <ns1:contactGroups>
         <ns1:contactGroup>
           <ns1:groupNames>
-            <ns1:groupName>eu.openminted.uc-tdm-socialsciences</ns1:groupName>
+            <ns1:groupName>eu.openminted.uc.socialsciences</ns1:groupName>
           </ns1:groupNames>
         </ns1:contactGroup>
         <ns1:contactGroup>
@@ -55,7 +55,7 @@
     <ns1:distributionInfos>
       <ns1:componentDistributionInfo>
         <ns1:componentDistributionForm>executableCode</ns1:componentDistributionForm>
-        <ns1:distributionLocation>mvn:eu.openminted.uc-tdm-socialsciences:ss-io-pdf:1.0.1-SNAPSHOT#eu.openminted.uc.socialsciences.io.docker.PdfXmiPipeline</ns1:distributionLocation>
+        <ns1:distributionLocation>mvn:eu.openminted.uc.socialsciences:ss-io-pdf:1.0.1-SNAPSHOT#eu.openminted.uc.socialsciences.io.docker.PdfXmiPipeline</ns1:distributionLocation>
         <ns1:command>eu.openminted.uc.socialsciences.io.docker.PdfXmiPipeline</ns1:command>
         <ns1:operatingSystems>
           <ns1:operatingSystem>os-independent</ns1:operatingSystem>

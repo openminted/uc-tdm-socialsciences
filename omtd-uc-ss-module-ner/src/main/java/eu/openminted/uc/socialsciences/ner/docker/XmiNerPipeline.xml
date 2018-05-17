@@ -10,7 +10,7 @@
         <ns1:description></ns1:description>
       </ns1:descriptions>
       <ns1:resourceIdentifiers>
-        <ns1:resourceIdentifier resourceIdentifierSchemeName="maven">mvn:eu.openminted.uc-tdm-socialsciences:ss-module-ner:1.0.1-SNAPSHOT#eu.openminted.uc.socialsciences.ner.docker.XmiNerPipeline</ns1:resourceIdentifier>
+        <ns1:resourceIdentifier resourceIdentifierSchemeName="maven">mvn:eu.openminted.uc.socialsciences:ss-module-ner:1.0.1-SNAPSHOT#eu.openminted.uc.socialsciences.ner.docker.XmiNerPipeline</ns1:resourceIdentifier>
       </ns1:resourceIdentifiers>
       <ns1:public>false</ns1:public>
     </ns1:identificationInfo>
@@ -23,7 +23,7 @@
       <ns1:contactGroups>
         <ns1:contactGroup>
           <ns1:groupNames>
-            <ns1:groupName>eu.openminted.uc-tdm-socialsciences</ns1:groupName>
+            <ns1:groupName>eu.openminted.uc.socialsciences</ns1:groupName>
           </ns1:groupNames>
         </ns1:contactGroup>
         <ns1:contactGroup>
@@ -54,7 +54,7 @@
     <ns1:distributionInfos>
       <ns1:componentDistributionInfo>
         <ns1:componentDistributionForm>executableCode</ns1:componentDistributionForm>
-        <ns1:distributionLocation>mvn:mvn:eu.openminted.uc-tdm-socialsciences:ss-module-ner:1.0.1-SNAPSHOT#eu.openminted.uc.socialsciences.ner.docker.XmiNerPipeline</ns1:distributionLocation>
+        <ns1:distributionLocation>mvn:mvn:eu.openminted.uc.socialsciences:ss-module-ner:1.0.1-SNAPSHOT#eu.openminted.uc.socialsciences.ner.docker.XmiNerPipeline</ns1:distributionLocation>
         <ns1:command>eu.openminted.uc.socialsciences.ner.docker.XmiNerPipeline</ns1:command>
         <ns1:operatingSystems>
           <ns1:operatingSystem>os-independent</ns1:operatingSystem>

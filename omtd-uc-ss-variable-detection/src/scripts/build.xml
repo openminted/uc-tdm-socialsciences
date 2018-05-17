@@ -61,8 +61,8 @@
     <target name="variable-disambiguaton-social-sciences-en">        
         <install-stub-and-upstream-folder 
             folder="src/models/variable-disambiguaton-social-sciences-en" 
-            groupId="eu.openminted.uc-tdm-socialsciences" 
-            artifactIdBase="ss-variable-detection"
+            groupId="eu.openminted.uc.socialsciences" 
+            artifactIdBase="omtd-uc-ss-variable-detection"
             upstreamVersion="20180406"
             metaDataVersion="1"
             tool="disambiguation"
@@ -71,7 +71,7 @@
             <metadata>
                 <entry key="DC.title" value="Example Social Sciences Variable Disambiguation Model"/>
                 <entry key="DC.creator" value="OpenMinTeD project"/>
-                <entry key="DC.identifier" value="eu.openminted.uc-tdm-socialsciences:ss-variable-detection-upstream-disambiguation-en-ss:20180406"/>
+                <entry key="DC.identifier" value="eu.openminted.uc.socialsciences:omtd-uc-ss-variable-detection-upstream-disambiguation-en-ss:20180406"/>
             </metadata>
         </install-stub-and-upstream-folder>
     </target>

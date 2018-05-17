@@ -27,8 +27,8 @@ To use the latest release, please add the following piece to your pom file:
 
 <dependencies>
     <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>eu.openminted.uc.socialsciences</artifactId>
         <version>1.0.0</version>
         <type>pom</type>
     </dependency>
@@ -52,8 +52,8 @@ To use the latest snapshot, please add the following piece to your pom file:
 
 <dependencies>
     <dependency>
-        <groupId>eu.openminted.uc-tdm-socialsciences</groupId>
-        <artifactId>eu.openminted.uc-tdm-socialsciences</artifactId>
+        <groupId>eu.openminted.uc.socialsciences</groupId>
+        <artifactId>eu.openminted.uc.socialsciences</artifactId>
         <version>1.0.1-SNAPSHOT</version>
         <type>pom</type>
     </dependency>
